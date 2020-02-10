@@ -3,7 +3,16 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+
     <!-- Application -->
     <dimen name="nav_bar_height">58dp</dimen>
     <dimen name="nav_icon_size">32dp</dimen>
+
+    <!-- Home Fragment -->
+    <dimen name="home_title_height">32dp</dimen>
+    <dimen name="text_content_padding">18dp</dimen>
+    <dimen name="text_line_padding">8dp</dimen>
+    <dimen name="home_category_title_width">114dp</dimen>
 </resources>

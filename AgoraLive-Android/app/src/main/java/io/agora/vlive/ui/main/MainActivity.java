@@ -1,7 +1,6 @@
 package io.agora.vlive.ui.main;
 
 import android.os.Bundle;
-
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 

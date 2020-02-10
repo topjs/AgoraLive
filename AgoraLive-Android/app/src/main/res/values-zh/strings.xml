@@ -1,8 +1,18 @@
 <resources>
-    <string name="app_name">AgoraLive</string>
+    <string name="app_name">Agora Live</string>
 
     <!-- Application -->
     <string name="title_home">主页</string>
     <string name="title_rooms">房间</string>
     <string name="title_me">我的</string>
+
+    <!-- Home Fragment -->
+    <string name="home_category_title_multi">多人连麦直播</string>
+    <string name="home_category_title_single">单主播直播</string>
+    <string name="home_category_title_pk">视频PK连麦</string>
+    <string name="home_category_title_blind_date">敬请期待</string>
+
+    <string name="home_category_desp_multi">观众与主播连\n麦互动</string>
+    <string name="home_category_desp_single">单主播，支持屏\n幕分享</string>
+    <string name="home_category_desp_pk">跨直播间主播连\n麦PK互动</string>
 </resources>
