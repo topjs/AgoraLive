@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AgoraLive</string>
+
+    <!-- Application -->
+    <string name="title_home">Home</string>
+    <string name="title_rooms">Rooms</string>
+    <string name="title_me">Me</string>
+</resources>
