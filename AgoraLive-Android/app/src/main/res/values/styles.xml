@@ -1,3 +1,5 @@
 <resources>
-
+    <style name="nav_title_text">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
 </resources>

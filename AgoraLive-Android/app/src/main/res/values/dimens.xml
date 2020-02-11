@@ -3,11 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
 
     <!-- Application -->
-    <dimen name="nav_bar_height">58dp</dimen>
+    <dimen name="nav_bar_height">60dp</dimen>
     <dimen name="nav_icon_size">32dp</dimen>
 
     <!-- Home Fragment -->
