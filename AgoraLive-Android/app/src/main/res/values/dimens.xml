@@ -16,4 +16,9 @@
     <dimen name="text_content_padding">18dp</dimen>
     <dimen name="text_line_padding">8dp</dimen>
     <dimen name="home_category_title_width">114dp</dimen>
+
+    <!-- Room Fragment -->
+    <dimen name="room_tab_item_width">120dp</dimen>
+    <dimen name="room_tab_height">48dp</dimen>
+    <dimen name="room_tab_item_selected_indicator_height">2dp</dimen>
 </resources>

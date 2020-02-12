@@ -1,4 +1,4 @@
-package io.agora.vlive.ui.main;
+package io.agora.vlive.ui.main.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
