@@ -7,6 +7,9 @@ public class Global {
         public static final int TAB_ID_SINGLE = 1;
         public static final int TAB_ID_PK = 2;
 
+        public static final String KEY_ROOM_NAME = "room-name";
+        public static final String KEY_IS_HOST = "is-host";
+
         public static final int[] TAB_IDS_RES = {
                 R.string.home_category_title_multi,
                 R.string.home_category_title_single,

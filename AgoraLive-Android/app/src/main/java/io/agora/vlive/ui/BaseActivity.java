@@ -3,7 +3,6 @@ package io.agora.vlive.ui;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -11,12 +10,19 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Capabilities that are shared by all activity, such as
+ * messaging.
+ */
 public abstract class BaseActivity extends AppCompatActivity {
+    protected int systemBarHeight;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setGlobalLayoutListener();
+        systemBarHeight = getStatusBarHeight();
     }
 
     private void setGlobalLayoutListener() {
@@ -56,5 +62,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         window.getDecorView().setSystemUiVisibility(flag |
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    private int getStatusBarHeight() {
+        int id = getResources().getIdentifier(
+                "status_bar_height", "dimen", "android");
+        return id > 0 ? getResources().getDimensionPixelSize(id) : id;
     }
 }

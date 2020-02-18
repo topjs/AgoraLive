@@ -4,12 +4,14 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
 
     <!-- Application -->
     <dimen name="nav_bar_height">60dp</dimen>
     <dimen name="nav_icon_size">32dp</dimen>
+    <dimen name="start_broadcast_btn_size">84dp</dimen>
 
     <!-- Home Fragment -->
     <dimen name="home_title_height">32dp</dimen>
@@ -21,4 +23,31 @@
     <dimen name="room_tab_item_width">120dp</dimen>
     <dimen name="room_tab_height">48dp</dimen>
     <dimen name="room_tab_item_selected_indicator_height">2dp</dimen>
+
+    <!-- Live Prepare -->
+    <dimen name="prepare_button_height">48dp</dimen>
+    <dimen name="bottom_btn_size">44dp</dimen>
+    <dimen name="prepare_padding">2dp</dimen>
+    <dimen name="bottom_action_margin_bottom">48dp</dimen>
+    <dimen name="start_broadcast_btn_padding">24dp</dimen>
+    <dimen name="bottom_btn_padding">12dp</dimen>
+
+    <!-- Live -->
+    <dimen name="live_component_base_height">40dp</dimen>
+    <dimen name="live_name_pad_height">40dp</dimen>
+    <dimen name="live_name_pad_max_width">100dp</dimen>
+    <dimen name="live_name_pad_corner">20dp</dimen>
+    <dimen name="live_name_pad_icon_padding">2dp</dimen>
+    <dimen name="live_message_list_height">320dp</dimen>
+    <dimen name="live_message_text_padding_horizontal">16dp</dimen>
+    <dimen name="live_message_text_padding_vertical">12dp</dimen>
+
+    <dimen name="live_participant_layout_height">36dp</dimen>
+    <dimen name="live_participant_count_width">78dp</dimen>
+    <dimen name="live_participant_count_height">28dp</dimen>
+    <dimen name="live_participant_icon_margin">10dp</dimen>
+
+    <dimen name="live_bottom_layout_height">42dp</dimen>
+    <dimen name="live_bottom_btn_margin">14dp</dimen>
+    <dimen name="live_bottom_edit_padding">12dp</dimen>
 </resources>

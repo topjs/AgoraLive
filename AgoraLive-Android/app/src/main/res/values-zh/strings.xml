@@ -15,4 +15,11 @@
     <string name="home_category_desp_multi">观众与主播连\n麦互动</string>
     <string name="home_category_desp_single">单主播，支持屏\n幕分享</string>
     <string name="home_category_desp_pk">跨直播间主播连\n麦PK互动</string>
+
+    <!-- Live Prepare Activity -->
+    <string name="live_prepare_hint">直播间名字:</string>
+    <string name="start_broadcast_text">开始直播</string>
+
+    <!-- Live -->
+    <string name="live_bottom_edit_hint">说点什么 &#8230;</string>
 </resources>

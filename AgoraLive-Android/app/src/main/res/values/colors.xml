@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="gray_alpha2">#af232323</color>
+    <color name="gray_alpha">#65232323</color>
     <color name="gray_darkest">#656565</color>
-    
+    <color name="gray_light">#a3a3a3</color>
+    <color name="gray_lightest">#efefef</color>
+
+    <color name="default_text_color_light">#c4c4c4</color>
+
     <color name="blue_original">#00AFF4</color>
+    <color name="blue_alpha">#aa00AFF4</color>
 </resources>

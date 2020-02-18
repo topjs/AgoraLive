@@ -18,5 +18,18 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.live.HostInLiveActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.live.SingleHostActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.live.HostPKLiveActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.live.LivePrepareActivity"
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
     </application>
 </manifest>

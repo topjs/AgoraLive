@@ -1,5 +1,6 @@
 package io.agora.vlive.ui.main.fragments;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +23,9 @@ import java.lang.reflect.Array;
 
 import io.agora.vlive.Global;
 import io.agora.vlive.R;
+import io.agora.vlive.ui.live.LivePrepareActivity;
 
-public class RoomFragment extends Fragment {
+public class RoomFragment extends Fragment implements View.OnClickListener {
     private static final int TAB_COUNT = 3;
     private static final int TAB_TEXT_VIEW_INDEX = 1;
 
@@ -115,6 +117,8 @@ public class RoomFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.start_broadcast_btn).setOnClickListener(this);
+
         return view;
     }
 
@@ -146,6 +150,16 @@ public class RoomFragment extends Fragment {
         if (view == null) return;
         Typeface typeface = bold ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT;
         view.setTypeface(typeface);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.start_broadcast_btn) {
+            Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
+            intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap);
+            intent.putExtra(Global.Constants.KEY_IS_HOST, true);
+            startActivity(intent);
+        }
     }
 
     private class RoomAdapter extends FragmentStateAdapter {
