@@ -23,6 +23,7 @@
     <dimen name="room_tab_item_width">120dp</dimen>
     <dimen name="room_tab_height">48dp</dimen>
     <dimen name="room_tab_item_selected_indicator_height">2dp</dimen>
+    <dimen name="room_list_no_data_icon_size">164dp</dimen>
 
     <!-- Live Prepare -->
     <dimen name="prepare_button_height">48dp</dimen>
@@ -42,12 +43,20 @@
     <dimen name="live_message_text_padding_horizontal">16dp</dimen>
     <dimen name="live_message_text_padding_vertical">12dp</dimen>
 
-    <dimen name="live_participant_layout_height">36dp</dimen>
-    <dimen name="live_participant_count_width">78dp</dimen>
-    <dimen name="live_participant_count_height">28dp</dimen>
-    <dimen name="live_participant_icon_margin">10dp</dimen>
+    <dimen name="live_participant_layout_height">32dp</dimen>
+    <dimen name="live_participant_count_width">58dp</dimen>
+    <dimen name="live_participant_count_height">18dp</dimen>
+    <dimen name="live_participant_icon_margin">6dp</dimen>
 
     <dimen name="live_bottom_layout_height">42dp</dimen>
     <dimen name="live_bottom_btn_margin">14dp</dimen>
     <dimen name="live_bottom_edit_padding">12dp</dimen>
+
+    <dimen name="live_host_in_video_size">116dp</dimen>
+    <dimen name="live_rect_corner">4dp</dimen>
+    <dimen name="live_host_in_seat_item_number_size">16dp</dimen>
+    <dimen name="live_host_in_seat_item_margin">6dp</dimen>
+    <dimen name="live_host_in_seat_item_operation_size">38dp</dimen>
+
+    <dimen name="live_pk_start_button_size">76dp</dimen>
 </resources>

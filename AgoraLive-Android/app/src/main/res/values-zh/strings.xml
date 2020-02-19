@@ -16,6 +16,9 @@
     <string name="home_category_desp_single">单主播，支持屏\n幕分享</string>
     <string name="home_category_desp_pk">跨直播间主播连\n麦PK互动</string>
 
+    <string name="room_list_no_data_hint">请创建一个房间</string>
+    <string name="room_list_fail_to_obtain_data_hint">暂无数据，请稍候再试</string>
+
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">直播间名字:</string>
     <string name="start_broadcast_text">开始直播</string>

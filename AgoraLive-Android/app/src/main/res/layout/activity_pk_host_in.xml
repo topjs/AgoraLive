@@ -28,6 +28,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_bottom_layout_height"
         android:layout_alignParentBottom="true"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/live_pk_start_button_size"
+        android:layout_height="@dimen/live_pk_start_button_size"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/pk_host_in_bottom_layout"
+        android:src="@drawable/start_pk_button"
+        android:scaleType="fitXY"/>
     <io.agora.vlive.ui.components.LiveRoomMessageList
         android:id="@+id/message_list"
         android:layout_width="match_parent"

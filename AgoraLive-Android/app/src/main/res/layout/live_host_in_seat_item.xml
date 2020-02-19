@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.agora.vlive.ui.components.SquareRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="@dimen/live_host_in_seat_item_number_size"
+        android:layout_height="@dimen/live_host_in_seat_item_number_size"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/live_host_in_seat_item_margin"
+        android:layout_marginTop="@dimen/live_host_in_seat_item_margin"
+        android:background="@drawable/round_gray_bg"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_small"
+        android:textColor="@color/gray_light"
+        android:text="0"/>
+    <LinearLayout
+        android:id="@+id/seat_item_operation_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/seat_item_operation_icon"
+            android:layout_width="@dimen/live_host_in_seat_item_operation_size"
+            android:layout_height="@dimen/live_host_in_seat_item_operation_size"
+            android:src="@drawable/live_seat_invite"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/seat_item_operation_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/live_host_in_seat_item_margin"
+            android:text="申请连线"
+            android:textColor="@color/gray_light"/>
+    </LinearLayout>
+</io.agora.vlive.ui.components.SquareRelativeLayout>

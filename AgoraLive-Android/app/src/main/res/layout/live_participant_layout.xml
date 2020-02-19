@@ -7,7 +7,6 @@
         android:layout_width="@dimen/live_participant_count_width"
         android:layout_height="@dimen/live_participant_layout_height"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:background="@drawable/round_scalable_gray_bg">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -19,7 +18,7 @@
                 android:layout_width="@dimen/live_participant_count_height"
                 android:layout_height="@dimen/live_participant_count_height"
                 android:src="@drawable/participants"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/live_participant_count_text"
                 android:layout_width="wrap_content"
@@ -27,8 +26,8 @@
                 android:textAlignment="gravity"
                 android:gravity="center_vertical"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_normal"
-                android:text="3"/>
+                android:textSize="@dimen/text_size_small"
+                android:text="345"/>
         </LinearLayout>
     </RelativeLayout>
     <LinearLayout
@@ -36,6 +35,5 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/live_participant_layout_height"
         android:orientation="horizontal"
-        android:layout_toStartOf="@id/live_participant_total_layout"
-        android:layout_centerVertical="true"/>
+        android:layout_toStartOf="@id/live_participant_total_layout"/>
 </RelativeLayout>
