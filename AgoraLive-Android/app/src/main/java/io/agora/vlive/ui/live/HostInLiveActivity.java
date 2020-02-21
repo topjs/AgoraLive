@@ -14,7 +14,7 @@ import io.agora.vlive.ui.components.LiveHostInSeatAdapter;
 import io.agora.vlive.ui.components.LiveRoomMessageList;
 import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
 
-public class HostInLiveActivity extends BaseLiveActivity {
+public class HostInLiveActivity extends BaseLiveActivity implements View.OnClickListener {
     private LiveRoomParticipantLayout mParticipants;
     private LiveRoomMessageList mMessageList;
     private LiveBottomButtonLayout mBottomButtons;
@@ -53,15 +53,19 @@ public class HostInLiveActivity extends BaseLiveActivity {
         mMessageList.addMessage("起司甜甜", "何必在乎其它人");
         mMessageList.notifyDataSetChanged();
 
-        mBottomButtons = findViewById(R.id.host_in_bottom_layout);
-        mBottomButtons.setHost(mIsHost);
-
         mSeatRecyclerView = findViewById(R.id.live_host_in_seat_recycler);
         GridLayoutManager layoutManager = new GridLayoutManager(this,
                 3, RecyclerView.VERTICAL, false);
         mSeatRecyclerView.setLayoutManager(layoutManager);
         mSeatAdapter = new LiveHostInSeatAdapter(this);
         mSeatRecyclerView.setAdapter(mSeatAdapter);
+
+        mBottomButtons = findViewById(R.id.host_in_bottom_layout);
+        mBottomButtons.setHost(mIsHost);
+        findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
+        findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);
+        findViewById(R.id.live_bottom_btn_fun1).setOnClickListener(this);
+        findViewById(R.id.live_bottom_btn_fun2).setOnClickListener(this);
     }
 
     @Override
@@ -71,5 +75,40 @@ public class HostInLiveActivity extends BaseLiveActivity {
                 (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
         params.topMargin += systemBarHeight;
         topLayout.setLayoutParams(params);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.live_bottom_btn_close:
+                showDialog(R.string.finish_broadcast_title,
+                        R.string.finish_broadcast_message, this);
+                break;
+            case R.id.live_bottom_btn_more:
+                break;
+            case R.id.live_bottom_btn_fun1:
+                if (mIsHost) {
+
+                } else {
+
+                }
+                break;
+            case R.id.live_bottom_btn_fun2:
+                // this button is hidden when
+                // current user is not host.
+                if (mIsHost) {
+                    showActionSheetDialog(ACTION_SHEET_BEAUTY);
+                }
+                break;
+            case R.id.dialog_positive_button:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showDialog(R.string.finish_broadcast_title,
+                R.string.finish_broadcast_message, this);
     }
 }

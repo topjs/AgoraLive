@@ -40,4 +40,11 @@
     <string name="live_room_beauty_action_sheet_contrast_low">低</string>
     <string name="live_room_beauty_action_sheet_contrast_medium">中</string>
     <string name="live_room_beauty_action_sheet_contrast_high">高</string>
+
+    <!-- dialog -->
+    <string name="dialog_negative_button">取消</string>
+    <string name="dialog_positive_button">确定</string>
+    
+    <string name="finish_broadcast_title">结束直播</string>
+    <string name="finish_broadcast_message">是否结束直播?</string>
 </resources>

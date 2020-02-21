@@ -74,7 +74,7 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
         Intent intent;
         switch (roomType) {
             case Global.Constants.TAB_ID_SINGLE:
-                intent = new Intent(this, SingleHostActivity.class);
+                intent = new Intent(this, SingleHostLiveActivity.class);
                 break;
             case Global.Constants.TAB_ID_PK:
                 intent = new Intent(this, HostPKLiveActivity.class);

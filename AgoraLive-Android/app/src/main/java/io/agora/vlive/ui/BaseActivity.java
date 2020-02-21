@@ -1,14 +1,19 @@
 package io.agora.vlive.ui;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -100,6 +105,28 @@ public abstract class BaseActivity extends AppCompatActivity {
                 layout = new LiveRoomSettingActionSheet(this);
         }
 
-        showActionSheetDialog(R.style.live_room_action_sheet_dialog, layout);
+        showActionSheetDialog(R.style.live_room_dialog, layout);
+    }
+
+    protected void showDialog(int title, int message,
+                              View.OnClickListener positiveClickListener) {
+        final Dialog dialog = new Dialog(this,
+                R.style.live_room_dialog_center_in_window);
+        dialog.setContentView(R.layout.live_room_dialog);
+        AppCompatTextView titleTextView = dialog.findViewById(R.id.dialog_title);
+        titleTextView.setText(title);
+        AppCompatTextView msgTextView = dialog.findViewById(R.id.dialog_message);
+        msgTextView.setText(message);
+        dialog.findViewById(R.id.dialog_negative_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+        dialog.findViewById(R.id.dialog_positive_button)
+                .setOnClickListener(positiveClickListener);
+        hideStatusBar(dialog.getWindow(), false);
+        dialog.show();
     }
 }

@@ -11,7 +11,7 @@ import io.agora.vlive.ui.components.LiveRoomMessageList;
 import io.agora.vlive.ui.components.LiveHostNameLayout;
 import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
 
-public class SingleHostActivity extends BaseLiveActivity {
+public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnClickListener {
     private LiveHostNameLayout mNamePad;
     private LiveRoomParticipantLayout mParticipants;
     private LiveRoomMessageList mMessageList;
@@ -43,6 +43,11 @@ public class SingleHostActivity extends BaseLiveActivity {
 
         mBottomButtons = findViewById(R.id.single_live_bottom_layout);
         mBottomButtons.setHost(mIsHost);
+
+        findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
+        findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);
+        findViewById(R.id.live_bottom_btn_fun1).setOnClickListener(this);
+        findViewById(R.id.live_bottom_btn_fun2).setOnClickListener(this);
     }
 
     @Override
@@ -52,5 +57,40 @@ public class SingleHostActivity extends BaseLiveActivity {
                 (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
         params.topMargin += systemBarHeight;
         topLayout.setLayoutParams(params);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.live_bottom_btn_close:
+                showDialog(R.string.finish_broadcast_title,
+                        R.string.finish_broadcast_message, this);
+                break;
+            case R.id.live_bottom_btn_more:
+                break;
+            case R.id.live_bottom_btn_fun1:
+                if (mIsHost) {
+
+                } else {
+
+                }
+                break;
+            case R.id.live_bottom_btn_fun2:
+                // this button is hidden when
+                // current user is not host.
+                if (mIsHost) {
+                    showActionSheetDialog(ACTION_SHEET_BEAUTY);
+                }
+                break;
+            case R.id.dialog_positive_button:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showDialog(R.string.finish_broadcast_title,
+                R.string.finish_broadcast_message, this);
     }
 }

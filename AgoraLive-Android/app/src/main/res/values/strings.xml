@@ -40,4 +40,11 @@
     <string name="live_room_beauty_action_sheet_contrast_low">Low</string>
     <string name="live_room_beauty_action_sheet_contrast_medium">Medium</string>
     <string name="live_room_beauty_action_sheet_contrast_high">High</string>
+
+    <!-- dialog -->
+    <string name="dialog_negative_button">Cancel</string>
+    <string name="dialog_positive_button">Confirm</string>
+
+    <string name="finish_broadcast_title">Stop Broadcast</string>
+    <string name="finish_broadcast_message">Do you want to stop your broadcast?</string>
 </resources>

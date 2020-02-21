@@ -20,10 +20,15 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="live_room_action_sheet_dialog" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="live_room_dialog" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:backgroundDimAmount">0</item>
+    </style>
+
+    <style name="live_room_dialog_center_in_window" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:windowBackground">@color/gray_alpha2</item>
     </style>
     
     <style name="beauty_action_sheet_button">
