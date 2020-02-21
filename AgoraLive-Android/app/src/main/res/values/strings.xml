@@ -25,4 +25,19 @@
 
     <!-- Live -->
     <string name="live_bottom_edit_hint">Say something &#8230;</string>
+
+    <!-- Action Sheet -->
+    <string name="live_room_setting_action_sheet_title">Live Room Setting</string>
+    <string name="live_room_setting_title_resolution">Resolution</string>
+    <string name="live_room_setting_title_framerate">Frame Rate</string>
+    <string name="live_room_setting_title_bitrate">Bitrate</string>
+
+    <string name="live_room_beauty_action_sheet_title">Beauty</string>
+    <string name="live_room_beauty_action_sheet_brightness">Brightness</string>
+    <string name="live_room_beauty_action_sheet_smooth">Smooth</string>
+    <string name="live_room_beauty_action_sheet_temperature">Color Temp</string>
+    <string name="live_room_beauty_action_sheet_contrast">Contrast</string>
+    <string name="live_room_beauty_action_sheet_contrast_low">Low</string>
+    <string name="live_room_beauty_action_sheet_contrast_medium">Medium</string>
+    <string name="live_room_beauty_action_sheet_contrast_high">High</string>
 </resources>

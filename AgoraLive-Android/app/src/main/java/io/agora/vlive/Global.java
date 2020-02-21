@@ -15,6 +15,17 @@ public class Global {
                 R.string.home_category_title_single,
                 R.string.home_category_title_pk
         };
+
+        public static final String[] RESOLUTIONS = {
+                "1920x1080",
+                "1280x720",
+                "960x640",
+                "640x480"
+        };
+
+        public static final String[] FRAME_RATES = {
+                "15", "24", "30"
+        };
     }
 
     public static class States {

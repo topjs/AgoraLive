@@ -2,6 +2,7 @@ package io.agora.vlive.ui.live;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -10,9 +11,13 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import io.agora.vlive.Global;
 import io.agora.vlive.R;
+import io.agora.vlive.camera.capture.CameraCapture;
 import io.agora.vlive.ui.BaseActivity;
 
 public class LivePrepareActivity extends BaseActivity implements View.OnClickListener {
+    private SurfaceView mSurfaceView;
+    private CameraCapture mCameraCapture = new CameraCapture();
+
     private AppCompatEditText mEditText;
     private AppCompatTextView mStartBroadBtn;
     private int roomType;
@@ -53,8 +58,10 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
                 gotoBroadcastActivity();
                 break;
             case R.id.prepare_beauty_btn:
+                showActionSheetDialog(ACTION_SHEET_BEAUTY);
                 break;
             case R.id.prepare_setting_btn:
+                showActionSheetDialog(ACTION_SHEET_VIDEO);
                 break;
         }
     }

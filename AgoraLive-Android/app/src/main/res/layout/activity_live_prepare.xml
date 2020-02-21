@@ -7,7 +7,7 @@
         android:id="@+id/surface_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
     <RelativeLayout
         android:id="@+id/prepare_top_btn_layout"
         android:layout_width="match_parent"
@@ -104,3 +104,4 @@
             android:background="@drawable/round_gray_bg"/>
     </RelativeLayout>
 </RelativeLayout>
+

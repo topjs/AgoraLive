@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring" android:innerRadius="4dp" android:thickness="6dp" android:useLevel="false">
+    <solid android:color="@color/blue_original"/>
+    <size android:width="@dimen/live_room_setting_progress_height"
+        android:height="@dimen/live_room_setting_progress_height"/>
+</shape>

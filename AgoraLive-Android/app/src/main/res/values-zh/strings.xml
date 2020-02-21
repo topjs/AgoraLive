@@ -25,4 +25,19 @@
 
     <!-- Live -->
     <string name="live_bottom_edit_hint">说点什么 &#8230;</string>
+
+    !-- Action Sheet -->
+    <string name="live_room_setting_action_sheet_title">直播间设置</string>
+    <string name="live_room_setting_title_resolution">分辨率</string>
+    <string name="live_room_setting_title_framerate">帧率</string>
+    <string name="live_room_setting_title_bitrate">码率</string>
+
+    <string name="live_room_beauty_action_sheet_title">美颜</string>
+    <string name="live_room_beauty_action_sheet_brightness">亮度</string>
+    <string name="live_room_beauty_action_sheet_smooth">光滑</string>
+    <string name="live_room_beauty_action_sheet_temperature">色温</string>
+    <string name="live_room_beauty_action_sheet_contrast">对比度</string>
+    <string name="live_room_beauty_action_sheet_contrast_low">低</string>
+    <string name="live_room_beauty_action_sheet_contrast_medium">中</string>
+    <string name="live_room_beauty_action_sheet_contrast_high">高</string>
 </resources>

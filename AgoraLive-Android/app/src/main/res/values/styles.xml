@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="nav_title_text">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
@@ -18,5 +18,26 @@
     <style name="live_message_user_text_style">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="live_room_action_sheet_dialog" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimAmount">0</item>
+    </style>
+    
+    <style name="beauty_action_sheet_button">
+        <item name="android:layout_width">@dimen/live_room_action_sheet_button_width</item>
+        <item name="android:layout_height">@dimen/live_room_action_sheet_button_height</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/action_sheet_button_bg</item>
+    </style>
+
+    <style name="action_sheet_seek_bar">
+        <item name="android:minHeight">@dimen/live_room_action_sheet_seek_bar_height</item>
+        <item name="android:maxHeight">@dimen/live_room_action_sheet_seek_bar_height</item>
+        <item name="android:progressDrawable">@drawable/setting_progress</item>
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
     </style>
 </resources>

@@ -59,4 +59,29 @@
     <dimen name="live_host_in_seat_item_operation_size">38dp</dimen>
 
     <dimen name="live_pk_start_button_size">76dp</dimen>
+
+    <dimen name="switch_width">42dp</dimen>
+    <dimen name="switch_height">28dp</dimen>
+    <dimen name="switch_thumb_size">24dp</dimen>
+
+    <!-- Action Sheets -->
+    <dimen name="live_room_action_sheet_margin">24dp</dimen>
+    <dimen name="live_room_action_sheet_text_margin">16dp</dimen>
+    <dimen name="live_room_action_sheet_corner">10dp</dimen>
+    <dimen name="live_room_action_sheet_text_item_height">48dp</dimen>
+    <dimen name="live_room_action_sheet_item_divider_height">1dp</dimen>
+    <dimen name="live_room_action_arrow_size">30dp</dimen>
+    <dimen name="live_room_action_sheet_progress_item_height">96dp</dimen>
+    <dimen name="live_room_setting_sheet_height">243dp</dimen>
+    <dimen name="live_room_setting_sheet_content_height">194dp</dimen>
+    <dimen name="live_room_setting_progress_height">20dp</dimen>
+
+    <dimen name="live_room_action_sheet_beauty_height">329dp</dimen>
+    <dimen name="live_room_action_sheet_seek_bar_item_height">64dp</dimen>
+    <dimen name="live_room_action_sheet_beauty_title_width">84dp</dimen>
+    <dimen name="live_room_action_sheet_button_width">68dp</dimen>
+    <dimen name="live_room_action_sheet_button_height">38dp</dimen>
+    <dimen name="live_room_action_sheet_button_radius">28dp</dimen>
+    <dimen name="live_room_action_sheet_button_border">1dp</dimen>
+    <dimen name="live_room_action_sheet_seek_bar_height">3dp</dimen>
 </resources>
