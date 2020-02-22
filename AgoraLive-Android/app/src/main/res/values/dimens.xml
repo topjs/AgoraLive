@@ -85,6 +85,9 @@
     <dimen name="live_room_action_sheet_button_border">1dp</dimen>
     <dimen name="live_room_action_sheet_seek_bar_height">3dp</dimen>
 
+    <dimen name="live_room_bg_music_action_sheet_height">540dp</dimen>
+    <dimen name="live_room_bg_music_action_sheet_icon_size">28dp</dimen>
+
     <!-- Dialogs -->
     <dimen name="dialog_width">282dp</dimen>
     <dimen name="dialog_height">150dp</dimen>

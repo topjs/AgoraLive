@@ -88,7 +88,7 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (mIsHost) {
-
+                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC);
                 } else {
 
                 }

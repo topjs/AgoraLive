@@ -22,7 +22,6 @@ import io.agora.vlive.Global;
 import io.agora.vlive.R;
 
 public class LiveRoomSettingActionSheet extends RelativeLayout implements View.OnClickListener {
-    private static final int DIVIDER_COLOR = Color.rgb(239, 239, 239);
     private static final int PAGE_MAIN = 0;
     private static final int PAGE_RESOLUTION = 1;
     private static final int PAGE_FRAME_RATE = 2;
@@ -65,7 +64,7 @@ public class LiveRoomSettingActionSheet extends RelativeLayout implements View.O
         mMain = mInflater.inflate(R.layout.action_room_settings_main, this, false);
         mBackIcon = layout.findViewById(R.id.live_room_setting_back);
         mBackIcon.setOnClickListener(this);
-        mTitle = layout.findViewById(R.id.live_room_setting_sheet_beauty_title);
+        mTitle = layout.findViewById(R.id.live_room_action_sheet_bg_music_title);
         mMain.findViewById(R.id.live_room_setting_resolution).setOnClickListener(this);
         mMain.findViewById(R.id.live_room_setting_framerate).setOnClickListener(this);
         gotoMainPage();
@@ -214,7 +213,7 @@ public class LiveRoomSettingActionSheet extends RelativeLayout implements View.O
         public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             Rect rect = new Rect();
             Paint paint = new Paint();
-            paint.setColor(DIVIDER_COLOR);
+            paint.setColor(Global.Constants.DIVIDER_COLOR);
 
             int count = parent.getChildCount();
             for (int i = 0; i < count - 1; i++) {

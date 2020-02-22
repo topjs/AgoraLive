@@ -41,6 +41,8 @@
     <string name="live_room_beauty_action_sheet_contrast_medium">中</string>
     <string name="live_room_beauty_action_sheet_contrast_high">高</string>
 
+    <string name="live_room_bg_music_action_sheet_title">背景音乐</string>
+
     <!-- dialog -->
     <string name="dialog_negative_button">取消</string>
     <string name="dialog_positive_button">确定</string>

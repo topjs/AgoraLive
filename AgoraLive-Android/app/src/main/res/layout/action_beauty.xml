@@ -11,7 +11,7 @@
         android:paddingStart="@dimen/live_room_action_sheet_margin"
         android:paddingEnd="@dimen/live_room_action_sheet_margin">
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/live_room_setting_sheet_beauty_title"
+            android:id="@+id/live_room_action_sheet_bg_music_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/live_room_action_sheet_text_item_height"
             android:textAlignment="gravity"

@@ -18,6 +18,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import io.agora.vlive.R;
+import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 
@@ -26,8 +27,9 @@ import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
  * messaging.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    protected static final int ACTION_SHEET_BEAUTY = 0;
-    protected static final int ACTION_SHEET_VIDEO = 1;
+    protected static final int ACTION_SHEET_VIDEO = 0;
+    protected static final int ACTION_SHEET_BEAUTY = 1;
+    protected static final int ACTION_SHEET_BG_MUSIC = 2;
 
     protected int systemBarHeight;
 
@@ -100,6 +102,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         switch (type) {
             case ACTION_SHEET_BEAUTY:
                 layout = new BeautySettingActionSheet(this);
+                break;
+            case ACTION_SHEET_BG_MUSIC:
+                layout = new BackgroundMusicActionSheet(this);
                 break;
             default:
                 layout = new LiveRoomSettingActionSheet(this);
