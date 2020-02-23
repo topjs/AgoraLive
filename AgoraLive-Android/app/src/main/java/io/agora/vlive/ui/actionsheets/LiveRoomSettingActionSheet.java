@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
-public class LiveRoomSettingActionSheet extends AbstractActionSheet implements View.OnClickListener {
+public class LiveRoomSettingActionSheet extends AbstractActionSheet implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+    public interface LiveRoomSettingActionSheetListener extends AbsActionSheetListener {
+        void onResolutionSelected(int index);
+        void onFrameRateSelected(int index);
+        void onBitrateSelected(int bitrate);
+    }
+
     private static final int PAGE_MAIN = 0;
     private static final int PAGE_RESOLUTION = 1;
     private static final int PAGE_FRAME_RATE = 2;
@@ -30,8 +37,19 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     private LayoutInflater mInflater;
     private LinearLayout mContainer;
 
+    private AppCompatTextView mMainResolutionText;
+    private AppCompatTextView mMainFrameRateText;
+    private AppCompatTextView mMainBitrateText;
+    private String mMainBitrateTextFormat;
+    private SeekBar mBitrateSeekBar;
+
+    private RecyclerView mResolutionRecycler;
+    private RecyclerView mFrameRateRecycler;
+
     private int mPaddingHorizontal;
     private int mDividerHeight;
+
+    private LiveRoomSettingActionSheetListener mListener;
 
     public LiveRoomSettingActionSheet(Context context) {
         super(context);
@@ -46,11 +64,6 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     public LiveRoomSettingActionSheet(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
-    }
-
-    @Override
-    public void setActionSheetListener(AbsActionSheetListener listener) {
-
     }
 
     private void init() {
@@ -70,12 +83,45 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         mTitle = layout.findViewById(R.id.live_room_action_sheet_bg_music_title);
         mMain.findViewById(R.id.live_room_setting_resolution).setOnClickListener(this);
         mMain.findViewById(R.id.live_room_setting_framerate).setOnClickListener(this);
+
         gotoMainPage();
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    public void setActionSheetListener(AbsActionSheetListener listener) {
+        if (listener instanceof LiveRoomSettingActionSheetListener) {
+            mListener = (LiveRoomSettingActionSheetListener) listener;
+        }
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        if (seekBar == mBitrateSeekBar) {
+            int progress = seekBar.getProgress();
+            if (progress < Global.Constants.VIDEO_MIN_BITRATE) {
+                progress = Global.Constants.VIDEO_MIN_BITRATE;
+            }
+
+            // round up all values to the multiples of 50
+            if (progress % 50 != 0) {
+                progress = progress / 50 * 50;
+            }
+
+            application().states().setVideoBitrate(progress);
+            mMainBitrateText.setText(String.format(
+                    mMainBitrateTextFormat, progress));
+            if (mListener != null) mListener.onBitrateSelected(progress);
+        }
     }
 
     @Override
@@ -112,33 +158,51 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         mTitle.setText(R.string.live_room_setting_action_sheet_title);
         mContainer.removeAllViews();
         mContainer.addView(mMain);
-        //TODO reset all texts
+
+        mMainResolutionText = findViewById(R.id.live_room_setting_main_resolution_text);
+        mMainFrameRateText = findViewById(R.id.live_room_setting_main_framerate_text);
+        mBitrateSeekBar = findViewById(R.id.live_room_setting_bitrate_progress_bar);
+        mBitrateSeekBar.setMax(Global.Constants.VIDEO_MAX_BITRATE);
+        mBitrateSeekBar.setOnSeekBarChangeListener(this);
+        mMainBitrateText = findViewById(R.id.live_room_setting_bitrate_value_text);
+        mMainBitrateTextFormat = getResources().getString(R.string.live_room_setting_bitrate_value_format);
+        setMainPageText();
+    }
+
+    private void setMainPageText() {
+        mMainResolutionText.setText(Global.Constants.RESOLUTIONS[
+                application().states().resolutionIndex()]);
+        mMainFrameRateText.setText(Global.Constants.FRAME_RATES[
+                application().states().frameRateIndex()]);
+        mBitrateSeekBar.setProgress(application().states().videoBitrate());
+        mMainBitrateText.setText(String.format(mMainBitrateTextFormat,
+                application().states().videoBitrate()));
     }
 
     private void gotoResolutionPage() {
         mBackIcon.setVisibility(View.VISIBLE);
         mTitle.setText(R.string.live_room_setting_title_resolution);
-        RecyclerView resolutionRecycler = new RecyclerView(getContext());
+        mResolutionRecycler = new RecyclerView(getContext());
         LinearLayoutManager manager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
-        resolutionRecycler.setLayoutManager(manager);
-        resolutionRecycler.setAdapter(new ResolutionAdapter());
-        resolutionRecycler.addItemDecoration(new LineDecorator());
+        mResolutionRecycler.setLayoutManager(manager);
+        mResolutionRecycler.setAdapter(new ResolutionAdapter());
+        mResolutionRecycler.addItemDecoration(new LineDecorator());
         mContainer.removeAllViews();
-        mContainer.addView(resolutionRecycler);
+        mContainer.addView(mResolutionRecycler);
     }
 
     private void gotoFrameRatePage() {
         mBackIcon.setVisibility(View.VISIBLE);
         mTitle.setText(R.string.live_room_setting_title_framerate);
-        RecyclerView frameRateRecycler = new RecyclerView(getContext());
+        mFrameRateRecycler = new RecyclerView(getContext());
         LinearLayoutManager manager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
-        frameRateRecycler.setLayoutManager(manager);
-        frameRateRecycler.setAdapter(new FrameRateAdapter());
-        frameRateRecycler.addItemDecoration(new LineDecorator());
+        mFrameRateRecycler.setLayoutManager(manager);
+        mFrameRateRecycler.setAdapter(new FrameRateAdapter());
+        mFrameRateRecycler.addItemDecoration(new LineDecorator());
         mContainer.removeAllViews();
-        mContainer.addView(frameRateRecycler);
+        mContainer.addView(mFrameRateRecycler);
     }
 
     private class ResolutionAdapter extends RecyclerView.Adapter {
@@ -154,6 +218,8 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ResolutionViewHolder resolutionHolder = (ResolutionViewHolder) holder;
             resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS[position]);
+            holder.itemView.setActivated(position == application().states().resolutionIndex());
+            resolutionHolder.setPosition(position);
         }
 
         @Override
@@ -164,15 +230,22 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
     private class ResolutionViewHolder extends RecyclerView.ViewHolder {
         AppCompatTextView textView;
+        int position;
         ResolutionViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.live_room_setting_item_text);
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    application().states().setResolutionIndex(position);
+                    mResolutionRecycler.getAdapter().notifyDataSetChanged();
+                    if (mListener != null) mListener.onResolutionSelected(position);
                 }
             });
+        }
+
+        void setPosition(int position) {
+            this.position = position;
         }
     }
 
@@ -189,6 +262,9 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             FrameRateViewHolder frameRateHolder = (FrameRateViewHolder) holder;
             frameRateHolder.textView.setText(Global.Constants.FRAME_RATES[position]);
+            frameRateHolder.setPosition(position);
+            holder.itemView.setActivated(
+                    position == application().states().frameRateIndex());
         }
 
         @Override
@@ -199,15 +275,22 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
     private class FrameRateViewHolder extends RecyclerView.ViewHolder {
         AppCompatTextView textView;
+        int position;
         FrameRateViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.live_room_setting_item_text);
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    application().states().setFrameRateIndex(position);
+                    mFrameRateRecycler.getAdapter().notifyDataSetChanged();
+                    if (mListener != null) mListener.onFrameRateSelected(position);
                 }
             });
+        }
+
+        void setPosition(int position) {
+            this.position = position;
         }
     }
 
@@ -220,6 +303,14 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
             int count = parent.getChildCount();
             for (int i = 0; i < count - 1; i++) {
+                if (parent == mResolutionRecycler &&
+                    application().states().resolutionIndex() == i + 1) {
+                    continue;
+                } else if (parent == mFrameRateRecycler &&
+                    application().states().frameRateIndex() == i + 1) {
+                    continue;
+                }
+
                 View child = parent.getChildAt(i);
                 child.getDrawingRect(rect);
                 int startX = rect.left + mPaddingHorizontal;

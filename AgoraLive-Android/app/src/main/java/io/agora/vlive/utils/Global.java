@@ -1,5 +1,6 @@
 package io.agora.vlive.utils;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import io.agora.vlive.AgoraLiveApplication;
@@ -28,6 +29,10 @@ public class Global {
         public static final String KEY_TEMPERATURE = "key-color-temperature";
         public static final String KEY_CONTRAST = "key-contrast";
 
+        public static final String KEY_RESOLUTION = "key-resolution";
+        public static final String KEY_FRAME_RATE = "key-framerate";
+        public static final String KEY_BITRATE = "key-bitrate";
+
         public static final String TAB_KEY = "live-tab";
         public static final int TAB_ID_MULTI = 0;
         public static final int TAB_ID_SINGLE = 1;
@@ -37,6 +42,12 @@ public class Global {
         public static final String KEY_IS_HOST = "is-host";
 
         public static final int DIVIDER_COLOR = Color.rgb(239, 239, 239);
+
+        public static final int VIDEO_MAX_BITRATE = 4000;
+        public static final int VIDEO_MIN_BITRATE = 150;
+        public static final int VIDEO_DEFAULT_BITRATE = 800;
+        public static final int VIDEO_DEFAULT_RESOLUTION_INDEX = 0;
+        public static final int VIDEO_DEFAULT_FRAME_RATE_INDEX = 0;
 
         public static final int[] TAB_IDS_RES = {
                 R.string.home_category_title_multi,
@@ -58,27 +69,36 @@ public class Global {
 
     public class States {
         private int mLastTabPosition = Constants.TAB_ID_MULTI;
+
+        // Beautification configs
         private boolean mBeautyEnabled;
         private float mBrightnessValue;
         private float mSmoothValue;
         private float mColorTemperatureValue;
         private int mContrast;
 
+        // Video configs
+        private int mResolutionIndex;
+        private int mFrameRateIndex;
+        private int mBitrate;
+
         States() {
-            mBeautyEnabled = mApplication.preferences()
-                    .getBoolean(Constants.KEY_BEAUTY_ENABLED, true);
+            SharedPreferences sp = mApplication.preferences();
+
+            mBeautyEnabled = sp.getBoolean(Constants.KEY_BEAUTY_ENABLED, true);
 
             //TODO the default value should come from FaceUnity module
             // will be completed soon
-            mBrightnessValue = mApplication.preferences()
-                    .getFloat(Constants.KEY_BRIGHTNESS, 0.3f);
-            mSmoothValue = mApplication.preferences()
-                    .getFloat(Constants.KEY_SMOOTH, 0.3f);
-            mColorTemperatureValue = mApplication.preferences()
-                    .getFloat(Constants.KEY_TEMPERATURE, 0.3f);
+            mBrightnessValue = sp.getFloat(Constants.KEY_BRIGHTNESS, 0.3f);
+            mSmoothValue = sp.getFloat(Constants.KEY_SMOOTH, 0.3f);
+            mColorTemperatureValue = sp.getFloat(Constants.KEY_TEMPERATURE, 0.3f);
 
-            mContrast = mApplication.preferences().getInt(Constants.KEY_CONTRAST,
+            mContrast = sp.getInt(Constants.KEY_CONTRAST,
                     BeautySettingActionSheet.CONTRAST_MEDIUM);
+
+            mResolutionIndex = sp.getInt(Constants.KEY_RESOLUTION, Constants.VIDEO_DEFAULT_RESOLUTION_INDEX);
+            mFrameRateIndex = sp.getInt(Constants.KEY_FRAME_RATE, Constants.VIDEO_DEFAULT_FRAME_RATE_INDEX);
+            mBitrate = sp.getInt(Constants.KEY_BITRATE, Constants.VIDEO_DEFAULT_BITRATE);
         }
 
         public boolean isBeautyEnabled() {
@@ -137,6 +157,36 @@ public class Global {
             mContrast = contrast;
             mApplication.preferences().edit()
                     .putInt(Constants.KEY_CONTRAST, contrast).apply();
+        }
+
+        public int resolutionIndex() {
+            return mResolutionIndex;
+        }
+
+        public void setResolutionIndex(int index) {
+            mResolutionIndex = index;
+            mApplication.preferences().edit()
+                    .putInt(Constants.KEY_RESOLUTION, index).apply();
+        }
+
+        public int frameRateIndex() {
+            return mFrameRateIndex;
+        }
+
+        public void setFrameRateIndex(int index) {
+            mFrameRateIndex = index;
+            mApplication.preferences().edit()
+                    .putInt(Constants.KEY_FRAME_RATE, index).apply();
+        }
+
+        public int videoBitrate() {
+            return mBitrate;
+        }
+
+        public void setVideoBitrate(int bitrate) {
+            mBitrate = bitrate;
+            mApplication.preferences().edit()
+                    .putInt(Constants.KEY_BITRATE, bitrate).apply();
         }
     }
 

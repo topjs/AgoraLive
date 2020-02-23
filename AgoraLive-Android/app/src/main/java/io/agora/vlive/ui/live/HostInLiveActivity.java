@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
+import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
@@ -17,8 +18,9 @@ import io.agora.vlive.ui.components.LiveHostInSeatAdapter;
 import io.agora.vlive.ui.components.LiveRoomMessageList;
 import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
 
-public class HostInLiveActivity extends BaseLiveActivity
-        implements View.OnClickListener, BeautySettingActionSheet.BeautyActionSheetListener {
+public class HostInLiveActivity extends BaseLiveActivity implements View.OnClickListener,
+        BeautySettingActionSheet.BeautyActionSheetListener,
+        LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener {
     private static final String TAG = HostInLiveActivity.class.getSimpleName();
 
     private LiveRoomParticipantLayout mParticipants;
@@ -148,5 +150,20 @@ public class HostInLiveActivity extends BaseLiveActivity
     @Override
     public void onContrastSelected(int type) {
         Log.i(TAG, "onContrastSelected:" + type);
+    }
+
+    @Override
+    public void onResolutionSelected(int index) {
+        Log.i(TAG, "onResolutionSelected:" + index);
+    }
+
+    @Override
+    public void onFrameRateSelected(int index) {
+        Log.i(TAG, "onFrameRateSelected:" + index);
+    }
+
+    @Override
+    public void onBitrateSelected(int bitrate) {
+        Log.i(TAG, "onBitrateSelected:" + bitrate);
     }
 }

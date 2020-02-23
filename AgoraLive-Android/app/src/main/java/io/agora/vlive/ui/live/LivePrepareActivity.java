@@ -11,13 +11,15 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
+import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.camera.capture.CameraCapture;
 import io.agora.vlive.ui.BaseActivity;
 
-public class LivePrepareActivity extends BaseActivity
-        implements View.OnClickListener, BeautySettingActionSheet.BeautyActionSheetListener {
+public class LivePrepareActivity extends BaseActivity implements View.OnClickListener,
+        BeautySettingActionSheet.BeautyActionSheetListener,
+        LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener {
     private static final String TAG = LivePrepareActivity.class.getSimpleName();
 
     private SurfaceView mSurfaceView;
@@ -117,5 +119,20 @@ public class LivePrepareActivity extends BaseActivity
     @Override
     public void onContrastSelected(int type) {
         Log.i(TAG, "onContrastSelected:" + type);
+    }
+
+    @Override
+    public void onResolutionSelected(int index) {
+        Log.i(TAG, "onResolutionSelected:" + index);
+    }
+
+    @Override
+    public void onFrameRateSelected(int index) {
+        Log.i(TAG, "onFrameRateSelected:" + index);
+    }
+
+    @Override
+    public void onBitrateSelected(int bitrate) {
+        Log.i(TAG, "onBitrateSelected:" + bitrate);
     }
 }
