@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
@@ -17,7 +18,8 @@ import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
 
 public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnClickListener,
         BeautySettingActionSheet.BeautyActionSheetListener,
-        LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener {
+        LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener,
+        BackgroundMusicActionSheet.BackgroundMusicActionSheetListener {
     private static final String TAG = SingleHostLiveActivity.class.getSimpleName();
 
     private LiveHostNameLayout mNamePad;
@@ -147,5 +149,10 @@ public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnC
     @Override
     public void onBitrateSelected(int bitrate) {
         Log.i(TAG, "onBitrateSelected:" + bitrate);
+    }
+
+    @Override
+    public void onBackgroundMusicSelected(int index, String name, String url) {
+        Log.i(TAG, "onBackgroundMusicSelected:" + name);
     }
 }

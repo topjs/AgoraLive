@@ -18,10 +18,16 @@ import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
 public class BackgroundMusicActionSheet extends AbstractActionSheet {
+    public interface BackgroundMusicActionSheetListener {
+        void onBackgroundMusicSelected(int index, String name, String url);
+    }
+
     private BgMusicAdapter mAdapter;
     private int mPaddingHorizontal;
     private int mDividerHeight;
     private int mSelected = -1;
+
+    private BackgroundMusicActionSheetListener mListener;
 
     public BackgroundMusicActionSheet(Context context) {
         super(context);
@@ -40,7 +46,9 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
 
     @Override
     public void setActionSheetListener(AbsActionSheetListener listener) {
-
+        if (listener instanceof BackgroundMusicActionSheetListener) {
+            mListener = (BackgroundMusicActionSheetListener) listener;
+        }
     }
 
     private void init() {
@@ -97,6 +105,8 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
                 public void onClick(View view) {
                     mSelected = mPosition;
                     mAdapter.notifyDataSetChanged();
+                    if (mListener != null) mListener.onBackgroundMusicSelected(mPosition,
+                            Global.FakeData.BG_MUSIC[mPosition][0], null);
                 }
             });
         }
