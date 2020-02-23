@@ -8,17 +8,16 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.agora.vlive.Global;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
-public class BackgroundMusicActionSheet extends RelativeLayout {
+public class BackgroundMusicActionSheet extends AbstractActionSheet {
     private BgMusicAdapter mAdapter;
     private int mPaddingHorizontal;
     private int mDividerHeight;
@@ -37,6 +36,11 @@ public class BackgroundMusicActionSheet extends RelativeLayout {
     public BackgroundMusicActionSheet(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+    }
+
+    @Override
+    public void setActionSheetListener(AbsActionSheetListener listener) {
+
     }
 
     private void init() {

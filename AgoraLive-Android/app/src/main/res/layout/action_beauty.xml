@@ -53,7 +53,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="0.7"
             android:textAlignment="gravity"
             android:gravity="center"/>
         <androidx.appcompat.widget.AppCompatSeekBar
@@ -63,7 +62,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/beauty_value_brightness"
             android:layout_toEndOf="@id/beauty_title_brightness"
-            style="@style/action_sheet_seek_bar"/>
+            style="@style/action_sheet_beauty_seek_bar"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -85,7 +84,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="0.7"
             android:textAlignment="gravity"
             android:gravity="center"/>
         <androidx.appcompat.widget.AppCompatSeekBar
@@ -95,7 +93,7 @@
             android:layout_toEndOf="@id/beauty_title_smooth"
             android:layout_toStartOf="@id/beauty_value_smooth"
             android:layout_centerVertical="true"
-            style="@style/action_sheet_seek_bar"/>
+            style="@style/action_sheet_beauty_seek_bar"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -118,7 +116,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="0.7"
             android:textAlignment="gravity"
             android:gravity="center"/>
         <androidx.appcompat.widget.AppCompatSeekBar
@@ -128,7 +125,7 @@
             android:layout_toEndOf="@id/beauty_title_temperature"
             android:layout_toStartOf="@id/beauty_value_temperature"
             android:layout_centerVertical="true"
-            style="@style/action_sheet_seek_bar"/>
+            style="@style/action_sheet_beauty_seek_bar"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

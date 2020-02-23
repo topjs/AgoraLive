@@ -1,22 +1,23 @@
 package io.agora.vlive.ui;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import io.agora.vlive.AgoraLiveApplication;
+import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
@@ -97,24 +98,25 @@ public abstract class BaseActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    protected void showActionSheetDialog(int type) {
-        View layout;
+    protected void showActionSheetDialog(int type, AbstractActionSheet.AbsActionSheetListener listener) {
+        AbstractActionSheet actionSheet;
         switch (type) {
             case ACTION_SHEET_BEAUTY:
-                layout = new BeautySettingActionSheet(this);
+                actionSheet = new BeautySettingActionSheet(this);
                 break;
             case ACTION_SHEET_BG_MUSIC:
-                layout = new BackgroundMusicActionSheet(this);
+                actionSheet = new BackgroundMusicActionSheet(this);
                 break;
             default:
-                layout = new LiveRoomSettingActionSheet(this);
+                actionSheet = new LiveRoomSettingActionSheet(this);
         }
 
-        showActionSheetDialog(R.style.live_room_dialog, layout);
+        actionSheet.setActionSheetListener(listener);
+        showActionSheetDialog(R.style.live_room_dialog, actionSheet);
     }
 
-    protected void showDialog(int title, int message,
-                              View.OnClickListener positiveClickListener) {
+    protected Dialog showDialog(int title, int message,
+                              final View.OnClickListener positiveClickListener) {
         final Dialog dialog = new Dialog(this,
                 R.style.live_room_dialog_center_in_window);
         dialog.setContentView(R.layout.live_room_dialog);
@@ -133,5 +135,18 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setOnClickListener(positiveClickListener);
         hideStatusBar(dialog.getWindow(), false);
         dialog.show();
+        return dialog;
+    }
+
+    protected AgoraLiveApplication application() {
+        return (AgoraLiveApplication)  getApplication();
+    }
+
+    protected Global global() {
+        return application().global();
+    }
+
+    protected SharedPreferences preferences() {
+        return application().preferences();
     }
 }

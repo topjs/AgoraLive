@@ -10,13 +10,12 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import io.agora.vlive.Global;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends AbstractFragment implements View.OnClickListener {
     private static final int CATEGORY_IMAGE_WIDTH = 690;
     private static final int CATEGORY_IMAGE_HEIGHT = 299;
 

@@ -1,26 +1,34 @@
 package io.agora.vlive.ui.live;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.agora.vlive.Global;
+import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
 import io.agora.vlive.ui.components.LiveHostInSeatAdapter;
 import io.agora.vlive.ui.components.LiveRoomMessageList;
 import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
 
-public class HostInLiveActivity extends BaseLiveActivity implements View.OnClickListener {
+public class HostInLiveActivity extends BaseLiveActivity
+        implements View.OnClickListener, BeautySettingActionSheet.BeautyActionSheetListener {
+    private static final String TAG = HostInLiveActivity.class.getSimpleName();
+
     private LiveRoomParticipantLayout mParticipants;
     private LiveRoomMessageList mMessageList;
     private LiveBottomButtonLayout mBottomButtons;
     private RecyclerView mSeatRecyclerView;
     private LiveHostInSeatAdapter mSeatAdapter;
     private boolean mIsHost;
+
+    private Dialog mDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,14 +89,14 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_bottom_btn_close:
-                showDialog(R.string.finish_broadcast_title,
+                mDialog = showDialog(R.string.finish_broadcast_title,
                         R.string.finish_broadcast_message, this);
                 break;
             case R.id.live_bottom_btn_more:
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (mIsHost) {
-                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC);
+                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, this);
                 } else {
 
                 }
@@ -97,10 +105,11 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
                 // this button is hidden when
                 // current user is not host.
                 if (mIsHost) {
-                    showActionSheetDialog(ACTION_SHEET_BEAUTY);
+                    showActionSheetDialog(ACTION_SHEET_BEAUTY, this);
                 }
                 break;
             case R.id.dialog_positive_button:
+                closeDialog();
                 finish();
                 break;
         }
@@ -108,7 +117,36 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        showDialog(R.string.finish_broadcast_title,
+        mDialog = showDialog(R.string.finish_broadcast_title,
                 R.string.finish_broadcast_message, this);
+    }
+
+    private void closeDialog() {
+        if (mDialog != null && mDialog.isShowing()) mDialog.dismiss();
+    }
+
+    @Override
+    public void onBeautyEnabled(boolean enabled) {
+        Log.i(TAG, "onBeautyEnabled:" + enabled);
+    }
+
+    @Override
+    public void onBrightnessSelected(float brightness) {
+        Log.i(TAG, "onBrightnessSelected:" + brightness);
+    }
+
+    @Override
+    public void onSmoothSelected(float smooth) {
+        Log.i(TAG, "onSmoothSelected:" + smooth);
+    }
+
+    @Override
+    public void onColorTemperatureSelected(float temperature) {
+        Log.i(TAG, "onColorTemperatureSelected:" + temperature);
+    }
+
+    @Override
+    public void onContrastSelected(int type) {
+        Log.i(TAG, "onContrastSelected:" + type);
     }
 }

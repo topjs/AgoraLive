@@ -2,6 +2,7 @@ package io.agora.vlive.ui.live;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -9,12 +10,16 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import io.agora.vlive.Global;
+import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.camera.capture.CameraCapture;
 import io.agora.vlive.ui.BaseActivity;
 
-public class LivePrepareActivity extends BaseActivity implements View.OnClickListener {
+public class LivePrepareActivity extends BaseActivity
+        implements View.OnClickListener, BeautySettingActionSheet.BeautyActionSheetListener {
+    private static final String TAG = LivePrepareActivity.class.getSimpleName();
+
     private SurfaceView mSurfaceView;
     private CameraCapture mCameraCapture = new CameraCapture();
 
@@ -58,10 +63,10 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
                 gotoBroadcastActivity();
                 break;
             case R.id.prepare_beauty_btn:
-                showActionSheetDialog(ACTION_SHEET_BEAUTY);
+                showActionSheetDialog(ACTION_SHEET_BEAUTY, this);
                 break;
             case R.id.prepare_setting_btn:
-                showActionSheetDialog(ACTION_SHEET_VIDEO);
+                showActionSheetDialog(ACTION_SHEET_VIDEO, this);
                 break;
         }
     }
@@ -87,5 +92,30 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
         intent.putExtras(getIntent());
         intent.putExtra(Global.Constants.KEY_ROOM_NAME, "");
         startActivity(intent);
+    }
+
+    @Override
+    public void onBeautyEnabled(boolean enabled) {
+        Log.i(TAG, "onBeautyEnabled:" + enabled);
+    }
+
+    @Override
+    public void onBrightnessSelected(float brightness) {
+        Log.i(TAG, "onBrightnessSelected:" + brightness);
+    }
+
+    @Override
+    public void onSmoothSelected(float smooth) {
+        Log.i(TAG, "onSmoothSelected:" + smooth);
+    }
+
+    @Override
+    public void onColorTemperatureSelected(float temperature) {
+        Log.i(TAG, "onColorTemperatureSelected:" + temperature);
+    }
+
+    @Override
+    public void onContrastSelected(int type) {
+        Log.i(TAG, "onContrastSelected:" + type);
     }
 }

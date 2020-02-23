@@ -31,7 +31,7 @@ public class LiveHostInSeatAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        System.out.println("onBindViewHolder:" + position);
+
     }
 
     @Override

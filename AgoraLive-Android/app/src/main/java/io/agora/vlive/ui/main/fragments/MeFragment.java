@@ -1,6 +1,4 @@
 package io.agora.vlive.ui.main.fragments;
 
-import androidx.fragment.app.Fragment;
-
-public class MeFragment extends Fragment {
+public class MeFragment extends AbstractFragment {
 }

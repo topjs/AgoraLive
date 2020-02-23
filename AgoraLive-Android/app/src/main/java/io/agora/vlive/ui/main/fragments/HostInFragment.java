@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import io.agora.vlive.R;
 
-public class HostInFragment extends Fragment {
+public class HostInFragment extends AbstractFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -21,11 +21,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Array;
 
-import io.agora.vlive.Global;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.live.LivePrepareActivity;
 
-public class RoomFragment extends Fragment implements View.OnClickListener {
+public class RoomFragment extends AbstractFragment implements View.OnClickListener {
     private static final int TAB_COUNT = 3;
     private static final int TAB_TEXT_VIEW_INDEX = 1;
 
@@ -52,7 +52,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
         if (bundle != null) {
             mCurrentTap = bundle.getInt(Global.Constants.TAB_KEY);
         } else {
-            mCurrentTap = Global.States.lastTabPosition;
+            mCurrentTap = application().states().lastTabPosition();
         }
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
@@ -90,7 +90,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
         TabLayout.Tab tab = mTabLayout.getTabAt(mCurrentTap);
         if (tab != null) {
             mTabLayout.selectTab(tab, true);
-            Global.States.lastTabPosition = mCurrentTap;
+            application().states().setLastTabPosition(mCurrentTap);
             setTextViewBold(getCachedTabText(tab), true);
         }
 
@@ -102,7 +102,7 @@ public class RoomFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mCurrentTap = tab.getPosition();
-                Global.States.lastTabPosition = mCurrentTap;
+                application().states().setLastTabPosition(mCurrentTap);
                 setTextViewBold(getCachedTabText(tab), true);
             }
 

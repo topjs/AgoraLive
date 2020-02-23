@@ -2,7 +2,6 @@ package io.agora.vlive.ui.actionsheets;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,10 +16,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.agora.vlive.Global;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
-public class LiveRoomSettingActionSheet extends RelativeLayout implements View.OnClickListener {
+public class LiveRoomSettingActionSheet extends AbstractActionSheet implements View.OnClickListener {
     private static final int PAGE_MAIN = 0;
     private static final int PAGE_RESOLUTION = 1;
     private static final int PAGE_FRAME_RATE = 2;
@@ -48,6 +46,11 @@ public class LiveRoomSettingActionSheet extends RelativeLayout implements View.O
     public LiveRoomSettingActionSheet(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+    }
+
+    @Override
+    public void setActionSheetListener(AbsActionSheetListener listener) {
+
     }
 
     private void init() {
