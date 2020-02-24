@@ -117,7 +117,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
             }
         });
 
-        view.findViewById(R.id.start_broadcast_btn).setOnClickListener(this);
+        view.findViewById(R.id.live_room_action_sheet_gift_send_btn).setOnClickListener(this);
 
         return view;
     }
@@ -154,7 +154,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.start_broadcast_btn) {
+        if (view.getId() == R.id.live_room_action_sheet_gift_send_btn) {
             Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
             intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap);
             intent.putExtra(Global.Constants.KEY_IS_HOST, true);

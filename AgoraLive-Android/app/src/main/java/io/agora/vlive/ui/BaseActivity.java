@@ -17,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
+import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
@@ -31,6 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected static final int ACTION_SHEET_VIDEO = 0;
     protected static final int ACTION_SHEET_BEAUTY = 1;
     protected static final int ACTION_SHEET_BG_MUSIC = 2;
+    protected static final int ACTION_SHEET_GIFT = 3;
 
     protected int systemBarHeight;
 
@@ -106,6 +108,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case ACTION_SHEET_BG_MUSIC:
                 actionSheet = new BackgroundMusicActionSheet(this);
+                break;
+            case ACTION_SHEET_GIFT:
+                actionSheet = new GiftActionSheet(this);
                 break;
             default:
                 actionSheet = new LiveRoomSettingActionSheet(this);

@@ -43,6 +43,21 @@
 
     <string name="live_room_bg_music_action_sheet_title">背景音乐</string>
 
+    <string name="live_room_gift_action_sheet_title">礼物</string>
+    <string name="live_room_gift_action_sheet_send">赠送</string>
+    <string name="live_room_gift_action_sheet_value_format">(%d金币)</string>
+
+    <string-array name="gift_names">
+        <item>铃铛</item>
+        <item>冰激凌</item>
+        <item>红酒</item>
+        <item>蛋糕</item>
+        <item>戒指</item>
+        <item>手表</item>
+        <item>钻石</item>
+        <item>火箭</item>
+    </string-array>
+
     <!-- dialog -->
     <string name="dialog_negative_button">取消</string>
     <string name="dialog_positive_button">确定</string>

@@ -49,7 +49,7 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
 
     private void initUI() {
         mEditText = findViewById(R.id.room_name_edit);
-        mStartBroadBtn = findViewById(R.id.start_broadcast_btn);
+        mStartBroadBtn = findViewById(R.id.live_room_action_sheet_gift_send_btn);
         mStartBroadBtn.setOnClickListener(this);
         findViewById(R.id.prepare_beauty_btn).setOnClickListener(this);
         findViewById(R.id.prepare_setting_btn).setOnClickListener(this);
@@ -61,7 +61,7 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
             case R.id.random_btn:
                 generateRandomRoomName();
                 break;
-            case R.id.start_broadcast_btn:
+            case R.id.live_room_action_sheet_gift_send_btn:
                 gotoBroadcastActivity();
                 break;
             case R.id.prepare_beauty_btn:

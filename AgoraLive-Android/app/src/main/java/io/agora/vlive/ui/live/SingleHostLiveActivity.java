@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
+import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
@@ -19,7 +20,8 @@ import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
 public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnClickListener,
         BeautySettingActionSheet.BeautyActionSheetListener,
         LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener,
-        BackgroundMusicActionSheet.BackgroundMusicActionSheetListener {
+        BackgroundMusicActionSheet.BackgroundMusicActionSheetListener,
+        GiftActionSheet.GiftActionSheetListener {
     private static final String TAG = SingleHostLiveActivity.class.getSimpleName();
 
     private LiveHostNameLayout mNamePad;
@@ -84,7 +86,7 @@ public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnC
                 if (mIsHost) {
                     showActionSheetDialog(ACTION_SHEET_BG_MUSIC, this);
                 } else {
-
+                    showActionSheetDialog(ACTION_SHEET_GIFT, this);
                 }
                 break;
             case R.id.live_bottom_btn_fun2:
@@ -154,5 +156,10 @@ public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnC
     @Override
     public void onBackgroundMusicSelected(int index, String name, String url) {
         Log.i(TAG, "onBackgroundMusicSelected:" + name);
+    }
+
+    @Override
+    public void onGiftSend(String name, String path, int value) {
+        Log.i(TAG, "onGiftSend:" + name);
     }
 }

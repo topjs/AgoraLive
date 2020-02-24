@@ -11,16 +11,16 @@
     <RelativeLayout
         android:id="@+id/prepare_top_btn_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/prepare_button_height">
+        android:layout_height="@dimen/button_height">
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/prepare_button_height"
-            android:layout_height="@dimen/prepare_button_height"
+            android:layout_width="@dimen/button_height"
+            android:layout_height="@dimen/button_height"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:src="@drawable/close_button_white"/>
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/prepare_button_height"
-            android:layout_height="@dimen/prepare_button_height"
+            android:layout_width="@dimen/button_height"
+            android:layout_height="@dimen/button_height"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/switch_camera_btn"/>
@@ -28,7 +28,7 @@
     <RelativeLayout
         android:id="@+id/prepare_name_edit_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/prepare_button_height"
+        android:layout_height="@dimen/button_height"
         android:layout_below="@id/prepare_top_btn_layout"
         android:background="@drawable/room_edit_layout_bg"
         android:padding="6dp">
@@ -43,8 +43,8 @@
             android:textSize="@dimen/text_size_small"/>
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/random_btn"
-            android:layout_width="@dimen/prepare_button_height"
-            android:layout_height="@dimen/prepare_button_height"
+            android:layout_width="@dimen/button_height"
+            android:layout_height="@dimen/button_height"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/prepare_padding"
             android:src="@drawable/random_button"
@@ -52,7 +52,7 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/room_name_edit"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/prepare_button_height"
+            android:layout_height="@dimen/button_height"
             android:layout_toEndOf="@id/room_name_edit_hint"
             android:layout_toStartOf="@id/random_btn"
             android:paddingStart="@dimen/prepare_padding"
@@ -65,7 +65,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/prepare_button_height"
+        android:layout_height="@dimen/button_height"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/bottom_action_margin_bottom">
@@ -79,9 +79,9 @@
             android:scaleType="fitXY"
             android:background="@drawable/round_gray_bg"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/start_broadcast_btn"
+            android:id="@+id/live_room_action_sheet_gift_send_btn"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/prepare_button_height"
+            android:layout_height="@dimen/button_height"
             android:layout_toEndOf="@id/prepare_beauty_btn"
             android:paddingStart="@dimen/start_broadcast_btn_padding"
             android:paddingEnd="@dimen/start_broadcast_btn_padding"
@@ -90,13 +90,13 @@
             android:gravity="center"
             android:text="@string/start_broadcast_text"
             android:textSize="@dimen/text_size_normal"
-            android:textColor="@color/start_broadcast_text_color"
-            android:background="@drawable/start_broadcast_btn_bg"/>
+            android:textColor="@color/live_action_button_text_color"
+            android:background="@drawable/live_action_button_bg"/>
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/prepare_setting_btn"
             android:layout_width="@dimen/bottom_btn_size"
             android:layout_height="@dimen/bottom_btn_size"
-            android:layout_toEndOf="@id/start_broadcast_btn"
+            android:layout_toEndOf="@id/live_room_action_sheet_gift_send_btn"
             android:layout_marginStart="@dimen/bottom_btn_padding"
             android:layout_centerVertical="true"
             android:src="@drawable/setting_button"

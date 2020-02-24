@@ -201,5 +201,20 @@ public class Global {
             {"天下没有不散的宴席", "郑钧"},
             {"作曲家", "李荣浩"},
         };
+
+        public static final String[] GIFT_FILES = {
+                "gift_01_bell.png",
+                "gift_02_icecream.png",
+                "gift_03_wine.png",
+                "gift_04_cake.png",
+                "gift_05_ring.png",
+                "gift_06_watch.png",
+                "gift_07_diamond.png",
+                "gift_08_rocket.png",
+        };
+
+        public static final int[] GIFT_VALUES = {
+                20, 30, 40, 50, 60, 70, 80, 90
+        };
     }
 }

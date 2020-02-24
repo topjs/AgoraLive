@@ -26,7 +26,7 @@
     <dimen name="room_list_no_data_icon_size">164dp</dimen>
 
     <!-- Live Prepare -->
-    <dimen name="prepare_button_height">48dp</dimen>
+    <dimen name="button_height">48dp</dimen>
     <dimen name="bottom_btn_size">44dp</dimen>
     <dimen name="prepare_padding">2dp</dimen>
     <dimen name="bottom_action_margin_bottom">48dp</dimen>
@@ -88,6 +88,12 @@
 
     <dimen name="live_room_bg_music_action_sheet_height">540dp</dimen>
     <dimen name="live_room_bg_music_action_sheet_icon_size">28dp</dimen>
+
+    <dimen name="live_room_gift_action_sheet_height">418dp</dimen>
+    <dimen name="live_room_gift_action_sheet_send_btn_width">86dp</dimen>
+    <dimen name="live_room_gift_action_sheet_icon_size">64dp</dimen>
+    <dimen name="live_room_gift_action_sheet_item_bg_corner">6dp</dimen>
+    <dimen name="live_room_gift_action_sheet_item_padding">8dp</dimen>
 
     <!-- Dialogs -->
     <dimen name="dialog_width">282dp</dimen>

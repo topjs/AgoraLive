@@ -44,6 +44,21 @@
 
     <string name="live_room_bg_music_action_sheet_title">Background Music</string>
 
+    <string name="live_room_gift_action_sheet_title">Presents</string>
+    <string name="live_room_gift_action_sheet_send">Send</string>
+    <string name="live_room_gift_action_sheet_value_format">(%d Coins)</string>
+
+    <string-array name="gift_names">
+        <item>Bell</item>
+        <item>Ice Cream</item>
+        <item>Wine</item>
+        <item>Cake</item>
+        <item>Ring</item>
+        <item>Watch</item>
+        <item>Diamond</item>
+        <item>Rocket</item>
+    </string-array>
+
     <!-- dialog -->
     <string name="dialog_negative_button">Cancel</string>
     <string name="dialog_positive_button">Confirm</string>
