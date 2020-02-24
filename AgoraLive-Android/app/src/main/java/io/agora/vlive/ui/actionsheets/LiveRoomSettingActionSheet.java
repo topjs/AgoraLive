@@ -25,12 +25,14 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         void onResolutionSelected(int index);
         void onFrameRateSelected(int index);
         void onBitrateSelected(int bitrate);
+        void onSettingBackPressed();
     }
 
     private static final int PAGE_MAIN = 0;
     private static final int PAGE_RESOLUTION = 1;
     private static final int PAGE_FRAME_RATE = 2;
 
+    private int mCurPage;
     private View mMain;
     private View mBackIcon;
     private TextView mTitle;
@@ -48,6 +50,9 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
     private int mPaddingHorizontal;
     private int mDividerHeight;
+
+    // Whether the sheet can fallback to previous action sheets
+    private boolean mCanFallback;
 
     private LiveRoomSettingActionSheetListener mListener;
 
@@ -85,6 +90,11 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         mMain.findViewById(R.id.live_room_setting_framerate).setOnClickListener(this);
 
         gotoMainPage();
+    }
+
+    public void setFallback(boolean canFallback) {
+        mCanFallback = canFallback;
+        mBackIcon.setVisibility(mCanFallback ? VISIBLE : GONE);
     }
 
     @Override
@@ -128,12 +138,20 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_room_setting_back:
-                gotoPage(PAGE_MAIN);
+                if (mCurPage != PAGE_MAIN) {
+                    mCurPage = PAGE_MAIN;
+                    gotoPage(PAGE_MAIN);
+                } else {
+                    if (mListener != null) mListener.onSettingBackPressed();
+                }
+
                 break;
             case R.id.live_room_setting_resolution:
+                mCurPage = PAGE_RESOLUTION;
                 gotoPage(PAGE_RESOLUTION);
                 break;
             case R.id.live_room_setting_framerate:
+                mCurPage = PAGE_FRAME_RATE;
                 gotoPage(PAGE_FRAME_RATE);
                 break;
         }
@@ -154,7 +172,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     }
 
     private void gotoMainPage() {
-        mBackIcon.setVisibility(View.GONE);
+        mBackIcon.setVisibility(mCanFallback ? VISIBLE : GONE);
         mTitle.setText(R.string.live_room_setting_action_sheet_title);
         mContainer.removeAllViews();
         mContainer.addView(mMain);

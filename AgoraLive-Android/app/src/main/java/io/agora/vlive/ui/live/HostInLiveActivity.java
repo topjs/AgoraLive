@@ -13,6 +13,7 @@ import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
+import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
@@ -24,7 +25,9 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
         BeautySettingActionSheet.BeautyActionSheetListener,
         LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener,
         BackgroundMusicActionSheet.BackgroundMusicActionSheetListener,
-        GiftActionSheet.GiftActionSheetListener {
+        GiftActionSheet.GiftActionSheetListener,
+        LiveRoomToolActionSheet.LiveRoomToolActionSheetListener {
+
     private static final String TAG = HostInLiveActivity.class.getSimpleName();
 
     private LiveRoomParticipantLayout mParticipants;
@@ -99,19 +102,20 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
                         R.string.finish_broadcast_message, this);
                 break;
             case R.id.live_bottom_btn_more:
+                showActionSheetDialog(ACTION_SHEET_TOOL, mIsHost, true, this);
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (mIsHost) {
-                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, this);
+                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, true, true, this);
                 } else {
-                    showActionSheetDialog(ACTION_SHEET_GIFT, this);
+                    showActionSheetDialog(ACTION_SHEET_GIFT, false, true, this);
                 }
                 break;
             case R.id.live_bottom_btn_fun2:
                 // this button is hidden when
                 // current user is not host.
                 if (mIsHost) {
-                    showActionSheetDialog(ACTION_SHEET_BEAUTY, this);
+                    showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
                 }
                 break;
             case R.id.dialog_positive_button:
@@ -172,6 +176,12 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
     }
 
     @Override
+    public void onSettingBackPressed() {
+        Log.i(TAG, "onSettingBackPressed:");
+        dismissActionSheetDialog();
+    }
+
+    @Override
     public void onBackgroundMusicSelected(int index, String name, String url) {
         Log.i(TAG, "onBackgroundMusicSelected:" + name);
     }
@@ -179,5 +189,41 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
     @Override
     public void onGiftSend(String name, String path, int value) {
         Log.i(TAG, "onGiftSend:" + name);
+    }
+
+    @Override
+    public void onVoiceClicked() {
+        Log.i(TAG, "onVoiceClicked");
+    }
+
+    @Override
+    public void onRealDataClicked() {
+        Log.i(TAG, "onRealDataClicked");
+    }
+
+    @Override
+    public void onShareClicked() {
+        Log.i(TAG, "onShareClicked");
+    }
+
+    @Override
+    public void onSettingClicked() {
+        Log.i(TAG, "onSettingClicked");
+        showActionSheetDialog(ACTION_SHEET_VIDEO, mIsHost, false, this);
+    }
+
+    @Override
+    public void onRotateClicked() {
+        Log.i(TAG, "onRotateClicked");
+    }
+
+    @Override
+    public void onVideoClicked(boolean muted) {
+        Log.i(TAG, "onVideoClicked" + muted);
+    }
+
+    @Override
+    public void onSpeakerClicked(boolean muted) {
+        Log.i(TAG, "onSpeakerClicked" + muted);
     }
 }

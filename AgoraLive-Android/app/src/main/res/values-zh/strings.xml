@@ -58,6 +58,18 @@
         <item>火箭</item>
     </string-array>
 
+    <string name="live_room_tool_action_sheet_title">工具</string>
+
+    <string-array name="live_room_action_sheet_tool_names">
+        <item>声音</item>
+        <item>实时数据</item>
+        <item>分享</item>
+        <item>设置</item>
+        <item>翻转</item>
+        <item>摄像头</item>
+        <item>麦克风</item>
+    </string-array>
+
     <!-- dialog -->
     <string name="dialog_negative_button">取消</string>
     <string name="dialog_positive_button">确定</string>

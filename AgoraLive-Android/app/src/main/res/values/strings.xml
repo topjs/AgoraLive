@@ -59,6 +59,17 @@
         <item>Rocket</item>
     </string-array>
 
+    <string name="live_room_tool_action_sheet_title">Tool</string>
+    <string-array name="live_room_action_sheet_tool_names">
+        <item>Voice</item>
+        <item>Data</item>
+        <item>Share</item>
+        <item>Setting</item>
+        <item>Rotate</item>
+        <item>Camera</item>
+        <item>Speaker</item>
+    </string-array>
+
     <!-- dialog -->
     <string name="dialog_negative_button">Cancel</string>
     <string name="dialog_positive_button">Confirm</string>

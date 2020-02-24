@@ -1,11 +1,14 @@
 package io.agora.vlive.ui;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,9 +18,12 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.Stack;
+
 import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
+import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
@@ -26,21 +32,30 @@ import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 
 /**
  * Capabilities that are shared by all activity, such as
- * messaging.
+ * messaging, action sheets, dialogs.
  */
 public abstract class BaseActivity extends AppCompatActivity {
+    private static final String TAG = BaseActivity.class.getSimpleName();
+
     protected static final int ACTION_SHEET_VIDEO = 0;
     protected static final int ACTION_SHEET_BEAUTY = 1;
     protected static final int ACTION_SHEET_BG_MUSIC = 2;
     protected static final int ACTION_SHEET_GIFT = 3;
+    protected static final int ACTION_SHEET_TOOL = 4;
+
+    private static final int ACTION_SHEET_DIALOG_STYLE_RES = R.style.live_room_dialog;
 
     protected int systemBarHeight;
+
+    private Stack<AbstractActionSheet> mActionSheetStack;
+    private BottomSheetDialog mSheetDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setGlobalLayoutListener();
+        mActionSheetStack = new Stack<>();
         systemBarHeight = getStatusBarHeight();
     }
 
@@ -92,15 +107,46 @@ public abstract class BaseActivity extends AppCompatActivity {
         return id > 0 ? getResources().getDimensionPixelSize(id) : id;
     }
 
-    protected void showActionSheetDialog(int styleRes, View content) {
-        BottomSheetDialog dialog = new BottomSheetDialog(this, styleRes);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setContentView(content);
-        hideStatusBar(dialog.getWindow(), false);
-        dialog.show();
+    protected void showActionSheetDialog(final AbstractActionSheet sheet) {
+        dismissActionSheetDialog();
+
+        mSheetDialog = new BottomSheetDialog(this, ACTION_SHEET_DIALOG_STYLE_RES);
+        mSheetDialog.setCanceledOnTouchOutside(true);
+        mSheetDialog.setContentView(sheet);
+        hideStatusBar(mSheetDialog.getWindow(), false);
+
+        mSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if (mActionSheetStack.isEmpty()) {
+                    // Happens only in case of errors.
+                    return;
+                }
+
+                if (sheet != mActionSheetStack.peek()) {
+                    // When this action sheet is not at the top of
+                    // stack, it means that a new action sheet
+                    // is about to be shown and it needs a fallback
+                    // history, and this sheet needs to be retained.
+                    return;
+                }
+
+                // At this moment, we want to fallback to
+                // the previous action sheet if exists.
+                mActionSheetStack.pop();
+                if (!mActionSheetStack.isEmpty()) {
+                    AbstractActionSheet sheet = mActionSheetStack.peek();
+                    ((ViewGroup) sheet.getParent()).removeAllViews();
+                    showActionSheetDialog(mActionSheetStack.peek());
+                }
+            }
+        });
+
+        mSheetDialog.show();
     }
 
-    protected void showActionSheetDialog(int type, AbstractActionSheet.AbsActionSheetListener listener) {
+    protected void showActionSheetDialog(int type, boolean isHost, boolean newStack,
+                                         AbstractActionSheet.AbsActionSheetListener listener) {
         AbstractActionSheet actionSheet;
         switch (type) {
             case ACTION_SHEET_BEAUTY:
@@ -112,12 +158,26 @@ public abstract class BaseActivity extends AppCompatActivity {
             case ACTION_SHEET_GIFT:
                 actionSheet = new GiftActionSheet(this);
                 break;
+            case ACTION_SHEET_TOOL:
+                actionSheet = new LiveRoomToolActionSheet(this);
+                ((LiveRoomToolActionSheet) actionSheet).setHost(isHost);
+                break;
             default:
                 actionSheet = new LiveRoomSettingActionSheet(this);
+                ((LiveRoomSettingActionSheet) actionSheet).setFallback(!newStack);
         }
 
         actionSheet.setActionSheetListener(listener);
-        showActionSheetDialog(R.style.live_room_dialog, actionSheet);
+        if (newStack) mActionSheetStack.clear();
+        mActionSheetStack.push(actionSheet);
+        Log.i(TAG, "action sheet stack size:" + mActionSheetStack.size());
+        showActionSheetDialog(actionSheet);
+    }
+
+    protected void dismissActionSheetDialog() {
+        if (mSheetDialog != null && mSheetDialog.isShowing()) {
+            mSheetDialog.dismiss();
+        }
     }
 
     protected Dialog showDialog(int title, int message,

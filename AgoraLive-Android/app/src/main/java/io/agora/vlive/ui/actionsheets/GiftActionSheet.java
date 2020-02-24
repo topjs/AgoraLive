@@ -76,7 +76,7 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new GiftViewHolder(LayoutInflater.from(getContext()).
-                    inflate(R.layout.action_sheet_gift_item, parent, false));
+                    inflate(R.layout.action_gift_item, parent, false));
         }
 
         @Override

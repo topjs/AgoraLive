@@ -65,10 +65,10 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
                 gotoBroadcastActivity();
                 break;
             case R.id.prepare_beauty_btn:
-                showActionSheetDialog(ACTION_SHEET_BEAUTY, this);
+                showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
                 break;
             case R.id.prepare_setting_btn:
-                showActionSheetDialog(ACTION_SHEET_VIDEO, this);
+                showActionSheetDialog(ACTION_SHEET_VIDEO, true, true, this);
                 break;
         }
     }
@@ -134,5 +134,10 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onBitrateSelected(int bitrate) {
         Log.i(TAG, "onBitrateSelected:" + bitrate);
+    }
+
+    @Override
+    public void onSettingBackPressed() {
+        Log.i(TAG, "onSettingBackPressed:");
     }
 }
