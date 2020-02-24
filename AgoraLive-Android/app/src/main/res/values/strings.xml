@@ -70,6 +70,11 @@
         <item>Speaker</item>
     </string-array>
 
+    <string name="live_room_voice_action_sheet_title">Voice</string>
+    <string name="live_room_voice_action_sheet_headphone">Headphone</string>
+    <string name="live_room_voice_action_sheet_loudspeaker">Loudspeaker</string>
+    <string name="live_room_voice_action_sheet_others">Others</string>
+
     <!-- dialog -->
     <string name="dialog_negative_button">Cancel</string>
     <string name="dialog_positive_button">Confirm</string>

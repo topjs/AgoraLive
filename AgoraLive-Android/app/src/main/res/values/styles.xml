@@ -49,4 +49,16 @@
     <style name="action_sheet_beauty_seek_bar" parent="action_sheet_seek_bar">
         <item name="android:max">10</item>
     </style>
+
+    <style name="voice_action_sheet_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/live_room_action_sheet_voice_button_text_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/live_room_action_sheet_voice_button_text_padding_vertical</item>
+        <item name="android:paddingStart">@dimen/live_room_action_sheet_voice_button_text_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/live_room_action_sheet_voice_button_text_padding_horizontal</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/action_sheet_button_bg</item>
+    </style>
 </resources>

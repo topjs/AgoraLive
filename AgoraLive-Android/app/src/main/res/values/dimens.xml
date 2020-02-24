@@ -98,6 +98,9 @@
     <dimen name="live_room_action_sheet_tool_icon_size">54dp</dimen>
     <dimen name="live_room_action_sheet_tool_icon_margin">6dp</dimen>
 
+    <dimen name="live_room_action_sheet_voice_button_text_padding_vertical">14dp</dimen>
+    <dimen name="live_room_action_sheet_voice_button_text_padding_horizontal">16dp</dimen>
+
     <!-- Dialogs -->
     <dimen name="dialog_width">282dp</dimen>
     <dimen name="dialog_height">150dp</dimen>

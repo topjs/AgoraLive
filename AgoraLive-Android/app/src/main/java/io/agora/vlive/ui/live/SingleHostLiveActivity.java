@@ -11,6 +11,7 @@ import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
+import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
@@ -23,7 +24,8 @@ public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnC
         LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener,
         BackgroundMusicActionSheet.BackgroundMusicActionSheetListener,
         GiftActionSheet.GiftActionSheetListener,
-        LiveRoomToolActionSheet.LiveRoomToolActionSheetListener {
+        LiveRoomToolActionSheet.LiveRoomToolActionSheetListener,
+        VoiceActionSheet.VoiceActionSheetListener {
 
     private static final String TAG = SingleHostLiveActivity.class.getSimpleName();
 
@@ -176,6 +178,7 @@ public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnC
     @Override
     public void onVoiceClicked() {
         Log.i(TAG, "onVoiceClicked");
+        showActionSheetDialog(ACTION_SHEET_VOICE, mIsHost, false, this);
     }
 
     @Override
@@ -206,5 +209,21 @@ public class SingleHostLiveActivity extends BaseLiveActivity implements View.OnC
     @Override
     public void onSpeakerClicked(boolean muted) {
         Log.i(TAG, "onSpeakerClicked:" + muted);
+    }
+
+    @Override
+    public void onAudioRouteSelected(int type) {
+        Log.i(TAG, "onAudioRouteSelected:" + type);
+    }
+
+    @Override
+    public void onAudioRouteEnabled(boolean enabled) {
+        Log.i(TAG, "onAudioRouteEnabled:" + enabled);
+    }
+
+    @Override
+    public void onAudioBackPressed() {
+        Log.i(TAG, "onAudioBackPressed");
+        dismissActionSheetDialog();
     }
 }

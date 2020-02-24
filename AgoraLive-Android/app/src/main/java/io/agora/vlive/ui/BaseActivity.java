@@ -24,6 +24,7 @@ import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
+import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
@@ -42,6 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected static final int ACTION_SHEET_BG_MUSIC = 2;
     protected static final int ACTION_SHEET_GIFT = 3;
     protected static final int ACTION_SHEET_TOOL = 4;
+    protected static final int ACTION_SHEET_VOICE = 5;
 
     private static final int ACTION_SHEET_DIALOG_STYLE_RES = R.style.live_room_dialog;
 
@@ -161,6 +163,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             case ACTION_SHEET_TOOL:
                 actionSheet = new LiveRoomToolActionSheet(this);
                 ((LiveRoomToolActionSheet) actionSheet).setHost(isHost);
+                break;
+            case ACTION_SHEET_VOICE:
+                actionSheet = new VoiceActionSheet(this);
                 break;
             default:
                 actionSheet = new LiveRoomSettingActionSheet(this);
