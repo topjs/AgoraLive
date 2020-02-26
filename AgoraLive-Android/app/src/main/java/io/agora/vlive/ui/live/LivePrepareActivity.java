@@ -2,32 +2,35 @@ package io.agora.vlive.ui.live;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
-import io.agora.vlive.camera.capture.CameraCapture;
-import io.agora.vlive.ui.BaseActivity;
 
-public class LivePrepareActivity extends BaseActivity implements View.OnClickListener,
+public class LivePrepareActivity extends BaseLiveActivity implements View.OnClickListener, TextWatcher,
         BeautySettingActionSheet.BeautyActionSheetListener,
         LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener {
-    private static final String TAG = LivePrepareActivity.class.getSimpleName();
 
-    private SurfaceView mSurfaceView;
-    private CameraCapture mCameraCapture = new CameraCapture();
+    private static final String TAG = LivePrepareActivity.class.getSimpleName();
+    private static final int MAX_NAME_LENGTH = 25;
 
     private AppCompatEditText mEditText;
     private AppCompatTextView mStartBroadBtn;
+
     private int roomType;
+    private String mNameTooLongToastMsg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,37 +50,91 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
         topLayout.setLayoutParams(params);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mStartBroadBtn.setEnabled(true);
+    }
+
     private void initUI() {
         mEditText = findViewById(R.id.room_name_edit);
+        mEditText.addTextChangedListener(this);
+
+        mNameTooLongToastMsg = String.format(getResources().getString(
+                R.string.live_prepare_name_too_long_toast_format), MAX_NAME_LENGTH);
+
         mStartBroadBtn = findViewById(R.id.live_room_action_sheet_gift_send_btn);
         mStartBroadBtn.setOnClickListener(this);
-        findViewById(R.id.prepare_beauty_btn).setOnClickListener(this);
-        findViewById(R.id.prepare_setting_btn).setOnClickListener(this);
+
+        findViewById(R.id.live_prepare_beauty_btn).setOnClickListener(this);
+        findViewById(R.id.live_prepare_setting_btn).setOnClickListener(this);
+        findViewById(R.id.live_prepare_close).setOnClickListener(this);
+        findViewById(R.id.live_prepare_rotate_camera).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.live_prepare_close:
+                finish();
+                break;
+            case R.id.live_prepare_rotate_camera:
+                rotateCamera();
+                break;
             case R.id.random_btn:
                 generateRandomRoomName();
                 break;
             case R.id.live_room_action_sheet_gift_send_btn:
                 gotoBroadcastActivity();
                 break;
-            case R.id.prepare_beauty_btn:
+            case R.id.live_prepare_beauty_btn:
                 showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
                 break;
-            case R.id.prepare_setting_btn:
+            case R.id.live_prepare_setting_btn:
                 showActionSheetDialog(ACTION_SHEET_VIDEO, true, true, this);
                 break;
         }
+    }
+
+    private void rotateCamera() {
+
     }
 
     private void generateRandomRoomName() {
 
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(@NotNull Editable editable) {
+        if (editable.length() > MAX_NAME_LENGTH) {
+            showShortToast(mNameTooLongToastMsg);
+            mEditText.setText(editable.subSequence(0, MAX_NAME_LENGTH));
+            mEditText.setSelection(MAX_NAME_LENGTH);
+        }
+    }
+
+    private boolean isRoomNameValid() {
+        return mEditText.getText() != null && !TextUtils.isEmpty(mEditText.getText());
+    }
+
     private void gotoBroadcastActivity() {
+        if (!isRoomNameValid()) {
+            showShortToast(getResources().getString(R.string.live_prepare_no_room_name));
+            return;
+        }
+
+        mStartBroadBtn.setEnabled(false);
+
         Intent intent;
         switch (roomType) {
             case Global.Constants.TAB_ID_SINGLE:
@@ -92,7 +149,7 @@ public class LivePrepareActivity extends BaseActivity implements View.OnClickLis
         }
 
         intent.putExtras(getIntent());
-        intent.putExtra(Global.Constants.KEY_ROOM_NAME, "");
+        intent.putExtra(Global.Constants.KEY_ROOM_NAME, mEditText.getText().toString());
         startActivity(intent);
     }
 

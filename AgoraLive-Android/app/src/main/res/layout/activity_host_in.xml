@@ -6,10 +6,11 @@
     <RelativeLayout
         android:id="@+id/host_in_top_participant_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/live_host_in_top_layout_height"
         android:layout_alignParentTop="true"
         android:padding="@dimen/activity_horizontal_margin">
         <RelativeLayout
+            android:id="@+id/host_video_layout"
             android:layout_width="@dimen/live_host_in_video_size"
             android:layout_height="@dimen/live_host_in_video_size">
             <ImageView
@@ -21,7 +22,26 @@
             android:id="@+id/host_in_participant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/host_video_layout"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/host_in_participant"
+            android:layout_toEndOf="@id/host_video_layout"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:gravity="center_horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/host_in_room_name"
+                android:layout_width="@dimen/live_host_in_room_name_max_width"
+                android:layout_height="match_parent"
+                android:textAlignment="gravity"
+                android:gravity="center"
+                android:lines="1"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -29,7 +49,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/host_in_top_participant_layout"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:overScrollMode="never"
         android:background="@color/black_alpha"/>
 
@@ -44,8 +63,9 @@
     <io.agora.vlive.ui.components.LiveRoomMessageList
         android:id="@+id/message_list"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/live_message_list_height"
+        android:layout_height="match_parent"
         android:layout_above="@id/host_in_bottom_layout"
+        android:layout_below="@id/live_host_in_seat_recycler"
         android:padding="@dimen/activity_horizontal_margin"
         android:overScrollMode="never"/>
 </RelativeLayout>

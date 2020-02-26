@@ -1,11 +1,18 @@
 package io.agora.vlive.ui.live;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,12 +39,17 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
 
     private static final String TAG = HostInLiveActivity.class.getSimpleName();
 
+    private static final int ROOM_NAME_HINT_COLOR = Color.rgb(101, 101, 101);
+    private static final int ROOM_NAME_COLOR = Color.rgb(235, 235, 235);
+
     private LiveRoomParticipantLayout mParticipants;
     private LiveRoomMessageList mMessageList;
     private LiveBottomButtonLayout mBottomButtons;
     private RecyclerView mSeatRecyclerView;
     private LiveHostInSeatAdapter mSeatAdapter;
+
     private boolean mIsHost;
+    private String mRoomName;
 
     private Dialog mDialog;
 
@@ -46,11 +58,16 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_in);
         hideStatusBar(false);
-        mIsHost = getIntent().getBooleanExtra(Global.Constants.KEY_IS_HOST, false);
+
+        Intent intent = getIntent();
+        mIsHost = intent.getBooleanExtra(Global.Constants.KEY_IS_HOST, false);
+        mRoomName = intent.getStringExtra(Global.Constants.KEY_ROOM_NAME);
         initUI();
     }
 
     private void initUI() {
+        setRoomNameText();
+
         mParticipants = findViewById(R.id.host_in_participant);
         mParticipants.setIconResource("fake_icon_2.jpeg");
         mParticipants.setIconResource("fake_icon_3.jpeg");
@@ -85,6 +102,21 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
         findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_fun1).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_fun2).setOnClickListener(this);
+    }
+
+    private void setRoomNameText() {
+        String nameHint = getResources().getString(R.string.live_host_in_room_name_hint);
+        SpannableString name = new SpannableString(nameHint + mRoomName);
+        name.setSpan(new ForegroundColorSpan(ROOM_NAME_HINT_COLOR),
+                0, nameHint.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        name.setSpan(new AbsoluteSizeSpan(getResources().getDimensionPixelSize(R.dimen.text_size_medium)),
+                0, nameHint.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        name.setSpan(new ForegroundColorSpan(ROOM_NAME_COLOR),
+                nameHint.length(), name.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        name.setSpan(new AbsoluteSizeSpan(getResources().getDimensionPixelSize(R.dimen.text_size_normal)),
+                nameHint.length(), name.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        ((AppCompatTextView) findViewById(R.id.host_in_room_name)).setText(name);
     }
 
     @Override

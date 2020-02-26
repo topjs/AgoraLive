@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -46,11 +47,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected static final int ACTION_SHEET_VOICE = 5;
 
     private static final int ACTION_SHEET_DIALOG_STYLE_RES = R.style.live_room_dialog;
+    private static final int TOAST_SHORT_INTERVAL = 2000;
 
     protected int systemBarHeight;
 
     private Stack<AbstractActionSheet> mActionSheetStack;
     private BottomSheetDialog mSheetDialog;
+    private long mLastToastTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -218,5 +221,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected SharedPreferences preferences() {
         return application().preferences();
+    }
+
+    protected void showShortToast(String message) {
+        long current = System.currentTimeMillis();
+        if (current - mLastToastTime > TOAST_SHORT_INTERVAL) {
+            // avoid showing the toast too frequently
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            mLastToastTime = current;
+        }
     }
 }

@@ -26,12 +26,13 @@
     <dimen name="room_list_no_data_icon_size">164dp</dimen>
 
     <!-- Live Prepare -->
+    <dimen name="live_prepare_content_padding">24dp</dimen>
     <dimen name="button_height">48dp</dimen>
     <dimen name="bottom_btn_size">44dp</dimen>
-    <dimen name="prepare_padding">2dp</dimen>
+    <dimen name="prepare_padding">10dp</dimen>
     <dimen name="bottom_action_margin_bottom">48dp</dimen>
     <dimen name="start_broadcast_btn_padding">24dp</dimen>
-    <dimen name="bottom_btn_padding">12dp</dimen>
+    <dimen name="bottom_btn_padding">24dp</dimen>
 
     <!-- Live -->
     <dimen name="live_component_base_height">40dp</dimen>
@@ -52,7 +53,9 @@
     <dimen name="live_bottom_btn_margin">14dp</dimen>
     <dimen name="live_bottom_edit_padding">12dp</dimen>
 
+    <dimen name="live_host_in_top_layout_height">148dp</dimen>
     <dimen name="live_host_in_video_size">116dp</dimen>
+    <dimen name="live_host_in_room_name_max_width">128dp</dimen>
     <dimen name="live_rect_corner">4dp</dimen>
     <dimen name="live_host_in_seat_item_number_size">16dp</dimen>
     <dimen name="live_host_in_seat_item_margin">6dp</dimen>
