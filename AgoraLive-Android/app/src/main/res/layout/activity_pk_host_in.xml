@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_horizontal_margin"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
     android:background="@drawable/dark_background">
     <RelativeLayout
         android:id="@+id/pk_host_in_top_participant_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:layout_alignParentTop="true">
         <io.agora.vlive.ui.components.LiveHostNameLayout
             android:id="@+id/pk_host_in_name_pad"
@@ -30,7 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_bottom_layout_height"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/live_pk_start_button_size"
@@ -45,12 +47,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_message_list_height"
         android:layout_above="@id/pk_host_in_bottom_layout"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"/>
 
     <io.agora.vlive.ui.components.LiveMessageEditLayout
         android:id="@+id/message_edit_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/live_bottom_layout_height"
+        android:layout_height="@dimen/live_message_edit_height"
         android:paddingTop="@dimen/live_message_text_margin"
         android:paddingBottom="@dimen/live_message_text_margin"
         android:layout_alignParentBottom="true"

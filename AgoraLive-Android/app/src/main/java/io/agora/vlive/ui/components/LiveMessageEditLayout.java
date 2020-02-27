@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethod;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -14,13 +12,10 @@ import io.agora.vlive.R;
 
 public class LiveMessageEditLayout extends RelativeLayout {
     public static final int EDIT_TEXT_ID = 1 << 4;
-    private static final int HINT_TEXT_COLOR = Color.rgb(196, 196, 196);
-    private static final int TEXT_COLOR = Color.rgb(239, 239, 239);
+    private static final int HINT_TEXT_COLOR = Color.rgb(96, 96, 96);
+    private static final int TEXT_COLOR = Color.rgb(35, 35, 35);
+    private static final int BACKGROUND_COLOR = Color.rgb(239, 239, 239);
     private static final int TEXT_SIZE = 14;
-
-    private AppCompatEditText mEditText;
-    private int mMargin;
-    private int mPadding;
 
     public LiveMessageEditLayout(Context context) {
         super(context);
@@ -38,26 +33,28 @@ public class LiveMessageEditLayout extends RelativeLayout {
     }
 
     private void init() {
-        mMargin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
-        mPadding = getResources().getDimensionPixelSize(R.dimen.live_bottom_edit_padding);
+        int margin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        int padding = getResources().getDimensionPixelSize(R.dimen.live_bottom_edit_padding);
 
-        mEditText = new AppCompatEditText(getContext());
-        mEditText.setId(EDIT_TEXT_ID);
+        setBackgroundColor(BACKGROUND_COLOR);
+
+        AppCompatEditText editText = new AppCompatEditText(getContext());
+        editText.setId(EDIT_TEXT_ID);
         LayoutParams params = new LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT);
-        params.setMarginStart(mMargin);
-        params.setMarginEnd(mMargin);
+        params.setMarginStart(margin);
+        params.setMarginEnd(margin);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-        addView(mEditText, params);
+        addView(editText, params);
 
-        mEditText.setPadding(mPadding, 0, mPadding, 0);
-        mEditText.setHint(R.string.live_bottom_edit_hint);
-        mEditText.setHintTextColor(HINT_TEXT_COLOR);
-        mEditText.setTextColor(TEXT_COLOR);
-        mEditText.setTextSize(TEXT_SIZE);
-        mEditText.setSingleLine();
-        mEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        mEditText.setBackgroundResource(R.drawable.round_scalable_gray_bg);
+        editText.setPadding(padding, 0, padding, 0);
+        editText.setHint(R.string.live_bottom_edit_hint);
+        editText.setHintTextColor(HINT_TEXT_COLOR);
+        editText.setTextColor(TEXT_COLOR);
+        editText.setTextSize(TEXT_SIZE);
+        editText.setSingleLine();
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editText.setBackgroundResource(R.drawable.message_edit_text_bg);
     }
 }

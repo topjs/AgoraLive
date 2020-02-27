@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_horizontal_margin"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
     android:background="@color/blue_alpha">
     <RelativeLayout
         android:id="@+id/single_live_top_participant_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin">
         <io.agora.vlive.ui.components.LiveHostNameLayout
             android:id="@+id/single_live_name_pad"
             android:layout_width="wrap_content"
@@ -30,18 +30,22 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_bottom_layout_height"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin" />
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"/>
 
     <io.agora.vlive.ui.components.LiveRoomMessageList
         android:id="@+id/message_list"
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_message_list_height"
-        android:layout_above="@id/single_live_bottom_layout"/>
+        android:layout_above="@id/single_live_bottom_layout"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"/>
 
     <io.agora.vlive.ui.components.LiveMessageEditLayout
         android:id="@+id/message_edit_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/live_bottom_layout_height"
+        android:layout_height="@dimen/live_message_edit_height"
         android:paddingTop="@dimen/live_message_text_margin"
         android:paddingBottom="@dimen/live_message_text_margin"
         android:layout_alignParentBottom="true"

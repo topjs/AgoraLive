@@ -73,7 +73,7 @@
     <io.agora.vlive.ui.components.LiveMessageEditLayout
         android:id="@+id/message_edit_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/live_bottom_layout_height"
+        android:layout_height="@dimen/live_message_edit_height"
         android:paddingTop="@dimen/live_message_text_margin"
         android:paddingBottom="@dimen/live_message_text_margin"
         android:layout_alignParentBottom="true"

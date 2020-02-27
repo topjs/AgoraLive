@@ -44,7 +44,8 @@
     <dimen name="live_message_list_height">320dp</dimen>
     <dimen name="live_message_text_padding_horizontal">16dp</dimen>
     <dimen name="live_message_text_padding_vertical">12dp</dimen>
-    <dimen name="live_message_text_margin">2dp</dimen>
+    <dimen name="live_message_text_margin">8dp</dimen>
+    <dimen name="live_message_edit_height">58dp</dimen>
 
     <dimen name="live_participant_layout_height">32dp</dimen>
     <dimen name="live_participant_count_width">58dp</dimen>
