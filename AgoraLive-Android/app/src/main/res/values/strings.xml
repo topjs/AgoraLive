@@ -27,8 +27,11 @@
 
     <!-- Live -->
     <string name="live_bottom_edit_hint">Say something &#8230;</string>
+    <string name="live_send_empty_message">Empty messages are not sent</string>
 
     <string name="live_host_in_room_name_hint">Room:&#160;</string>
+    <string name="live_host_in_seat_state_open">Ask Invitation</string>
+    <string name="live_host_in_seat_state_closed">Closed</string>
 
     <!-- Action Sheet -->
     <string name="live_room_setting_action_sheet_title">Live Room Setting</string>

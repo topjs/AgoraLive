@@ -60,12 +60,22 @@
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
     <io.agora.vlive.ui.components.LiveRoomMessageList
         android:id="@+id/message_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/host_in_bottom_layout"
         android:layout_below="@id/live_host_in_seat_recycler"
+        android:layout_above="@id/host_in_bottom_layout"
         android:padding="@dimen/activity_horizontal_margin"
         android:overScrollMode="never"/>
+
+    <io.agora.vlive.ui.components.LiveMessageEditLayout
+        android:id="@+id/message_edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/live_bottom_layout_height"
+        android:paddingTop="@dimen/live_message_text_margin"
+        android:paddingBottom="@dimen/live_message_text_margin"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
 </RelativeLayout>

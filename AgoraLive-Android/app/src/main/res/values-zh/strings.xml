@@ -27,8 +27,11 @@
 
     <!-- Live -->
     <string name="live_bottom_edit_hint">说点什么 &#8230;</string>
+    <string name="live_send_empty_message">您不能发空的消息</string>
 
     <string name="live_host_in_room_name_hint">房间:&#160;</string>
+    <string name="live_host_in_seat_state_open">申请连线</string>
+    <string name="live_host_in_seat_state_closed">封麦</string>
 
     !-- Action Sheet -->
     <string name="live_room_setting_action_sheet_title">直播间设置</string>

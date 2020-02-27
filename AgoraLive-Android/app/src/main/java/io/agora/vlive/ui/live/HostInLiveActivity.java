@@ -1,14 +1,11 @@
 package io.agora.vlive.ui.live;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -16,78 +13,50 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
-import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
-import io.agora.vlive.ui.actionsheets.GiftActionSheet;
-import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
-import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
-import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
-import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
-import io.agora.vlive.ui.components.LiveBottomButtonLayout;
 import io.agora.vlive.ui.components.LiveHostInSeatAdapter;
-import io.agora.vlive.ui.components.LiveRoomMessageList;
-import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
+import io.agora.vlive.ui.components.LiveMessageEditLayout;
 
-public class HostInLiveActivity extends BaseLiveActivity implements View.OnClickListener,
-        BeautySettingActionSheet.BeautyActionSheetListener,
-        LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener,
-        BackgroundMusicActionSheet.BackgroundMusicActionSheetListener,
-        GiftActionSheet.GiftActionSheetListener,
-        LiveRoomToolActionSheet.LiveRoomToolActionSheetListener,
-        VoiceActionSheet.VoiceActionSheetListener {
-
+public class HostInLiveActivity extends LiveRoomActivity implements View.OnClickListener {
     private static final String TAG = HostInLiveActivity.class.getSimpleName();
 
     private static final int ROOM_NAME_HINT_COLOR = Color.rgb(101, 101, 101);
     private static final int ROOM_NAME_COLOR = Color.rgb(235, 235, 235);
 
-    private LiveRoomParticipantLayout mParticipants;
-    private LiveRoomMessageList mMessageList;
-    private LiveBottomButtonLayout mBottomButtons;
     private RecyclerView mSeatRecyclerView;
     private LiveHostInSeatAdapter mSeatAdapter;
-
-    private boolean mIsHost;
-    private String mRoomName;
-
-    private Dialog mDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_in);
         hideStatusBar(false);
-
-        Intent intent = getIntent();
-        mIsHost = intent.getBooleanExtra(Global.Constants.KEY_IS_HOST, false);
-        mRoomName = intent.getStringExtra(Global.Constants.KEY_ROOM_NAME);
         initUI();
     }
 
     private void initUI() {
         setRoomNameText();
 
-        mParticipants = findViewById(R.id.host_in_participant);
-        mParticipants.setIconResource("fake_icon_2.jpeg");
-        mParticipants.setIconResource("fake_icon_3.jpeg");
-        mParticipants.setIconResource("fake_icon_2.jpeg");
-        mParticipants.setIconResource("fake_icon_3.jpeg");
+        participants = findViewById(R.id.host_in_participant);
+        participants.setIconResource("fake_icon_2.jpeg");
+        participants.setIconResource("fake_icon_3.jpeg");
+        participants.setIconResource("fake_icon_2.jpeg");
+        participants.setIconResource("fake_icon_3.jpeg");
 
-        mMessageList = findViewById(R.id.message_list);
-        mMessageList.addMessage("康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
-        mMessageList.addMessage("康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.addMessage("起司甜甜", "何必在乎其它人");
-        mMessageList.notifyDataSetChanged();
+        messageList = findViewById(R.id.message_list);
+        messageList.addMessage("康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
+        messageList.addMessage("康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.addMessage("起司甜甜", "何必在乎其它人");
+        messageList.notifyDataSetChanged();
 
         mSeatRecyclerView = findViewById(R.id.live_host_in_seat_recycler);
         GridLayoutManager layoutManager = new GridLayoutManager(this,
@@ -96,17 +65,23 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
         mSeatAdapter = new LiveHostInSeatAdapter(this);
         mSeatRecyclerView.setAdapter(mSeatAdapter);
 
-        mBottomButtons = findViewById(R.id.host_in_bottom_layout);
-        mBottomButtons.setHost(mIsHost);
+        bottomButtons = findViewById(R.id.host_in_bottom_layout);
+        bottomButtons.setLiveBottomButtonListener(this);
+        bottomButtons.setHost(isHost);
+        if (isHost) bottomButtons.setBeautyEnabled(application().states().isBeautyEnabled());
+
         findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_fun1).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_fun2).setOnClickListener(this);
+
+        messageEditLayout = findViewById(R.id.message_edit_layout);
+        mMessageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
     }
 
     private void setRoomNameText() {
         String nameHint = getResources().getString(R.string.live_host_in_room_name_hint);
-        SpannableString name = new SpannableString(nameHint + mRoomName);
+        SpannableString name = new SpannableString(nameHint + roomName);
         name.setSpan(new ForegroundColorSpan(ROOM_NAME_HINT_COLOR),
                 0, nameHint.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         name.setSpan(new AbsoluteSizeSpan(getResources().getDimensionPixelSize(R.dimen.text_size_medium)),
@@ -132,23 +107,22 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_bottom_btn_close:
-                mDialog = showDialog(R.string.finish_broadcast_title,
+                curDialog = showDialog(R.string.finish_broadcast_title,
                         R.string.finish_broadcast_message, this);
                 break;
             case R.id.live_bottom_btn_more:
-                showActionSheetDialog(ACTION_SHEET_TOOL, mIsHost, true, this);
+                showActionSheetDialog(ACTION_SHEET_TOOL, isHost, true, this);
                 break;
             case R.id.live_bottom_btn_fun1:
-                if (mIsHost) {
+                if (isHost) {
                     showActionSheetDialog(ACTION_SHEET_BG_MUSIC, true, true, this);
                 } else {
                     showActionSheetDialog(ACTION_SHEET_GIFT, false, true, this);
                 }
                 break;
             case R.id.live_bottom_btn_fun2:
-                // this button is hidden when
-                // current user is not host.
-                if (mIsHost) {
+                if (isHost) {
+                    // this button is hidden when current user is not host.
                     showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
                 }
                 break;
@@ -161,120 +135,17 @@ public class HostInLiveActivity extends BaseLiveActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        mDialog = showDialog(R.string.finish_broadcast_title,
+        curDialog = showDialog(R.string.finish_broadcast_title,
                 R.string.finish_broadcast_message, this);
     }
 
     private void closeDialog() {
-        if (mDialog != null && mDialog.isShowing()) mDialog.dismiss();
+        if (curDialog != null && curDialog.isShowing()) curDialog.dismiss();
     }
 
     @Override
-    public void onBeautyEnabled(boolean enabled) {
-        Log.i(TAG, "onBeautyEnabled:" + enabled);
-    }
-
-    @Override
-    public void onBrightnessSelected(float brightness) {
-        Log.i(TAG, "onBrightnessSelected:" + brightness);
-    }
-
-    @Override
-    public void onSmoothSelected(float smooth) {
-        Log.i(TAG, "onSmoothSelected:" + smooth);
-    }
-
-    @Override
-    public void onColorTemperatureSelected(float temperature) {
-        Log.i(TAG, "onColorTemperatureSelected:" + temperature);
-    }
-
-    @Override
-    public void onContrastSelected(int type) {
-        Log.i(TAG, "onContrastSelected:" + type);
-    }
-
-    @Override
-    public void onResolutionSelected(int index) {
-        Log.i(TAG, "onResolutionSelected:" + index);
-    }
-
-    @Override
-    public void onFrameRateSelected(int index) {
-        Log.i(TAG, "onFrameRateSelected:" + index);
-    }
-
-    @Override
-    public void onBitrateSelected(int bitrate) {
-        Log.i(TAG, "onBitrateSelected:" + bitrate);
-    }
-
-    @Override
-    public void onSettingBackPressed() {
-        Log.i(TAG, "onSettingBackPressed:");
-        dismissActionSheetDialog();
-    }
-
-    @Override
-    public void onBackgroundMusicSelected(int index, String name, String url) {
-        Log.i(TAG, "onBackgroundMusicSelected:" + name);
-    }
-
-    @Override
-    public void onGiftSend(String name, String path, int value) {
-        Log.i(TAG, "onGiftSend:" + name);
-    }
-
-    @Override
-    public void onVoiceClicked() {
-        Log.i(TAG, "onVoiceClicked");
-        showActionSheetDialog(ACTION_SHEET_VOICE, mIsHost, false, this);
-    }
-
-    @Override
-    public void onRealDataClicked() {
-        Log.i(TAG, "onRealDataClicked");
-    }
-
-    @Override
-    public void onShareClicked() {
-        Log.i(TAG, "onShareClicked");
-    }
-
-    @Override
-    public void onSettingClicked() {
-        Log.i(TAG, "onSettingClicked");
-        showActionSheetDialog(ACTION_SHEET_VIDEO, mIsHost, false, this);
-    }
-
-    @Override
-    public void onRotateClicked() {
-        Log.i(TAG, "onRotateClicked");
-    }
-
-    @Override
-    public void onVideoClicked(boolean muted) {
-        Log.i(TAG, "onVideoClicked:" + muted);
-    }
-
-    @Override
-    public void onSpeakerClicked(boolean muted) {
-        Log.i(TAG, "onSpeakerClicked:" + muted);
-    }
-
-    @Override
-    public void onAudioRouteSelected(int type) {
-        Log.i(TAG, "onAudioRouteSelected:" + type);
-    }
-
-    @Override
-    public void onAudioRouteEnabled(boolean enabled) {
-        Log.i(TAG, "onAudioRouteEnabled:" + enabled);
-    }
-
-    @Override
-    public void onAudioBackPressed() {
-        Log.i(TAG, "onAudioBackPressed");
-        dismissActionSheetDialog();
+    public void finish() {
+        super.finish();
+        bottomButtons.clearStates(application());
     }
 }

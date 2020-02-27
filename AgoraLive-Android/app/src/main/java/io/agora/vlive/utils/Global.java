@@ -39,7 +39,7 @@ public class Global {
         public static final int TAB_ID_PK = 2;
 
         public static final String KEY_ROOM_NAME = "room-name";
-        public static final String KEY_IS_HOST = "is-host";
+        public static final String KEY_IS_ROOM_OWNER = "is-room-owner";
 
         public static final int DIVIDER_COLOR = Color.rgb(239, 239, 239);
 
@@ -81,6 +81,8 @@ public class Global {
         private int mResolutionIndex;
         private int mFrameRateIndex;
         private int mBitrate;
+
+        private int mCurrentPlayedMusicIndex = -1;
 
         States() {
             SharedPreferences sp = mApplication.preferences();
@@ -187,6 +189,14 @@ public class Global {
             mBitrate = bitrate;
             mApplication.preferences().edit()
                     .putInt(Constants.KEY_BITRATE, bitrate).apply();
+        }
+
+        public int currentMusicIndex() {
+            return mCurrentPlayedMusicIndex;
+        }
+
+        public void setCurrentMusicIndex(int index) {
+            mCurrentPlayedMusicIndex = index;
         }
     }
 

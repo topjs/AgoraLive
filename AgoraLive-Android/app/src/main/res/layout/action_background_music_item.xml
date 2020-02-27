@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/live_room_action_sheet_text_item_height"
+    android:layout_height="@dimen/live_room_bg_music_action_sheet_item_height"
     android:background="@color/action_sheet_list_item_bg_color">
 
     <androidx.appcompat.widget.AppCompatImageView

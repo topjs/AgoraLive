@@ -20,6 +20,7 @@ import io.agora.vlive.R;
 public class BackgroundMusicActionSheet extends AbstractActionSheet {
     public interface BackgroundMusicActionSheetListener {
         void onBackgroundMusicSelected(int index, String name, String url);
+        void onBackgroundMusicStopped();
     }
 
     private BgMusicAdapter mAdapter;
@@ -65,6 +66,8 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
         mAdapter = new BgMusicAdapter();
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new LineDecorator());
+
+        mSelected = application().states().currentMusicIndex();
     }
 
     private class BgMusicAdapter extends RecyclerView.Adapter {
@@ -103,10 +106,17 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mSelected = mPosition;
+                    if (mPosition == mSelected) {
+                        mSelected = -1;
+                        if (mListener != null) mListener.onBackgroundMusicStopped();
+                    } else {
+                        mSelected = mPosition;
+                        if (mListener != null) mListener.onBackgroundMusicSelected(
+                                mPosition, Global.FakeData.BG_MUSIC[mPosition][0], null);
+                    }
+
+                    application().states().setCurrentMusicIndex(mSelected);
                     mAdapter.notifyDataSetChanged();
-                    if (mListener != null) mListener.onBackgroundMusicSelected(mPosition,
-                            Global.FakeData.BG_MUSIC[mPosition][0], null);
                 }
             });
         }

@@ -89,6 +89,8 @@ public class LiveRoomMessageList extends RecyclerView {
                 mMessageList.remove(mMessageList.size() - 1);
             }
             mMessageList.add(0, new LiveMessageItem(user, message));
+            mAdapter.notifyDataSetChanged();
+            scrollToPosition(0);
         }
     }
 

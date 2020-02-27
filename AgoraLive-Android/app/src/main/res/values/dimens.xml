@@ -3,10 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="text_size_small">12sp</dimen>
-    <dimen name="text_size_medium">14sp</dimen>
-    <dimen name="text_size_normal">16sp</dimen>
-    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_small">12dp</dimen>
+    <dimen name="text_size_medium">14dp</dimen>
+    <dimen name="text_size_normal">16dp</dimen>
+    <dimen name="text_size_large">20dp</dimen>
 
     <!-- Application -->
     <dimen name="nav_bar_height">60dp</dimen>
@@ -33,6 +33,7 @@
     <dimen name="bottom_action_margin_bottom">48dp</dimen>
     <dimen name="start_broadcast_btn_padding">24dp</dimen>
     <dimen name="bottom_btn_padding">24dp</dimen>
+    <dimen name="prepare_edit_corner">10dp</dimen>
 
     <!-- Live -->
     <dimen name="live_component_base_height">40dp</dimen>
@@ -43,6 +44,7 @@
     <dimen name="live_message_list_height">320dp</dimen>
     <dimen name="live_message_text_padding_horizontal">16dp</dimen>
     <dimen name="live_message_text_padding_vertical">12dp</dimen>
+    <dimen name="live_message_text_margin">2dp</dimen>
 
     <dimen name="live_participant_layout_height">32dp</dimen>
     <dimen name="live_participant_count_width">58dp</dimen>
@@ -57,8 +59,8 @@
     <dimen name="live_host_in_video_size">116dp</dimen>
     <dimen name="live_host_in_room_name_max_width">128dp</dimen>
     <dimen name="live_rect_corner">4dp</dimen>
-    <dimen name="live_host_in_seat_item_number_size">16dp</dimen>
-    <dimen name="live_host_in_seat_item_margin">6dp</dimen>
+    <dimen name="live_host_in_seat_item_number_size">20dp</dimen>
+    <dimen name="live_host_in_seat_item_margin">8dp</dimen>
     <dimen name="live_host_in_seat_item_operation_size">38dp</dimen>
 
     <dimen name="live_pk_start_button_size">76dp</dimen>
@@ -91,6 +93,7 @@
 
     <dimen name="live_room_bg_music_action_sheet_height">540dp</dimen>
     <dimen name="live_room_bg_music_action_sheet_icon_size">28dp</dimen>
+    <dimen name="live_room_bg_music_action_sheet_item_height">52dp</dimen>
 
     <dimen name="live_room_gift_action_sheet_height">418dp</dimen>
     <dimen name="live_room_gift_action_sheet_send_btn_width">86dp</dimen>

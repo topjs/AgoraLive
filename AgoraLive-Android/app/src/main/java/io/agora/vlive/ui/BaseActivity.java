@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static final int TOAST_SHORT_INTERVAL = 2000;
 
     protected int systemBarHeight;
+    protected int displayHeight;
 
     private Stack<AbstractActionSheet> mActionSheetStack;
     private BottomSheetDialog mSheetDialog;
@@ -62,6 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setGlobalLayoutListener();
         mActionSheetStack = new Stack<>();
         systemBarHeight = getStatusBarHeight();
+        displayHeight = getDisplayHeight();
     }
 
     private void setGlobalLayoutListener() {
@@ -110,6 +113,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         int id = getResources().getIdentifier(
                 "status_bar_height", "dimen", "android");
         return id > 0 ? getResources().getDimensionPixelSize(id) : id;
+    }
+
+    private int getDisplayHeight() {
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        return metric.heightPixels;
     }
 
     protected void showActionSheetDialog(final AbstractActionSheet sheet) {
