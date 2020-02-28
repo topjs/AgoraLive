@@ -33,6 +33,9 @@
     <string name="live_host_in_seat_state_open">Ask Invitation</string>
     <string name="live_host_in_seat_state_closed">Closed</string>
 
+    <!-- Messages -->
+    <string name="live_message_gift_send">has sent out</string>
+
     <!-- Action Sheet -->
     <string name="live_room_setting_action_sheet_title">Live Room Setting</string>
     <string name="live_room_setting_title_resolution">Resolution</string>

@@ -1,8 +1,6 @@
 package io.agora.vlive.ui.actionsheets;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +12,12 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
-import java.io.IOException;
-
 import io.agora.vlive.R;
 import io.agora.vlive.utils.Global;
 
 public class GiftActionSheet extends AbstractActionSheet implements View.OnClickListener {
     public interface GiftActionSheetListener {
-        void onGiftSend(String name, String path, int value);
+        void onGiftSend(String name, int index, int value);
     }
 
     private static final int SPAN_COUNT = 4;
@@ -65,9 +60,7 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_action_sheet_gift_send_btn) {
             if (mListener != null && mSelected != -1) mListener.onGiftSend(
-                    mGiftNames[mSelected],
-                    Global.FakeData.GIFT_FILES[mSelected],
-                    Global.FakeData.GIFT_VALUES[mSelected]);
+                    mGiftNames[mSelected], mSelected, Global.FakeData.GIFT_VALUES[mSelected]);
         }
     }
 
@@ -87,20 +80,12 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
                     mValueFormat, Global.FakeData.GIFT_VALUES[position]));
             giftViewHolder.setPosition(position);
             giftViewHolder.itemView.setActivated(mSelected == position);
-
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getContext().getAssets().
-                        open(ASSET_PREFIX + File.separator +
-                                Global.FakeData.GIFT_FILES[position]));
-                giftViewHolder.icon.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            giftViewHolder.icon.setImageResource(Global.Constants.GIFT_ICON_RES[position]);
         }
 
         @Override
         public int getItemCount() {
-            return Global.FakeData.GIFT_FILES.length;
+            return Global.Constants.GIFT_ICON_RES.length;
         }
     }
 

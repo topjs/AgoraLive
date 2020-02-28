@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,8 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import io.agora.vlive.R;
+import io.agora.vlive.utils.Global;
 
 public class LiveRoomMessageList extends RecyclerView {
+    public static final int MSG_TYPE_SYSTEM = 0;
+    public static final int MSG_TYPE_CHAT = 1;
+    public static final int MSG_TYPE_GIFT = 2;
+
     private static final int DEFAULT_MESSAGE_TEXT_COLOR = Color.rgb(196, 196, 196);
     private static final int MAX_SAVED_MESSAGE = 50;
     private static final int MESSAGE_ITEM_MARGIN = 16;
@@ -55,8 +61,13 @@ public class LiveRoomMessageList extends RecyclerView {
         addItemDecoration(new MessageItemDecorator());
     }
 
-    public void addMessage(String user, String message) {
-        mAdapter.addMessage(user, message);
+    public void addMessage(int type, String user, String message, int... index) {
+        LiveMessageItem item = new LiveMessageItem(type, user, message);
+        if (type == MSG_TYPE_GIFT && index != null) {
+            item.giftIndex = index[0];
+            item.message = getResources().getString(R.string.live_message_gift_send);
+        }
+        mAdapter.addMessage(item);
     }
 
     public void notifyDataSetChanged() {
@@ -69,14 +80,23 @@ public class LiveRoomMessageList extends RecyclerView {
         @NonNull
         @Override
         public MessageListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new MessageListViewHolder(mInflater
-                    .inflate(R.layout.message_item_layout, parent, false));
+            if (viewType == MSG_TYPE_GIFT) {
+                return new MessageListViewHolder(mInflater
+                        .inflate(R.layout.message_item_gift_layout, parent, false));
+            } else {
+                return new MessageListViewHolder(mInflater
+                        .inflate(R.layout.message_item_layout, parent, false));
+            }
         }
 
         @Override
         public void onBindViewHolder(@NonNull MessageListViewHolder holder, int position) {
             LiveMessageItem item = mMessageList.get(position);
             holder.setMessage(item.user, item.message);
+
+            if (item.type == MSG_TYPE_GIFT && holder.giftIcon != null) {
+                holder.giftIcon.setImageResource(Global.Constants.GIFT_ICON_RES[item.giftIndex]);
+            }
         }
 
         @Override
@@ -84,22 +104,29 @@ public class LiveRoomMessageList extends RecyclerView {
             return mMessageList.size();
         }
 
-        void addMessage(String user, String message) {
+        @Override
+        public int getItemViewType(int position) {
+            return mMessageList.get(position).type;
+        }
+
+        void addMessage(LiveMessageItem item) {
             if (mMessageList.size() == MAX_SAVED_MESSAGE) {
                 mMessageList.remove(mMessageList.size() - 1);
             }
-            mMessageList.add(0, new LiveMessageItem(user, message));
+            mMessageList.add(item);
             mAdapter.notifyDataSetChanged();
-            scrollToPosition(0);
+            scrollToPosition(mMessageList.size() - 1);
         }
     }
 
     private class MessageListViewHolder extends ViewHolder {
-        private AppCompatTextView mMessageText;
+        private AppCompatTextView messageText;
+        private AppCompatImageView giftIcon;
 
         MessageListViewHolder(@NonNull View itemView) {
             super(itemView);
-            mMessageText = itemView.findViewById(R.id.live_message_item_text);
+            messageText = itemView.findViewById(R.id.live_message_item_text);
+            giftIcon = itemView.findViewById(R.id.live_message_gift_icon);
         }
 
         void setMessage(String user, String message) {
@@ -113,7 +140,7 @@ public class LiveRoomMessageList extends RecyclerView {
                     user.length() + 2, messageSpan.length(),
                     Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-            mMessageText.setText(messageSpan);
+            messageText.setText(messageSpan);
         }
     }
 
@@ -128,11 +155,14 @@ public class LiveRoomMessageList extends RecyclerView {
         }
     }
 
-    public static class LiveMessageItem {
+    private static class LiveMessageItem {
+        int type;
         String user;
         String message;
+        int giftIndex;
 
-        LiveMessageItem(String user, String message) {
+        LiveMessageItem(int type, String user, String message) {
+            this.type = type;
             this.user = user;
             this.message = message;
         }

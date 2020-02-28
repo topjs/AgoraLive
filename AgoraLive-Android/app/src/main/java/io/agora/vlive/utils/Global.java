@@ -65,6 +65,17 @@ public class Global {
         public static final String[] FRAME_RATES = {
                 "15", "24", "30"
         };
+
+        public static final int[] GIFT_ICON_RES = {
+                R.drawable.gift_01_bell,
+                R.drawable.gift_02_icecream,
+                R.drawable.gift_03_wine,
+                R.drawable.gift_04_cake,
+                R.drawable.gift_05_ring,
+                R.drawable.gift_06_watch,
+                R.drawable.gift_07_diamond,
+                R.drawable.gift_08_rocket
+        };
     }
 
     public class States {
@@ -210,17 +221,6 @@ public class Global {
             {"同桌的你", "老狼"},
             {"天下没有不散的宴席", "郑钧"},
             {"作曲家", "李荣浩"},
-        };
-
-        public static final String[] GIFT_FILES = {
-                "gift_01_bell.png",
-                "gift_02_icecream.png",
-                "gift_03_wine.png",
-                "gift_04_cake.png",
-                "gift_05_ring.png",
-                "gift_06_watch.png",
-                "gift_07_diamond.png",
-                "gift_08_rocket.png",
         };
 
         public static final int[] GIFT_VALUES = {

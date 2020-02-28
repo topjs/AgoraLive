@@ -187,8 +187,10 @@ public abstract class LiveRoomActivity extends BaseLiveActivity implements
     }
 
     @Override
-    public void onGiftSend(String name, String path, int value) {
+    public void onGiftSend(String name, int index, int value) {
         Log.i(TAG, "onGiftSend:" + name);
+        dismissActionSheetDialog();
+        messageList.addMessage(LiveRoomMessageList.MSG_TYPE_GIFT, "me", null, index);
     }
 
     @Override
@@ -261,7 +263,7 @@ public abstract class LiveRoomActivity extends BaseLiveActivity implements
                 showShortToast(getResources().getString(R.string.live_send_empty_message));
             } else {
                 String message = editable.toString();
-                messageList.addMessage("me", message);
+                messageList.addMessage(LiveRoomMessageList.MSG_TYPE_CHAT, "me", message);
                 mMessageEditText.setText("");
             }
 
