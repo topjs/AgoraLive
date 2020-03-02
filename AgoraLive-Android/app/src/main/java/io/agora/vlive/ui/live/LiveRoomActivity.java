@@ -43,9 +43,9 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         TextView.OnEditorActionListener {
 
     private static final String TAG = LiveRoomActivity.class.getSimpleName();
-    private static final int IDEAL_MIN_KEYBOARD_HEIGHT = 100;
+    private static final int IDEAL_MIN_KEYBOARD_HEIGHT = 200;
 
-    private View mContentView;
+    private Rect mDecorViewRect;
     private int mInputMethodHeight;
 
     // UI components of a live room
@@ -67,9 +67,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mContentView = findViewById(Window.ID_ANDROID_CONTENT);
-        mContentView.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
+        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         detectKeyboardLayout();
@@ -84,8 +83,13 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     private void detectKeyboardLayout() {
         Rect rect = new Rect();
-        mContentView.getWindowVisibleDisplayFrame(rect);
-        int diff = displayHeight - systemBarHeight - rect.height();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+
+        if (mDecorViewRect == null) {
+            mDecorViewRect = rect;
+        }
+
+        int diff = mDecorViewRect.height() - rect.height();
 
         // The global layout listener may be invoked several
         // times when the activity is launched, we need to care

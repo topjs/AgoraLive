@@ -139,6 +139,10 @@ public class HostInLiveActivity extends LiveRoomActivity implements View.OnClick
                     showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
                 }
                 break;
+            case R.id.dialog_positive_button:
+                closeDialog();
+                finish();
+                break;
         }
     }
 
