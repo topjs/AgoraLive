@@ -19,7 +19,7 @@ import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
-public class LivePrepareActivity extends BaseLiveActivity implements View.OnClickListener, TextWatcher,
+public class LivePrepareActivity extends LiveBaseActivity implements View.OnClickListener, TextWatcher,
         BeautySettingActionSheet.BeautyActionSheetListener,
         LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener {
 

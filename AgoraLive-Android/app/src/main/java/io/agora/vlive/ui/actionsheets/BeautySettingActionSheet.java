@@ -68,15 +68,15 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         mSmoothValue = findViewById(R.id.beauty_value_smooth);
         mColorTempValue = findViewById(R.id.beauty_value_temperature);
 
-        float value = application().states().beautyBrightness();
+        float value = application().config().beautyBrightness();
         mBrightnessSeekBar.setProgress(valueToProgress(value));
         mBrightnessValue.setText(String.valueOf(value));
 
-        value = application().states().beautySmooth();
+        value = application().config().beautySmooth();
         mSmoothSeekBar.setProgress(valueToProgress(value));
         mSmoothValue.setText(String.valueOf(value));
 
-        value = application().states().beautyColorTemp();
+        value = application().config().beautyColorTemp();
         mColorTempSeekBar.setProgress(valueToProgress(value));
         mColorTempValue.setText(String.valueOf(value));
 
@@ -87,12 +87,12 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         mContrastMediumBtn.setOnClickListener(this);
         mContrastHighBtn.setOnClickListener(this);
 
-        contrastTypeToButton(application().states().
+        contrastTypeToButton(application().config().
                 beautyContrast()).setActivated(true);
 
         mBeautySwitch = findViewById(R.id.beauty_switch);
         mBeautySwitch.setOnClickListener(this);
-        mBeautySwitch.setActivated(application().states().isBeautyEnabled());
+        mBeautySwitch.setActivated(application().config().isBeautyEnabled());
     }
 
     @Override
@@ -101,7 +101,7 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         if (R.id.beauty_switch == id) {
             boolean activated = !mBeautySwitch.isActivated();
             mBeautySwitch.setActivated(activated);
-            application().states().setBeautyEnabled(activated);
+            application().config().setBeautyEnabled(activated);
             if (mListener != null) mListener.onBeautyEnabled(activated);
             return;
         }
@@ -126,7 +126,7 @@ public class BeautySettingActionSheet extends AbstractActionSheet
                 break;
         }
 
-        application().states().setContrast(type);
+        application().config().setContrast(type);
         if (mListener != null) mListener.onContrastSelected(type);
     }
 
@@ -146,17 +146,17 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         switch (seekBar.getId()) {
             case R.id.beauty_brightness_progress_bar:
                 mBrightnessValue.setText(String.valueOf(value));
-                application().states().setBeautyBrightness(value);
+                application().config().setBeautyBrightness(value);
                 if (mListener != null) mListener.onBrightnessSelected(value);
                 break;
             case R.id.beauty_smooth_progress_bar:
                 mSmoothValue.setText(String.valueOf(value));
-                application().states().setBeautySmooth(value);
+                application().config().setBeautySmooth(value);
                 if (mListener != null) mListener.onSmoothSelected(value);
                 break;
             case R.id.beauty_temperature_progress_bar:
                 mColorTempValue.setText(String.valueOf(value));
-                application().states().setBeautyColorTemp(value);
+                application().config().setBeautyColorTemp(value);
                 if (mListener != null) mListener.onColorTemperatureSelected(value);
                 break;
         }

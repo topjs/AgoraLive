@@ -67,7 +67,7 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new LineDecorator());
 
-        mSelected = application().states().currentMusicIndex();
+        mSelected = application().config().currentMusicIndex();
     }
 
     private class BgMusicAdapter extends RecyclerView.Adapter {
@@ -115,7 +115,7 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
                                 mPosition, Global.FakeData.BG_MUSIC[mPosition][0], null);
                     }
 
-                    application().states().setCurrentMusicIndex(mSelected);
+                    application().config().setCurrentMusicIndex(mSelected);
                     mAdapter.notifyDataSetChanged();
                 }
             });

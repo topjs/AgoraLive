@@ -39,7 +39,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         bottomButtons = findViewById(R.id.single_live_bottom_layout);
         bottomButtons.setLiveBottomButtonListener(this);
         bottomButtons.setHost(isHost);
-        if (isHost) bottomButtons.setBeautyEnabled(application().states().isBeautyEnabled());
+        if (isHost) bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
 
         findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);

@@ -21,9 +21,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Array;
 
+import io.agora.vlive.ui.live.LivePrepareActivity;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
-import io.agora.vlive.ui.live.LivePrepareBaseActivity;
 
 public class RoomFragment extends AbstractFragment implements View.OnClickListener {
     private static final int TAB_COUNT = 3;
@@ -52,7 +52,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
         if (bundle != null) {
             mCurrentTap = bundle.getInt(Global.Constants.TAB_KEY);
         } else {
-            mCurrentTap = application().states().lastTabPosition();
+            mCurrentTap = application().config().lastTabPosition();
         }
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
@@ -90,7 +90,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
         TabLayout.Tab tab = mTabLayout.getTabAt(mCurrentTap);
         if (tab != null) {
             mTabLayout.selectTab(tab, true);
-            application().states().setLastTabPosition(mCurrentTap);
+            application().config().setLastTabPosition(mCurrentTap);
             setTextViewBold(getCachedTabText(tab), true);
         }
 
@@ -102,7 +102,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mCurrentTap = tab.getPosition();
-                application().states().setLastTabPosition(mCurrentTap);
+                application().config().setLastTabPosition(mCurrentTap);
                 setTextViewBold(getCachedTabText(tab), true);
             }
 
@@ -155,7 +155,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_action_sheet_gift_send_btn) {
-            Intent intent = new Intent(getActivity(), LivePrepareBaseActivity.class);
+            Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
             intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap);
             intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, true);
             startActivity(intent);

@@ -23,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.Stack;
 
 import io.agora.vlive.AgoraLiveApplication;
+import io.agora.vlive.Config;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
@@ -230,8 +231,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         return (AgoraLiveApplication)  getApplication();
     }
 
-    protected Global global() {
-        return application().global();
+    protected Config config() {
+        return application().config();
     }
 
     protected SharedPreferences preferences() {

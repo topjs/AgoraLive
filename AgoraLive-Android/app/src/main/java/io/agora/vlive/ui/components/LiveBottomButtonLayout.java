@@ -101,7 +101,7 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
      * @param application
      */
     public void clearStates(AgoraLiveApplication application) {
-        application.states().setCurrentMusicIndex(-1);
+        application.config().setCurrentMusicIndex(-1);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class HostPKLiveActivity extends LiveRoomActivity implements View.OnClick
         bottomButtons = findViewById(R.id.pk_host_in_bottom_layout);
         bottomButtons.setLiveBottomButtonListener(this);
         bottomButtons.setHost(isHost);
-        if (isHost) bottomButtons.setBeautyEnabled(application().states().isBeautyEnabled());
+        if (isHost) bottomButtons.setBeautyEnabled(application().config().isBeautyEnabled());
 
         findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);
@@ -93,10 +93,6 @@ public class HostPKLiveActivity extends LiveRoomActivity implements View.OnClick
     public void onBackPressed() {
         curDialog = showDialog(R.string.finish_broadcast_title,
                 R.string.finish_broadcast_message, this);
-    }
-
-    private void closeDialog() {
-        if (curDialog != null && curDialog.isShowing()) curDialog.dismiss();
     }
 
     @Override

@@ -20,16 +20,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.live.HostInLiveBaseActivity"
+        <activity android:name=".ui.live.HostInLiveActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.live.SingleHostLiveBaseActivity"
+        <activity android:name=".ui.live.SingleHostLiveActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.live.HostPKLiveBaseActivity"
+        <activity android:name=".ui.live.HostPKLiveActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.live.LivePrepareBaseActivity"
+        <activity android:name=".ui.live.LivePrepareActivity"
             android:screenOrientation="portrait"
             android:noHistory="true"/>
     </application>

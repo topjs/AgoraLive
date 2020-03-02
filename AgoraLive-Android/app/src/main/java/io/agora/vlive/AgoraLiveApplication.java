@@ -7,22 +7,18 @@ import android.content.SharedPreferences;
 import io.agora.vlive.utils.Global;
 
 public class AgoraLiveApplication extends Application {
-    private Global mGlobal;
     private SharedPreferences mPref;
+    private Config mConfig;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mPref = getSharedPreferences(Global.Constants.SF_NAME, Context.MODE_PRIVATE);
-        mGlobal = new Global(this);
+        mConfig = new Config(this);
     }
 
-    public Global global() {
-        return mGlobal;
-    }
-
-    public Global.States states() {
-        return mGlobal.getGlobalStates();
+    public Config config() {
+        return mConfig;
     }
 
     public SharedPreferences preferences() {

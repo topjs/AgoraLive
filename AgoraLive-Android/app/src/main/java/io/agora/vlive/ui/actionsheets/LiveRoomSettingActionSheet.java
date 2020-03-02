@@ -127,7 +127,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
                 progress = progress / 50 * 50;
             }
 
-            application().states().setVideoBitrate(progress);
+            application().config().setVideoBitrate(progress);
             mMainBitrateText.setText(String.format(
                     mMainBitrateTextFormat, progress));
             if (mListener != null) mListener.onBitrateSelected(progress);
@@ -189,12 +189,12 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
     private void setMainPageText() {
         mMainResolutionText.setText(Global.Constants.RESOLUTIONS[
-                application().states().resolutionIndex()]);
+                application().config().resolutionIndex()]);
         mMainFrameRateText.setText(Global.Constants.FRAME_RATES[
-                application().states().frameRateIndex()]);
-        mBitrateSeekBar.setProgress(application().states().videoBitrate());
+                application().config().frameRateIndex()]);
+        mBitrateSeekBar.setProgress(application().config().videoBitrate());
         mMainBitrateText.setText(String.format(mMainBitrateTextFormat,
-                application().states().videoBitrate()));
+                application().config().videoBitrate()));
     }
 
     private void gotoResolutionPage() {
@@ -236,7 +236,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ResolutionViewHolder resolutionHolder = (ResolutionViewHolder) holder;
             resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS[position]);
-            holder.itemView.setActivated(position == application().states().resolutionIndex());
+            holder.itemView.setActivated(position == application().config().resolutionIndex());
             resolutionHolder.setPosition(position);
         }
 
@@ -255,7 +255,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    application().states().setResolutionIndex(position);
+                    application().config().setResolutionIndex(position);
                     mResolutionRecycler.getAdapter().notifyDataSetChanged();
                     if (mListener != null) mListener.onResolutionSelected(position);
                 }
@@ -282,7 +282,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
             frameRateHolder.textView.setText(Global.Constants.FRAME_RATES[position]);
             frameRateHolder.setPosition(position);
             holder.itemView.setActivated(
-                    position == application().states().frameRateIndex());
+                    position == application().config().frameRateIndex());
         }
 
         @Override
@@ -300,7 +300,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
             itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    application().states().setFrameRateIndex(position);
+                    application().config().setFrameRateIndex(position);
                     mFrameRateRecycler.getAdapter().notifyDataSetChanged();
                     if (mListener != null) mListener.onFrameRateSelected(position);
                 }
@@ -322,10 +322,10 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
             int count = parent.getChildCount();
             for (int i = 0; i < count - 1; i++) {
                 if (parent == mResolutionRecycler &&
-                    application().states().resolutionIndex() == i + 1) {
+                    application().config().resolutionIndex() == i + 1) {
                     continue;
                 } else if (parent == mFrameRateRecycler &&
-                    application().states().frameRateIndex() == i + 1) {
+                    application().config().frameRateIndex() == i + 1) {
                     continue;
                 }
 

@@ -21,10 +21,10 @@ import io.agora.vlive.ui.components.LiveHostInSeatAdapter;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
 import io.agora.vlive.ui.components.LiveRoomMessageList;
 
-public class HostInLiveBaseActivity extends LiveRoomActivity implements View.OnClickListener,
+public class HostInLiveActivity extends LiveRoomActivity implements View.OnClickListener,
         LiveHostInSeatAdapter.LiveHostInSeatOnClickedListener,
         InviteUserActionSheet.InviteUserActionSheetListener {
-    private static final String TAG = HostInLiveBaseActivity.class.getSimpleName();
+    private static final String TAG = HostInLiveActivity.class.getSimpleName();
 
     private static final int ROOM_NAME_HINT_COLOR = Color.rgb(101, 101, 101);
     private static final int ROOM_NAME_COLOR = Color.rgb(235, 235, 235);
@@ -81,7 +81,7 @@ public class HostInLiveBaseActivity extends LiveRoomActivity implements View.OnC
         bottomButtons = findViewById(R.id.host_in_bottom_layout);
         bottomButtons.setLiveBottomButtonListener(this);
         bottomButtons.setHost(isHost);
-        if (isHost) bottomButtons.setBeautyEnabled(application().states().isBeautyEnabled());
+        if (isHost) bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
 
         findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);
