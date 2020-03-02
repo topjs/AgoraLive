@@ -42,6 +42,11 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     }
 
     @Override
+    protected void onPermissionGranted() {
+
+    }
+
+    @Override
     protected void onGlobalLayoutCompleted() {
         View topLayout = findViewById(R.id.prepare_top_btn_layout);
         RelativeLayout.LayoutParams params =

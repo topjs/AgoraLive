@@ -22,6 +22,11 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         initUI();
     }
 
+    @Override
+    protected void onPermissionGranted() {
+
+    }
+
     private void initUI() {
         mNamePad = findViewById(R.id.single_live_name_pad);
         mNamePad.setName("康康有毒");

@@ -22,6 +22,11 @@ public class HostPKLiveActivity extends LiveRoomActivity implements View.OnClick
         initUI();
     }
 
+    @Override
+    protected void onPermissionGranted() {
+
+    }
+
     private void initUI() {
         mNamePad = findViewById(R.id.pk_host_in_name_pad);
         mNamePad.setName("康康有毒");

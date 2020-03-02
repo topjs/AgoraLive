@@ -6,6 +6,8 @@
     <string name="title_rooms">房间</string>
     <string name="title_me">我的</string>
 
+    <string name="permission_not_granted">应用未给予必要权限</string>
+
     <!-- Home Fragment -->
     <string name="home_category_title_multi">多人连麦直播</string>
     <string name="home_category_title_single">单主播直播</string>

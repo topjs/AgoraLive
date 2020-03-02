@@ -45,6 +45,11 @@ public class HostInLiveActivity extends LiveRoomActivity implements View.OnClick
         initUI();
     }
 
+    @Override
+    protected void onPermissionGranted() {
+
+    }
+
     private void initUI() {
         setRoomNameText();
 

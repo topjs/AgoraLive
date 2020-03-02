@@ -5,6 +5,7 @@
     <string name="title_home">Home</string>
     <string name="title_rooms">Rooms</string>
     <string name="title_me">Me</string>
+    <string name="permission_not_granted">Necessary permissions not granted</string>
 
     <!-- Home Fragment -->
     <string name="home_category_title_multi">Host-in Live</string>
