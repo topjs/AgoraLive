@@ -42,4 +42,5 @@ dependencies {
     implementation 'org.jetbrains:annotations-java5:15.0'
 
     implementation 'io.agora.rtc:full-sdk:2.9.2'
+    implementation project(path: ':camera')
 }

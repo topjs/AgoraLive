@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import io.agora.vlive.R;
+import io.agora.vlive.camera.CameraProxy;
 import io.agora.vlive.ui.BaseActivity;
 
 /**
@@ -25,6 +26,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
 
     private static final int PERMISSION_REQ = 1;
 
+    private CameraProxy mCameraProxy = CameraProxy.create(application());
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
     protected void checkPermissions() {
         if (!permissionArrayGranted()) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQ);
+        } else {
+            onPermissionGranted();
         }
     }
 
@@ -56,14 +61,18 @@ public abstract class LiveBaseActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQ) {
-            boolean granted = permissionArrayGranted();
             if (permissionArrayGranted()) {
                 onPermissionGranted();
-            } else if (!granted) {
+            } else {
                 Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_LONG).show();
+                finish();
             }
         }
     }
 
     protected abstract void onPermissionGranted();
+
+    protected CameraProxy cameraProxy() {
+        return mCameraProxy;
+    }
 }

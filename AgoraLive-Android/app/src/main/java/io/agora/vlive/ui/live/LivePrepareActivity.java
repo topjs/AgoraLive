@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -32,6 +33,9 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     private int roomType;
     private String mNameTooLongToastMsg;
 
+    private TextureView mTextureView;
+    private boolean mInitCalled;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +43,6 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         setContentView(R.layout.activity_live_prepare);
         roomType = getIntent().getIntExtra(Global.Constants.TAB_KEY, Global.Constants.TAB_ID_MULTI);
         initUI();
-    }
-
-    @Override
-    protected void onPermissionGranted() {
-
     }
 
     @Override
@@ -58,10 +57,17 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        mStartBroadBtn.setEnabled(true);
     }
 
     private void initUI() {
+        // onCreate() and onPermissionsGranted() may be called
+        // in any order, and we want to call initUI() when the
+        // last one of them is called.
+        if (!mInitCalled) {
+            mInitCalled = true;
+            return;
+        }
+
         mEditText = findViewById(R.id.room_name_edit);
         mEditText.addTextChangedListener(this);
 
@@ -75,6 +81,15 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         findViewById(R.id.live_prepare_setting_btn).setOnClickListener(this);
         findViewById(R.id.live_prepare_close).setOnClickListener(this);
         findViewById(R.id.live_prepare_rotate_camera).setOnClickListener(this);
+
+        mTextureView = findViewById(R.id.live_prepare_texture_view);
+        mTextureView.setVisibility(View.VISIBLE);
+        cameraProxy().setRenderView(mTextureView);
+    }
+
+    @Override
+    protected void onPermissionGranted() {
+        initUI();
     }
 
     @Override
