@@ -23,7 +23,7 @@ import java.lang.reflect.Array;
 
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
-import io.agora.vlive.ui.live.LivePrepareActivity;
+import io.agora.vlive.ui.live.LivePrepareBaseActivity;
 
 public class RoomFragment extends AbstractFragment implements View.OnClickListener {
     private static final int TAB_COUNT = 3;
@@ -155,7 +155,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_action_sheet_gift_send_btn) {
-            Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
+            Intent intent = new Intent(getActivity(), LivePrepareBaseActivity.class);
             intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap);
             intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, true);
             startActivity(intent);

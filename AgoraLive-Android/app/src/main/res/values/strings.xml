@@ -30,7 +30,8 @@
     <string name="live_send_empty_message">Empty messages are not sent</string>
 
     <string name="live_host_in_room_name_hint">Room:&#160;</string>
-    <string name="live_host_in_seat_state_open">Ask Invitation</string>
+    <string name="live_host_in_seat_state_open_audience">Apply</string>
+    <string name="live_host_in_seat_state_open_host">Invite</string>
     <string name="live_host_in_seat_state_closed">Closed</string>
 
     <!-- Messages -->
@@ -84,6 +85,11 @@
     <string name="live_room_voice_action_sheet_headphone">Headphone</string>
     <string name="live_room_voice_action_sheet_loudspeaker">Loudspeaker</string>
     <string name="live_room_voice_action_sheet_others">Others</string>
+
+    <string name="live_room_host_in_invite_user_list_action_sheet_title">Invite</string>
+    <string name="live_room_all_online_user_action_sheet_title">Online Users</string>
+    <string name="live_room_host_in_audience_apply_title">Apply</string>
+    <string name="live_room_host_in_audience_apply_message">Do you want to apply to a seat?</string>
 
     <!-- dialog -->
     <string name="dialog_negative_button">Cancel</string>

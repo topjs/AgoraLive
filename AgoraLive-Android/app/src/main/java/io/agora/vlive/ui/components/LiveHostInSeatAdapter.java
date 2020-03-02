@@ -16,11 +16,20 @@ import java.util.ArrayList;
 import io.agora.vlive.R;
 
 public class LiveHostInSeatAdapter extends RecyclerView.Adapter {
+    public interface LiveHostInSeatOnClickedListener {
+        void onHostInviteClicked(int position);
+        void onAudienceApplyClicked(int position);
+        void onSeatPositionCloseClicked(int position);
+    }
+
     private static final int MAX_SEAT = 6;
 
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Seat> mSeatList;
+    private boolean mIsHost;
+
+    private LiveHostInSeatOnClickedListener mListener;
 
     public LiveHostInSeatAdapter(Context context) {
         mContext = context;
@@ -38,6 +47,14 @@ public class LiveHostInSeatAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public void setIsHost(boolean isHost) {
+        mIsHost = isHost;
+    }
+
+    public void setSeatListener(LiveHostInSeatOnClickedListener listener) {
+        mListener = listener;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,19 +64,40 @@ public class LiveHostInSeatAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         Seat seat = mSeatList.get(position);
         SeatViewHolder seatViewHolder = (SeatViewHolder) holder;
         seatViewHolder.id.setText(String.valueOf(seat.id));
 
         if (seat.state.isOpen()) {
             seatViewHolder.icon.setImageResource(R.drawable.live_seat_invite);
-            seatViewHolder.text.setText(R.string.live_host_in_seat_state_open);
+            int textRes = mIsHost ?
+                    R.string.live_host_in_seat_state_open_host :
+                    R.string.live_host_in_seat_state_open_audience;
+            seatViewHolder.text.setText(textRes);
         } else if (seat.state.isClosed()) {
-            seatViewHolder.icon.setImageResource(R.drawable.live_seat_close);
             seatViewHolder.text.setText(R.string.live_host_in_seat_state_closed);
+            seatViewHolder.icon.setImageResource(R.drawable.live_seat_close);
         } else if (seat.state.isTaken()) {
 
+        }
+
+        if (seat.state.isOpen() || seat.state.isClosed()) {
+            final SeatState state = seat.state;
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (state.isOpen() && mListener != null) {
+                        if (mIsHost) {
+                            mListener.onHostInviteClicked(position);
+                        } else {
+                            mListener.onAudienceApplyClicked(position);
+                        }
+                    } else if (state.isClosed() && mListener != null) {
+                        mListener.onSeatPositionCloseClicked(position);
+                    }
+                }
+            });
         }
     }
 

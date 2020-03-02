@@ -30,7 +30,8 @@
     <string name="live_send_empty_message">您不能发空的消息</string>
 
     <string name="live_host_in_room_name_hint">房间:&#160;</string>
-    <string name="live_host_in_seat_state_open">申请连线</string>
+    <string name="live_host_in_seat_state_open_audience">申请连线</string>
+    <string name="live_host_in_seat_state_open_host">邀请连麦</string>
     <string name="live_host_in_seat_state_closed">封麦</string>
 
     <!-- Messages -->
@@ -84,6 +85,11 @@
     <string name="live_room_voice_action_sheet_headphone">耳机</string>
     <string name="live_room_voice_action_sheet_loudspeaker">音箱</string>
     <string name="live_room_voice_action_sheet_others">其它设备</string>
+
+    <string name="live_room_host_in_invite_user_list_action_sheet_title">邀请上麦</string>
+    <string name="live_room_all_online_user_action_sheet_title">在线用户</string>
+    <string name="live_room_host_in_audience_apply_title">申请上麦</string>
+    <string name="live_room_host_in_audience_apply_message">您是否申请上麦?</string>
 
     <!-- dialog -->
     <string name="dialog_negative_button">取消</string>

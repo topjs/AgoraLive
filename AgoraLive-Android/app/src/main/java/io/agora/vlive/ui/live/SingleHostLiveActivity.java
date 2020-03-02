@@ -96,10 +96,6 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
                 R.string.finish_broadcast_message, this);
     }
 
-    private void closeDialog() {
-        if (curDialog != null && curDialog.isShowing()) curDialog.dismiss();
-    }
-
     @Override
     public void finish() {
         super.finish();

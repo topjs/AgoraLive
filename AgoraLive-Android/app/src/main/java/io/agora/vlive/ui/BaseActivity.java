@@ -26,6 +26,7 @@ import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
+import io.agora.vlive.ui.actionsheets.InviteUserActionSheet;
 import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
@@ -46,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected static final int ACTION_SHEET_GIFT = 3;
     protected static final int ACTION_SHEET_TOOL = 4;
     protected static final int ACTION_SHEET_VOICE = 5;
+    protected static final int ACTION_SHEET_ROOM_USER = 6;
 
     private static final int ACTION_SHEET_DIALOG_STYLE_RES = R.style.live_room_dialog;
     private static final int TOAST_SHORT_INTERVAL = 2000;
@@ -159,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mSheetDialog.show();
     }
 
-    protected void showActionSheetDialog(int type, boolean isHost, boolean newStack,
+    protected AbstractActionSheet showActionSheetDialog(int type, boolean isHost, boolean newStack,
                                          AbstractActionSheet.AbsActionSheetListener listener) {
         AbstractActionSheet actionSheet;
         switch (type) {
@@ -179,6 +181,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             case ACTION_SHEET_VOICE:
                 actionSheet = new VoiceActionSheet(this);
                 break;
+            case ACTION_SHEET_ROOM_USER:
+                actionSheet = new InviteUserActionSheet(this);
+                break;
             default:
                 actionSheet = new LiveRoomSettingActionSheet(this);
                 ((LiveRoomSettingActionSheet) actionSheet).setFallback(!newStack);
@@ -189,6 +194,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActionSheetStack.push(actionSheet);
         Log.i(TAG, "action sheet stack size:" + mActionSheetStack.size());
         showActionSheetDialog(actionSheet);
+        return actionSheet;
     }
 
     protected void dismissActionSheetDialog() {

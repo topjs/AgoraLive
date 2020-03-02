@@ -32,7 +32,7 @@ import io.agora.vlive.ui.components.LiveRoomMessageList;
 import io.agora.vlive.ui.components.LiveRoomParticipantLayout;
 import io.agora.vlive.utils.Global;
 
-public abstract class LiveRoomActivity extends BaseLiveActivity implements
+public abstract class LiveRoomActivity extends LiveBaseActivity implements
         BeautySettingActionSheet.BeautyActionSheetListener,
         LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener,
         BackgroundMusicActionSheet.BackgroundMusicActionSheetListener,
@@ -271,5 +271,15 @@ public abstract class LiveRoomActivity extends BaseLiveActivity implements
             return true;
         }
         return false;
+    }
+
+    protected boolean isCurDialogShowing() {
+        return curDialog != null && curDialog.isShowing();
+    }
+
+    protected void closeDialog() {
+        if (isCurDialogShowing()) {
+            curDialog.dismiss();
+        }
     }
 }
