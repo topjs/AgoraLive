@@ -24,12 +24,12 @@ import java.util.Stack;
 
 import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.Config;
+import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.ui.actionsheets.InviteUserActionSheet;
 import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
-import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
@@ -37,7 +37,7 @@ import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 
 /**
  * Capabilities that are shared by all activity, such as
- * messaging, action sheets, dialogs.
+ * messaging, action sheets, dialogs, server requests and so on.
  */
 public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
@@ -56,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int systemBarHeight;
     protected int displayHeight;
 
-    private Stack<AbstractActionSheet> mActionSheetStack;
+    private Stack<AbstractActionSheet> mActionSheetStack = new Stack<>();
     private BottomSheetDialog mSheetDialog;
     private long mLastToastTime;
 
@@ -65,7 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setGlobalLayoutListener();
-        mActionSheetStack = new Stack<>();
         systemBarHeight = getStatusBarHeight();
         displayHeight = getDisplayHeight();
     }
@@ -237,6 +236,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected SharedPreferences preferences() {
         return application().preferences();
+    }
+
+    protected ClientProxy proxy() {
+        return application().proxy();
     }
 
     protected void showShortToast(String message) {

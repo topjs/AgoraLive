@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import io.agora.vlive.R;
-import io.agora.vlive.struts.User;
+import io.agora.vlive.proxy.struts.UserProfile;
 
 public class InviteUserActionSheet extends AbstractActionSheet {
     public interface InviteUserActionSheetListener extends AbsActionSheetListener {
-        void onAudienceInvited(User user);
+        void onAudienceInvited(UserProfile user);
     }
 
     private InviteUserActionSheetListener mListener;
@@ -48,14 +48,14 @@ public class InviteUserActionSheet extends AbstractActionSheet {
         }
     }
 
-    public void refreshUserList(List<User> userList) {
+    public void refreshUserList(List<UserProfile> userList) {
         mAdapter.setUserList(userList);
     }
 
     private class RoomUserAdapter extends RecyclerView.Adapter {
-        private List<User> mUserList;
+        private List<UserProfile> mUserList;
 
-        public void setUserList(List<User> userList) {
+        public void setUserList(List<UserProfile> userList) {
             mUserList = userList;
             notifyDataSetChanged();
         }

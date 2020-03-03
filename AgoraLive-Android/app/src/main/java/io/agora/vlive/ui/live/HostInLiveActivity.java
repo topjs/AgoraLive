@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.agora.vlive.R;
-import io.agora.vlive.struts.User;
+import io.agora.vlive.proxy.struts.UserProfile;
 import io.agora.vlive.ui.actionsheets.InviteUserActionSheet;
 import io.agora.vlive.ui.components.LiveHostInSeatAdapter;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
@@ -206,7 +206,7 @@ public class HostInLiveActivity extends LiveRoomActivity implements View.OnClick
     }
 
     @Override
-    public void onAudienceInvited(User user) {
+    public void onAudienceInvited(UserProfile user) {
         Log.i(TAG, "onAudienceInvited");
     }
 }
