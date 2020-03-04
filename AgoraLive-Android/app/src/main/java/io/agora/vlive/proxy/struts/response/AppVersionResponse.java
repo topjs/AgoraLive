@@ -1,6 +1,6 @@
 package io.agora.vlive.proxy.struts.response;
 
-public class AppVersionResponse extends Response {
+public class AppVersionResponse extends AbsResponse {
     public Data data;
 
     public class Data {

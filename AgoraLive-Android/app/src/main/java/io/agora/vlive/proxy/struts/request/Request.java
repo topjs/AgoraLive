@@ -21,6 +21,6 @@ public class Request {
     public static final int GIFT_RANK = 13;
     public static final int REFRESH_TOKEN = 14;
     public static final int MODIFY_SEAT_STATE = 15;
-    public static final int SEAT_LIST = 16;
+    public static final int SEAT_STATE = 16;
     public static final int PK_START_STOP = 17;
 }
