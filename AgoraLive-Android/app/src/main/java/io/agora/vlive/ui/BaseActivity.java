@@ -226,19 +226,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         return dialog;
     }
 
-    protected AgoraLiveApplication application() {
+    public AgoraLiveApplication application() {
         return (AgoraLiveApplication)  getApplication();
     }
 
-    protected Config config() {
+    public Config config() {
         return application().config();
     }
 
-    protected SharedPreferences preferences() {
+    public SharedPreferences preferences() {
         return application().preferences();
     }
 
-    protected ClientProxy proxy() {
+    public ClientProxy proxy() {
         return application().proxy();
     }
 

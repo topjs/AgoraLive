@@ -52,8 +52,8 @@ public class Client implements Callback<ResponseBody> {
     private LiveRoomService mLiveRoomService;
     private UserService mUserService;
 
-    private ClientProxyListener mProxyListener;
     private Map<Call, Long> mReqMap = new HashMap<>();
+    private Map<Long, ClientProxyListener> mProxyListeners = new HashMap<>();
 
     private Gson mGson;
 
@@ -80,8 +80,14 @@ public class Client implements Callback<ResponseBody> {
         return sInstance;
     }
 
-    void setProxyListener(ClientProxyListener listener) {
-        mProxyListener = listener;
+    void setProxyListener(long reqId, ClientProxyListener listener) {
+        if (!mProxyListeners.containsKey(reqId)) {
+            mProxyListeners.put(reqId, listener);
+        }
+    }
+
+    void removeProxyListener(long reqId) {
+        mProxyListeners.remove(reqId);
     }
 
     void requestVersion(long reqId, String appCode, int osType, int terminalType, String appVersion) {
@@ -98,70 +104,68 @@ public class Client implements Callback<ResponseBody> {
     }
 
     void requestOssPolicy(long reqId, String token, int type) {
-        mGeneralService.requestOssPolicy(reqId, Request.OSS, token, type);
+        mGeneralService.requestOssPolicy(reqId, Request.OSS, token, type).enqueue(this);
     }
 
     void createUser(long reqId, String userName, String avatar) {
-        mUserService.createUser(reqId, Request.CREATE_USER, userName, avatar);
+        mUserService.createUser(reqId, Request.CREATE_USER, userName, avatar).enqueue(this);
     }
 
     void editUser(long reqId, String token, String userName, String avatar) {
-        mUserService.editUser(token, reqId, Request.EDIT_USER, userName, avatar);
+        mUserService.editUser(token, reqId, Request.EDIT_USER, userName, avatar).enqueue(this);
     }
 
-    void requestRoomList(long reqId, String auth, int nextId, int count, int type, int pkState) {
-        mRoomListService.requestRoomList(reqId, Request.ROOM_LIST, auth, nextId, count, type, pkState);
+    void requestRoomList(long reqId, String nextId, int count, int type, int pkState) {
+        mRoomListService.requestRoomList(reqId, Request.ROOM_LIST, nextId, count, type, pkState).enqueue(this);
     }
 
     void createRoom(long reqId, String token, String userName, int type) {
-        mLiveRoomService.createLiveRoom(token, reqId, Request.CREATE_ROOM, userName, type);
+        mLiveRoomService.createLiveRoom(token, reqId, Request.CREATE_ROOM, userName, type).enqueue(this);
     }
 
     void enterRoom(long reqId, String token, String roomId) {
-        mLiveRoomService.enterLiveRoom(token, reqId, Request.ENTER_ROOM, roomId);
+        mLiveRoomService.enterLiveRoom(token, reqId, Request.ENTER_ROOM, roomId).enqueue(this);
     }
 
     void leaveRoom(long reqId, String token, String roomId) {
-        mLiveRoomService.leaveLiveRoom(token, reqId, Request.LEAVE_ROOM, roomId);
+        mLiveRoomService.leaveLiveRoom(token, reqId, Request.LEAVE_ROOM, roomId).enqueue(this);
     }
 
     void requestAudienceList(long reqId, String token, String roomId) {
-        mLiveRoomService.requestAudienceList(token, reqId, Request.AUDIENCE_LIST, roomId);
+        mLiveRoomService.requestAudienceList(token, reqId, Request.AUDIENCE_LIST, roomId).enqueue(this);
     }
 
     void requestSeatState(long reqId, String token, String roomId) {
-        mLiveRoomService.requestSeatState(token, reqId, Request.SEAT_STATE, roomId);
+        mLiveRoomService.requestSeatState(token, reqId, Request.SEAT_STATE, roomId).enqueue(this);
     }
 
     void modifySeatState(long reqId, String token, String roomId, int no, String userId, int state) {
-        mLiveRoomService.modifySeatState(token, reqId, Request.MODIFY_SEAT_STATE, roomId, no, userId, state);
+        mLiveRoomService.modifySeatState(token, reqId, Request.MODIFY_SEAT_STATE, roomId, no, userId, state).enqueue(this);
     }
 
     void sendGift(long reqId, String roomId, String giftId, int count) {
-        mLiveRoomService.sendGift(reqId, Request.SEND_GIFT, roomId, giftId, count);
+        mLiveRoomService.sendGift(reqId, Request.SEND_GIFT, roomId, giftId, count).enqueue(this);
     }
 
     void giftRank(long reqId, String roomId) {
-        mLiveRoomService.giftRank(reqId, Request.GIFT_RANK, roomId);
+        mLiveRoomService.giftRank(reqId, Request.GIFT_RANK, roomId).enqueue(this);
     }
 
     void refreshToken(long reqId, String roomId) {
-        mGeneralService.refreshToken(reqId, Request.REFRESH_TOKEN, roomId);
+        mGeneralService.refreshToken(reqId, Request.REFRESH_TOKEN, roomId).enqueue(this);
     }
 
     void startStopPk(long reqId, String myRoomId, String targetRoomId) {
-        mLiveRoomService.startStopPk(reqId, Request.PK_START_STOP, myRoomId, targetRoomId);
+        mLiveRoomService.startStopPk(reqId, Request.PK_START_STOP, myRoomId, targetRoomId).enqueue(this);
     }
 
     @Override
     public void onResponse(@NonNull Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-        System.out.println(Thread.currentThread().getName());
-
         String reqIdString = response.headers().get("reqId");
         long reqId = TextUtils.isEmpty(reqIdString) ? -1 :
             Long.parseLong(reqIdString);
 
-        if (/*reqId == -1 || */response.body() == null) return;
+        // if (reqId == -1 || response.body() == null) return;
 
         String json;
         try {
@@ -174,6 +178,9 @@ public class Client implements Callback<ResponseBody> {
         String reqTypeString = response.headers().get("reqType");
         int type = TextUtils.isEmpty(reqTypeString) ? -1 :
                 Integer.parseInt(reqTypeString);
+        type = Request.ROOM_LIST;
+
+        ClientProxyListener listener = mProxyListeners.get(reqId);
 
         switch (type) {
             case Request.APP_VERSION:
@@ -197,6 +204,7 @@ public class Client implements Callback<ResponseBody> {
                 break;
             case Request.ROOM_LIST:
                 RoomListResponse roomListResponse = mGson.fromJson(json, RoomListResponse.class);
+                if (listener != null) listener.onRoomListResponse(roomListResponse);
                 break;
             case Request.CREATE_ROOM:
                 CreateRoomResponse createRoomResponse = mGson.fromJson(json, CreateRoomResponse.class);

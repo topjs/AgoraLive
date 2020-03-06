@@ -13,7 +13,15 @@ import io.agora.vlive.proxy.struts.request.OssPolicyRequest;
 import io.agora.vlive.proxy.struts.request.Request;
 import retrofit2.Call;
 
-public class ClientProxy implements ClientProxyListener {
+public class ClientProxy {
+    public static final int ROOM_TYPE_SINGLE = 1;
+    public static final int ROOM_TYPE_HOST_IN = 2;
+    public static final int ROOM_TYPE_PK = 3;
+
+    public static final int PK_WAIT = 0;
+    public static final int PK_IN = 1;
+    public static final int PK_UNAWARE = 2;
+
     private static final String APP_CODE = "ent-super";
     private static final int OS_TYPE = 2;
 
@@ -26,11 +34,10 @@ public class ClientProxy implements ClientProxyListener {
 
     public ClientProxy() {
         mClient = Client.instance();
-        mClient.setProxyListener(this);
         mReqMap = new SparseArray<>();
     }
 
-    public long sendReq(int request, Object params) {
+    public long sendReq(int request, Object params, ClientProxyListener listener) {
         switch (request) {
             case Request.APP_VERSION:
                 String ver = (String) params;
@@ -56,7 +63,7 @@ public class ClientProxy implements ClientProxyListener {
                 break;
             case Request.ROOM_LIST:
                 RoomListRequest roomListRequest = (RoomListRequest) params;
-                mClient.requestRoomList(mReqId, roomListRequest.auth, roomListRequest.nextId,
+                mClient.requestRoomList(mReqId, roomListRequest.nextId,
                         roomListRequest.count, roomListRequest.type, roomListRequest.pkState);
                 break;
             case Request.CREATE_ROOM:
@@ -104,6 +111,11 @@ public class ClientProxy implements ClientProxyListener {
                 break;
         }
 
+        mClient.setProxyListener(mReqId, listener);
         return mReqId++;
+    }
+
+    public void removeListener(long reqId) {
+        mClient.removeProxyListener(reqId);
     }
 }

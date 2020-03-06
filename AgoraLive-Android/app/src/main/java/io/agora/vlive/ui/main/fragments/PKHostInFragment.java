@@ -10,12 +10,17 @@ import androidx.annotation.Nullable;
 
 import io.agora.vlive.R;
 
-public class PKHostInFragment extends AbstractFragment {
+public class PKHostInFragment extends AbsPageFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_pk_host, container, false);
         return layout;
+    }
+
+    @Override
+    void onPeriodicRefreshTimerTicked() {
+
     }
 }

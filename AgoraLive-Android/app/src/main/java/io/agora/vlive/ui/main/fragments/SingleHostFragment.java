@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import io.agora.vlive.R;
 
-public class SingleHostFragment extends Fragment {
+public class SingleHostFragment extends AbsPageFragment {
     private RecyclerView mRecycler;
 
     @Nullable
@@ -26,5 +26,10 @@ public class SingleHostFragment extends Fragment {
                 2, RecyclerView.VERTICAL,false);
         mRecycler.setLayoutManager(layoutManager);
         return layout;
+    }
+
+    @Override
+    void onPeriodicRefreshTimerTicked() {
+
     }
 }

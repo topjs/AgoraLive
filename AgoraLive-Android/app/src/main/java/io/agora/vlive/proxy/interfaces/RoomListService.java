@@ -9,6 +9,6 @@ import retrofit2.http.Query;
 public interface RoomListService {
     @GET("ent/v1/room/page")
     Call<ResponseBody> requestRoomList(@Header("reqId") long reqId, @Header("reqType") int reqType,
-                                       @Header("Authorization") String auth, @Query("nextId") int nextId,
-                                       @Query("count") int count, @Query("type") int type, @Query("pkState") int pkState);
+                                       @Query("nextId") String nextId, @Query("count") int count,
+                                       @Query("type") int type, @Query("pkState") int pkState);
 }
