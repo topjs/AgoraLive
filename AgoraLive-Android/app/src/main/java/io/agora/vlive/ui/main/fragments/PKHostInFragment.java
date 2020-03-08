@@ -1,26 +1,10 @@
 package io.agora.vlive.ui.main.fragments;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import io.agora.vlive.R;
+import io.agora.vlive.utils.Global;
 
 public class PKHostInFragment extends AbsPageFragment {
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_pk_host, container, false);
-        return layout;
-    }
-
-    @Override
-    void onPeriodicRefreshTimerTicked() {
-
+    protected int onGetTabType() {
+        return Global.Constants.TAB_ID_PK;
     }
 }

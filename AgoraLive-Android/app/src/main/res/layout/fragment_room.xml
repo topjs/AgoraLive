@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin">
+    android:layout_height="match_parent">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/room_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/room_tab_height"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         app:tabTextAppearance="@style/room_tab_title_text"
         app:tabGravity="fill"
         app:tabMode="scrollable"
@@ -27,11 +27,13 @@
         android:layout_below="@id/room_tab_layout"/>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/live_room_action_sheet_gift_send_btn"
+        android:id="@+id/live_room_start_broadcast"
         android:layout_width="@dimen/start_broadcast_btn_size"
         android:layout_height="@dimen/start_broadcast_btn_size"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:src="@drawable/start_broadcast_btn"

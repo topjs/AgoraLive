@@ -3,6 +3,7 @@ package io.agora.vlive.utils;
 import android.graphics.Color;
 
 import io.agora.vlive.R;
+import io.agora.vlive.proxy.model.RoomInfo;
 
 public class Global {
     public static class Constants {
@@ -25,6 +26,7 @@ public class Global {
 
         public static final String KEY_ROOM_NAME = "room-name";
         public static final String KEY_IS_ROOM_OWNER = "is-room-owner";
+        public static final String KEY_ROOM_OWNER_ID = "room-owner-id";
 
         public static final int DIVIDER_COLOR = Color.rgb(239, 239, 239);
 
@@ -77,6 +79,19 @@ public class Global {
 
         public static final int[] GIFT_VALUES = {
                 20, 30, 40, 50, 60, 70, 80, 90
+        };
+
+        public static final RoomInfo[] ROOM_LIST = {
+                new RoomInfo("1000", "test room0", null, 10, 1000),
+                new RoomInfo("1001", "test room1", null, 10, 1001),
+                new RoomInfo("1002", "test room2", null, 10, 1002),
+                new RoomInfo("1003", "test room3", null, 10, 1003),
+                new RoomInfo("1004", "test room4", null, 10, 1004),
+                new RoomInfo("1005", "test room5", null, 10, 1005),
+                new RoomInfo("1006", "test room6", null, 10, 1006),
+                new RoomInfo("1007", "test room7", null, 10, 1007),
+                new RoomInfo("1008", "test room8", null, 10, 1008),
+                new RoomInfo("1009", "test room9", null, 10, 1009),
         };
     }
 }

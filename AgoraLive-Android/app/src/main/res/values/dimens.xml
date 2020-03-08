@@ -13,6 +13,12 @@
     <dimen name="nav_icon_size">32dp</dimen>
     <dimen name="start_broadcast_btn_size">84dp</dimen>
 
+    <dimen name="room_list_item_corner">12dp</dimen>
+    <dimen name="room_list_item_padding">8dp</dimen>
+    <dimen name="room_list_item_name_width">72dp</dimen>
+    <dimen name="room_list_item_text_padding_big">6dp</dimen>
+    <dimen name="room_list_item_text_padding_small">2dp</dimen>
+
     <!-- Home Fragment -->
     <dimen name="home_title_height">32dp</dimen>
     <dimen name="text_content_padding">18dp</dimen>

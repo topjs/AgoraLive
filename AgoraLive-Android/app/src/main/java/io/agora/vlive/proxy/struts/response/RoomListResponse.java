@@ -2,6 +2,8 @@ package io.agora.vlive.proxy.struts.response;
 
 import java.util.List;
 
+import io.agora.vlive.proxy.model.RoomInfo;
+
 public class RoomListResponse extends AbsResponse {
     public RoomList data;
 
@@ -9,14 +11,6 @@ public class RoomListResponse extends AbsResponse {
         public int count;
         public String total;
         public String next;
-        List<RoomInfo> list;
-    }
-
-    public class RoomInfo {
-        public String roomId;
-        public String roomName;
-        public String thumnbail;
-        public int currentUsers;
-        public int ownerUid;
+        public List<RoomInfo> list;
     }
 }
