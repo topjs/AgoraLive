@@ -16,6 +16,7 @@ import io.agora.vlive.proxy.interfaces.GeneralService;
 import io.agora.vlive.proxy.interfaces.LiveRoomService;
 import io.agora.vlive.proxy.interfaces.RoomListService;
 import io.agora.vlive.proxy.interfaces.UserService;
+import io.agora.vlive.proxy.model.UserInfo;
 import io.agora.vlive.proxy.struts.request.Request;
 import io.agora.vlive.proxy.struts.response.AppVersionResponse;
 import io.agora.vlive.proxy.struts.response.AudienceListResponse;
@@ -38,6 +39,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Client implements Callback<ResponseBody> {
     private static final String MOCK_URL = "http://115.231.168.26:3000/mock/12/";
@@ -61,6 +63,7 @@ public class Client implements Callback<ResponseBody> {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(MOCK_URL)
                 .callbackExecutor(Executors.newFixedThreadPool(MAX_RESPONSE_THREAD))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mGeneralService = mRetrofit.create(GeneralService.class);
         mRoomListService = mRetrofit.create(RoomListService.class);
@@ -108,11 +111,11 @@ public class Client implements Callback<ResponseBody> {
     }
 
     void createUser(long reqId, String userName, String avatar) {
-        mUserService.createUser(reqId, Request.CREATE_USER, userName, avatar).enqueue(this);
+        mUserService.createUser(reqId, Request.CREATE_USER, new UserInfo(userName, avatar)).enqueue(this);
     }
 
     void editUser(long reqId, String token, String userName, String avatar) {
-        mUserService.editUser(token, reqId, Request.EDIT_USER, userName, avatar).enqueue(this);
+        mUserService.editUser(token, reqId, Request.EDIT_USER, new UserInfo(userName, avatar)).enqueue(this);
     }
 
     void requestRoomList(long reqId, String nextId, int count, int type, int pkState) {

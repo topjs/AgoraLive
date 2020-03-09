@@ -6,10 +6,22 @@ import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.utils.Global;
 
 public class Config {
+    public static class UserProfile {
+        public String userId;
+        public String userName;
+        public String imageUrl;
+        public String token;
+
+        public boolean isValid() {
+            return userId != null && userName != null && token != null;
+        }
+    }
+
     private AgoraLiveApplication mApplication;
 
     Config(AgoraLiveApplication application) {
         mApplication = application;
+        mUserProfile = new UserProfile();
         SharedPreferences sp = mApplication.preferences();
 
         mBeautyEnabled = sp.getBoolean(Global.Constants.KEY_BEAUTY_ENABLED, true);
@@ -28,6 +40,7 @@ public class Config {
         mBitrate = sp.getInt(Global.Constants.KEY_BITRATE, Global.Constants.VIDEO_DEFAULT_BITRATE);
     }
 
+    private UserProfile mUserProfile;
     private int mLastTabPosition = Global.Constants.TAB_ID_MULTI;
 
     // Beautification configs
@@ -43,6 +56,10 @@ public class Config {
     private int mBitrate;
 
     private int mCurrentPlayedMusicIndex = -1;
+
+    public UserProfile getUserProfile() {
+        return mUserProfile;
+    }
 
     public boolean isBeautyEnabled() {
         return mBeautyEnabled;

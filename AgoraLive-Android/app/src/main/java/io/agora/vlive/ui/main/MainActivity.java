@@ -11,8 +11,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Field;
 
+import io.agora.vlive.Config;
 import io.agora.vlive.R;
+import io.agora.vlive.proxy.struts.request.Request;
+import io.agora.vlive.proxy.struts.request.UserRequest;
+import io.agora.vlive.proxy.struts.response.CreateUserResponse;
 import io.agora.vlive.ui.BaseActivity;
+import io.agora.vlive.utils.Global;
 
 public class MainActivity extends BaseActivity {
     @Override
@@ -21,6 +26,7 @@ public class MainActivity extends BaseActivity {
         hideStatusBar(true);
         setContentView(R.layout.activity_main);
         initUI();
+        initUser();
     }
 
     private void initUI() {
@@ -50,5 +56,38 @@ public class MainActivity extends BaseActivity {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initUser() {
+        Config.UserProfile profile = config().getUserProfile();
+        initUserFromStorage(profile);
+        if (!profile.isValid()) {
+            createUser();
+        }
+    }
+
+    private void initUserFromStorage(Config.UserProfile profile) {
+        profile.userId = preferences().getString(Global.Constants.KEY_PROFILE_UID, null);
+        profile.userName = preferences().getString(Global.Constants.KEY_USER_NAME, null);
+        profile.imageUrl = preferences().getString(Global.Constants.KEY_IMAGE_URL, null);
+        profile.token = preferences().getString(Global.Constants.KEY_TOKEN, null);
+    }
+
+    private void createUser() {
+        proxy().sendReq(Request.CREATE_USER, new UserRequest(), this);
+    }
+
+    @Override
+    public void onCreateUserResponse(CreateUserResponse response) {
+        createUserFromResponse(response);
+    }
+
+    private void createUserFromResponse(CreateUserResponse response) {
+        Config.UserProfile profile = config().getUserProfile();
+        profile.userId = response.data.userId;
+        profile.token = response.data.token;
+
+        preferences().edit().putString(Global.Constants.KEY_PROFILE_UID, profile.userId).apply();
+        preferences().edit().putString(Global.Constants.KEY_TOKEN, profile.token).apply();
     }
 }

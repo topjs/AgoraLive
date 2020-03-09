@@ -28,6 +28,11 @@ public class Global {
         public static final String KEY_IS_ROOM_OWNER = "is-room-owner";
         public static final String KEY_ROOM_OWNER_ID = "room-owner-id";
 
+        public static final String KEY_PROFILE_UID = "key-profile-uid";
+        public static final String KEY_USER_NAME = "key-user-name";
+        public static final String KEY_IMAGE_URL = "key-image-url";
+        public static final String KEY_TOKEN = "key-token";
+
         public static final int DIVIDER_COLOR = Color.rgb(239, 239, 239);
 
         public static final int VIDEO_MAX_BITRATE = 4000;

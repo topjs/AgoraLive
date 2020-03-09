@@ -204,7 +204,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
     }
 
     private void goLiveRoom(RoomInfo info, int roomType) {
-        Intent intent = new Intent(getActivity(), HostInLiveActivity.class);
+        Intent intent = new Intent(getActivity(), getLiveActivityClass());
         intent.putExtra(Global.Constants.TAB_KEY, roomType);
         intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, false);
         intent.putExtra(Global.Constants.KEY_ROOM_NAME, info.roomName);
@@ -256,4 +256,6 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
     }
 
     protected abstract int onGetTabType();
+
+    protected abstract Class<?> getLiveActivityClass();
 }

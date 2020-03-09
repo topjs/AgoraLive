@@ -25,6 +25,24 @@ import java.util.Stack;
 import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.Config;
 import io.agora.vlive.proxy.ClientProxy;
+import io.agora.vlive.proxy.ClientProxyListener;
+import io.agora.vlive.proxy.struts.response.AppVersionResponse;
+import io.agora.vlive.proxy.struts.response.AudienceListResponse;
+import io.agora.vlive.proxy.struts.response.CreateRoomResponse;
+import io.agora.vlive.proxy.struts.response.CreateUserResponse;
+import io.agora.vlive.proxy.struts.response.EditUserResponse;
+import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
+import io.agora.vlive.proxy.struts.response.GiftListResponse;
+import io.agora.vlive.proxy.struts.response.GiftRankResponse;
+import io.agora.vlive.proxy.struts.response.LeaveRoomResponse;
+import io.agora.vlive.proxy.struts.response.ModifySeatStateResponse;
+import io.agora.vlive.proxy.struts.response.MusicListResponse;
+import io.agora.vlive.proxy.struts.response.OssPolicyResponse;
+import io.agora.vlive.proxy.struts.response.RefreshTokenResponse;
+import io.agora.vlive.proxy.struts.response.RoomListResponse;
+import io.agora.vlive.proxy.struts.response.SeatStateResponse;
+import io.agora.vlive.proxy.struts.response.SendGiftResponse;
+import io.agora.vlive.proxy.struts.response.StartStopPkResponse;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
@@ -39,7 +57,7 @@ import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
  * Capabilities that are shared by all activity, such as
  * messaging, action sheets, dialogs, server requests and so on.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements ClientProxyListener {
     private static final String TAG = BaseActivity.class.getSimpleName();
 
     protected static final int ACTION_SHEET_VIDEO = 0;
@@ -213,12 +231,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         AppCompatTextView msgTextView = dialog.findViewById(R.id.dialog_message);
         msgTextView.setText(message);
         dialog.findViewById(R.id.dialog_negative_button)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
+                .setOnClickListener(view -> dialog.dismiss());
         dialog.findViewById(R.id.dialog_positive_button)
                 .setOnClickListener(positiveClickListener);
         hideStatusBar(dialog.getWindow(), false);
@@ -249,5 +262,90 @@ public abstract class BaseActivity extends AppCompatActivity {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             mLastToastTime = current;
         }
+    }
+
+    @Override
+    public void onAppVersionResponse(AppVersionResponse response) {
+
+    }
+
+    @Override
+    public void onRefreshTokenResponse(RefreshTokenResponse refreshTokenResponse) {
+
+    }
+
+    @Override
+    public void onOssPolicyResponse(OssPolicyResponse response) {
+
+    }
+
+    @Override
+    public void onMusicLisResponse(MusicListResponse response) {
+
+    }
+
+    @Override
+    public void onGiftListResponse(GiftListResponse response) {
+
+    }
+
+    @Override
+    public void onRoomListResponse(RoomListResponse response) {
+
+    }
+
+    @Override
+    public void onCreateUserResponse(CreateUserResponse response) {
+
+    }
+
+    @Override
+    public void onEditUserResponse(EditUserResponse response) {
+
+    }
+
+    @Override
+    public void onCreateRoomResponse(CreateRoomResponse response) {
+
+    }
+
+    @Override
+    public void onEnterRoomResponse(EnterRoomResponse response) {
+
+    }
+
+    @Override
+    public void onLeaveRoomResponse(LeaveRoomResponse response) {
+
+    }
+
+    @Override
+    public void onAudienceListResponse(AudienceListResponse response) {
+
+    }
+
+    @Override
+    public void onRequestSeatState(SeatStateResponse response) {
+
+    }
+
+    @Override
+    public void onModifySeatState(ModifySeatStateResponse response) {
+
+    }
+
+    @Override
+    public void onSendGift(SendGiftResponse response) {
+
+    }
+
+    @Override
+    public void onGiftRank(GiftRankResponse response) {
+
+    }
+
+    @Override
+    public void onStartStopPk(StartStopPkResponse response) {
+
     }
 }
