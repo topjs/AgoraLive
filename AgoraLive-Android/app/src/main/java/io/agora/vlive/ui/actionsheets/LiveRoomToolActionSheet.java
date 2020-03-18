@@ -16,13 +16,13 @@ import io.agora.vlive.R;
 
 public class LiveRoomToolActionSheet extends AbstractActionSheet {
     public interface LiveRoomToolActionSheetListener extends AbsActionSheetListener {
-        void onVoiceClicked();
-        void onRealDataClicked();
-        void onShareClicked();
-        void onSettingClicked();
-        void onRotateClicked();
-        void onVideoClicked(boolean muted);
-        void onSpeakerClicked(boolean muted);
+        void onActionSheetVoiceClicked();
+        void onActionSheetRealDataClicked();
+        void onActionSheetShareClicked();
+        void onActionSheetSettingClicked();
+        void onActionSheetRotateClicked();
+        void onActionSheetVideoClicked(boolean muted);
+        void onActionSheetSpeakerClicked(boolean muted);
     }
 
     private static final int GRID_SPAN = 4;
@@ -139,25 +139,25 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
 
         switch (position) {
             case VOICE_INDEX:
-                mListener.onVoiceClicked();
+                mListener.onActionSheetVoiceClicked();
                 break;
             case DATA_INDEX:
-                mListener.onRealDataClicked();
+                mListener.onActionSheetRealDataClicked();
                 break;
             case SHARE_INDEX:
-                mListener.onShareClicked();
+                mListener.onActionSheetShareClicked();
                 break;
             case SETTING_INDEX:
-                mListener.onSettingClicked();
+                mListener.onActionSheetSettingClicked();
                 break;
             case ROTATE_INDEX:
-                mListener.onRotateClicked();
+                mListener.onActionSheetRotateClicked();
                 break;
             case VIDEO_INDEX:
-                mListener.onVideoClicked(mMuteVideo);
+                mListener.onActionSheetVideoClicked(mMuteVideo);
                 break;
             case SPEAKER_INDEX:
-                mListener.onSpeakerClicked(mMuteVoice);
+                mListener.onActionSheetSpeakerClicked(mMuteVoice);
                 break;
         }
     }

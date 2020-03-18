@@ -3,7 +3,6 @@ package io.agora.vlive.utils;
 import android.graphics.Color;
 
 import io.agora.vlive.R;
-import io.agora.vlive.proxy.model.RoomInfo;
 
 public class Global {
     public static class Constants {
@@ -24,9 +23,11 @@ public class Global {
         public static final int TAB_ID_SINGLE = 1;
         public static final int TAB_ID_PK = 2;
 
+        public static final String KEY_ROOM_ID = "room-id";
         public static final String KEY_ROOM_NAME = "room-name";
         public static final String KEY_IS_ROOM_OWNER = "is-room-owner";
         public static final String KEY_ROOM_OWNER_ID = "room-owner-id";
+        public static final String KEY_CREATE_ROOM = "create-room";
 
         public static final String KEY_PROFILE_UID = "key-profile-uid";
         public static final String KEY_USER_NAME = "key-user-name";
@@ -68,35 +69,20 @@ public class Global {
                 R.drawable.gift_07_diamond,
                 R.drawable.gift_08_rocket
         };
-    }
 
-    public static class FakeData {
-        public static final String[][] BG_MUSIC = {
-            {"像梦一样自由", "汪峰"},
-            {"我就知道那是爱", "梁静茹"},
-            {"I Believe I Can Fly", "R.Kelly"},
-            {"What a wonderful world", "Louis Armstrong"},
-            {"长安长安", "郑钧"},
-            {"同桌的你", "老狼"},
-            {"天下没有不散的宴席", "郑钧"},
-            {"作曲家", "李荣浩"},
-        };
-
-        public static final int[] GIFT_VALUES = {
-                20, 30, 40, 50, 60, 70, 80, 90
-        };
-
-        public static final RoomInfo[] ROOM_LIST = {
-                new RoomInfo("1000", "test room0", null, 10, 1000),
-                new RoomInfo("1001", "test room1", null, 10, 1001),
-                new RoomInfo("1002", "test room2", null, 10, 1002),
-                new RoomInfo("1003", "test room3", null, 10, 1003),
-                new RoomInfo("1004", "test room4", null, 10, 1004),
-                new RoomInfo("1005", "test room5", null, 10, 1005),
-                new RoomInfo("1006", "test room6", null, 10, 1006),
-                new RoomInfo("1007", "test room7", null, 10, 1007),
-                new RoomInfo("1008", "test room8", null, 10, 1008),
-                new RoomInfo("1009", "test room9", null, 10, 1009),
+        public static final int[] PROFILE_BG_RES = {
+                R.drawable.profile_image_1,
+                R.drawable.profile_image_2,
+                R.drawable.profile_image_3,
+                R.drawable.profile_image_4,
+                R.drawable.profile_image_5,
+                R.drawable.profile_image_6,
+                R.drawable.profile_image_7,
+                R.drawable.profile_image_8,
+                R.drawable.profile_image_9,
+                R.drawable.profile_image_10,
+                R.drawable.profile_image_11,
+                R.drawable.profile_image_12
         };
     }
 }

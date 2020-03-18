@@ -14,13 +14,16 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+import io.agora.vlive.proxy.model.MusicInfo;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
 public class BackgroundMusicActionSheet extends AbstractActionSheet {
     public interface BackgroundMusicActionSheetListener {
-        void onBackgroundMusicSelected(int index, String name, String url);
-        void onBackgroundMusicStopped();
+        void onActionSheetMusicSelected(int index, String name, String url);
+        void onActionSheetMusicStopped();
     }
 
     private BgMusicAdapter mAdapter;
@@ -71,6 +74,8 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
     }
 
     private class BgMusicAdapter extends RecyclerView.Adapter {
+        private List<MusicInfo> mMusicList = application().config().getMusicList();
+
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -81,16 +86,14 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             BgMusicViewHolder bgMusicViewHolder = (BgMusicViewHolder) holder;
-            bgMusicViewHolder.setMusicInfo(
-                    Global.FakeData.BG_MUSIC[position][0],
-                    Global.FakeData.BG_MUSIC[position][1]);
+            bgMusicViewHolder.setMusicInfo(mMusicList.get(position).getMusicName(), null);
             bgMusicViewHolder.setPosition(position);
             bgMusicViewHolder.setPlaying(mSelected == position);
         }
 
         @Override
         public int getItemCount() {
-            return Global.FakeData.BG_MUSIC.length;
+            return mMusicList == null ? 0 : mMusicList.size();
         }
     }
 
@@ -103,21 +106,21 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
             super(itemView);
             mTitle = itemView.findViewById(R.id.live_room_action_sheet_bg_music_title);
             mArtist = itemView.findViewById(R.id.live_room_action_sheet_bg_music_artist);
-            itemView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mPosition == mSelected) {
-                        mSelected = -1;
-                        if (mListener != null) mListener.onBackgroundMusicStopped();
-                    } else {
-                        mSelected = mPosition;
-                        if (mListener != null) mListener.onBackgroundMusicSelected(
-                                mPosition, Global.FakeData.BG_MUSIC[mPosition][0], null);
+            itemView.setOnClickListener(view -> {
+                if (mPosition == mSelected) {
+                    mSelected = -1;
+                    if (mListener != null) mListener.onActionSheetMusicStopped();
+                } else {
+                    mSelected = mPosition;
+                    MusicInfo info = application().config().getMusicList().get(mPosition);
+                    if (mListener != null) {
+                        mListener.onActionSheetMusicSelected(mPosition,
+                                info.getMusicName(), info.getUrl());
                     }
-
-                    application().config().setCurrentMusicIndex(mSelected);
-                    mAdapter.notifyDataSetChanged();
                 }
+
+                application().config().setCurrentMusicIndex(mSelected);
+                mAdapter.notifyDataSetChanged();
             });
         }
 

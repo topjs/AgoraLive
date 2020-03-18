@@ -1,19 +1,95 @@
 package io.agora.vlive;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 
+import java.lang.ref.SoftReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.agora.vlive.proxy.model.AppVersionInfo;
+import io.agora.vlive.proxy.model.GiftInfo;
+import io.agora.vlive.proxy.model.MusicInfo;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.utils.Global;
 
 public class Config {
     public static class UserProfile {
-        public String userId;
-        public String userName;
-        public String imageUrl;
-        public String token;
+        private String userId;
+        private String userName;
+        private String imageUrl;
+        private String token;
+        private String rtcToken;
+        private String rtmToken;
+        private long agoraUid;
+        private SoftReference<Drawable> userIcon;
 
         public boolean isValid() {
-            return userId != null && userName != null && token != null;
+            return userId != null;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public String getRtcToken() {
+            return rtcToken;
+        }
+
+        public void setRtcToken(String rtcToken) {
+            this.rtcToken = rtcToken;
+        }
+
+        public String getRtmToken() {
+            return rtmToken;
+        }
+
+        public void setRtmToken(String rtmToken) {
+            this.rtmToken = rtmToken;
+        }
+
+        public long getAgoraUid() {
+            return agoraUid;
+        }
+
+        public void setAgoraUid(long agoraUid) {
+            this.agoraUid = agoraUid;
+        }
+
+        public Drawable getProfileIcon() {
+            return userIcon == null ? null : userIcon.get();
+        }
+
+        public void setProfileIcon(Drawable userProfileDrawable) {
+            this.userIcon = new SoftReference<>(userProfileDrawable);
         }
     }
 
@@ -38,9 +114,13 @@ public class Config {
         mResolutionIndex = sp.getInt(Global.Constants.KEY_RESOLUTION, Global.Constants.VIDEO_DEFAULT_RESOLUTION_INDEX);
         mFrameRateIndex = sp.getInt(Global.Constants.KEY_FRAME_RATE, Global.Constants.VIDEO_DEFAULT_FRAME_RATE_INDEX);
         mBitrate = sp.getInt(Global.Constants.KEY_BITRATE, Global.Constants.VIDEO_DEFAULT_BITRATE);
+
     }
 
     private UserProfile mUserProfile;
+    private AppVersionInfo mVersionInfo;
+    private List<GiftInfo> mGiftInfoList = new ArrayList<>();
+    private List<MusicInfo> mMusicInfoList = new ArrayList<>();
     private int mLastTabPosition = Global.Constants.TAB_ID_MULTI;
 
     // Beautification configs
@@ -57,8 +137,24 @@ public class Config {
 
     private int mCurrentPlayedMusicIndex = -1;
 
+    // rtc configurations
+    private boolean mVideoMuted;
+    private boolean mAudioMuted;
+
     public UserProfile getUserProfile() {
         return mUserProfile;
+    }
+
+    public AppVersionInfo getVersionInfo() {
+        return mVersionInfo;
+    }
+
+    public void setVersionInfo(AppVersionInfo mVersionInfo) {
+        this.mVersionInfo = mVersionInfo;
+    }
+
+    public boolean hasCheckedVersion() {
+        return mVersionInfo != null;
     }
 
     public boolean isBeautyEnabled() {
@@ -155,5 +251,39 @@ public class Config {
 
     public void setCurrentMusicIndex(int index) {
         mCurrentPlayedMusicIndex = index;
+    }
+
+    public void setVideoMuted(boolean muted) {
+        mVideoMuted = muted;
+    }
+
+    public boolean isVideoMuted() {
+        return mVideoMuted;
+    }
+
+    public void setAudioMuted(boolean muted) {
+        mAudioMuted = muted;
+    }
+
+    public boolean isAudioMuted() {
+        return mAudioMuted;
+    }
+
+    public void setGiftList(List<GiftInfo> list) {
+        mGiftInfoList.clear();
+        mGiftInfoList.addAll(list);
+    }
+
+    public List<GiftInfo> getGiftList() {
+        return mGiftInfoList;
+    }
+
+    public void setMusicList(List<MusicInfo> list) {
+        mMusicInfoList.clear();
+        mMusicInfoList.addAll(list);
+    }
+
+    public List<MusicInfo> getMusicList() {
+        return mMusicInfoList;
     }
 }

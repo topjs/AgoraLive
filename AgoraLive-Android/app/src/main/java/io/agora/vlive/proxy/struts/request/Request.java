@@ -10,17 +10,18 @@ public class Request {
     // User management
     public static final int CREATE_USER = 5;
     public static final int EDIT_USER = 6;
+    public static final int USER_LOGIN = 7;
 
     // Live Room
-    public static final int CREATE_ROOM = 7;
-    public static final int ROOM_LIST = 8;
-    public static final int ENTER_ROOM = 9;
-    public static final int LEAVE_ROOM = 10;
-    public static final int AUDIENCE_LIST = 11;
-    public static final int SEND_GIFT = 12;
-    public static final int GIFT_RANK = 13;
-    public static final int REFRESH_TOKEN = 14;
-    public static final int MODIFY_SEAT_STATE = 15;
-    public static final int SEAT_STATE = 16;
-    public static final int PK_START_STOP = 17;
+    public static final int CREATE_ROOM = 8;
+    public static final int ROOM_LIST = 9;
+    public static final int ENTER_ROOM = 10;
+    public static final int LEAVE_ROOM = 11;
+    public static final int AUDIENCE_LIST = 12;
+    public static final int SEND_GIFT = 13;
+    public static final int GIFT_RANK = 14;
+    public static final int REFRESH_TOKEN = 15;
+    public static final int MODIFY_SEAT_STATE = 16;
+    public static final int SEAT_STATE = 17;
+    public static final int PK_START_STOP = 18;
 }

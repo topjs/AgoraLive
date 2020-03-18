@@ -12,6 +12,7 @@
 
     <color name="default_text_color_light">#c4c4c4</color>
 
+    <color name="blue_dialog">#0088EB</color>
     <color name="blue_original">#00AFF4</color>
     <color name="blue_alpha">#aa00AFF4</color>
     <color name="blue_light">#01F0F9FF</color>

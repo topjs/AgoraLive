@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"/>
-        <io.agora.vlive.ui.components.LiveRoomParticipantLayout
+        <io.agora.vlive.ui.components.LiveRoomUserLayout
             android:id="@+id/single_live_participant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -80,12 +80,8 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
             }
         });
 
-        new TabLayoutMediator(mTabLayout, mViewPager,
-            new TabLayoutMediator.TabConfigurationStrategy() {
-                @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                    tab.setText(mTabTitles[position]);
-                }
-            }).attach();
+        new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) ->
+            tab.setText(mTabTitles[position])).attach();
 
         TabLayout.Tab tab = mTabLayout.getTabAt(mCurrentTap);
         if (tab != null) {
@@ -158,6 +154,9 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
             Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
             intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap);
             intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, true);
+            intent.putExtra(Global.Constants.KEY_CREATE_ROOM, true);
+            intent.putExtra(Global.Constants.KEY_ROOM_OWNER_ID,
+                    getContainer().config().getUserProfile().getUserId());
             startActivity(intent);
         }
     }

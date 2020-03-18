@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.agora.vlive.R;
@@ -26,7 +25,7 @@ import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.proxy.model.RoomInfo;
 import io.agora.vlive.proxy.struts.request.Request;
 import io.agora.vlive.proxy.struts.request.RoomListRequest;
-import io.agora.vlive.ui.live.HostInLiveActivity;
+import io.agora.vlive.proxy.struts.response.RoomListResponse;
 import io.agora.vlive.utils.Global;
 
 public abstract class AbsPageFragment extends AbstractFragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -37,8 +36,6 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
 
     // By default, the client asks for 10 more rooms to show in the list
     private static final int REQ_ROOM_COUNT = 10;
-
-    long mLastRefreshReq = -1;
 
     private Handler mHandler;
     private PageRefreshRunnable mPageRefreshRunnable;
@@ -88,10 +85,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
                             recyclerView.getChildAt(recyclerView.getChildCount() - 1));
                     if (lastItemPosition == recyclerView.getAdapter().getItemCount() - 1) {
                         Log.i(TAG, "last item is reached");
-                        //refreshPage(mAdapter.getLast() == null ? null : mAdapter.getLast().roomId,
-                        //        REQ_ROOM_COUNT, ClientProxy.ROOM_TYPE_HOST_IN, ClientProxy.PK_UNAWARE);
-                        // test only
-                        mAdapter.append(Arrays.asList(Global.FakeData.ROOM_LIST));
+                        refreshPage(mAdapter.getLast() == null ? null : mAdapter.getLast().roomId);
                     }
                 }
             }
@@ -103,8 +97,14 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
         });
 
         mNoDataBg = layout.findViewById(R.id.no_data_bg);
-        mNoDataBg.setVisibility(View.GONE);
+        checkRoomListEmpty();
+
         return layout;
+    }
+
+    private void checkRoomListEmpty() {
+        mRecyclerView.setVisibility(mAdapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
+        mNoDataBg.setVisibility(mAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     private void startRefreshTimer() {
@@ -124,13 +124,13 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
     }
 
     private void onPeriodicRefreshTimerTicked() {
-        refreshPage(null, mAdapter.getItemCount(), onGetTabType(), ClientProxy.PK_UNAWARE);
+        refreshPage(null);
     }
 
     @Override
     public void onRefresh() {
         Log.i(TAG, "onPageRefresh");
-        mSwipeRefreshLayout.setRefreshing(false);
+        refreshPage(null);
     }
 
     @Override
@@ -138,6 +138,8 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
         super.onResume();
         Log.i(TAG, "onResume");
         startRefreshTimer();
+        getContainer().proxy().registerProxyListener(this);
+        refreshPage(null);
     }
 
     @Override
@@ -145,23 +147,46 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
         super.onPause();
         Log.i(TAG, "onPause");
         stopRefreshTimer();
+        getContainer().proxy().removeProxyListener(this);
     }
 
-    void refreshPage(String nextId, int count, int type, int pkState) {
+    /**
+     * Refresh the page from after a specific room.
+     * @param nextId null if refresh from the beginning of list
+     */
+    private void refreshPage(String nextId) {
+        refreshPage(nextId, REQ_ROOM_COUNT, onGetRoomListType(), ClientProxy.PK_UNAWARE);
+    }
+
+    private void refreshPage(String nextId, int count, int type, int pkState) {
         RoomListRequest request = new RoomListRequest();
         request.nextId = nextId;
         request.count = count;
         request.type = type;
         request.pkState = pkState;
-        mLastRefreshReq = getContainer().proxy().sendReq(Request.ROOM_LIST, request, this);
+        getContainer().proxy().sendReq(Request.ROOM_LIST, request);
+    }
+
+    @Override
+    public void onRoomListResponse(RoomListResponse response) {
+        final List<RoomInfo> list = response.data.list;
+        getContainer().runOnUiThread(() -> {
+            if (response.data.next == null) {
+                // this page refreshes from the start
+                mAdapter.reset(list);
+            } else {
+                mAdapter.append(list);
+            }
+
+            checkRoomListEmpty();
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private class RoomListAdapter extends RecyclerView.Adapter {
         private List<RoomInfo> mRoomList = new ArrayList<>();
-
-        RoomListAdapter() {
-            mRoomList.addAll(Arrays.asList(Global.FakeData.ROOM_LIST));
-        }
 
         @NonNull
         @Override
@@ -177,8 +202,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
             itemHolder.name.setText(info.roomName);
             itemHolder.count.setText(String.valueOf(info.currentUsers));
             itemHolder.itemView.setOnClickListener((view) -> {
-                goLiveRoom(mRoomList.get(position), onGetTabType());
-                Log.i(TAG, "Room Chosen:" + mRoomList.get(position).roomName + " position:" + position);
+                goLiveRoom(mRoomList.get(position), onGetRoomListType());
             });
         }
 
@@ -192,7 +216,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
             notifyDataSetChanged();
         }
 
-        public void reset(List<RoomInfo> infoList) {
+        void reset(List<RoomInfo> infoList) {
             mRoomList.clear();
             append(infoList);
             notifyDataSetChanged();
@@ -255,7 +279,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
         }
     }
 
-    protected abstract int onGetTabType();
+    protected abstract int onGetRoomListType();
 
     protected abstract Class<?> getLiveActivityClass();
 }

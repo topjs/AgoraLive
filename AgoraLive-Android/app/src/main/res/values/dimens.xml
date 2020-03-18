@@ -31,6 +31,14 @@
     <dimen name="room_tab_item_selected_indicator_height">2dp</dimen>
     <dimen name="room_list_no_data_icon_size">164dp</dimen>
 
+    <!-- My profile Fragment -->
+    <dimen name="profile_background_height">226dp</dimen>
+    <dimen name="profile_item_height">54dp</dimen>
+    <dimen name="profile_item_divider_height">1dp</dimen>
+    <dimen name="profile_portrait_background_size">102dp</dimen>
+    <dimen name="profile_portrait_size">96dp</dimen>
+    <dimen name="profile_user_nickname_margin">4dp</dimen>
+
     <!-- Live Prepare -->
     <dimen name="live_prepare_content_padding">24dp</dimen>
     <dimen name="button_height">48dp</dimen>
@@ -62,13 +70,24 @@
     <dimen name="live_bottom_btn_margin">14dp</dimen>
     <dimen name="live_bottom_edit_padding">12dp</dimen>
 
-    <dimen name="live_host_in_top_layout_height">148dp</dimen>
-    <dimen name="live_host_in_video_size">116dp</dimen>
+    <dimen name="live_host_in_top_layout_height">140dp</dimen>
+    <dimen name="live_host_in_owner_video_size">108dp</dimen>
+    <dimen name="live_host_in_owner_video_radius">6dp</dimen>
     <dimen name="live_host_in_room_name_max_width">128dp</dimen>
     <dimen name="live_rect_corner">4dp</dimen>
     <dimen name="live_host_in_seat_item_number_size">20dp</dimen>
     <dimen name="live_host_in_seat_item_margin">8dp</dimen>
     <dimen name="live_host_in_seat_item_operation_size">38dp</dimen>
+    <dimen name="live_host_in_seat_item_more_btn_size">20dp</dimen>
+
+    <dimen name="live_host_in_seat_item_dialog_width">64dp</dimen>
+    <dimen name="live_host_in_seat_item_dialog_corner">8dp</dimen>
+    <dimen name="live_host_in_seat_item_dialog_stroke_width">2px</dimen>
+    <dimen name="live_host_in_seat_item_dialog_triangle_size">14dp</dimen>
+    <dimen name="live_host_in_seat_item_dialog_triangle_margin">12dp</dimen>
+    <dimen name="live_host_in_seat_item_height">38dp</dimen>
+    <dimen name="live_host_in_seat_item_option_height">116dp</dimen>
+    <dimen name="live_host_in_seat_item_padding">4dp</dimen>
 
     <dimen name="live_pk_start_button_size">76dp</dimen>
 

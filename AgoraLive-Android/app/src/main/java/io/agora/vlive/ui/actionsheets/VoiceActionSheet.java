@@ -9,9 +9,9 @@ import io.agora.vlive.R;
 
 public class VoiceActionSheet extends AbstractActionSheet implements View.OnClickListener {
     public interface VoiceActionSheetListener extends AbsActionSheetListener {
-        void onAudioRouteSelected(int type);
-        void onAudioRouteEnabled(boolean enabled);
-        void onAudioBackPressed();
+        void onActionSheetAudioRouteSelected(int type);
+        void onActionSheetAudioRouteEnabled(boolean enabled);
+        void onActionSheetAudioBackPressed();
     }
 
     public static final int VOICE_UNKNOWN = -1;
@@ -58,11 +58,11 @@ public class VoiceActionSheet extends AbstractActionSheet implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_room_voice_back:
-                if (mListener != null) mListener.onAudioBackPressed();
+                if (mListener != null) mListener.onActionSheetAudioBackPressed();
                 break;
             case R.id.voice_switch:
                 view.setActivated(!view.isActivated());
-                if (mListener != null) mListener.onAudioRouteEnabled(view.isActivated());
+                if (mListener != null) mListener.onActionSheetAudioRouteEnabled(view.isActivated());
                 break;
             case R.id.voice_headphone:
             case R.id.voice_loudspeaker:
@@ -70,7 +70,7 @@ public class VoiceActionSheet extends AbstractActionSheet implements View.OnClic
                 mVoiceHeadphone.setActivated(view == mVoiceHeadphone);
                 mVoiceLoudspeaker.setActivated(view == mVoiceLoudspeaker);
                 mVoiceOthers.setActivated(view == mVoiceOthers);
-                if (mListener != null) mListener.onAudioRouteSelected(viewIdToIndex(view.getId()));
+                if (mListener != null) mListener.onActionSheetAudioRouteSelected(viewIdToIndex(view.getId()));
                 break;
         }
     }

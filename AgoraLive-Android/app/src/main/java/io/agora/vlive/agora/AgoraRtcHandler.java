@@ -6,19 +6,19 @@ import java.util.List;
 import io.agora.rtc.IRtcEngineEventHandler;
 
 public class AgoraRtcHandler extends IRtcEngineEventHandler {
-    private List<EventHandler> mHandlers;
+    private List<RtcEventHandler> mHandlers;
 
     AgoraRtcHandler() {
         mHandlers = new ArrayList<>();
     }
 
-    public void registerEventHandler(EventHandler handler) {
+    public void registerEventHandler(RtcEventHandler handler) {
         if (!mHandlers.contains(handler)) {
             mHandlers.add(handler);
         }
     }
 
-    public void removeEventHandler(EventHandler handler) {
+    public void removeEventHandler(RtcEventHandler handler) {
         mHandlers.remove(handler);
     }
 }

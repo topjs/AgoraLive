@@ -5,6 +5,5 @@ public class CreateUserResponse extends AbsResponse {
 
     public class CreateUserInfo {
         public String userId;
-        public String token;
     }
 }

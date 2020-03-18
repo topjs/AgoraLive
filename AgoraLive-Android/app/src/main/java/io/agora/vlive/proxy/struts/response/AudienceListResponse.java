@@ -3,12 +3,19 @@ package io.agora.vlive.proxy.struts.response;
 import java.util.List;
 
 public class AudienceListResponse extends AbsResponse {
-    List<AudienceInfo> data;
+    public RoomProfile data;
+
+    public class RoomProfile {
+        public int count;
+        public int total;
+        public String next;
+        public List<AudienceInfo> list;
+    }
 
     public class AudienceInfo {
         public String userId;
         public String userName;
         public String avator;
-        public int uid;
+        public String uid;
     }
 }

@@ -20,6 +20,10 @@
     <string name="room_list_no_data_hint">Please Create a Room</string>
     <string name="room_list_fail_to_obtain_data_hint">Loading Data failed, please try later</string>
 
+    <!-- My Profile Fragment -->
+    <string name="profile_item_title_avatar">Avatar Setting</string>
+    <string name="profile_item_title_nickname">Nickname Setting</string>
+
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">Room Name:</string>
     <string name="start_broadcast_text">Start Broadcast</string>
@@ -34,6 +38,13 @@
     <string name="live_host_in_seat_state_open_audience">Apply</string>
     <string name="live_host_in_seat_state_open_host">Invite</string>
     <string name="live_host_in_seat_state_closed">Closed</string>
+
+    <string-array name="live_host_in_seat_operations">
+        <item>Mute</item>
+        <item>Unmute</item>
+        <item>Leave</item>
+        <item>close</item>
+    </string-array>
 
     <!-- Messages -->
     <string name="live_message_gift_send">has sent out</string>

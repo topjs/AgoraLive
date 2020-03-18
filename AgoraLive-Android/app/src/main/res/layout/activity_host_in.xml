@@ -11,14 +11,15 @@
         android:padding="@dimen/activity_horizontal_margin">
         <RelativeLayout
             android:id="@+id/host_video_layout"
-            android:layout_width="@dimen/live_host_in_video_size"
-            android:layout_height="@dimen/live_host_in_video_size">
-            <ImageView
+            android:layout_width="@dimen/live_host_in_owner_video_size"
+            android:layout_height="@dimen/live_host_in_owner_video_size">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/host_in_owner_default_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/fake_icon_1"/>
+                android:scaleType="centerCrop"/>
         </RelativeLayout>
-        <io.agora.vlive.ui.components.LiveRoomParticipantLayout
+        <io.agora.vlive.ui.components.LiveRoomUserLayout
             android:id="@+id/host_in_participant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -22,10 +22,10 @@ import io.agora.vlive.R;
 
 public class LiveRoomSettingActionSheet extends AbstractActionSheet implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
     public interface LiveRoomSettingActionSheetListener extends AbsActionSheetListener {
-        void onResolutionSelected(int index);
-        void onFrameRateSelected(int index);
-        void onBitrateSelected(int bitrate);
-        void onSettingBackPressed();
+        void onActionSheetResolutionSelected(int index);
+        void onActionSheetFrameRateSelected(int index);
+        void onActionSheetBitrateSelected(int bitrate);
+        void onActionSheetSettingBackPressed();
     }
 
     private static final int PAGE_MAIN = 0;
@@ -130,7 +130,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
             application().config().setVideoBitrate(progress);
             mMainBitrateText.setText(String.format(
                     mMainBitrateTextFormat, progress));
-            if (mListener != null) mListener.onBitrateSelected(progress);
+            if (mListener != null) mListener.onActionSheetBitrateSelected(progress);
         }
     }
 
@@ -142,7 +142,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
                     mCurPage = PAGE_MAIN;
                     gotoPage(PAGE_MAIN);
                 } else {
-                    if (mListener != null) mListener.onSettingBackPressed();
+                    if (mListener != null) mListener.onActionSheetSettingBackPressed();
                 }
 
                 break;
@@ -257,7 +257,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
                 public void onClick(View view) {
                     application().config().setResolutionIndex(position);
                     mResolutionRecycler.getAdapter().notifyDataSetChanged();
-                    if (mListener != null) mListener.onResolutionSelected(position);
+                    if (mListener != null) mListener.onActionSheetResolutionSelected(position);
                 }
             });
         }
@@ -302,7 +302,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
                 public void onClick(View view) {
                     application().config().setFrameRateIndex(position);
                     mFrameRateRecycler.getAdapter().notifyDataSetChanged();
-                    if (mListener != null) mListener.onFrameRateSelected(position);
+                    if (mListener != null) mListener.onActionSheetFrameRateSelected(position);
                 }
             });
         }

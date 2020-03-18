@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -16,26 +15,29 @@ import java.io.IOException;
 
 import io.agora.vlive.R;
 
-public class LiveRoomParticipantLayout extends RelativeLayout {
-    private static final int EXPAND_MAX = 4;
+public class LiveRoomUserLayout extends RelativeLayout {
+    public interface UserLayoutListener {
+        void onUserLayoutShowUserList(View view);
+    }
 
-    private int mMaxWidth;
     private int mHeight;
     private int mIconSize;
     private int mIconMargin;
     private LinearLayout mIconLayout;
 
-    public LiveRoomParticipantLayout(Context context) {
+    private UserLayoutListener mListener;
+
+    public LiveRoomUserLayout(Context context) {
         super(context);
         init();
     }
 
-    public LiveRoomParticipantLayout(Context context, AttributeSet attrs) {
+    public LiveRoomUserLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public LiveRoomParticipantLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LiveRoomUserLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -48,6 +50,14 @@ public class LiveRoomParticipantLayout extends RelativeLayout {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View layout = inflater.inflate(R.layout.live_participant_layout, this, true);
         mIconLayout = layout.findViewById(R.id.icon_layout);
+        layout.findViewById(R.id.live_participant_total_layout)
+                .setOnClickListener(view -> {
+                    if (mListener != null) mListener.onUserLayoutShowUserList(view);
+                });
+    }
+
+    public void setUserLayoutListener(UserLayoutListener listener) {
+        mListener = listener;
     }
 
     @Override

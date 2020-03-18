@@ -1,7 +1,6 @@
 package io.agora.vlive.proxy;
 
-import android.util.SparseArray;
-
+import io.agora.vlive.proxy.struts.request.AudienceListRequest;
 import io.agora.vlive.proxy.struts.request.CreateRoomRequest;
 import io.agora.vlive.proxy.struts.request.ModifySeatStateRequest;
 import io.agora.vlive.proxy.struts.request.PKRequest;
@@ -11,7 +10,6 @@ import io.agora.vlive.proxy.struts.request.SendGiftRequest;
 import io.agora.vlive.proxy.struts.request.UserRequest;
 import io.agora.vlive.proxy.struts.request.OssPolicyRequest;
 import io.agora.vlive.proxy.struts.request.Request;
-import retrofit2.Call;
 
 public class ClientProxy {
     public static final int ROOM_TYPE_SINGLE = 1;
@@ -30,14 +28,12 @@ public class ClientProxy {
 
     private Client mClient;
     private long mReqId = 1;
-    private SparseArray<Call> mReqMap;
 
     public ClientProxy() {
         mClient = Client.instance();
-        mReqMap = new SparseArray<>();
     }
 
-    public long sendReq(int request, Object params, ClientProxyListener listener) {
+    public long sendReq(int request, Object params) {
         switch (request) {
             case Request.APP_VERSION:
                 String ver = (String) params;
@@ -54,12 +50,15 @@ public class ClientProxy {
                 mClient.requestOssPolicy(mReqId, ossRequest.token, ossRequest.type);
                 break;
             case Request.CREATE_USER:
-                UserRequest userRequest = (UserRequest) params;
-                mClient.createUser(mReqId, userRequest.userName, userRequest.avatar);
+                mClient.createUser(mReqId);
                 break;
             case Request.EDIT_USER:
-                userRequest = (UserRequest) params;
+                UserRequest userRequest = (UserRequest) params;
                 mClient.editUser(mReqId, userRequest.token, userRequest.userName, userRequest.avatar);
+                break;
+            case Request.USER_LOGIN:
+                String userId = (String) params;
+                mClient.login(mReqId, userId);
                 break;
             case Request.ROOM_LIST:
                 RoomListRequest roomListRequest = (RoomListRequest) params;
@@ -69,7 +68,7 @@ public class ClientProxy {
             case Request.CREATE_ROOM:
                 CreateRoomRequest createRoomRequest = (CreateRoomRequest) params;
                 mClient.createRoom(mReqId, createRoomRequest.token,
-                        createRoomRequest.userName, createRoomRequest.type);
+                        createRoomRequest.roomName, createRoomRequest.type);
                 break;
             case Request.ENTER_ROOM:
                 RoomRequest roomRequest = (RoomRequest) params;
@@ -80,8 +79,9 @@ public class ClientProxy {
                 mClient.leaveRoom(mReqId, roomRequest.token, roomRequest.roomId);
                 break;
             case Request.AUDIENCE_LIST:
-                roomRequest = (RoomRequest) params;
-                mClient.requestAudienceList(mReqId, roomRequest.token, roomRequest.roomId);
+                AudienceListRequest audienceRequest = (AudienceListRequest) params;
+                mClient.requestAudienceList(mReqId, audienceRequest.token, audienceRequest.roomId,
+                        audienceRequest.nextId, audienceRequest.count, audienceRequest.type);
                 break;
             case Request.SEND_GIFT:
                 SendGiftRequest sendGiftRequest = (SendGiftRequest) params;
@@ -111,11 +111,14 @@ public class ClientProxy {
                 break;
         }
 
-        mClient.setProxyListener(mReqId, listener);
         return mReqId++;
     }
 
-    public void removeListener(long reqId) {
-        mClient.removeProxyListener(reqId);
+    public void registerProxyListener(ClientProxyListener listener) {
+        mClient.registerProxyListener(listener);
+    }
+
+    public void removeProxyListener(ClientProxyListener listener) {
+        mClient.removeProxyListener(listener);
     }
 }

@@ -55,8 +55,11 @@ public class LiveRoomMessageList extends RecyclerView {
     private void init() {
         mInflater = LayoutInflater.from(getContext());
         mAdapter = new LiveRoomMessageAdapter();
-        setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        layoutManager.setStackFromEnd(true);
+        setLayoutManager(layoutManager);
         setAdapter(mAdapter);
         addItemDecoration(new MessageItemDecorator());
     }

@@ -11,14 +11,15 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.agora.vlive.R;
-import io.agora.vlive.proxy.struts.UserProfile;
+import io.agora.vlive.proxy.model.UserProfile;
 
 public class InviteUserActionSheet extends AbstractActionSheet {
     public interface InviteUserActionSheetListener extends AbsActionSheetListener {
-        void onAudienceInvited(UserProfile user);
+        void onActionSheetAudienceInvited(UserProfile user);
     }
 
     private InviteUserActionSheetListener mListener;
@@ -48,15 +49,15 @@ public class InviteUserActionSheet extends AbstractActionSheet {
         }
     }
 
-    public void refreshUserList(List<UserProfile> userList) {
-        mAdapter.setUserList(userList);
+    public void append(List<UserProfile> userList) {
+        mAdapter.append(userList);
     }
 
     private class RoomUserAdapter extends RecyclerView.Adapter {
-        private List<UserProfile> mUserList;
+        private List<UserProfile> mUserList = new ArrayList<>();
 
-        public void setUserList(List<UserProfile> userList) {
-            mUserList = userList;
+        public void append(List<UserProfile> userList) {
+            mUserList.addAll(userList);
             notifyDataSetChanged();
         }
 
@@ -64,17 +65,14 @@ public class InviteUserActionSheet extends AbstractActionSheet {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new RoomUserViewHolder(LayoutInflater.
-                    from(getContext()).inflate(R.layout.action_user_list_item, parent, false));
+                    from(getContext()).inflate(R.layout.action_invite_audience_list_item, parent, false));
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
             RoomUserViewHolder viewHolder = (RoomUserViewHolder) holder;
-            viewHolder.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null) mListener.onAudienceInvited(mUserList.get(position));
-                }
+            viewHolder.button.setOnClickListener(view -> {
+                if (mListener != null) mListener.onActionSheetAudienceInvited(mUserList.get(position));
             });
         }
 

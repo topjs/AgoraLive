@@ -14,7 +14,7 @@ import io.agora.vlive.R;
 
 public class LiveBottomButtonLayout extends RelativeLayout implements View.OnClickListener {
     public interface LiveBottomButtonListener {
-        void onShowMessageInput();
+        void onLiveBottomLayoutShowMessageEditor();
     }
 
     private int mHeight;
@@ -107,7 +107,7 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.live_bottom_message_input_hint) {
-            if (mListener != null) mListener.onShowMessageInput();
+            if (mListener != null) mListener.onLiveBottomLayoutShowMessageEditor();
         }
     }
 }

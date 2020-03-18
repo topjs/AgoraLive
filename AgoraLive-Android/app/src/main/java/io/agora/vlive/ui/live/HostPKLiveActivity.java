@@ -33,6 +33,7 @@ public class HostPKLiveActivity extends LiveRoomActivity implements View.OnClick
         mNamePad.setIconResource("fake_icon_1.jpeg");
 
         participants = findViewById(R.id.pk_host_in_participant);
+        participants.setUserLayoutListener(this);
         participants.setIconResource("fake_icon_2.jpeg");
         participants.setIconResource("fake_icon_3.jpeg");
 

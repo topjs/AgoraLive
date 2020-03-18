@@ -171,50 +171,51 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         intent.putExtras(getIntent());
         intent.putExtra(Global.Constants.KEY_ROOM_NAME, mEditText.getText().toString());
         startActivity(intent);
+        finish();
     }
 
     @Override
-    public void onBeautyEnabled(boolean enabled) {
-        Log.i(TAG, "onBeautyEnabled:" + enabled);
+    public void onActionSheetBeautyEnabled(boolean enabled) {
+        Log.i(TAG, "onActionSheetBeautyEnabled:" + enabled);
     }
 
     @Override
-    public void onBrightnessSelected(float brightness) {
-        Log.i(TAG, "onBrightnessSelected:" + brightness);
+    public void onActionSheetBrightnessSelected(float brightness) {
+        Log.i(TAG, "onActionSheetBrightnessSelected:" + brightness);
     }
 
     @Override
-    public void onSmoothSelected(float smooth) {
-        Log.i(TAG, "onSmoothSelected:" + smooth);
+    public void onActionSheetSmoothSelected(float smooth) {
+        Log.i(TAG, "onActionSheetSmoothSelected:" + smooth);
     }
 
     @Override
-    public void onColorTemperatureSelected(float temperature) {
-        Log.i(TAG, "onColorTemperatureSelected:" + temperature);
+    public void onActionSheetColorTemperatureSelected(float temperature) {
+        Log.i(TAG, "onActionSheetColorTemperatureSelected:" + temperature);
     }
 
     @Override
-    public void onContrastSelected(int type) {
-        Log.i(TAG, "onContrastSelected:" + type);
+    public void onActionSheetContrastSelected(int type) {
+        Log.i(TAG, "onActionSheetContrastSelected:" + type);
     }
 
     @Override
-    public void onResolutionSelected(int index) {
-        Log.i(TAG, "onResolutionSelected:" + index);
+    public void onActionSheetResolutionSelected(int index) {
+        Log.i(TAG, "onActionSheetResolutionSelected:" + index);
     }
 
     @Override
-    public void onFrameRateSelected(int index) {
-        Log.i(TAG, "onFrameRateSelected:" + index);
+    public void onActionSheetFrameRateSelected(int index) {
+        Log.i(TAG, "onActionSheetFrameRateSelected:" + index);
     }
 
     @Override
-    public void onBitrateSelected(int bitrate) {
-        Log.i(TAG, "onBitrateSelected:" + bitrate);
+    public void onActionSheetBitrateSelected(int bitrate) {
+        Log.i(TAG, "onActionSheetBitrateSelected:" + bitrate);
     }
 
     @Override
-    public void onSettingBackPressed() {
-        Log.i(TAG, "onSettingBackPressed:");
+    public void onActionSheetSettingBackPressed() {
+        Log.i(TAG, "onActionSheetSettingBackPressed:");
     }
 }

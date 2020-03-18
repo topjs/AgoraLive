@@ -33,6 +33,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         mNamePad.setIconResource("fake_icon_1.jpeg");
 
         participants = findViewById(R.id.single_live_participant);
+        participants.setUserLayoutListener(this);
         participants.setIconResource("fake_icon_2.jpeg");
         participants.setIconResource("fake_icon_3.jpeg");
 

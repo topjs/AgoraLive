@@ -18,7 +18,7 @@ public class CameraRender implements TextureView.SurfaceTextureListener {
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-        Log.i(TAG, "onSurfaceTextureAvailable: width=" + width + " height=" + height);
+        Log.i(TAG, "onSurfaceTextureAvailable: width=" + width + " height=" + height + " " + surfaceTexture.toString());
         mCamera = Camera.open();
         try {
             surfaceTexture.setDefaultBufferSize(width, height);
@@ -38,10 +38,11 @@ public class CameraRender implements TextureView.SurfaceTextureListener {
 
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-        Log.i(TAG, "onSurfaceTextureDestroyed");
+        Log.i(TAG, "onSurfaceTextureDestroyed:" + surfaceTexture.toString());
         if (mCamera != null) {
             mCamera.stopPreview();
             mCamera.release();
+            mCamera = null;
         }
         return true;
     }

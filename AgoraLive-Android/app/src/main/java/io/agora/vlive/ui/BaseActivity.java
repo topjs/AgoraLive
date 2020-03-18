@@ -22,8 +22,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Stack;
 
+import io.agora.rtc.RtcEngine;
+import io.agora.rtm.RtmClient;
 import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.Config;
+import io.agora.vlive.agora.RtcEventHandler;
 import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.proxy.ClientProxyListener;
 import io.agora.vlive.proxy.struts.response.AppVersionResponse;
@@ -35,6 +38,7 @@ import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.proxy.struts.response.GiftListResponse;
 import io.agora.vlive.proxy.struts.response.GiftRankResponse;
 import io.agora.vlive.proxy.struts.response.LeaveRoomResponse;
+import io.agora.vlive.proxy.struts.response.LoginResponse;
 import io.agora.vlive.proxy.struts.response.ModifySeatStateResponse;
 import io.agora.vlive.proxy.struts.response.MusicListResponse;
 import io.agora.vlive.proxy.struts.response.OssPolicyResponse;
@@ -45,6 +49,7 @@ import io.agora.vlive.proxy.struts.response.SendGiftResponse;
 import io.agora.vlive.proxy.struts.response.StartStopPkResponse;
 import io.agora.vlive.ui.actionsheets.AbstractActionSheet;
 import io.agora.vlive.ui.actionsheets.GiftActionSheet;
+import io.agora.vlive.ui.actionsheets.LiveRoomUserListActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.ui.actionsheets.InviteUserActionSheet;
 import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
@@ -66,7 +71,8 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
     protected static final int ACTION_SHEET_GIFT = 3;
     protected static final int ACTION_SHEET_TOOL = 4;
     protected static final int ACTION_SHEET_VOICE = 5;
-    protected static final int ACTION_SHEET_ROOM_USER = 6;
+    protected static final int ACTION_SHEET_INVITE_AUDIENCE = 6;
+    protected static final int ACTION_SHEET_ROOM_USER = 7;
 
     private static final int ACTION_SHEET_DIALOG_STYLE_RES = R.style.live_room_dialog;
     private static final int TOAST_SHORT_INTERVAL = 2000;
@@ -85,6 +91,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         setGlobalLayoutListener();
         systemBarHeight = getStatusBarHeight();
         displayHeight = getDisplayHeight();
+        proxy().registerProxyListener(this);
     }
 
     private void setGlobalLayoutListener() {
@@ -199,8 +206,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
             case ACTION_SHEET_VOICE:
                 actionSheet = new VoiceActionSheet(this);
                 break;
-            case ACTION_SHEET_ROOM_USER:
+            case ACTION_SHEET_INVITE_AUDIENCE:
                 actionSheet = new InviteUserActionSheet(this);
+                break;
+            case ACTION_SHEET_ROOM_USER:
+                actionSheet = new LiveRoomUserListActionSheet(this);
                 break;
             default:
                 actionSheet = new LiveRoomSettingActionSheet(this);
@@ -255,6 +265,22 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         return application().proxy();
     }
 
+    public RtcEngine rtcEngine() {
+        return application().rtcEngine();
+    }
+
+    public RtmClient rtmClient() {
+        return application().rtmClient();
+    }
+
+    public void registerRtcHandler(RtcEventHandler handler) {
+        application().registerRtcHandler(handler);
+    }
+
+    public void removeRtcHandler(RtcEventHandler handler) {
+        application().removeRtcHandler(handler);
+    }
+
     protected void showShortToast(String message) {
         long current = System.currentTimeMillis();
         if (current - mLastToastTime > TOAST_SHORT_INTERVAL) {
@@ -262,6 +288,12 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             mLastToastTime = current;
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        proxy().removeProxyListener(this);
     }
 
     @Override
@@ -305,6 +337,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
     }
 
     @Override
+    public void onLoginResponse(LoginResponse response) {
+
+    }
+
+    @Override
     public void onCreateRoomResponse(CreateRoomResponse response) {
 
     }
@@ -325,27 +362,32 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
     }
 
     @Override
-    public void onRequestSeatState(SeatStateResponse response) {
+    public void onRequestSeatStateResponse(SeatStateResponse response) {
 
     }
 
     @Override
-    public void onModifySeatState(ModifySeatStateResponse response) {
+    public void onModifySeatStateResponse(ModifySeatStateResponse response) {
 
     }
 
     @Override
-    public void onSendGift(SendGiftResponse response) {
+    public void onSendGiftResponse(SendGiftResponse response) {
 
     }
 
     @Override
-    public void onGiftRank(GiftRankResponse response) {
+    public void onGiftRankResponse(GiftRankResponse response) {
 
     }
 
     @Override
-    public void onStartStopPk(StartStopPkResponse response) {
+    public void onStartStopPkResponse(StartStopPkResponse response) {
+
+    }
+
+    @Override
+    public void onResponseError(int requestType, int error, String message) {
 
     }
 }

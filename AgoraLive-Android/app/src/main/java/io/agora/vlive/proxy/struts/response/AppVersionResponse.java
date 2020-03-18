@@ -1,24 +1,7 @@
 package io.agora.vlive.proxy.struts.response;
 
+import io.agora.vlive.proxy.model.AppVersionInfo;
+
 public class AppVersionResponse extends AbsResponse {
-    public Data data;
-
-    public class Data {
-        public String appCode;
-        int osType;
-        int terminalType;
-        String appVersion;
-        String latestVersion;
-        String appPackage;
-        String upgradeDescription;
-        int forcedUpgrade;
-        String upgradeUrl;
-        int reviewing;
-        int remindTimes;
-        Config config;
-    }
-
-    private class Config {
-        String appId;
-    }
+    public AppVersionInfo data;
 }

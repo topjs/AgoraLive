@@ -13,11 +13,11 @@ import io.agora.vlive.R;
 public class BeautySettingActionSheet extends AbstractActionSheet
         implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
     public interface BeautyActionSheetListener extends AbsActionSheetListener {
-        void onBeautyEnabled(boolean enabled);
-        void onBrightnessSelected(float brightness);
-        void onSmoothSelected(float smooth);
-        void onColorTemperatureSelected(float temperature);
-        void onContrastSelected(int type);
+        void onActionSheetBeautyEnabled(boolean enabled);
+        void onActionSheetBrightnessSelected(float brightness);
+        void onActionSheetSmoothSelected(float smooth);
+        void onActionSheetColorTemperatureSelected(float temperature);
+        void onActionSheetContrastSelected(int type);
     }
 
     public static final int CONTRAST_LOW = 0;
@@ -102,7 +102,7 @@ public class BeautySettingActionSheet extends AbstractActionSheet
             boolean activated = !mBeautySwitch.isActivated();
             mBeautySwitch.setActivated(activated);
             application().config().setBeautyEnabled(activated);
-            if (mListener != null) mListener.onBeautyEnabled(activated);
+            if (mListener != null) mListener.onActionSheetBeautyEnabled(activated);
             return;
         }
 
@@ -127,7 +127,7 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         }
 
         application().config().setContrast(type);
-        if (mListener != null) mListener.onContrastSelected(type);
+        if (mListener != null) mListener.onActionSheetContrastSelected(type);
     }
 
     @Override
@@ -147,17 +147,17 @@ public class BeautySettingActionSheet extends AbstractActionSheet
             case R.id.beauty_brightness_progress_bar:
                 mBrightnessValue.setText(String.valueOf(value));
                 application().config().setBeautyBrightness(value);
-                if (mListener != null) mListener.onBrightnessSelected(value);
+                if (mListener != null) mListener.onActionSheetBrightnessSelected(value);
                 break;
             case R.id.beauty_smooth_progress_bar:
                 mSmoothValue.setText(String.valueOf(value));
                 application().config().setBeautySmooth(value);
-                if (mListener != null) mListener.onSmoothSelected(value);
+                if (mListener != null) mListener.onActionSheetSmoothSelected(value);
                 break;
             case R.id.beauty_temperature_progress_bar:
                 mColorTempValue.setText(String.valueOf(value));
                 application().config().setBeautyColorTemp(value);
-                if (mListener != null) mListener.onColorTemperatureSelected(value);
+                if (mListener != null) mListener.onActionSheetColorTemperatureSelected(value);
                 break;
         }
     }

@@ -17,7 +17,7 @@ import io.agora.vlive.utils.Global;
 
 public class GiftActionSheet extends AbstractActionSheet implements View.OnClickListener {
     public interface GiftActionSheetListener {
-        void onGiftSend(String name, int index, int value);
+        void onActionSheetGiftSend(String name, int index, int value);
     }
 
     private static final int SPAN_COUNT = 4;
@@ -59,8 +59,8 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_action_sheet_gift_send_btn) {
-            if (mListener != null && mSelected != -1) mListener.onGiftSend(
-                    mGiftNames[mSelected], mSelected, Global.FakeData.GIFT_VALUES[mSelected]);
+            if (mListener != null && mSelected != -1) mListener.onActionSheetGiftSend(
+                    mGiftNames[mSelected], mSelected, 0);
         }
     }
 
@@ -77,7 +77,7 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
             GiftViewHolder giftViewHolder = (GiftViewHolder) holder;
             giftViewHolder.name.setText(mGiftNames[position]);
             giftViewHolder.value.setText(String.format(
-                    mValueFormat, Global.FakeData.GIFT_VALUES[position]));
+                    mValueFormat, 0));
             giftViewHolder.setPosition(position);
             giftViewHolder.itemView.setActivated(mSelected == position);
             giftViewHolder.icon.setImageResource(Global.Constants.GIFT_ICON_RES[position]);

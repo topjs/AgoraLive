@@ -1,2 +1,2 @@
-include ':app', ':camera'
+include ':app', ':camera', ':faceunity', ':video_capturer_and_renderer'
 rootProject.name='AgoraLive-Android'

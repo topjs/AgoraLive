@@ -21,6 +21,10 @@
     <string name="room_list_no_data_hint">请创建一个房间</string>
     <string name="room_list_fail_to_obtain_data_hint">暂无数据，请稍候再试</string>
 
+    <!-- My Profile Fragment -->
+    <string name="profile_item_title_avatar">设置头像</string>
+    <string name="profile_item_title_nickname">设置昵称</string>
+
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">直播间名字:</string>
     <string name="start_broadcast_text">开始直播</string>
@@ -35,6 +39,13 @@
     <string name="live_host_in_seat_state_open_audience">申请连线</string>
     <string name="live_host_in_seat_state_open_host">邀请连麦</string>
     <string name="live_host_in_seat_state_closed">封麦</string>
+
+    <string-array name="live_host_in_seat_operations">
+        <item>禁麦</item>
+        <item>解禁</item>
+        <item>下麦</item>
+        <item>封麦</item>
+    </string-array>
 
     <!-- Messages -->
     <string name="live_message_gift_send">向主播赠送了一个</string>

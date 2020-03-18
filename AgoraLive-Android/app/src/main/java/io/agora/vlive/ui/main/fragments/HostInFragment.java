@@ -1,12 +1,13 @@
 package io.agora.vlive.ui.main.fragments;
 
+import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.ui.live.HostInLiveActivity;
 import io.agora.vlive.utils.Global;
 
 public class HostInFragment extends AbsPageFragment {
     @Override
-    protected int onGetTabType() {
-        return Global.Constants.TAB_ID_MULTI;
+    protected int onGetRoomListType() {
+        return ClientProxy.ROOM_TYPE_HOST_IN;
     }
 
     @Override

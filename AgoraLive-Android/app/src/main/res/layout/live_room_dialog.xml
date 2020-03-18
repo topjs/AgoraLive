@@ -33,7 +33,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dialog_negative_button"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/dialog_negative_button"
             android:textSize="@dimen/text_size_normal"
@@ -47,7 +47,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dialog_positive_button"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/dialog_positive_button"
             android:textColor="@color/blue_original"

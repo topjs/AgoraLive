@@ -13,6 +13,7 @@ import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.proxy.struts.response.GiftListResponse;
 import io.agora.vlive.proxy.struts.response.GiftRankResponse;
 import io.agora.vlive.proxy.struts.response.LeaveRoomResponse;
+import io.agora.vlive.proxy.struts.response.LoginResponse;
 import io.agora.vlive.proxy.struts.response.ModifySeatStateResponse;
 import io.agora.vlive.proxy.struts.response.MusicListResponse;
 import io.agora.vlive.proxy.struts.response.OssPolicyResponse;
@@ -68,6 +69,11 @@ public abstract class AbstractFragment extends Fragment implements ClientProxyLi
     }
 
     @Override
+    public void onLoginResponse(LoginResponse response) {
+
+    }
+
+    @Override
     public void onEditUserResponse(EditUserResponse response) {
 
     }
@@ -93,27 +99,32 @@ public abstract class AbstractFragment extends Fragment implements ClientProxyLi
     }
 
     @Override
-    public void onRequestSeatState(SeatStateResponse response) {
+    public void onRequestSeatStateResponse(SeatStateResponse response) {
 
     }
 
     @Override
-    public void onModifySeatState(ModifySeatStateResponse response) {
+    public void onModifySeatStateResponse(ModifySeatStateResponse response) {
 
     }
 
     @Override
-    public void onSendGift(SendGiftResponse response) {
+    public void onSendGiftResponse(SendGiftResponse response) {
 
     }
 
     @Override
-    public void onGiftRank(GiftRankResponse response) {
+    public void onGiftRankResponse(GiftRankResponse response) {
 
     }
 
     @Override
-    public void onStartStopPk(StartStopPkResponse response) {
+    public void onStartStopPkResponse(StartStopPkResponse response) {
+
+    }
+
+    @Override
+    public void onResponseError(int requestType, int error, String message) {
 
     }
 }
