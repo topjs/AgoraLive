@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import io.agora.vlive.R;
+import io.agora.vlive.proxy.struts.model.SeatInfo;
 
 public class SeatItemDialog extends Dialog implements View.OnClickListener {
     // Owner has full privilege to operate on any host on the seat
@@ -25,7 +26,7 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
     }
 
     public enum Operation {
-        mute, unmute, leave, close;
+        mute, unmute, leave, open, close;
 
         @NonNull
         @Override
@@ -37,6 +38,8 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
                     return "unmute";
                 case leave:
                     return "leave";
+                case open:
+                    return "open";
                 case close:
                     return "close";
                 default: return "unknown";
@@ -46,21 +49,22 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
 
     private int mMode;
 
-    private LiveHostInSeatAdapter.SeatState mState;
+    private int mSeatState;
+    private int mAudioMuteState;
     private String[] mOperations;
     private AppCompatTextView[] mOpTextViews = new AppCompatTextView[3];
     private OnSeatDialogItemClickedListener mListener;
     private final int mPosition;
 
-    public SeatItemDialog(@NonNull Context context, LiveHostInSeatAdapter.SeatState state, int mode,
+    public SeatItemDialog(@NonNull Context context, int seatState, int audioMuteState, int mode,
                           View anchor, int position, @NonNull OnSeatDialogItemClickedListener listener) {
         super(context, R.style.seat_item_dialog);
-        mState = state;
+        mSeatState = seatState;
+        mAudioMuteState = audioMuteState;
         mListener = listener;
         mPosition = position;
         mMode = mode;
         init(context, anchor);
-        initOperations();
     }
 
     private void init(Context context, View anchor) {
@@ -69,12 +73,13 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
     }
 
     private void initDialog(View anchor) {
-        if (isOwner()) {
-            setContentView(R.layout.seat_item_popup_owner);
+        if (isOwner() && mSeatState == SeatInfo.TAKEN) {
+            setContentView(R.layout.seat_item_popup_multi);
         } else {
-            setContentView(R.layout.seat_item_popup_host);
+            setContentView(R.layout.seat_item_popup_single);
         }
 
+        initOperations();
         setDialogPosition(anchor);
         setCancelable(true);
     }
@@ -111,8 +116,17 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
         mOpTextViews[0] = findViewById(R.id.seat_item_dialog_op1);
         mOpTextViews[0].setOnClickListener(this);
 
-        if (!isOwner()) {
-            mOpTextViews[0].setText(mOperations[2]);
+        if (!isOwner() || mSeatState != LiveMultiHostSeatLayout.SEAT_TAKEN) {
+            if (!isOwner()) {
+                // Other hosts are only allowed to
+                // leave their seat by the pop up window
+                mOpTextViews[0].setText(mOperations[2]);
+            } else if (mSeatState == LiveMultiHostSeatLayout.SEAT_OPEN) {
+                mOpTextViews[0].setText(mOperations[4]);
+            } else if (mSeatState == LiveMultiHostSeatLayout.SEAT_CLOSED) {
+                mOpTextViews[0].setText(mOperations[3]);
+            }
+
             return;
         }
 
@@ -122,7 +136,7 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
         mOpTextViews[2] = findViewById(R.id.seat_item_dialog_op3);
         mOpTextViews[2].setOnClickListener(this);
 
-        if (mState.isAudioMutedByOwner()) {
+        if (mAudioMuteState == LiveMultiHostSeatLayout.AUDIO_MUTED_BY_OWNER) {
             mOpTextViews[0].setText(mOperations[1]);
         } else {
             mOpTextViews[0].setText(mOperations[0]);
@@ -137,9 +151,22 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
         Operation op = Operation.mute;
         switch (view.getId()) {
             case R.id.seat_item_dialog_op1:
-                op = !isOwner() ? Operation.leave :
-                        mState.isAudioMutedByOwner() ?
-                                Operation.unmute : Operation.mute;
+                if (!isOwner()) {
+                    op = Operation.leave;
+                } else {
+                    if (mSeatState == LiveMultiHostSeatLayout.SEAT_OPEN) {
+                        op = Operation.close;
+                    } else if (mSeatState == LiveMultiHostSeatLayout.SEAT_CLOSED) {
+                        op = Operation.open;
+                    } else if (mSeatState == LiveMultiHostSeatLayout.SEAT_TAKEN) {
+                        if (mAudioMuteState == LiveMultiHostSeatLayout.AUDIO_MUTED_BY_OWNER) {
+                            op = Operation.unmute;
+                        } else if (mAudioMuteState == LiveMultiHostSeatLayout.MUTE_NONE) {
+                            op = Operation.mute;
+                        }
+                    }
+                }
+
                 break;
             case R.id.seat_item_dialog_op2:
                 op = Operation.leave;

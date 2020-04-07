@@ -41,6 +41,8 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
     private static final int PEER_MSG_CMD_INVITE = 102;
     private static final int PEER_MSG_CMD_APPLY_REJECT = 103;
     private static final int PEER_MSG_CMD_INVITE_REJECT = 104;
+    private static final int PEER_MSG_CMD_APPLY_ACCEPTED = 105;
+    private static final int PEER_MSG_CMD_INVITE_ACCEPTED = 106;
 
     private static final int PEER_MSG_CMD_PK = 201;
     private static final int PEER_MSG_CMD_PK_REJECT = 202;
@@ -75,6 +77,7 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
         mOptions = new SendMessageOptions();
         mOptions.enableOfflineMessaging = false;
         mOptions.enableHistoricalMessaging = false;
+        mMessageListeners = new ArrayList<>();
     }
 
     public static RtmMessageManager instance() {
@@ -90,7 +93,6 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
 
     public void init(RtmClient client) {
         mRtmClient = client;
-        mMessageListeners = new ArrayList<>();
     }
 
     public synchronized void joinChannel(String channel, ResultCallback<Void> callback) {
@@ -121,13 +123,23 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
         mRtmChannel.sendMessage(msg, mOptions, callback);
     }
 
-    public void apply(String userId, String nickname, ResultCallback<Void> callback) {
-        String json = getPeerMessageDataJson(PEER_MSG_TYPE_CALL, nickname, PEER_MSG_CMD_APPLY);
+    public void apply(String userId, String nickname, int coindex, ResultCallback<Void> callback) {
+        String json = getPeerMessageDataJson(PEER_MSG_TYPE_CALL, nickname, PEER_MSG_CMD_APPLY, coindex);
         sendPeerMessage(userId, json, callback);
     }
 
-    public void invite(String userId, String nickname, ResultCallback<Void> callback) {
-        String json = getPeerMessageDataJson(PEER_MSG_TYPE_CALL, nickname, PEER_MSG_CMD_INVITE);
+    public void invite(String userId, String nickname, int coindex, ResultCallback<Void> callback) {
+        String json = getPeerMessageDataJson(PEER_MSG_TYPE_CALL, nickname, PEER_MSG_CMD_INVITE, coindex);
+        sendPeerMessage(userId, json, callback);
+    }
+
+    public void acceptApplication(String userId, String nickname, int coindex, ResultCallback<Void> callback) {
+        String json = getPeerMessageDataJson(PEER_MSG_TYPE_CALL, nickname, PEER_MSG_CMD_APPLY_ACCEPTED);
+        sendPeerMessage(userId, json, callback);
+    }
+
+    public void acceptInvitation(String userId, String nickname, int coindex, ResultCallback<Void> callback) {
+        String json = getPeerMessageDataJson(PEER_MSG_TYPE_CALL, nickname, PEER_MSG_CMD_INVITE_ACCEPTED);
         sendPeerMessage(userId, json, callback);
     }
 
@@ -156,8 +168,13 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
         sendPeerMessage(userId, json, callback);
     }
 
+    private String getPeerMessageDataJson(int cmd, String nickname, int operate, int coindex) {
+        PeerMessageData data = new PeerMessageData(cmd, nickname, operate, coindex);
+        return new GsonBuilder().create().toJson(data);
+    }
+
     private String getPeerMessageDataJson(int cmd, String nickname, int operate) {
-        PeerMessageData data = new PeerMessageData(cmd, nickname, operate);
+        PeerMessageData data = new PeerMessageData(cmd, nickname, operate, 0);
         return new GsonBuilder().create().toJson(data);
     }
 
@@ -229,20 +246,20 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
                 fromJson(rtmMessage.getText(), PeerMessageData.class);
 
         if (mHandler != null) {
-            mHandler.post(() -> handlePeerMessages(message, peerId, message.data.account));
+            mHandler.post(() -> handlePeerMessages(message, peerId, message.data.account, message.data.coindex));
         } else {
-            handlePeerMessages(message, peerId, message.data.account);
+            handlePeerMessages(message, peerId, message.data.account, message.data.coindex);
         }
     }
 
-    private void handlePeerMessages(PeerMessageData message, String peerId, String nickname) {
+    private void handlePeerMessages(PeerMessageData message, String peerId, String nickname, int index) {
         for (RtmMessageListener listener : mMessageListeners) {
             switch (message.data.operate) {
                 case PEER_MSG_CMD_APPLY:
-                    listener.onRtmAppliedForSeat(peerId, nickname);
+                    listener.onRtmAppliedForSeat(peerId, nickname, index);
                     break;
                 case PEER_MSG_CMD_INVITE:
-                    listener.onRtmInvitedByOwner(peerId, nickname);
+                    listener.onRtmInvitedByOwner(peerId, nickname, index);
                     break;
                 case PEER_MSG_CMD_APPLY_REJECT:
                     listener.onRtmApplicationRejected(peerId, nickname);

@@ -16,7 +16,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import io.agora.vlive.Config;
 import io.agora.vlive.R;
-import io.agora.vlive.utils.UserProfileUtil;
+import io.agora.vlive.utils.UserUtil;
 
 public class MeFragment extends AbstractFragment implements View.OnClickListener {
     private static final String TAG = MeFragment.class.getSimpleName();
@@ -45,7 +45,7 @@ public class MeFragment extends AbstractFragment implements View.OnClickListener
         if (drawable == null) {
             drawable = RoundedBitmapDrawableFactory.create(getResources(),
                     BitmapFactory.decodeResource(getResources(),
-                    UserProfileUtil.getUserProfileIcon(profile.getUserId())));
+                    UserUtil.getUserProfileIcon(profile.getUserId())));
             drawable.setCircular(true);
             profile.setProfileIcon(drawable);
         }

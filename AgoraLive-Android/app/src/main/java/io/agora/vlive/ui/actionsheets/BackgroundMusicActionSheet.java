@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import io.agora.vlive.proxy.model.MusicInfo;
+import io.agora.vlive.proxy.struts.model.MusicInfo;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
@@ -79,14 +79,16 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new BgMusicViewHolder(LayoutInflater.from(getContext()).
-                    inflate(R.layout.action_background_music_item, parent, false));
+            View view = LayoutInflater.from(parent.getContext()).
+                    inflate(R.layout.action_background_music_item, parent, false);
+            return new BgMusicViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             BgMusicViewHolder bgMusicViewHolder = (BgMusicViewHolder) holder;
-            bgMusicViewHolder.setMusicInfo(mMusicList.get(position).getMusicName(), null);
+            MusicInfo info = mMusicList.get(position);
+            bgMusicViewHolder.setMusicInfo(info.getMusicName(), info.getSinger());
             bgMusicViewHolder.setPosition(position);
             bgMusicViewHolder.setPlaying(mSelected == position);
         }
@@ -124,9 +126,9 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
             });
         }
 
-        void setMusicInfo(String title, String artist) {
+        void setMusicInfo(String title, String singer) {
             mTitle.setText(title);
-            mArtist.setText(artist);
+            mArtist.setText(singer);
         }
 
         void setPosition(int position) {

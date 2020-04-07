@@ -15,6 +15,7 @@ import io.agora.vlive.proxy.struts.response.GiftRankResponse;
 import io.agora.vlive.proxy.struts.response.LeaveRoomResponse;
 import io.agora.vlive.proxy.struts.response.LoginResponse;
 import io.agora.vlive.proxy.struts.response.ModifySeatStateResponse;
+import io.agora.vlive.proxy.struts.response.ModifyUserStateResponse;
 import io.agora.vlive.proxy.struts.response.MusicListResponse;
 import io.agora.vlive.proxy.struts.response.OssPolicyResponse;
 import io.agora.vlive.proxy.struts.response.RefreshTokenResponse;
@@ -100,6 +101,11 @@ public abstract class AbstractFragment extends Fragment implements ClientProxyLi
 
     @Override
     public void onRequestSeatStateResponse(SeatStateResponse response) {
+
+    }
+
+    @Override
+    public void onModifyUserStateResponse(ModifyUserStateResponse response) {
 
     }
 

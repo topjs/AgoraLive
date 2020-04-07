@@ -2,7 +2,7 @@ package io.agora.vlive.proxy.struts.response;
 
 import java.util.List;
 
-import io.agora.vlive.proxy.model.RoomInfo;
+import io.agora.vlive.proxy.struts.model.RoomInfo;
 
 public class RoomListResponse extends AbsResponse {
     public RoomList data;

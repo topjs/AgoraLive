@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.live.HostInLiveActivity"
+        <activity android:name=".ui.live.MultiHostLiveActivity"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.live.SingleHostLiveActivity"
@@ -41,6 +41,7 @@
 
         <activity android:name=".ui.live.LivePrepareActivity"
             android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:keepScreenOn="true"/>
+
     </application>
 </manifest>

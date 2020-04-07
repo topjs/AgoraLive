@@ -17,6 +17,7 @@
                 android:id="@+id/participant_icon"
                 android:layout_width="@dimen/live_participant_count_height"
                 android:layout_height="@dimen/live_participant_count_height"
+                android:layout_marginEnd="@dimen/live_participant_icon_margin_end"
                 android:src="@drawable/participants"
                 android:scaleType="fitCenter"/>
             <androidx.appcompat.widget.AppCompatTextView
@@ -25,12 +26,13 @@
                 android:layout_height="@dimen/live_participant_count_height"
                 android:textAlignment="gravity"
                 android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/live_participant_icon_margin_end"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_small"
                 android:text="345"/>
         </LinearLayout>
     </RelativeLayout>
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/icon_layout"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/live_participant_layout_height"

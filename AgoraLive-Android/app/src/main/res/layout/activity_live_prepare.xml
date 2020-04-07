@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextureView
-        android:id="@+id/live_prepare_texture_view"
+    <FrameLayout
+        android:id="@+id/local_preview_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:id="@+id/prepare_top_btn_layout"
@@ -23,7 +22,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/close_button_white"/>
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/live_prepare_rotate_camera"
+            android:id="@+id/live_prepare_switch_camera"
             android:layout_width="@dimen/button_height"
             android:layout_height="@dimen/button_height"
             android:layout_alignParentEnd="true"

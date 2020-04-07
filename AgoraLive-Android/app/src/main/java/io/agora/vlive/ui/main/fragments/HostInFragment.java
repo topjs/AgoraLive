@@ -1,8 +1,7 @@
 package io.agora.vlive.ui.main.fragments;
 
 import io.agora.vlive.proxy.ClientProxy;
-import io.agora.vlive.ui.live.HostInLiveActivity;
-import io.agora.vlive.utils.Global;
+import io.agora.vlive.ui.live.MultiHostLiveActivity;
 
 public class HostInFragment extends AbsPageFragment {
     @Override
@@ -12,6 +11,6 @@ public class HostInFragment extends AbsPageFragment {
 
     @Override
     protected Class<?> getLiveActivityClass() {
-        return HostInLiveActivity.class;
+        return MultiHostLiveActivity.class;
     }
 }

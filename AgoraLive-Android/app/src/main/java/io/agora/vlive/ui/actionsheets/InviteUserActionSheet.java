@@ -15,11 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.agora.vlive.R;
-import io.agora.vlive.proxy.model.UserProfile;
+import io.agora.vlive.proxy.struts.response.AudienceListResponse.AudienceInfo;
+
 
 public class InviteUserActionSheet extends AbstractActionSheet {
     public interface InviteUserActionSheetListener extends AbsActionSheetListener {
-        void onActionSheetAudienceInvited(UserProfile user);
+        void onActionSheetAudienceInvited(AudienceInfo user);
     }
 
     private InviteUserActionSheetListener mListener;
@@ -49,14 +50,14 @@ public class InviteUserActionSheet extends AbstractActionSheet {
         }
     }
 
-    public void append(List<UserProfile> userList) {
+    public void append(List<AudienceInfo> userList) {
         mAdapter.append(userList);
     }
 
     private class RoomUserAdapter extends RecyclerView.Adapter {
-        private List<UserProfile> mUserList = new ArrayList<>();
+        private List<AudienceInfo> mUserList = new ArrayList<>();
 
-        public void append(List<UserProfile> userList) {
+        public void append(List<AudienceInfo> userList) {
             mUserList.addAll(userList);
             notifyDataSetChanged();
         }

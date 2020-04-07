@@ -18,7 +18,7 @@ import java.util.List;
 import io.agora.vlive.R;
 import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.proxy.ClientProxyListener;
-import io.agora.vlive.proxy.model.UserProfile;
+import io.agora.vlive.proxy.struts.model.UserProfile;
 import io.agora.vlive.proxy.struts.request.AudienceListRequest;
 import io.agora.vlive.proxy.struts.request.Request;
 
@@ -58,7 +58,6 @@ public class LiveRoomUserListActionSheet extends AbstractActionSheet {
                     int lastItemPosition = recyclerView.getChildAdapterPosition(
                             recyclerView.getChildAt(recyclerView.getChildCount() - 1));
                     if (lastItemPosition == recyclerView.getAdapter().getItemCount() - 1) {
-                        Log.i(TAG, "last item is reached");
                         requestMoreAudience();
                     }
                 }
@@ -78,7 +77,7 @@ public class LiveRoomUserListActionSheet extends AbstractActionSheet {
         AudienceListRequest request = new AudienceListRequest(
                 mToken, mRoomId, mAdapter.getLastUserId(),
                 AudienceListRequest.TYPE_AUDIENCE);
-        mProxy.sendReq(Request.AUDIENCE_LIST, request);
+        mProxy.sendRequest(Request.AUDIENCE_LIST, request);
     }
 
     @Override

@@ -1,12 +1,13 @@
 package io.agora.vlive.proxy.interfaces;
 
-import io.agora.vlive.proxy.model.CreateRoomRequestBody;
+import io.agora.vlive.proxy.struts.model.CreateRoomRequestBody;
 import io.agora.vlive.proxy.struts.response.AudienceListResponse;
 import io.agora.vlive.proxy.struts.response.CreateRoomResponse;
 import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.proxy.struts.response.GiftRankResponse;
 import io.agora.vlive.proxy.struts.response.LeaveRoomResponse;
 import io.agora.vlive.proxy.struts.response.ModifySeatStateResponse;
+import io.agora.vlive.proxy.struts.response.ModifyUserStateResponse;
 import io.agora.vlive.proxy.struts.response.SeatStateResponse;
 import io.agora.vlive.proxy.struts.response.SendGiftResponse;
 import io.agora.vlive.proxy.struts.response.StartStopPkResponse;
@@ -40,6 +41,11 @@ public interface LiveRoomService {
     @GET("ent/v1/room/{roomId}/seats")
     Call<SeatStateResponse> requestSeatState(@Header("token") String token, @Header("reqId") long reqId,
                                              @Header("reqType") int reqType, @Path("roomId") String roomId);
+
+    @POST("ent/v1/room/{roomId}/user/{userId}")
+    Call<ModifyUserStateResponse> requestModifyUserState(@Header("token") String token, @Path("roomId") String roomId,
+                                                         @Path("userId") String userId, @Body int enableAudio,
+                                                         @Body int enableVideo, @Body int enableChat);
 
     @POST("ent/v1/room/{roomId}/seat")
     Call<ModifySeatStateResponse> requestModifySeatState(@Header("token") String token, @Header("reqId") long reqId,

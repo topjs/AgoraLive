@@ -1,7 +1,7 @@
 package io.agora.vlive.proxy.interfaces;
 
-import io.agora.vlive.proxy.model.LoginBody;
-import io.agora.vlive.proxy.model.UserRequestBody;
+import io.agora.vlive.proxy.struts.model.LoginBody;
+import io.agora.vlive.proxy.struts.model.UserRequestBody;
 import io.agora.vlive.proxy.struts.response.CreateUserResponse;
 import io.agora.vlive.proxy.struts.response.EditUserResponse;
 import io.agora.vlive.proxy.struts.response.LoginResponse;

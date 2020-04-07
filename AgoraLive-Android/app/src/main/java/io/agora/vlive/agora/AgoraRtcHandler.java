@@ -21,4 +21,11 @@ public class AgoraRtcHandler extends IRtcEngineEventHandler {
     public void removeEventHandler(RtcEventHandler handler) {
         mHandlers.remove(handler);
     }
+
+    @Override
+    public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
+        for (RtcEventHandler handler : mHandlers) {
+            handler.onRtcJoinChannelSuccess(channel, uid, elapsed);
+        }
+    }
 }

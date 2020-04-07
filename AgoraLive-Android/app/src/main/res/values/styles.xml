@@ -9,7 +9,7 @@
     </style>
 
     <style name="room_list_tab_item">
-        <item name="android:layout_width">@dimen/room_tab_item_width</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/room_tab_height</item>
         <item name="android:textAlignment">gravity</item>
         <item name="android:gravity">center</item>

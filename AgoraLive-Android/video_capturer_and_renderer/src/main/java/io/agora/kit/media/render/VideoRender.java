@@ -69,6 +69,7 @@ public class VideoRender implements SinkConnector<VideoCaptureFrame> {
             mCameraTextureId = GlUtil.createTextureObject(GLES11Ext.GL_TEXTURE_EXTERNAL_OES);
             mTexConnector.onDataAvailable(new Integer(mCameraTextureId));
 
+            GLES20.glClearColor(0, 0, 0, 0);
             Log.e(TAG, "onSurfaceCreated gl " + gl + " " + config + " " + mGLSurfaceView + " " + mGLRenderer);
         }
 

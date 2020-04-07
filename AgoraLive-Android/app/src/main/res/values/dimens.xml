@@ -62,9 +62,11 @@
     <dimen name="live_message_edit_height">58dp</dimen>
 
     <dimen name="live_participant_layout_height">32dp</dimen>
-    <dimen name="live_participant_count_width">58dp</dimen>
+    <dimen name="live_participant_count_width">68dp</dimen>
     <dimen name="live_participant_count_height">18dp</dimen>
-    <dimen name="live_participant_icon_margin">6dp</dimen>
+    <dimen name="live_participant_icon_margin">10dp</dimen>
+    <dimen name="live_participant_margin_end">6dp</dimen>
+    <dimen name="live_participant_icon_margin_end">4dp</dimen>
 
     <dimen name="live_bottom_layout_height">42dp</dimen>
     <dimen name="live_bottom_btn_margin">14dp</dimen>
@@ -78,7 +80,7 @@
     <dimen name="live_host_in_seat_item_number_size">20dp</dimen>
     <dimen name="live_host_in_seat_item_margin">8dp</dimen>
     <dimen name="live_host_in_seat_item_operation_size">38dp</dimen>
-    <dimen name="live_host_in_seat_item_more_btn_size">20dp</dimen>
+    <dimen name="live_host_in_seat_item_more_btn_size">22dp</dimen>
 
     <dimen name="live_host_in_seat_item_dialog_width">64dp</dimen>
     <dimen name="live_host_in_seat_item_dialog_corner">8dp</dimen>

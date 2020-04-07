@@ -2,13 +2,15 @@ package com.faceunity;
 
 import android.content.Context;
 import android.hardware.Camera;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.faceunity.entity.Effect;
 import com.faceunity.entity.Filter;
@@ -130,9 +132,10 @@ public class FURenderer implements OnFUControlListener {
      * 创建及初始化 Faceunity 相应的资源
      */
     public void onSurfaceCreated() {
-        onSurfaceDestroyed();
+        // onSurfaceDestroyed();
         Log.e(TAG, "onSurfaceCreated");
-        mEventQueue = Collections.synchronizedList(new ArrayList<Runnable>(16));
+        mEventQueue = Collections.synchronizedList(
+                new ArrayList<Runnable>(16));
 
         HandlerThread handlerThread = new HandlerThread("FUItemWorker");
         handlerThread.start();
@@ -177,6 +180,8 @@ public class FURenderer implements OnFUControlListener {
         if (mDefaultEffect != null) {
             mFuItemHandler.sendMessage(Message.obtain(mFuItemHandler, ITEM_ARRAYS_EFFECT_INDEX, mDefaultEffect));
         }
+
+        Log.i("FURenderer", "onSurfaceCreated " + this);
     }
 
     /**
@@ -206,6 +211,8 @@ public class FURenderer implements OnFUControlListener {
      */
     public void onSurfaceDestroyed() {
         Log.e(TAG, "onSurfaceDestroyed");
+        long before = System.currentTimeMillis();
+
         if (mFuItemHandler != null) {
             mFuItemHandler.removeCallbacksAndMessages(null);
             mFuItemHandler.getLooper().quit();
@@ -230,6 +237,8 @@ public class FURenderer implements OnFUControlListener {
         if (mIsCreateEGLContext) {
             faceunity.fuReleaseEGLContext();
         }
+
+        Log.i("FURenderer", "onSurfaceDestroyed " + this);
     }
 
     /**
@@ -304,6 +313,7 @@ public class FURenderer implements OnFUControlListener {
             Log.e(TAG, "onDrawFrame data null");
             return 0;
         }
+
         prepareDrawFrame();
 
         int flags = mInputTextureType | mInputImageFormat;
@@ -312,9 +322,15 @@ public class FURenderer implements OnFUControlListener {
 
         if (mNeedBenchmark)
             mFuCallStartTime = System.nanoTime();
+
+        long before = System.currentTimeMillis();
         int fuTex = faceunity.fuDualInputToTexture(img, tex, flags, w, h, mFrameId++, mItemsArray);
+        long after = System.currentTimeMillis();
+        //Log.i(TAG, "onDrawFrame:" + (after - before) + " ms");
+
         if (mNeedBenchmark)
             mOneHundredFrameFUTime += System.nanoTime() - mFuCallStartTime;
+
         return fuTex;
     }
 
@@ -674,8 +690,7 @@ public class FURenderer implements OnFUControlListener {
      * 类似 GLSurfaceView 的 queueEvent 机制
      */
     public void queueEvent(Runnable r) {
-        if (mEventQueue == null)
-            return;
+        if (mEventQueue == null) return;
         mEventQueue.add(r);
     }
 
@@ -768,7 +783,7 @@ public class FURenderer implements OnFUControlListener {
         }
 
         //queueEvent的Runnable在此处被调用
-        while (!mEventQueue.isEmpty()) {
+        while (mEventQueue != null && !mEventQueue.isEmpty()) {
             mEventQueue.remove(0).run();
         }
     }

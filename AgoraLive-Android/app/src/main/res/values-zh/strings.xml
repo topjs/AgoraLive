@@ -44,6 +44,7 @@
         <item>禁麦</item>
         <item>解禁</item>
         <item>下麦</item>
+        <item>解封</item>
         <item>封麦</item>
     </string-array>
 
@@ -103,10 +104,18 @@
     <string name="live_room_all_online_user_action_sheet_title">在线用户</string>
     <string name="live_room_host_in_audience_apply_title">申请上麦</string>
     <string name="live_room_host_in_audience_apply_message">您是否申请上麦?</string>
+    <string name="live_room_host_in_audience_apply_owner_message">"%s" 申请上麦位%d，是否接受？</string>
+    <string name="live_room_host_in_invited_by_owner">"%s" 邀请你上麦位%d， 是否接受？</string>
+    <string name="live_room_host_in_invite_rejected">邀请被拒绝</string>
+    <string name="live_room_host_in_invite_rejected_message">您的邀请已被 "%s" 拒绝</string>
+    <string name="live_room_host_in_apply_rejected">申请被拒绝</string>
+    <string name="live_room_host_in_apply_rejected_message">您的申请已被 "%s" 拒绝</string>
 
     <!-- dialog -->
     <string name="dialog_negative_button">取消</string>
     <string name="dialog_positive_button">确定</string>
+    <string name="dialog_positive_button_accept">接受</string>
+    <string name="dialog_negative_button_refuse">拒绝</string>
     
     <string name="finish_broadcast_title">结束直播</string>
     <string name="finish_broadcast_message">是否结束直播?</string>

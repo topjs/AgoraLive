@@ -10,11 +10,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.faceunity.FURenderer;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Field;
 
+import io.agora.framework.PreprocessorFaceUnity;
+import io.agora.framework.VideoModule;
+import io.agora.framework.channels.ChannelManager;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
 import io.agora.vlive.Config;
@@ -34,6 +38,8 @@ public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private RelativeLayout mContainerLayout;
+    private BottomNavigationView mNavView;
+    private NavController mNavController;
     private int mTopMargin;
 
     @Override
@@ -42,10 +48,7 @@ public class MainActivity extends BaseActivity {
         hideStatusBar(true);
         setContentView(R.layout.activity_main);
         initUI();
-        login();
-        getGiftList();
-        getMusicList();
-        checkUpdate();
+        initAsync();
     }
 
     private void initUI() {
@@ -53,29 +56,36 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initNavigation() {
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        changeItemHeight(navView);
-        navView.setItemIconTintList(null);
-        NavController controller = Navigation.
-                findNavController(this, R.id.nav_host_fragment);
+        mNavView = findViewById(R.id.nav_view);
+        changeItemHeight(mNavView);
+        mNavView.setItemIconTintList(null);
+        mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
-        navView.setOnNavigationItemSelectedListener(item -> {
+        mNavView.setOnNavigationItemSelectedListener(item -> {
                 int selectedId = item.getItemId();
-                int currentId = controller.getCurrentDestination() == null ?
-                        0 : controller.getCurrentDestination().getId();
+                int currentId = mNavController.getCurrentDestination() == null ?
+                        0 : mNavController.getCurrentDestination().getId();
 
                 // Do not respond to this click event because
                 // we do not want to refresh this fragment
                 // by repeatedly selecting the same menu item.
                 if (selectedId == currentId) return false;
 
-                NavigationUI.onNavDestinationSelected(item, controller);
+                NavigationUI.onNavDestinationSelected(item, mNavController);
                 hideStatusBar(getWindow(), true);
+
+                // Profile fragment needs to be drawn
+                // to the top of the screen.
                 int top = selectedId == R.id.navigation_me ? 0 : mTopMargin;
                 mContainerLayout.setPadding(0, top, 0, 0);
                 return true;
             }
         );
+    }
+
+    public void setNavigationSelected(int resId, Bundle bundle) {
+        mNavView.setSelectedItemId(resId);
+        mNavController.navigate(resId, bundle);
     }
 
     @Override
@@ -101,9 +111,18 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void initAsync() {
+        new Thread(() -> {
+            login();
+            getGiftList();
+            getMusicList();
+            checkUpdate();
+        }).start();
+    }
+
     private void checkUpdate() {
         if (!config().hasCheckedVersion()) {
-            proxy().sendReq(Request.APP_VERSION, getAppVersion());
+            sendRequest(Request.APP_VERSION, getAppVersion());
         }
     }
 
@@ -139,7 +158,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void createUser() {
-        proxy().sendReq(Request.CREATE_USER, new UserRequest());
+        sendRequest(Request.CREATE_USER, new UserRequest());
     }
 
     @Override
@@ -156,7 +175,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loginToServer() {
-        proxy().sendReq(Request.USER_LOGIN, config().getUserProfile().getUserId());
+        sendRequest(Request.USER_LOGIN, config().getUserProfile().getUserId());
     }
 
     @Override
@@ -185,7 +204,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getGiftList() {
-        proxy().sendReq(Request.GIFT_LIST, null);
+        sendRequest(Request.GIFT_LIST, null);
     }
 
     @Override
@@ -195,7 +214,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getMusicList() {
-        proxy().sendReq(Request.MUSIC_LIST, null);
+        sendRequest(Request.MUSIC_LIST, null);
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,7 +22,7 @@ import java.util.List;
 import io.agora.vlive.Config;
 import io.agora.vlive.R;
 import io.agora.vlive.proxy.ClientProxy;
-import io.agora.vlive.proxy.model.UserProfile;
+import io.agora.vlive.proxy.struts.model.UserProfile;
 import io.agora.vlive.proxy.struts.request.CreateRoomRequest;
 import io.agora.vlive.proxy.struts.request.Request;
 import io.agora.vlive.proxy.struts.request.RoomRequest;
@@ -57,7 +56,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     private static final String TAG = LiveRoomActivity.class.getSimpleName();
     private static final int IDEAL_MIN_KEYBOARD_HEIGHT = 200;
-    private static final int USER_COUNT_REFRESH_INTERVAL = 5000;
     private static final int MIN_ONLINE_MUSIC_INTERVAL = 100;
 
     private Rect mDecorViewRect;
@@ -75,13 +73,12 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     private LiveRoomUserListActionSheet mRoomUserActionSheet;
 
-    private Handler mHandler;
-    private UserCountRunnable mUserCountRunnable = new UserCountRunnable();
-
-    // Rtc Engine requires that the calls of startAudioMixing should
-    // not be too frequent if online musics are played.
+    // Rtc Engine requires that the calls of startAudioMixing
+    // should not be too frequent if online musics are played.
     // The interval is better not to be fewer than 100 ms.
     private volatile long mLastMusicPlayedTimeStamp;
+
+    private boolean mActivityFinished;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,9 +89,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
         mInputMethodManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        mHandler = new Handler(getMainLooper());
-        mHandler.postDelayed(mUserCountRunnable, USER_COUNT_REFRESH_INTERVAL);
 
         if (getIntent().getBooleanExtra(Global.Constants.KEY_CREATE_ROOM, false)) {
             createRoom();
@@ -151,7 +145,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         request.token = config().getUserProfile().getToken();
         request.type = getChannelTypeByTabId();
         request.roomName = roomName;
-        proxy().sendReq(Request.CREATE_ROOM, request);
+        sendRequest(Request.CREATE_ROOM, request);
     }
 
     private int getChannelTypeByTabId() {
@@ -176,7 +170,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         RoomRequest request = new RoomRequest();
         request.roomId = roomId;
         request.token = config().getUserProfile().getToken();
-        proxy().sendReq(Request.ENTER_ROOM, request);
+        sendRequest(Request.ENTER_ROOM, request);
     }
 
     @Override
@@ -186,30 +180,28 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             profile.setRtcToken(response.data.user.rtcToken);
             profile.setRtmToken(response.data.user.rtmToken);
             profile.setAgoraUid(response.data.user.uid);
+
             rtcChannelName = response.data.room.channelName;
             roomId = response.data.room.roomId;
             roomName = response.data.room.roomName;
+
             joinRtcChannel();
             joinRtmChannel();
+
+            initUserCount(response.data.room.total,
+                    response.data.room.rankUsers);
         }
     }
 
-    private class UserCountRunnable implements Runnable {
-        @Override
-        public void run() {
-            requestUserCount();
-            mHandler.postDelayed(mUserCountRunnable, USER_COUNT_REFRESH_INTERVAL);
-        }
-    }
-
-    private void requestUserCount() {
-        //TODO
+    private void initUserCount(final int total, final List<EnterRoomResponse.RankInfo> rankUsers) {
+        runOnUiThread(() -> participants.reset(total, rankUsers));
     }
 
     @Override
     public void onActionSheetBeautyEnabled(boolean enabled) {
         Log.i(TAG, "onActionSheetBeautyEnabled:" + enabled);
         bottomButtons.setBeautyEnabled(enabled);
+        enablePreProcess(enabled);
     }
 
     @Override
@@ -303,22 +295,20 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetRotateClicked() {
         Log.i(TAG, "onActionSheetRotateClicked");
+        switchCamera();
+        dismissActionSheetDialog();
     }
 
     @Override
     public void onActionSheetVideoClicked(boolean muted) {
         Log.i(TAG, "onActionSheetVideoClicked:" + muted);
-        // call rtc engine to mute/unmute my video, then
-        // send a channel message to notify other users in
-        // this channel to update their UI
+        if (isHost) rtcEngine().muteLocalVideoStream(true);
     }
 
     @Override
     public void onActionSheetSpeakerClicked(boolean muted) {
         Log.i(TAG, "onActionSheetSpeakerClicked:" + muted);
-        // call rtc engine to mute/unmute my audio, then
-        // send a channel message to notify other users in
-        // this channel to update their UI
+        if (isHost) rtcEngine().muteLocalAudioStream(muted);
     }
 
     @Override
@@ -389,11 +379,38 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             UserProfile profile = new UserProfile();
             profile.setUserId(info.userId);
             profile.setUserName(info.userName);
-            profile.setAvatar(info.avator);
+            profile.setAvatar(info.avatar);
         }
 
         if (mRoomUserActionSheet != null && mRoomUserActionSheet.getVisibility() == View.VISIBLE) {
             mRoomUserActionSheet.appendUsers(userList);
         }
+    }
+
+    @Override
+    public void onRtmChannelMessageReceived(String peerId, String nickname, String content) {
+        runOnUiThread(() -> messageList.addMessage(LiveRoomMessageList.MSG_TYPE_CHAT, nickname, content));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (isHost && !config().isVideoMuted()) {
+            startCameraCapture();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (isHost && !config().isVideoMuted() && !mActivityFinished) {
+            stopCameraCapture();
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        mActivityFinished = true;
     }
 }

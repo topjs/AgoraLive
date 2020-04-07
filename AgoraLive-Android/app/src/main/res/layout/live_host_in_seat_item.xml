@@ -7,11 +7,6 @@
         android:id="@+id/host_in_seat_item_video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/host_in_seat_item_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/host_in_seat_item_id"
         android:layout_width="@dimen/live_host_in_seat_item_number_size"
@@ -65,13 +60,11 @@
         android:layout_marginEnd="@dimen/live_host_in_seat_item_margin"
         android:src="@drawable/host_seat_item_popup_btn"/>
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/host_in_seat_item_mute_icon"
+        android:id="@+id/host_in_seat_item_voice_state_icon"
         android:layout_width="@dimen/live_host_in_seat_item_more_btn_size"
         android:layout_height="@dimen/live_host_in_seat_item_more_btn_size"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/live_host_in_seat_item_margin"
-        android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"
-        android:src="@drawable/host_seat_item_mute_icon"
-        android:visibility="gone"/>
+        android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"/>
 </io.agora.vlive.ui.components.SquareRelativeLayout>

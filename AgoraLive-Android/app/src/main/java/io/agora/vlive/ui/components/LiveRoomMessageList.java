@@ -71,6 +71,7 @@ public class LiveRoomMessageList extends RecyclerView {
             item.message = getResources().getString(R.string.live_message_gift_send);
         }
         mAdapter.addMessage(item);
+        mAdapter.notifyDataSetChanged();
     }
 
     public void notifyDataSetChanged() {

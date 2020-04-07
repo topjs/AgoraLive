@@ -29,10 +29,8 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
     private static final int TAB_COUNT = 3;
     private static final int TAB_TEXT_VIEW_INDEX = 1;
 
-    private TabLayout mTabLayout;
-    private ViewPager2 mViewPager;
     private int mCurrentTap;
-
+    private int mTitleTextSize;
     private String[] mTabTitles = new String[TAB_COUNT];
 
     @SuppressWarnings("unchecked")
@@ -42,7 +40,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("room", "onCreate: savedinstance:" + savedInstanceState);
+        mTitleTextSize = getResources().getDimensionPixelSize(R.dimen.text_size_large);
     }
 
     @Nullable
@@ -57,44 +55,27 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
         getTabTitles();
-        mTabLayout = view.findViewById(R.id.room_tab_layout);
+        TabLayout tabLayout = view.findViewById(R.id.room_tab_layout);
 
-        mViewPager = view.findViewById(R.id.room_list_pager);
-        mViewPager.setAdapter(new RoomAdapter(this));
+        ViewPager2 viewPager = view.findViewById(R.id.room_list_pager);
+        viewPager.setAdapter(new RoomAdapter(this));
 
-        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                Log.i("room", "page selected:" + position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-        });
-
-        new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) ->
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
             tab.setText(mTabTitles[position])).attach();
 
-        TabLayout.Tab tab = mTabLayout.getTabAt(mCurrentTap);
+        TabLayout.Tab tab = tabLayout.getTabAt(mCurrentTap);
         if (tab != null) {
-            mTabLayout.selectTab(tab, true);
+            // When we navigate to this fragment from home fragment,
+            // it's better not to switch to this fragment smoothly.
+            viewPager.setCurrentItem(mCurrentTap, false);
             application().config().setLastTabPosition(mCurrentTap);
             setTextViewBold(getCachedTabText(tab), true);
         }
 
         // Note tab selected listener should be set after
         // tab layout and view pager are attached together.
-        // Before that, it cannot know how many tabs
-        // are there.
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        // Before that, it cannot know how many tabs are there.
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mCurrentTap = tab.getPosition();
@@ -161,7 +142,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
         }
     }
 
-    private class RoomAdapter extends FragmentStateAdapter {
+    private static class RoomAdapter extends FragmentStateAdapter {
         RoomAdapter(@NonNull Fragment fragment) {
             super(fragment);
         }

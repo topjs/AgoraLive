@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.SurfaceView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,14 @@ import androidx.core.content.ContextCompat;
 import java.util.List;
 import java.util.Map;
 
+import io.agora.framework.PreprocessorFaceUnity;
+import io.agora.framework.RtcVideoConsumer;
+import io.agora.framework.VideoModule;
+import io.agora.framework.channels.CameraVideoChannel;
+import io.agora.framework.channels.ChannelManager;
 import io.agora.rtc.Constants;
+import io.agora.rtc.RtcEngine;
+import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
 import io.agora.rtm.RtmChannelAttribute;
@@ -23,14 +32,13 @@ import io.agora.vlive.R;
 import io.agora.vlive.agora.RtcEventHandler;
 import io.agora.vlive.agora.rtm.RtmMessageManager;
 import io.agora.vlive.agora.rtm.RtmMessageListener;
-import io.agora.vlive.camera.CameraProxy;
 import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
 
 /**
  * Common capabilities of a live room. Such as, camera capture，
- * , agora rtc, messaging, permissions, communication with
- * back-end server, and so on.
+ * , agora rtc, messaging, permission check, communication with
+ * the back-end server, and so on.
  */
 public abstract class LiveBaseActivity extends BaseActivity
         implements RtcEventHandler, RtmMessageListener {
@@ -56,13 +64,17 @@ public abstract class LiveBaseActivity extends BaseActivity
     // and obtained when entering the room.
     protected String rtcChannelName;
 
+    // Used to receive video from video channel,
+    // and push video frames to rtc engine
+    private RtcVideoConsumer mRtcConsumer;
+
     private RtmMessageManager mMessageManager;
-    private CameraProxy mCameraProxy = CameraProxy.create(application());
+    private CameraVideoChannel mCameraChannel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initRoom();
+        keepScreenOn(getWindow());
         checkPermissions();
     }
 
@@ -70,7 +82,7 @@ public abstract class LiveBaseActivity extends BaseActivity
         if (!permissionArrayGranted()) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQ);
         } else {
-            onPermissionGranted();
+            performInit();
         }
     }
 
@@ -94,7 +106,7 @@ public abstract class LiveBaseActivity extends BaseActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQ) {
             if (permissionArrayGranted()) {
-                onPermissionGranted();
+                performInit();
             } else {
                 Toast.makeText(this, R.string.permission_not_granted, Toast.LENGTH_LONG).show();
                 finish();
@@ -102,10 +114,9 @@ public abstract class LiveBaseActivity extends BaseActivity
         }
     }
 
-    protected abstract void onPermissionGranted();
-
-    protected CameraProxy cameraProxy() {
-        return mCameraProxy;
+    private void performInit() {
+        initRoom();
+        onPermissionGranted();
     }
 
     private void initRoom() {
@@ -125,7 +136,27 @@ public abstract class LiveBaseActivity extends BaseActivity
 
         proxy().registerProxyListener(this);
         registerRtcHandler(this);
+
+        initVideoModule();
+        mRtcConsumer = new RtcVideoConsumer(VideoModule.instance());
+        mCameraChannel = (CameraVideoChannel) VideoModule.instance()
+                .getVideoChannel(ChannelManager.ChannelID.CAMERA);
     }
+
+    private void initVideoModule() {
+        VideoModule videoModule = VideoModule.instance();
+        if (videoModule.hasInitialized()) return;
+        videoModule.init(getApplicationContext());
+
+        int channelId = ChannelManager.ChannelID.CAMERA;
+        videoModule.setPreprocessor(channelId,
+                new PreprocessorFaceUnity(getApplicationContext()));
+        // enables off-screen frame consumers like rtc engine.
+        videoModule.enableOffscreenMode(channelId, true);
+        videoModule.startChannel(channelId);
+    }
+
+    protected abstract void onPermissionGranted();
 
     protected RtmMessageManager getMessageManager() {
         return mMessageManager;
@@ -133,8 +164,42 @@ public abstract class LiveBaseActivity extends BaseActivity
 
     protected void joinRtcChannel() {
         rtcEngine().setClientRole(myRtcRole);
+        rtcEngine().setVideoSource(mRtcConsumer);
         rtcEngine().joinChannel(config().getUserProfile().getRtcToken(),
                 rtcChannelName, null, (int) config().getUserProfile().getAgoraUid());
+    }
+
+    protected SurfaceView setupRemoteVideo(int uid) {
+        SurfaceView surfaceView = RtcEngine.CreateRendererView(this);
+        rtcEngine().setupRemoteVideo(new VideoCanvas(
+                surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
+        return surfaceView;
+    }
+
+    protected void startCameraCapture() {
+        if (mCameraChannel != null && !mCameraChannel.hasCaptureStarted()) {
+            Log.i("LiveBaseActivity", "startCameraCapture");
+            enablePreProcess(config().isBeautyEnabled());
+            mCameraChannel.startCapture();
+        }
+    }
+
+    protected void switchCamera() {
+        if (mCameraChannel != null) {
+            mCameraChannel.switchCamera();
+        }
+    }
+
+    protected void stopCameraCapture() {
+        if (mCameraChannel != null && mCameraChannel.hasCaptureStarted()) {
+            mCameraChannel.stopCapture();
+        }
+    }
+
+    protected void enablePreProcess(boolean enabled) {
+        if (mCameraChannel != null) {
+            mCameraChannel.enablePreProcess(enabled);
+        }
     }
 
     protected void joinRtmChannel() {
@@ -187,12 +252,12 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
-    public void onRtmInvitedByOwner(String ownerId, String nickname) {
+    public void onRtmInvitedByOwner(String ownerId, String nickname, int index) {
 
     }
 
     @Override
-    public void onRtmAppliedForSeat(String ownerId, String nickname) {
+    public void onRtmAppliedForSeat(String ownerId, String nickname, int index) {
 
     }
 
@@ -243,6 +308,11 @@ public abstract class LiveBaseActivity extends BaseActivity
 
     @Override
     public void onRtmGiftMessageReceived(String fromUid, String toUid, String giftId) {
+
+    }
+
+    @Override
+    public void onRtcJoinChannelSuccess(String channel, int uid, int elapsed) {
 
     }
 

@@ -7,9 +7,10 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.agora.vlive.proxy.model.AppVersionInfo;
-import io.agora.vlive.proxy.model.GiftInfo;
-import io.agora.vlive.proxy.model.MusicInfo;
+import io.agora.kit.media.constant.Constant;
+import io.agora.vlive.proxy.struts.model.AppVersionInfo;
+import io.agora.vlive.proxy.struts.model.GiftInfo;
+import io.agora.vlive.proxy.struts.model.MusicInfo;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.utils.Global;
 
@@ -123,6 +124,9 @@ public class Config {
     private List<MusicInfo> mMusicInfoList = new ArrayList<>();
     private int mLastTabPosition = Global.Constants.TAB_ID_MULTI;
 
+    // Camera capture configurations
+    private int mCameraFacing = Constant.CAMERA_FACING_FRONT;
+
     // Beautification configs
     private boolean mBeautyEnabled;
     private float mBrightnessValue;
@@ -173,6 +177,14 @@ public class Config {
 
     public void setLastTabPosition(int position) {
         mLastTabPosition = position;
+    }
+
+    public int getCameraFacing() {
+        return mCameraFacing;
+    }
+
+    public void setCameraFacing(int facing) {
+        this.mCameraFacing = facing;
     }
 
     public float beautyBrightness() {

@@ -22,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Stack;
 
+import io.agora.framework.camera.VideoCapture;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtm.RtmClient;
 import io.agora.vlive.AgoraLiveApplication;
@@ -40,6 +41,7 @@ import io.agora.vlive.proxy.struts.response.GiftRankResponse;
 import io.agora.vlive.proxy.struts.response.LeaveRoomResponse;
 import io.agora.vlive.proxy.struts.response.LoginResponse;
 import io.agora.vlive.proxy.struts.response.ModifySeatStateResponse;
+import io.agora.vlive.proxy.struts.response.ModifyUserStateResponse;
 import io.agora.vlive.proxy.struts.response.MusicListResponse;
 import io.agora.vlive.proxy.struts.response.OssPolicyResponse;
 import io.agora.vlive.proxy.struts.response.RefreshTokenResponse;
@@ -140,6 +142,10 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         int id = getResources().getIdentifier(
                 "status_bar_height", "dimen", "android");
         return id > 0 ? getResources().getDimensionPixelSize(id) : id;
+    }
+
+    protected void keepScreenOn(Window window) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private int getDisplayHeight() {
@@ -249,6 +255,55 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         return dialog;
     }
 
+    protected Dialog showDialog(String title, String message,
+                                int positiveText, int negativeText,
+                                final View.OnClickListener positiveClickListener,
+                                final View.OnClickListener negativeClickListener) {
+        final Dialog dialog = new Dialog(this,
+                R.style.live_room_dialog_center_in_window);
+        dialog.setContentView(R.layout.live_room_dialog);
+
+        AppCompatTextView titleTextView = dialog.findViewById(R.id.dialog_title);
+        titleTextView.setText(title);
+
+        AppCompatTextView msgTextView = dialog.findViewById(R.id.dialog_message);
+        msgTextView.setText(message);
+
+        AppCompatTextView negativeButton = dialog.findViewById(R.id.dialog_negative_button);
+        negativeButton.setText(positiveText);
+        negativeButton.setOnClickListener(negativeClickListener);
+
+        AppCompatTextView positiveButton = dialog.findViewById(R.id.dialog_positive_button);
+        positiveButton.setText(negativeText);
+        positiveButton.setOnClickListener(positiveClickListener);
+
+        hideStatusBar(dialog.getWindow(), false);
+        dialog.show();
+        return dialog;
+    }
+
+    protected Dialog showSingleButtonConfirmDialog(String title, String message,
+                                                   final View.OnClickListener listener) {
+        final Dialog dialog = new Dialog(this,
+                R.style.live_room_dialog_center_in_window);
+        dialog.setContentView(R.layout.live_room_dialog_single_button);
+        AppCompatTextView titleTextView = dialog.findViewById(R.id.dialog_title);
+        titleTextView.setText(title);
+        AppCompatTextView msgTextView = dialog.findViewById(R.id.dialog_message);
+        msgTextView.setText(message);
+        dialog.findViewById(R.id.dialog_positive_button).setOnClickListener(listener);
+        hideStatusBar(dialog.getWindow(), false);
+        dialog.show();
+        return dialog;
+    }
+
+    protected Dialog showSingleButtonConfirmDialog(int title, int message,
+                                                   final View.OnClickListener listener) {
+        String titleStr = getResources().getString(title);
+        String messageStr = getResources().getString(message);
+        return showSingleButtonConfirmDialog(titleStr, messageStr, listener);
+    }
+
     public AgoraLiveApplication application() {
         return (AgoraLiveApplication)  getApplication();
     }
@@ -271,6 +326,10 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
 
     public RtmClient rtmClient() {
         return application().rtmClient();
+    }
+
+    public long sendRequest(int req, Object params) {
+        return proxy().sendRequest(req, params);
     }
 
     public void registerRtcHandler(RtcEventHandler handler) {
@@ -363,6 +422,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
 
     @Override
     public void onRequestSeatStateResponse(SeatStateResponse response) {
+
+    }
+
+    @Override
+    public void onModifyUserStateResponse(ModifyUserStateResponse response) {
 
     }
 

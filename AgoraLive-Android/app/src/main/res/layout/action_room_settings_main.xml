@@ -15,7 +15,7 @@
             android:id="@+id/live_room_setting_resolution"
             android:layout_width="match_parent"
             android:layout_height="@dimen/live_room_action_sheet_text_item_height"
-            android:background="@color/action_sheet_item_bg">
+            android:background="@drawable/action_sheet_item_bg">
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:id="@+id/live_room_setting_framerate"
             android:layout_width="match_parent"
             android:layout_height="@dimen/live_room_action_sheet_text_item_height"
-            android:background="@color/action_sheet_item_bg">
+            android:background="@drawable/action_sheet_item_bg">
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

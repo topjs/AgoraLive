@@ -11,9 +11,9 @@ import io.agora.vlive.proxy.interfaces.GeneralService;
 import io.agora.vlive.proxy.interfaces.LiveRoomService;
 import io.agora.vlive.proxy.interfaces.RoomListService;
 import io.agora.vlive.proxy.interfaces.UserService;
-import io.agora.vlive.proxy.model.CreateRoomRequestBody;
-import io.agora.vlive.proxy.model.LoginBody;
-import io.agora.vlive.proxy.model.UserRequestBody;
+import io.agora.vlive.proxy.struts.model.CreateRoomRequestBody;
+import io.agora.vlive.proxy.struts.model.LoginBody;
+import io.agora.vlive.proxy.struts.model.UserRequestBody;
 import io.agora.vlive.proxy.struts.request.Request;
 import io.agora.vlive.proxy.struts.response.AppVersionResponse;
 import io.agora.vlive.proxy.struts.response.AudienceListResponse;
@@ -26,6 +26,7 @@ import io.agora.vlive.proxy.struts.response.GiftRankResponse;
 import io.agora.vlive.proxy.struts.response.LeaveRoomResponse;
 import io.agora.vlive.proxy.struts.response.LoginResponse;
 import io.agora.vlive.proxy.struts.response.ModifySeatStateResponse;
+import io.agora.vlive.proxy.struts.response.ModifyUserStateResponse;
 import io.agora.vlive.proxy.struts.response.MusicListResponse;
 import io.agora.vlive.proxy.struts.response.OssPolicyResponse;
 import io.agora.vlive.proxy.struts.response.RefreshTokenResponse;
@@ -43,7 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.internal.EverythingIsNonNull;
 
 class Client {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final String MOCK_URL = "http://115.231.168.26:3000/mock/12/";
     private static final String DEV_URL = "http://115.231.168.26:8080";
     private static final String MSG_NULL_RESPONSE = "Response content is null";
@@ -53,8 +54,6 @@ class Client {
     private static final int ERROR_CONNECTION = -1;
     private static final int ERROR_NULL = -2;
 
-    private static Client sInstance;
-
     private GeneralService mGeneralService;
     private RoomListService mRoomListService;
     private LiveRoomService mLiveRoomService;
@@ -62,7 +61,7 @@ class Client {
 
     private List<ClientProxyListener> mProxyListeners = new ArrayList<>();
 
-    private Client() {
+    Client() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(DEV_URL)
                 .callbackExecutor(Executors.newFixedThreadPool(MAX_RESPONSE_THREAD))
@@ -80,17 +79,6 @@ class Client {
         mRoomListService = retrofit.create(RoomListService.class);
         mLiveRoomService = retrofit.create(LiveRoomService.class);
         mUserService = retrofit.create(UserService.class);
-    }
-
-    static Client instance() {
-        if (sInstance == null) {
-            synchronized (Client.class) {
-                if (sInstance == null) {
-                    sInstance = new Client();
-                }
-            }
-        }
-        return sInstance;
     }
 
     void registerProxyListener(ClientProxyListener listener) {
@@ -524,6 +512,35 @@ class Client {
         });
     }
 
+    void modifyUserState(String token, String roomId, String userId, int enableAudio, int enableVideo, int enableChat) {
+        mLiveRoomService.requestModifyUserState(token, roomId, userId,
+                enableAudio, enableVideo, enableChat).enqueue(new Callback<ModifyUserStateResponse>() {
+            @Override
+            @EverythingIsNonNull
+            public void onResponse(Call<ModifyUserStateResponse> call, Response<ModifyUserStateResponse> response) {
+                ModifyUserStateResponse modifyUserStateResponse = response.body();
+                for (ClientProxyListener listener : mProxyListeners) {
+                    if (modifyUserStateResponse == null) {
+                        listener.onResponseError(Request.MODIFY_SEAT_STATE, ERROR_NULL,
+                                response.errorBody() == null ? MSG_NULL_RESPONSE : response.errorBody().toString());
+                    } else if (modifyUserStateResponse.code == ERROR_OK) {
+                        listener.onModifyUserStateResponse(modifyUserStateResponse);
+                    } else {
+                        listener.onResponseError(Request.MODIFY_SEAT_STATE, modifyUserStateResponse.code, modifyUserStateResponse.msg);
+                    }
+                }
+            }
+
+            @Override
+            @EverythingIsNonNull
+            public void onFailure(Call<ModifyUserStateResponse> call, Throwable t) {
+                for (ClientProxyListener listener : mProxyListeners) {
+                    listener.onResponseError(Request.MODIFY_SEAT_STATE, ERROR_CONNECTION, t.getMessage());
+                }
+            }
+        });
+    }
+
     void modifySeatState(long reqId, String token, String roomId, int no, String userId, int state) {
         mLiveRoomService.requestModifySeatState(token, reqId,
                 Request.MODIFY_SEAT_STATE, roomId, no, userId, state).enqueue(new Callback<ModifySeatStateResponse>() {
@@ -611,9 +628,9 @@ class Client {
         });
     }
 
-    void refreshToken(long reqId, String roomId) {
+    void refreshToken(long reqId, String token, String roomId) {
         mGeneralService.requestRefreshToken(reqId, Request.REFRESH_TOKEN,
-                roomId).enqueue(new Callback<RefreshTokenResponse>() {
+                token, roomId).enqueue(new Callback<RefreshTokenResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<RefreshTokenResponse> call, Response<RefreshTokenResponse> response) {

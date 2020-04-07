@@ -3,28 +3,35 @@ package io.agora.vlive;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.faceunity.FURenderer;
+
+import io.agora.framework.PreprocessorFaceUnity;
+import io.agora.framework.VideoModule;
+import io.agora.framework.channels.ChannelManager;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtm.RtmClient;
 import io.agora.vlive.agora.AgoraEngine;
 import io.agora.vlive.agora.RtcEventHandler;
-import io.agora.vlive.agora.RtmEventHandler;
 import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.utils.Global;
 
 public class AgoraLiveApplication extends Application {
+    private static final String TAG = AgoraLiveApplication.class.getSimpleName();
+
     private SharedPreferences mPref;
     private Config mConfig;
     private AgoraEngine mAgoraEngine;
-    private ClientProxy mProxy;
 
     @Override
     public void onCreate() {
+        Log.i(TAG, "onCreate");
         super.onCreate();
         mPref = getSharedPreferences(Global.Constants.SF_NAME, Context.MODE_PRIVATE);
         mConfig = new Config(this);
         mAgoraEngine = new AgoraEngine(this);
-        mProxy = new ClientProxy();
+        initFaceUnityGlobally();
     }
 
     public Config config() {
@@ -44,7 +51,7 @@ public class AgoraLiveApplication extends Application {
     }
 
     public ClientProxy proxy() {
-        return mProxy;
+        return ClientProxy.instance();
     }
 
     public void registerRtcHandler(RtcEventHandler handler) {
@@ -55,8 +62,15 @@ public class AgoraLiveApplication extends Application {
         mAgoraEngine.removeRtcHandler(handler);
     }
 
+    private void initFaceUnityGlobally() {
+        new Thread(() -> {
+            FURenderer.initFURenderer(getApplicationContext());
+        }).start();
+    }
+
     @Override
     public void onTerminate() {
+        Log.i(TAG, "onCreate");
         super.onTerminate();
         mAgoraEngine.release();
     }

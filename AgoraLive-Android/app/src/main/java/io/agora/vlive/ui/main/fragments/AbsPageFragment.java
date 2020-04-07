@@ -22,7 +22,7 @@ import java.util.List;
 
 import io.agora.vlive.R;
 import io.agora.vlive.proxy.ClientProxy;
-import io.agora.vlive.proxy.model.RoomInfo;
+import io.agora.vlive.proxy.struts.model.RoomInfo;
 import io.agora.vlive.proxy.struts.request.Request;
 import io.agora.vlive.proxy.struts.request.RoomListRequest;
 import io.agora.vlive.proxy.struts.response.RoomListResponse;
@@ -164,7 +164,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
         request.count = count;
         request.type = type;
         request.pkState = pkState;
-        getContainer().proxy().sendReq(Request.ROOM_LIST, request);
+        getContainer().proxy().sendRequest(Request.ROOM_LIST, request);
     }
 
     @Override

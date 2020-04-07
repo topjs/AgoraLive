@@ -1,5 +1,6 @@
 package io.agora.vlive.ui.live;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -15,6 +17,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.agora.framework.VideoModule;
+import io.agora.framework.channels.CameraVideoChannel;
+import io.agora.framework.channels.ChannelManager;
+import io.agora.framework.comsumers.TextureViewConsumer;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
@@ -29,44 +35,42 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
     private AppCompatEditText mEditText;
     private AppCompatTextView mStartBroadBtn;
+    private Dialog mExitDialog;
 
     private int roomType;
     private String mNameTooLongToastMsg;
 
-    private TextureView mTextureView;
-    private boolean mInitCalled;
+    private CameraVideoChannel mCameraChannel;
+
+    // If camera is to persist, the camera capture is not
+    // stopped, and we want to keep the capture and transit
+    // to next activity.
+    private boolean mCameraPersist;
+
+    private boolean mActivityFinished;
+
+    private boolean mPermissionGranted;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideStatusBar(false);
-        setContentView(R.layout.activity_live_prepare);
-        roomType = getIntent().getIntExtra(Global.Constants.TAB_KEY, Global.Constants.TAB_ID_MULTI);
-        initUI();
     }
 
     @Override
     protected void onGlobalLayoutCompleted() {
+
+    }
+
+    private void initUI() {
+        hideStatusBar(false);
+        setContentView(R.layout.activity_live_prepare);
+
         View topLayout = findViewById(R.id.prepare_top_btn_layout);
         RelativeLayout.LayoutParams params =
                 (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
         params.topMargin += systemBarHeight;
         topLayout.setLayoutParams(params);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    private void initUI() {
-        // onCreate() and onPermissionsGranted() may be called
-        // in any order, and we want to call initUI() when the
-        // last one of them is called.
-        if (!mInitCalled) {
-            mInitCalled = true;
-            return;
-        }
 
         mEditText = findViewById(R.id.room_name_edit);
         mEditText.addTextChangedListener(this);
@@ -80,26 +84,40 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         findViewById(R.id.live_prepare_beauty_btn).setOnClickListener(this);
         findViewById(R.id.live_prepare_setting_btn).setOnClickListener(this);
         findViewById(R.id.live_prepare_close).setOnClickListener(this);
-        findViewById(R.id.live_prepare_rotate_camera).setOnClickListener(this);
+        findViewById(R.id.live_prepare_switch_camera).setOnClickListener(this);
 
-        mTextureView = findViewById(R.id.live_prepare_texture_view);
-        mTextureView.setVisibility(View.VISIBLE);
-        cameraProxy().setRenderView(mTextureView);
+        FrameLayout localPreviewLayout = findViewById(R.id.local_preview_layout);
+        TextureView textureView = new TextureView(this);
+        TextureViewConsumer consumer = new TextureViewConsumer(VideoModule.instance());
+        textureView.setSurfaceTextureListener(consumer);
+        localPreviewLayout.addView(textureView);
+
+        startCaptureIfStopped();
     }
 
     @Override
     protected void onPermissionGranted() {
+        roomType = getIntent().getIntExtra(Global.Constants.TAB_KEY, Global.Constants.TAB_ID_MULTI);
+        mPermissionGranted = true;
         initUI();
+    }
+
+    private void startCaptureIfStopped() {
+        mCameraChannel = (CameraVideoChannel) VideoModule.instance().
+                getVideoChannel(ChannelManager.ChannelID.CAMERA);
+        if (mCameraChannel != null && !mCameraChannel.hasCaptureStarted()) {
+            mCameraChannel.startCapture();
+        }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_prepare_close:
-                finish();
+                onBackPressed();
                 break;
-            case R.id.live_prepare_rotate_camera:
-                rotateCamera();
+            case R.id.live_prepare_switch_camera:
+                switchCamera();
                 break;
             case R.id.random_btn:
                 generateRandomRoomName();
@@ -114,10 +132,6 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
                 showActionSheetDialog(ACTION_SHEET_VIDEO, true, true, this);
                 break;
         }
-    }
-
-    private void rotateCamera() {
-
     }
 
     private void generateRandomRoomName() {
@@ -164,19 +178,25 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
                 intent = new Intent(this, HostPKLiveActivity.class);
                 break;
             default:
-                intent = new Intent(this, HostInLiveActivity.class);
+                intent = new Intent(this, MultiHostLiveActivity.class);
                 break;
         }
 
-        intent.putExtras(getIntent());
+        if (getIntent().getExtras() != null) {
+            intent.putExtras(getIntent().getExtras());
+        }
+
         intent.putExtra(Global.Constants.KEY_ROOM_NAME, mEditText.getText().toString());
         startActivity(intent);
+        mCameraPersist = true;
         finish();
     }
 
     @Override
     public void onActionSheetBeautyEnabled(boolean enabled) {
         Log.i(TAG, "onActionSheetBeautyEnabled:" + enabled);
+        findViewById(R.id.live_prepare_beauty_btn).setActivated(enabled);
+        enablePreProcess(enabled);
     }
 
     @Override
@@ -217,5 +237,51 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     @Override
     public void onActionSheetSettingBackPressed() {
         Log.i(TAG, "onActionSheetSettingBackPressed:");
+    }
+
+    @Override
+    public void onBackPressed() {
+        mExitDialog = showDialog(R.string.finish_broadcast_title,
+                R.string.finish_broadcast_message, view -> {
+                    dismissDialog();
+                    finish();
+                });
+    }
+
+    private void dismissDialog() {
+        if (mExitDialog != null && mExitDialog.isShowing()) {
+            mExitDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mPermissionGranted) {
+            startCaptureIfStopped();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (!mCameraPersist && mCameraChannel != null && !mActivityFinished
+                && mCameraChannel.hasCaptureStarted()) {
+            // Stop camera capture when this activity
+            // goes to background, but not because
+            // of being finished.
+            mCameraChannel.stopCapture();
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        dismissDialog();
+        mActivityFinished = true;
+        if (!mCameraPersist && mCameraChannel != null
+                && mCameraChannel.hasCaptureStarted()) {
+            mCameraChannel.stopCapture();
+        }
     }
 }

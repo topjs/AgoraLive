@@ -60,7 +60,7 @@ public class FPSUtil {
                 mLimitFrameRate = 0;
             }
             long sleepTime = mLimitMinTime * mLimitFrameRate++ - (System.nanoTime() - mLimitStartTime);
-            Log.w("FPSUtil.limit", "sleep time: " + sleepTime);
+            //Log.w("FPSUtil.limit", "sleep time: " + sleepTime);
             if (sleepTime > 0) {
                 Thread.sleep(sleepTime / NANO_IN_ONE_MILLI_SECOND, (int) (sleepTime % NANO_IN_ONE_MILLI_SECOND));
             }

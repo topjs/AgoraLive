@@ -3,7 +3,9 @@ package io.agora.vlive.proxy;
 import io.agora.vlive.proxy.struts.request.AudienceListRequest;
 import io.agora.vlive.proxy.struts.request.CreateRoomRequest;
 import io.agora.vlive.proxy.struts.request.ModifySeatStateRequest;
+import io.agora.vlive.proxy.struts.request.ModifyUserStateRequest;
 import io.agora.vlive.proxy.struts.request.PKRequest;
+import io.agora.vlive.proxy.struts.request.RefreshTokenRequest;
 import io.agora.vlive.proxy.struts.request.RoomRequest;
 import io.agora.vlive.proxy.struts.request.RoomListRequest;
 import io.agora.vlive.proxy.struts.request.SendGiftRequest;
@@ -29,11 +31,25 @@ public class ClientProxy {
     private Client mClient;
     private long mReqId = 1;
 
-    public ClientProxy() {
-        mClient = Client.instance();
+    private static volatile ClientProxy sInstance;
+
+    private ClientProxy() {
+        mClient = new Client();
     }
 
-    public long sendReq(int request, Object params) {
+    public static ClientProxy instance() {
+        if (sInstance == null) {
+            synchronized (ClientProxy.class) {
+                if (sInstance == null) {
+                    sInstance = new ClientProxy();
+                }
+            }
+        }
+
+        return sInstance;
+    }
+
+    public long sendRequest(int request, Object params) {
         switch (request) {
             case Request.APP_VERSION:
                 String ver = (String) params;
@@ -96,14 +112,20 @@ public class ClientProxy {
                 roomRequest = (RoomRequest) params;
                 mClient.requestSeatState(mReqId, roomRequest.token, roomRequest.roomId);
                 break;
+            case Request.MODIFY_USER_STATE:
+                ModifyUserStateRequest userStateRequest = (ModifyUserStateRequest) params;
+                mClient.modifyUserState(userStateRequest.token, userStateRequest.roomId,
+                        userStateRequest.userId, userStateRequest.enableAudio,
+                        userStateRequest.enableVideo, userStateRequest.enableChat);
+                break;
             case Request.MODIFY_SEAT_STATE:
                 ModifySeatStateRequest modifySeatRequest = (ModifySeatStateRequest) params;
                 mClient.modifySeatState(mReqId, modifySeatRequest.token, modifySeatRequest.roomId,
                         modifySeatRequest.no, modifySeatRequest.userId, modifySeatRequest.state);
                 break;
             case Request.REFRESH_TOKEN:
-                roomId = (String) params;
-                mClient.refreshToken(mReqId, roomId);
+                RefreshTokenRequest refreshTokenRequest = (RefreshTokenRequest) params;
+                mClient.refreshToken(mReqId, refreshTokenRequest.token, refreshTokenRequest.roomId);
                 break;
             case Request.PK_START_STOP:
                 PKRequest pkRequest = (PKRequest) params;

@@ -42,6 +42,10 @@ public class Global {
         public static final int VIDEO_DEFAULT_RESOLUTION_INDEX = 0;
         public static final int VIDEO_DEFAULT_FRAME_RATE_INDEX = 0;
 
+        public static final int CAMERA_CAPTURE_WIDTH = 1920;
+        public static final int CAMERA_CAPTURE_HEIGHT = 1080;
+        public static final int CAMERA_FRAME_RATE = 30;
+
         public static final int[] TAB_IDS_RES = {
                 R.string.home_category_title_multi,
                 R.string.home_category_title_single,
@@ -83,6 +87,12 @@ public class Global {
                 R.drawable.profile_image_10,
                 R.drawable.profile_image_11,
                 R.drawable.profile_image_12
+        };
+
+        public static final String[][] FAKE_RANK = {
+                { "1324389", "", "" },
+                { "3532423", "", "" },
+                { "234790238", "", "" },
         };
     }
 }

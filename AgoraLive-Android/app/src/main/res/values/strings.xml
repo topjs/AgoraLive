@@ -43,6 +43,7 @@
         <item>Mute</item>
         <item>Unmute</item>
         <item>Leave</item>
+        <item>Open</item>
         <item>close</item>
     </string-array>
 
@@ -102,10 +103,18 @@
     <string name="live_room_all_online_user_action_sheet_title">Online Users</string>
     <string name="live_room_host_in_audience_apply_title">Apply</string>
     <string name="live_room_host_in_audience_apply_message">Do you want to apply to a seat?</string>
+    <string name="live_room_host_in_audience_apply_owner_message">"%s" want to apply seat%d /n do you accept？</string>
+    <string name="live_room_host_in_invited_by_owner">"%s" invites you to seat %d， do you accept？</string>
+    <string name="live_room_host_in_invite_rejected">Invitation Rejected</string>
+    <string name="live_room_host_in_invite_rejected_message">Your invitation has been /n rejected by "%s"</string>
+    <string name="live_room_host_in_apply_rejected">Rejected</string>
+    <string name="live_room_host_in_apply_rejected_message">Your application has been /n rejected by "%s"</string>
 
     <!-- dialog -->
     <string name="dialog_negative_button">Cancel</string>
     <string name="dialog_positive_button">Confirm</string>
+    <string name="dialog_positive_button_accept">Accept</string>
+    <string name="dialog_negative_button_refuse">Refuse</string>
 
     <string name="finish_broadcast_title">Stop Broadcast</string>
     <string name="finish_broadcast_message">Do you want to stop your broadcast?</string>

@@ -21,9 +21,9 @@ public interface RtmMessageListener {
 
     void onRtmMemberLeft(RtmChannelMember rtmChannelMember);
 
-    void onRtmInvitedByOwner(String ownerId, String nickname);
+    void onRtmInvitedByOwner(String peerId, String nickname, int index);
 
-    void onRtmAppliedForSeat(String ownerId, String nickname);
+    void onRtmAppliedForSeat(String peerId, String nickname, int index);
 
     void onRtmInvitationRejected(String peerId, String nickname);
 

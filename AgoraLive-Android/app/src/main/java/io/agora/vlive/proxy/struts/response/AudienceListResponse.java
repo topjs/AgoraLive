@@ -15,7 +15,7 @@ public class AudienceListResponse extends AbsResponse {
     public class AudienceInfo {
         public String userId;
         public String userName;
-        public String avator;
+        public String avatar;
         public String uid;
     }
 }

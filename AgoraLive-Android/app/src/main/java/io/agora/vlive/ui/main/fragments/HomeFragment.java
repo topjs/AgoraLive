@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
+import io.agora.vlive.ui.main.MainActivity;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
@@ -79,10 +80,8 @@ public class HomeFragment extends AbstractFragment implements View.OnClickListen
 
         Bundle bundle = new Bundle();
         bundle.putInt(Global.Constants.TAB_KEY, tabId);
-        if (getActivity() != null) {
-            Navigation.findNavController(
-                    getActivity(), R.id.nav_host_fragment)
-                    .navigate(R.id.navigation_rooms, bundle);
+        if (getContainer() != null) {
+            getContainer().setNavigationSelected(R.id.navigation_rooms, bundle);
         }
     }
 }

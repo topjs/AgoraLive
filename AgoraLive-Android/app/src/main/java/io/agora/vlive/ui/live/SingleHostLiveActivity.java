@@ -2,9 +2,14 @@ package io.agora.vlive.ui.live;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import io.agora.framework.VideoModule;
 import io.agora.vlive.R;
+import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
+import io.agora.vlive.proxy.struts.response.Response;
+import io.agora.vlive.ui.components.CameraTextureView;
 import io.agora.vlive.ui.components.LiveHostNameLayout;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
 import io.agora.vlive.ui.components.LiveRoomMessageList;
@@ -13,47 +18,52 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
     private static final String TAG = SingleHostLiveActivity.class.getSimpleName();
 
     private LiveHostNameLayout mNamePad;
+    private FrameLayout mVideoLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_host);
         hideStatusBar(false);
-        initUI();
     }
 
     @Override
     protected void onPermissionGranted() {
-
+        initUI();
     }
 
     private void initUI() {
+        setContentView(R.layout.activity_single_host);
+
         mNamePad = findViewById(R.id.single_live_name_pad);
-        mNamePad.setName("康康有毒");
-        mNamePad.setIconResource("fake_icon_1.jpeg");
 
         participants = findViewById(R.id.single_live_participant);
         participants.setUserLayoutListener(this);
-        participants.setIconResource("fake_icon_2.jpeg");
-        participants.setIconResource("fake_icon_3.jpeg");
-
-        messageList = findViewById(R.id.message_list);
-        messageList.addMessage(LiveRoomMessageList.MSG_TYPE_CHAT, "康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
-        messageList.addMessage(LiveRoomMessageList.MSG_TYPE_CHAT, "起司甜甜", "何必在乎其它人");
-        messageList.notifyDataSetChanged();
 
         bottomButtons = findViewById(R.id.single_live_bottom_layout);
         bottomButtons.setLiveBottomButtonListener(this);
-        bottomButtons.setHost(isHost);
-        if (isHost) bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
+        bottomButtons.setHost(isOwner);
+
+        mVideoLayout = findViewById(R.id.single_live_video_layout);
+
+        if (isOwner) {
+            bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
+            startCameraCapture();
+            initLocalPreview();
+        }
 
         findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_more).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_fun1).setOnClickListener(this);
         findViewById(R.id.live_bottom_btn_fun2).setOnClickListener(this);
 
+        messageList = findViewById(R.id.message_list);
         messageEditLayout = findViewById(R.id.message_edit_layout);
         mMessageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
+    }
+
+    private void initLocalPreview() {
+        CameraTextureView textureView = new CameraTextureView(this);
+        mVideoLayout.addView(textureView);
     }
 
     @Override
@@ -93,6 +103,16 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
                 closeDialog();
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    public void onEnterRoomResponse(EnterRoomResponse response) {
+        super.onEnterRoomResponse(response);
+        if (response.code == Response.SUCCESS) {
+            runOnUiThread(() -> {
+                mNamePad.setName(response.data.room.owner.userName);
+            });
         }
     }
 

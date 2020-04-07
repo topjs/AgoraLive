@@ -24,7 +24,7 @@ public interface GeneralService {
 
     @GET("ent/v1/room/{roomId}/token/refresh")
     Call<RefreshTokenResponse> requestRefreshToken(@Header("reqId") long reqId, @Header("reqType") int reqType,
-                                                   @Query("roomId") String roomId);
+                                                   @Header("token") String token, @Query("roomId") String roomId);
 
     @GET("ent/v1/file/policy")
     Call<OssPolicyResponse> requestOssPolicy(@Header("reqId") long reqId, @Header("reqType") int reqType,

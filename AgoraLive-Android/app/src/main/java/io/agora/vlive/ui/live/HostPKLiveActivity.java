@@ -30,12 +30,10 @@ public class HostPKLiveActivity extends LiveRoomActivity implements View.OnClick
     private void initUI() {
         mNamePad = findViewById(R.id.pk_host_in_name_pad);
         mNamePad.setName("康康有毒");
-        mNamePad.setIconResource("fake_icon_1.jpeg");
+        // mNamePad.setIconResource("fake_icon_1.jpeg");
 
         participants = findViewById(R.id.pk_host_in_participant);
         participants.setUserLayoutListener(this);
-        participants.setIconResource("fake_icon_2.jpeg");
-        participants.setIconResource("fake_icon_3.jpeg");
 
         messageList = findViewById(R.id.message_list);
         messageList.addMessage(LiveRoomMessageList.MSG_TYPE_CHAT, "康康有毒", "他说会因为那一分钟而永远记住我，那时候我觉得很动听。但现在我看着时钟，我就告诉我自己，我要从这一分钟开始忘掉");
