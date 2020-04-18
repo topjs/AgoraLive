@@ -1,6 +1,6 @@
 package io.agora.vlive.proxy.struts.request;
 
-public class OssPolicyRequest {
+public class OssPolicyRequest extends Request {
     public static final int OSS_TYPE_AVATOR = 1;
 
     public OssPolicyRequest(String token) {

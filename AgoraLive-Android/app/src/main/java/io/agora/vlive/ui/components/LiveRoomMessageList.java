@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import io.agora.vlive.R;
+import io.agora.vlive.utils.GiftUtil;
 import io.agora.vlive.utils.Global;
 
 public class LiveRoomMessageList extends RecyclerView {
@@ -30,12 +31,18 @@ public class LiveRoomMessageList extends RecyclerView {
     public static final int MSG_TYPE_CHAT = 1;
     public static final int MSG_TYPE_GIFT = 2;
 
+    public static final int MSG_SYSTEM_STATE_JOIN = 1;
+    public static final int MSG_SYSTEM_STATE_LEAVE = 0;
+
     private static final int DEFAULT_MESSAGE_TEXT_COLOR = Color.rgb(196, 196, 196);
     private static final int MAX_SAVED_MESSAGE = 50;
     private static final int MESSAGE_ITEM_MARGIN = 16;
 
     private LiveRoomMessageAdapter mAdapter;
     private LayoutInflater mInflater;
+
+    private String mJoinNotificationText;
+    private String mLeaveNotificationText;
 
     public LiveRoomMessageList(@NonNull Context context) {
         super(context);
@@ -62,6 +69,9 @@ public class LiveRoomMessageList extends RecyclerView {
         setLayoutManager(layoutManager);
         setAdapter(mAdapter);
         addItemDecoration(new MessageItemDecorator());
+
+        mJoinNotificationText = getResources().getString(R.string.live_system_notification_member_joined);
+        mLeaveNotificationText = getResources().getString(R.string.live_system_notification_member_left);
     }
 
     public void addMessage(int type, String user, String message, int... index) {
@@ -69,10 +79,19 @@ public class LiveRoomMessageList extends RecyclerView {
         if (type == MSG_TYPE_GIFT && index != null) {
             item.giftIndex = index[0];
             item.message = getResources().getString(R.string.live_message_gift_send);
+        } else if (type == MSG_TYPE_SYSTEM) {
+            if (index != null) {
+                if (index[0] == 1) {
+                    item.message = mJoinNotificationText;
+                } else if (index[0] == 0) {
+                    item.message = mLeaveNotificationText;
+                }
+            }
         }
         mAdapter.addMessage(item);
         mAdapter.notifyDataSetChanged();
     }
+
 
     public void notifyDataSetChanged() {
         mAdapter.notifyDataSetChanged();
@@ -99,7 +118,7 @@ public class LiveRoomMessageList extends RecyclerView {
             holder.setMessage(item.user, item.message);
 
             if (item.type == MSG_TYPE_GIFT && holder.giftIcon != null) {
-                holder.giftIcon.setImageResource(Global.Constants.GIFT_ICON_RES[item.giftIndex]);
+                holder.giftIcon.setImageResource(GiftUtil.GIFT_ICON_RES[item.giftIndex]);
             }
         }
 

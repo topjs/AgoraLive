@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.agora.framework.VideoCaptureFrame;
-import io.agora.framework.comsumers.IVideoConsumer;
+import io.agora.framework.camera.VideoCapture;
+import io.agora.framework.consumers.IVideoConsumer;
 import io.agora.framework.gles.ProgramTexture2d;
 import io.agora.framework.gles.ProgramTextureOES;
 import io.agora.framework.gles.core.EglCore;
@@ -229,20 +230,21 @@ public class VideoChannel extends HandlerThread {
     public void pushVideoFrame(VideoCaptureFrame frame) {
         checkThreadRunningState();
 
+        VideoCaptureFrame processFrame = frame;
         if (mPreprocessor != null) {
-            mPreprocessor.onPreProcessFrame(frame, getChannelContext());
+            processFrame = mPreprocessor.onPreProcessFrame(processFrame, getChannelContext());
             makeDummySurfaceCurrent();
         }
 
         if (mOnScreenConsumers != null && mOnScreenConsumers.size() > 0) {
             // By default we only render to the latest
             // registered on-screen consumer.
-            mOnScreenConsumers.get(mOnScreenConsumers.size() - 1).onConsumeFrame(frame, mContext);
+            mOnScreenConsumers.get(mOnScreenConsumers.size() - 1).onConsumeFrame(processFrame, mContext);
             makeDummySurfaceCurrent();
         }
 
         for (IVideoConsumer consumer : mOffScreenConsumers) {
-            consumer.onConsumeFrame(frame, mContext);
+            consumer.onConsumeFrame(processFrame, mContext);
             makeDummySurfaceCurrent();
         }
     }

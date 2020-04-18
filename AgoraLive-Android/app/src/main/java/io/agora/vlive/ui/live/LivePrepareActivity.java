@@ -20,11 +20,12 @@ import org.jetbrains.annotations.NotNull;
 import io.agora.framework.VideoModule;
 import io.agora.framework.channels.CameraVideoChannel;
 import io.agora.framework.channels.ChannelManager;
-import io.agora.framework.comsumers.TextureViewConsumer;
+import io.agora.framework.consumers.TextureViewConsumer;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
+import io.agora.vlive.utils.RandomUtil;
 
 public class LivePrepareActivity extends LiveBaseActivity implements View.OnClickListener, TextWatcher,
         BeautySettingActionSheet.BeautyActionSheetListener,
@@ -81,6 +82,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         mStartBroadBtn = findViewById(R.id.live_room_action_sheet_gift_send_btn);
         mStartBroadBtn.setOnClickListener(this);
 
+        findViewById(R.id.random_btn).setOnClickListener(this);
         findViewById(R.id.live_prepare_beauty_btn).setOnClickListener(this);
         findViewById(R.id.live_prepare_setting_btn).setOnClickListener(this);
         findViewById(R.id.live_prepare_close).setOnClickListener(this);
@@ -120,7 +122,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
                 switchCamera();
                 break;
             case R.id.random_btn:
-                generateRandomRoomName();
+                setRandomRoomName();
                 break;
             case R.id.live_room_action_sheet_gift_send_btn:
                 gotoBroadcastActivity();
@@ -134,8 +136,8 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         }
     }
 
-    private void generateRandomRoomName() {
-
+    private void setRandomRoomName() {
+        mEditText.setText(RandomUtil.randomLiveRoomName(this));
     }
 
     @Override
@@ -222,16 +224,19 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     @Override
     public void onActionSheetResolutionSelected(int index) {
         Log.i(TAG, "onActionSheetResolutionSelected:" + index);
+        config().setResolutionIndex(index);
     }
 
     @Override
     public void onActionSheetFrameRateSelected(int index) {
         Log.i(TAG, "onActionSheetFrameRateSelected:" + index);
+        config().setFrameRateIndex(index);
     }
 
     @Override
     public void onActionSheetBitrateSelected(int bitrate) {
         Log.i(TAG, "onActionSheetBitrateSelected:" + bitrate);
+        config().setVideoBitrate(bitrate);
     }
 
     @Override
@@ -241,8 +246,8 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        mExitDialog = showDialog(R.string.finish_broadcast_title,
-                R.string.finish_broadcast_message, view -> {
+        mExitDialog = showDialog(R.string.finish_broadcast_title_owner,
+                R.string.finish_broadcast_message_owner, view -> {
                     dismissDialog();
                     finish();
                 });

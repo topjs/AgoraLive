@@ -12,7 +12,12 @@ import io.agora.vlive.proxy.interfaces.LiveRoomService;
 import io.agora.vlive.proxy.interfaces.RoomListService;
 import io.agora.vlive.proxy.interfaces.UserService;
 import io.agora.vlive.proxy.struts.model.CreateRoomRequestBody;
+import io.agora.vlive.proxy.struts.model.CreateUserBody;
 import io.agora.vlive.proxy.struts.model.LoginBody;
+import io.agora.vlive.proxy.struts.model.ModifySeatStateRequestBody;
+import io.agora.vlive.proxy.struts.model.ModifyUserStateRequestBody;
+import io.agora.vlive.proxy.struts.model.PkRoomBody;
+import io.agora.vlive.proxy.struts.model.SendGiftBody;
 import io.agora.vlive.proxy.struts.model.UserRequestBody;
 import io.agora.vlive.proxy.struts.request.Request;
 import io.agora.vlive.proxy.struts.response.AppVersionResponse;
@@ -44,9 +49,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.internal.EverythingIsNonNull;
 
 class Client {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static final String MOCK_URL = "http://115.231.168.26:3000/mock/12/";
-    private static final String DEV_URL = "http://115.231.168.26:8080";
+    private static final String DEV_URL = "http://115.231.168.26:8088";
     private static final String MSG_NULL_RESPONSE = "Response content is null";
     private static final int MAX_RESPONSE_THREAD = 10;
 
@@ -68,7 +73,7 @@ class Client {
                 .addConverterFactory(GsonConverterFactory.create());
 
         if (DEBUG) {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(s -> Log.i("client", s));
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(s -> Log.d("client", s));
             interceptor.level(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
             builder.client(client);
@@ -220,8 +225,9 @@ class Client {
         });
     }
 
-    void createUser(long reqId) {
-        mUserService.requestCreateUser(reqId, Request.CREATE_USER).enqueue(new Callback<CreateUserResponse>() {
+    void createUser(long reqId, String userName) {
+        mUserService.requestCreateUser(reqId, Request.CREATE_USER,
+                new CreateUserBody(userName)).enqueue(new Callback<CreateUserResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<CreateUserResponse> call, Response<CreateUserResponse> response) {
@@ -252,8 +258,8 @@ class Client {
         });
     }
 
-    void editUser(long reqId, String token, String userName, String avatar) {
-        mUserService.requestEditUser(token, reqId, Request.EDIT_USER,
+    void editUser(long reqId, String token, String userId, String userName, String avatar) {
+        mUserService.requestEditUser(token, reqId, Request.EDIT_USER, userId,
                 new UserRequestBody(userName, avatar)).enqueue(new Callback<EditUserResponse>() {
             @Override
             @EverythingIsNonNull
@@ -317,8 +323,8 @@ class Client {
         });
     }
 
-    void requestRoomList(long reqId, String nextId, int count, int type, int pkState) {
-        mRoomListService.requestRoomList(reqId, Request.ROOM_LIST, nextId, count, type, pkState).enqueue(new Callback<RoomListResponse>() {
+    void requestRoomList(long reqId, String token, String nextId, int count, int type, Integer pkState) {
+        mRoomListService.requestRoomList(reqId, token, Request.ROOM_LIST, nextId, count, type, pkState).enqueue(new Callback<RoomListResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<RoomListResponse> call, Response<RoomListResponse> response) {
@@ -514,7 +520,7 @@ class Client {
 
     void modifyUserState(String token, String roomId, String userId, int enableAudio, int enableVideo, int enableChat) {
         mLiveRoomService.requestModifyUserState(token, roomId, userId,
-                enableAudio, enableVideo, enableChat).enqueue(new Callback<ModifyUserStateResponse>() {
+                new ModifyUserStateRequestBody(enableAudio, enableVideo, enableChat)).enqueue(new Callback<ModifyUserStateResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<ModifyUserStateResponse> call, Response<ModifyUserStateResponse> response) {
@@ -542,8 +548,9 @@ class Client {
     }
 
     void modifySeatState(long reqId, String token, String roomId, int no, String userId, int state) {
+        ModifySeatStateRequestBody body = new ModifySeatStateRequestBody(no, userId, state);
         mLiveRoomService.requestModifySeatState(token, reqId,
-                Request.MODIFY_SEAT_STATE, roomId, no, userId, state).enqueue(new Callback<ModifySeatStateResponse>() {
+                Request.MODIFY_SEAT_STATE, roomId, body).enqueue(new Callback<ModifySeatStateResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<ModifySeatStateResponse> call, Response<ModifySeatStateResponse> response) {
@@ -570,9 +577,9 @@ class Client {
         });
     }
 
-    void sendGift(long reqId, String roomId, String giftId, int count) {
-        mLiveRoomService.requestSendGift(reqId, Request.SEND_GIFT,
-                roomId, giftId, count).enqueue(new Callback<SendGiftResponse>() {
+    void sendGift(long reqId, String token, String roomId, int giftId, int count) {
+        mLiveRoomService.requestSendGift(token, reqId, Request.SEND_GIFT,
+                roomId, new SendGiftBody(giftId, count)).enqueue(new Callback<SendGiftResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<SendGiftResponse> call, Response<SendGiftResponse> response) {
@@ -657,9 +664,9 @@ class Client {
         });
     }
 
-    void startStopPk(long reqId, String myRoomId, String targetRoomId) {
-        mLiveRoomService.requestStartStopPk(reqId, Request.PK_START_STOP,
-                myRoomId, targetRoomId).enqueue(new Callback<StartStopPkResponse>() {
+    void startStopPk(long reqId, String token, String myRoomId, String targetRoomId) {
+        mLiveRoomService.requestStartStopPk(token, reqId, Request.PK_START_STOP,
+                myRoomId, new PkRoomBody(targetRoomId)).enqueue(new Callback<StartStopPkResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<StartStopPkResponse> call, Response<StartStopPkResponse> response) {

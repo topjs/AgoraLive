@@ -5,4 +5,14 @@ public class ModifyUserStateRequest extends RoomRequest {
     public int enableAudio;
     public int enableVideo;
     public int enableChat;
+
+    public ModifyUserStateRequest(String token, String roomId, String userId,
+                                  int enableAudio, int enableVideo, int enableChat) {
+        this.token = token;
+        this.roomId = roomId;
+        this.userId = userId;
+        this.enableAudio = enableAudio;
+        this.enableVideo = enableVideo;
+        this.enableChat = enableChat;
+    }
 }

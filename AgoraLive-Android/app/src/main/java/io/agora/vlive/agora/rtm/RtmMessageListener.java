@@ -5,6 +5,10 @@ import java.util.Map;
 
 import io.agora.rtm.RtmChannelAttribute;
 import io.agora.rtm.RtmChannelMember;
+import io.agora.vlive.agora.rtm.model.GiftRankMessage;
+import io.agora.vlive.agora.rtm.model.NotificationMessage;
+import io.agora.vlive.agora.rtm.model.PKMessage;
+import io.agora.vlive.agora.rtm.model.SeatStateMessage;
 
 public interface RtmMessageListener {
     void onRtmConnectionStateChanged(int state, int reason);
@@ -25,11 +29,15 @@ public interface RtmMessageListener {
 
     void onRtmAppliedForSeat(String peerId, String nickname, int index);
 
+    void onRtmInvitationAccepted(String peerId, String nickname, int index);
+
+    void onRtmApplicationAccepted(String peerId, String nickname, int index);
+
     void onRtmInvitationRejected(String peerId, String nickname);
 
     void onRtmApplicationRejected(String peerId, String nickname);
 
-    void onRtmPkReceivedFromAnotherHost(String peerId, String nickname);
+    void onRtmPkReceivedFromAnotherHost(String peerId, String nickname, String roomId);
 
     void onRtmPkAcceptedByTargetHost(String peerId, String nickname);
 
@@ -37,11 +45,15 @@ public interface RtmMessageListener {
 
     void onRtmChannelMessageReceived(String peerId, String nickname, String content);
 
-    void onRtmHostStateChanged(String uid, int index, int operate);
+    void onRtmChannelNotification(int total, List<NotificationMessage.NotificationItem> list);
 
-    void onRtmPkStartStateReceived();
+    void onRtmRoomGiftRankChanged(int total, List<GiftRankMessage.GiftRankItem> list);
 
-    void onRtmPkEndStateReceived();
+    void onRtmOwnerStateChanged(String userId, String userName, int uid, int enableAudio, int enableVideo);
 
-    void onRtmGiftMessageReceived(String fromUid, String toUid, String giftId);
+    void onRtmSeatStateChanged(List<SeatStateMessage.SeatStateMessageDataItem> data);
+
+    void onRtmPkStateChanged(PKMessage.PKMessageData messageData);
+
+    void onRtmGiftMessage(String fromUserId, String fromUserName, String toUserId, String toUserName, int giftId);
 }

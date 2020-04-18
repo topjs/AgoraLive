@@ -16,15 +16,17 @@ import java.util.List;
 
 import io.agora.vlive.R;
 import io.agora.vlive.proxy.struts.response.AudienceListResponse.AudienceInfo;
+import io.agora.vlive.utils.UserUtil;
 
 
 public class InviteUserActionSheet extends AbstractActionSheet {
     public interface InviteUserActionSheetListener extends AbsActionSheetListener {
-        void onActionSheetAudienceInvited(AudienceInfo user);
+        void onActionSheetAudienceInvited(int seatId, String userId, String userName);
     }
 
     private InviteUserActionSheetListener mListener;
     private RoomUserAdapter mAdapter;
+    private int mSeatNo;
 
     public InviteUserActionSheet(Context context) {
         super(context);
@@ -33,8 +35,8 @@ public class InviteUserActionSheet extends AbstractActionSheet {
 
     private void init() {
         LayoutInflater.from(getContext()).inflate(
-                R.layout.action_room_host_in_invite_user_list, this, true);
-        RecyclerView recyclerView = findViewById(R.id.live_room_action_sheet_host_in_invite_user_list_recycler);
+                R.layout.action_room_host_in_audience_list, this, true);
+        RecyclerView recyclerView = findViewById(R.id.live_room_action_sheet_host_in_audience_list_recycler);
         LinearLayoutManager manager = new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
@@ -50,6 +52,10 @@ public class InviteUserActionSheet extends AbstractActionSheet {
         }
     }
 
+    public void setSeatNo(int seat) {
+        mSeatNo = seat;
+    }
+
     public void append(List<AudienceInfo> userList) {
         mAdapter.append(userList);
     }
@@ -57,7 +63,7 @@ public class InviteUserActionSheet extends AbstractActionSheet {
     private class RoomUserAdapter extends RecyclerView.Adapter {
         private List<AudienceInfo> mUserList = new ArrayList<>();
 
-        public void append(List<AudienceInfo> userList) {
+        void append(List<AudienceInfo> userList) {
             mUserList.addAll(userList);
             notifyDataSetChanged();
         }
@@ -71,9 +77,12 @@ public class InviteUserActionSheet extends AbstractActionSheet {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+            AudienceInfo info = mUserList.get(position);
             RoomUserViewHolder viewHolder = (RoomUserViewHolder) holder;
+            viewHolder.name.setText(UserUtil.getUserText(info.userId, info.userName));
+            viewHolder.icon.setImageDrawable(UserUtil.getUserRoundIcon(getResources(), info.userId));
             viewHolder.button.setOnClickListener(view -> {
-                if (mListener != null) mListener.onActionSheetAudienceInvited(mUserList.get(position));
+                if (mListener != null) mListener.onActionSheetAudienceInvited(mSeatNo, info.userId, info.userName);
             });
         }
 

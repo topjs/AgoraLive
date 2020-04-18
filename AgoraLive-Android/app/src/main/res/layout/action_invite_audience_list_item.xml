@@ -28,6 +28,7 @@
         android:id="@+id/live_room_action_sheet_user_list_item_invite_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/live_room_action_sheet_margin"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:paddingStart="@dimen/text_content_padding"
@@ -38,6 +39,5 @@
         android:gravity="center"
         android:text="@string/live_room_host_in_invite_user_list_action_sheet_title"
         android:textColor="@color/blue_original"
-        android:background="@drawable/action_sheet_button_bg_normal"
-        android:visibility="gone"/>
+        android:background="@drawable/action_sheet_button_bg_normal"/>
 </RelativeLayout>

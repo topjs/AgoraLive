@@ -1,17 +1,19 @@
 package io.agora.vlive;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.agora.kit.media.constant.Constant;
+import io.agora.framework.camera.Constant;
+import io.agora.rtc.video.VideoEncoderConfiguration;
 import io.agora.vlive.proxy.struts.model.AppVersionInfo;
 import io.agora.vlive.proxy.struts.model.GiftInfo;
 import io.agora.vlive.proxy.struts.model.MusicInfo;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
+import io.agora.vlive.utils.GiftUtil;
 import io.agora.vlive.utils.Global;
 
 public class Config {
@@ -38,7 +40,7 @@ public class Config {
         }
 
         public String getUserName() {
-            return userName;
+            return userName != null ? userName : userId;
         }
 
         public void setUserName(String userName) {
@@ -257,6 +259,15 @@ public class Config {
                 .putInt(Global.Constants.KEY_BITRATE, bitrate).apply();
     }
 
+    public VideoEncoderConfiguration createVideoEncoderConfig() {
+        return new VideoEncoderConfiguration(
+                Global.Constants.RESOLUTIONS[mResolutionIndex],
+                Global.Constants.FRAME_RATES[mFrameRateIndex],
+                mBitrate,
+                VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
+        );
+    }
+
     public int currentMusicIndex() {
         return mCurrentPlayedMusicIndex;
     }
@@ -281,9 +292,15 @@ public class Config {
         return mAudioMuted;
     }
 
-    public void setGiftList(List<GiftInfo> list) {
-        mGiftInfoList.clear();
-        mGiftInfoList.addAll(list);
+    public void initGiftList(Context context) {
+        String[] mGiftNames = context.getResources().getStringArray(R.array.gift_names);
+        int[] mGiftValues = context.getResources().getIntArray(R.array.gift_values);
+        mGiftInfoList = new ArrayList<>();
+        for (int i = 0; i < mGiftNames.length; i++) {
+            GiftInfo info = new GiftInfo(i, mGiftNames[i],
+                    GiftUtil.GIFT_ICON_RES[i], mGiftValues[i]);
+            mGiftInfoList.add(i, info);
+        }
     }
 
     public List<GiftInfo> getGiftList() {

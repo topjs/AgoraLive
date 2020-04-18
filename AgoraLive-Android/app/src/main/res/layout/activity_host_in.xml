@@ -17,6 +17,15 @@
                 android:id="@+id/room_owner_video_layout"
                 android:layout_width="@dimen/live_host_in_owner_video_size"
                 android:layout_height="@dimen/live_host_in_owner_video_size"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/live_host_in_owner_mute_icon"
+                android:layout_width="@dimen/live_host_in_seat_item_more_btn_size"
+                android:layout_height="@dimen/live_host_in_seat_item_more_btn_size"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="@dimen/live_host_in_seat_item_margin"
+                android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"
+                android:src="@drawable/host_seat_item_mute_icon"/>
         </RelativeLayout>
         <io.agora.vlive.ui.components.LiveRoomUserLayout
             android:id="@+id/host_in_participant"

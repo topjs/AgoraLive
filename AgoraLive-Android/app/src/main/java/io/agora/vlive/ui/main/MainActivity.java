@@ -3,22 +3,23 @@ package io.agora.vlive.ui.main;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.TooltipCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.faceunity.FURenderer;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Field;
 
-import io.agora.framework.PreprocessorFaceUnity;
-import io.agora.framework.VideoModule;
-import io.agora.framework.channels.ChannelManager;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
 import io.agora.vlive.Config;
@@ -33,6 +34,8 @@ import io.agora.vlive.proxy.struts.response.MusicListResponse;
 import io.agora.vlive.proxy.struts.response.Response;
 import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
+import io.agora.vlive.utils.RandomUtil;
+import io.agora.vlive.utils.UserUtil;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -56,42 +59,37 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initNavigation() {
-        mNavView = findViewById(R.id.nav_view);
-        changeItemHeight(mNavView);
-        mNavView.setItemIconTintList(null);
         mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
+        mNavView = findViewById(R.id.nav_view);
+        mNavView.setItemIconTintList(null);
+        changeItemHeight(mNavView);
         mNavView.setOnNavigationItemSelectedListener(item -> {
-                int selectedId = item.getItemId();
-                int currentId = mNavController.getCurrentDestination() == null ?
-                        0 : mNavController.getCurrentDestination().getId();
+            int selectedId = item.getItemId();
+            int currentId = mNavController.getCurrentDestination() == null ?
+                    0 : mNavController.getCurrentDestination().getId();
 
-                // Do not respond to this click event because
-                // we do not want to refresh this fragment
-                // by repeatedly selecting the same menu item.
-                if (selectedId == currentId) return false;
+            // Do not respond to this click event because
+            // we do not want to refresh this fragment
+            // by repeatedly selecting the same menu item.
+            if (selectedId == currentId) return false;
 
-                NavigationUI.onNavDestinationSelected(item, mNavController);
-                hideStatusBar(getWindow(), true);
+            // Profile fragment needs to be drawn
+            // to the top of the screen.
+            int top = selectedId == R.id.navigation_me ? 0 : mTopMargin;
+            NavigationUI.onNavDestinationSelected(item, mNavController);
+            hideStatusBar(getWindow(), true);
+            return true;
+        });
+    }
 
-                // Profile fragment needs to be drawn
-                // to the top of the screen.
-                int top = selectedId == R.id.navigation_me ? 0 : mTopMargin;
-                mContainerLayout.setPadding(0, top, 0, 0);
-                return true;
-            }
-        );
+    public int getSystemBarHeight() {
+        return systemBarHeight;
     }
 
     public void setNavigationSelected(int resId, Bundle bundle) {
         mNavView.setSelectedItemId(resId);
         mNavController.navigate(resId, bundle);
-    }
-
-    @Override
-    protected void onGlobalLayoutCompleted() {
-        mContainerLayout = findViewById(R.id.main_activity_container);
-        mTopMargin = mContainerLayout.getPaddingTop();
     }
 
     private void changeItemHeight(@NonNull BottomNavigationView navView) {
@@ -113,10 +111,9 @@ public class MainActivity extends BaseActivity {
 
     private void initAsync() {
         new Thread(() -> {
-            login();
+            checkUpdate();
             getGiftList();
             getMusicList();
-            checkUpdate();
         }).start();
     }
 
@@ -138,6 +135,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onAppVersionResponse(AppVersionResponse response) {
         config().setVersionInfo(response.data);
+        application().initEngine(response.data.config.appId);
+        login();
     }
 
     private void login() {
@@ -158,7 +157,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void createUser() {
-        sendRequest(Request.CREATE_USER, new UserRequest());
+        String userName = RandomUtil.randomUserName(this);
+        config().getUserProfile().setUserName(userName);
+        preferences().edit().putString(Global.Constants.KEY_USER_NAME, userName).apply();
+        sendRequest(Request.CREATE_USER, new UserRequest(userName));
     }
 
     @Override
@@ -171,7 +173,6 @@ public class MainActivity extends BaseActivity {
         Config.UserProfile profile = config().getUserProfile();
         profile.setUserId(response.data.userId);
         preferences().edit().putString(Global.Constants.KEY_PROFILE_UID, profile.getUserId()).apply();
-
     }
 
     private void loginToServer() {
@@ -181,19 +182,21 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onLoginResponse(LoginResponse response) {
         if (response != null && response.code == Response.SUCCESS) {
-            config().getUserProfile().setToken(response.data.userToken);
-            config().getUserProfile().setRtmToken(response.data.rtmToken);
+            Config.UserProfile profile = config().getUserProfile();
+            profile.setToken(response.data.userToken);
+            profile.setRtmToken(response.data.rtmToken);
+            profile.setAgoraUid(response.data.uid);
             preferences().edit().putString(Global.Constants.KEY_TOKEN, response.data.userToken).apply();
             joinRtmServer();
         }
     }
 
     private void joinRtmServer() {
-        rtmClient().login(config().getUserProfile().getRtmToken(),
-                config().getUserProfile().getUserId(), new ResultCallback<Void>() {
+        Config.UserProfile profile = config().getUserProfile();
+        rtmClient().login(profile.getRtmToken(), String.valueOf(profile.getAgoraUid()), new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
+                Log.d(TAG, "rtm client login success:" + config().getUserProfile().getRtmToken());
             }
 
             @Override
@@ -209,8 +212,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onGiftListResponse(GiftListResponse response) {
-        config().setGiftList(response.data);
         Log.i(TAG, "onGiftListFinished");
+        config().initGiftList(this);
     }
 
     private void getMusicList() {

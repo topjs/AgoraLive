@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.navigation.Navigation;
 
 import io.agora.vlive.ui.main.MainActivity;
@@ -20,10 +21,13 @@ public class HomeFragment extends AbstractFragment implements View.OnClickListen
     private static final int CATEGORY_IMAGE_WIDTH = 690;
     private static final int CATEGORY_IMAGE_HEIGHT = 299;
 
+    private AppCompatTextView mHomeTitleText;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container,false);
+        mHomeTitleText = view.findViewById(R.id.home_title);
 
         ViewTreeObserver observer = view.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -62,6 +66,18 @@ public class HomeFragment extends AbstractFragment implements View.OnClickListen
         params = (RelativeLayout.LayoutParams) image.getLayoutParams();
         params.height = (int) (image.getMeasuredWidth() * ratio);
         image.setLayoutParams(params);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (mHomeTitleText != null) {
+            RelativeLayout.LayoutParams params =
+                    (RelativeLayout.LayoutParams) mHomeTitleText.getLayoutParams();
+            int systemBarHeight = getContainer().getSystemBarHeight();
+            params.topMargin += systemBarHeight;
+            mHomeTitleText.setLayoutParams(params);
+        }
     }
 
     @Override

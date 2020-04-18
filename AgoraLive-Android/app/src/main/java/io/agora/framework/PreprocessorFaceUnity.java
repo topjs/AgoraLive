@@ -2,7 +2,6 @@ package io.agora.framework;
 
 import android.content.Context;
 import android.opengl.GLES20;
-import android.util.Log;
 
 import com.faceunity.FURenderer;
 
@@ -22,17 +21,20 @@ public class PreprocessorFaceUnity implements IPreprocessor {
     }
 
     @Override
-    public void onPreProcessFrame(VideoCaptureFrame outFrame, VideoChannel.ChannelContext context) {
+    public VideoCaptureFrame onPreProcessFrame(VideoCaptureFrame outFrame, VideoChannel.ChannelContext context) {
         if (mFURenderer == null || !mEnabled) {
-            return;
+            return outFrame;
         }
 
-        outFrame.mTextureId = mFURenderer.onDrawFrame(outFrame.mImage,
-                outFrame.mTextureId, outFrame.mFormat.getWidth(),
-                outFrame.mFormat.getHeight());
+        VideoCaptureFrame frame = new VideoCaptureFrame(outFrame);
+
+        frame.mTextureId = mFURenderer.onDrawFrame(frame.mImage,
+                frame.mTextureId, frame.mFormat.getWidth(),
+                frame.mFormat.getHeight());
 
         // The texture is transformed to texture2D by beauty module.
-        outFrame.mFormat.setTexFormat(GLES20.GL_TEXTURE_2D);
+        frame.mFormat.setTexFormat(GLES20.GL_TEXTURE_2D);
+        return frame;
     }
 
     @Override

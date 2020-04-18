@@ -2,6 +2,7 @@ package io.agora.vlive.utils;
 
 import android.graphics.Color;
 
+import io.agora.rtc.video.VideoEncoderConfiguration;
 import io.agora.vlive.R;
 
 public class Global {
@@ -34,6 +35,9 @@ public class Global {
         public static final String KEY_IMAGE_URL = "key-image-url";
         public static final String KEY_TOKEN = "key-token";
 
+        public static final int EDIT_USER_NAME_RESULT_CANCEL = 1;
+        public static final int EDIT_USER_NAME_RESULT_DONE = 2;
+
         public static final int DIVIDER_COLOR = Color.rgb(239, 239, 239);
 
         public static final int VIDEO_MAX_BITRATE = 4000;
@@ -52,26 +56,28 @@ public class Global {
                 R.string.home_category_title_pk
         };
 
-        public static final String[] RESOLUTIONS = {
+        public static final String[] RESOLUTIONS_TEXT = {
                 "1920x1080",
                 "1280x720",
                 "960x640",
                 "640x480"
         };
 
-        public static final String[] FRAME_RATES = {
+        public static final VideoEncoderConfiguration.VideoDimensions[] RESOLUTIONS = {
+                new VideoEncoderConfiguration.VideoDimensions(1920, 1080),
+                VideoEncoderConfiguration.VD_1280x720,
+                new VideoEncoderConfiguration.VideoDimensions(960, 640),
+                VideoEncoderConfiguration.VD_640x480,
+        };
+
+        public static final String[] FRAME_RATES_TEXT = {
                 "15", "24", "30"
         };
 
-        public static final int[] GIFT_ICON_RES = {
-                R.drawable.gift_01_bell,
-                R.drawable.gift_02_icecream,
-                R.drawable.gift_03_wine,
-                R.drawable.gift_04_cake,
-                R.drawable.gift_05_ring,
-                R.drawable.gift_06_watch,
-                R.drawable.gift_07_diamond,
-                R.drawable.gift_08_rocket
+        public static final VideoEncoderConfiguration.FRAME_RATE[] FRAME_RATES = {
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24,
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_30,
         };
 
         public static final int[] PROFILE_BG_RES = {
@@ -87,12 +93,6 @@ public class Global {
                 R.drawable.profile_image_10,
                 R.drawable.profile_image_11,
                 R.drawable.profile_image_12
-        };
-
-        public static final String[][] FAKE_RANK = {
-                { "1324389", "", "" },
-                { "3532423", "", "" },
-                { "234790238", "", "" },
         };
     }
 }

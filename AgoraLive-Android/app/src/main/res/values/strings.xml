@@ -23,6 +23,7 @@
     <!-- My Profile Fragment -->
     <string name="profile_item_title_avatar">Avatar Setting</string>
     <string name="profile_item_title_nickname">Nickname Setting</string>
+    <string name="modify_user_title">Edit Name</string>
 
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">Room Name:</string>
@@ -39,6 +40,9 @@
     <string name="live_host_in_seat_state_open_host">Invite</string>
     <string name="live_host_in_seat_state_closed">Closed</string>
 
+    <string name="live_system_notification_member_joined">has joined</string>
+    <string name="live_system_notification_member_left">has left</string>
+
     <string-array name="live_host_in_seat_operations">
         <item>Mute</item>
         <item>Unmute</item>
@@ -46,6 +50,8 @@
         <item>Open</item>
         <item>close</item>
     </string-array>
+
+    <string name="live_pk_host_remaining_time_hint">PK left:</string>
 
     <!-- Messages -->
     <string name="live_message_gift_send">has sent out</string>
@@ -72,6 +78,8 @@
     <string name="live_room_gift_action_sheet_send">Send</string>
     <string name="live_room_gift_action_sheet_value_format">(%d Coins)</string>
 
+    <string name="live_room_pk_room_list_title_format">Room List (%d)</string>
+
     <string-array name="gift_names">
         <item>Bell</item>
         <item>Ice Cream</item>
@@ -83,15 +91,18 @@
         <item>Rocket</item>
     </string-array>
 
+    <string name="live_room_gift_channel_message">has sent %s a gift</string>
+
     <string name="live_room_tool_action_sheet_title">Tool</string>
     <string-array name="live_room_action_sheet_tool_names">
-        <item>Voice</item>
         <item>Data</item>
         <item>Share</item>
         <item>Setting</item>
+        <item>Empty</item>
         <item>Rotate</item>
         <item>Camera</item>
         <item>Speaker</item>
+        <item>EarMonitor</item>
     </string-array>
 
     <string name="live_room_voice_action_sheet_title">Voice</string>
@@ -103,12 +114,17 @@
     <string name="live_room_all_online_user_action_sheet_title">Online Users</string>
     <string name="live_room_host_in_audience_apply_title">Apply</string>
     <string name="live_room_host_in_audience_apply_message">Do you want to apply to a seat?</string>
-    <string name="live_room_host_in_audience_apply_owner_message">"%s" want to apply seat%d /n do you accept？</string>
+    <string name="live_room_host_in_audience_apply_owner_message">"%s" want to apply seat%d \n do you accept？</string>
     <string name="live_room_host_in_invited_by_owner">"%s" invites you to seat %d， do you accept？</string>
     <string name="live_room_host_in_invite_rejected">Invitation Rejected</string>
-    <string name="live_room_host_in_invite_rejected_message">Your invitation has been /n rejected by "%s"</string>
+    <string name="live_room_host_in_invite_rejected_message">Your invitation has been \n rejected by "%s"</string>
     <string name="live_room_host_in_apply_rejected">Rejected</string>
-    <string name="live_room_host_in_apply_rejected_message">Your application has been /n rejected by "%s"</string>
+    <string name="live_room_host_in_apply_rejected_message">Your application has been \n rejected by "%s"</string>
+
+    <string name="live_room_pk_room_list_button_text">Invite PK</string>
+
+    <string name="live_room_pk_room_receive_pk_request_title">PK Received</string>
+    <string name="live_room_pk_room_receive_pk_request_message">%s invited you to his PK room,\n do you accept?</string>
 
     <!-- dialog -->
     <string name="dialog_negative_button">Cancel</string>
@@ -116,6 +132,80 @@
     <string name="dialog_positive_button_accept">Accept</string>
     <string name="dialog_negative_button_refuse">Refuse</string>
 
-    <string name="finish_broadcast_title">Stop Broadcast</string>
-    <string name="finish_broadcast_message">Do you want to stop your broadcast?</string>
+    <string name="finish_broadcast_title_owner">Stop Broadcast</string>
+    <string name="finish_broadcast_message_owner">Do you want to stop your broadcast?</string>
+
+    <string name="finish_broadcast_title_audience">Leave Room</string>
+    <string name="finish_broadcast_message_audience">Do you want to leave the room?</string>
+
+    <string name="dialog_multi_host_open_seat_title">Open</string>
+    <string name="dialog_multi_host_open_seat_message">Do you want to open this seat?</string>
+
+    <string name="dialog_multi_host_close_seat_title">Close</string>
+    <string name="dialog_multi_host_close_seat_message">Close the seat. If it is taken, \n the user will be forced to leave.</string>
+
+    <string name="dialog_multi_host_mute_title">Mute</string>
+    <string name="dialog_multi_host_mute_message">Forbid "%s" of speaking？</string>
+
+    <string name="dialog_multi_host_unmute_title">Unmute</string>
+    <string name="dialog_multi_host_unmute_message">Allow "%s" to speak？</string>
+
+    <string name="dialog_multi_host_leave_title">Leave</string>
+    <string name="dialog_multi_host_leave_message_owner">Do you want "%s" to leave？</string>
+    <string name="dialog_multi_host_leave_message_host">Do you want to leave？</string>
+
+    <!-- Toasts -->
+    <string name="apply_seat_success">Apply Successfully</string>
+    <string name="invite_success">Invite Successfully</string>
+
+    <string name="live_room_pk_room_pk_invitation_accepted">Your PK invitation has been accepted</string>
+    <string name="live_room_pk_room_pk_invitation_rejected">Your PK invitation has been rejected</string>
+
+    <string name="modify_user_name_too_long">User name should not be longer than 15 letters</string>
+    <string name="modify_user_name_empty">User name cannot be empty</string>
+    <string name="modify_user_name_error">Modify user name failed</string>
+
+    <string-array name="random_channel_names">
+        <item>Cheer</item>
+        <item>Vibe</item>
+        <item>Devine</item>
+        <item>Duo</item>
+        <item>Ablaze</item>
+        <item>Amaze</item>
+        <item>Harmony</item>
+        <item>Verse</item>
+        <item>Vigilant</item>
+        <item>Contender</item>
+        <item>Vista</item>
+        <item>Wander</item>
+        <item>Collections</item>
+        <item>Moon</item>
+        <item>Boho</item>
+        <item>Everest</item>
+    </string-array>
+
+    <string-array name="random_surnames">
+        <item>Atkinson</item>
+        <item>Edwards</item>
+        <item>Gibson</item>
+        <item>Holmes</item>
+        <item>Kelvin</item>
+        <item>Lloyd</item>
+        <item>Payne</item>
+        <item>White</item>
+    </string-array>
+
+    <string-array name="random_names">
+        <item>Alexander</item>
+        <item>Halley</item>
+        <item>Rickey</item>
+        <item>Xavior</item>
+        <item>Yolanda</item>
+        <item>Corynn</item>
+        <item>Daniel</item>
+        <item>Kelly</item>
+        <item>Lauren</item>
+    </string-array>
+
+    <string name="button_text_done">Done</string>
 </resources>

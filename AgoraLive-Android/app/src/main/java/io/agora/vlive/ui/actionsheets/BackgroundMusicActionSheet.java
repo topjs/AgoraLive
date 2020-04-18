@@ -61,8 +61,8 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
         mDividerHeight = getResources().getDimensionPixelSize(
                 R.dimen.live_room_action_sheet_item_divider_height);
         LayoutInflater.from(getContext()).inflate(
-                R.layout.action_background_music, this, true);
-        RecyclerView recyclerView = findViewById(R.id.live_room_action_sheet_bg_music_recycler);
+                R.layout.action_room_background_music, this, true);
+        RecyclerView recyclerView = findViewById(R.id.live_room_action_sheet_background_music_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

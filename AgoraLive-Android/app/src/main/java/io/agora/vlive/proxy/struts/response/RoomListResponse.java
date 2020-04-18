@@ -7,10 +7,10 @@ import io.agora.vlive.proxy.struts.model.RoomInfo;
 public class RoomListResponse extends AbsResponse {
     public RoomList data;
 
-    public class RoomList {
+    public static class RoomList {
         public int count;
-        public String total;
-        public String next;
+        public int total;
+        public String nextId;
         public List<RoomInfo> list;
     }
 }

@@ -69,6 +69,5 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     implementation project(path: ':faceunity')
-    implementation project(path: ':video_capturer_and_renderer')
     implementation project(path: ':framework')
 }

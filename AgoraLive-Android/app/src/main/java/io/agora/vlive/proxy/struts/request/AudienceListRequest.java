@@ -1,6 +1,6 @@
 package io.agora.vlive.proxy.struts.request;
 
-public class AudienceListRequest {
+public class AudienceListRequest extends Request {
     public static final int TYPE_ALL = 1;
     public static final int TYPE_AUDIENCE = 2;
 

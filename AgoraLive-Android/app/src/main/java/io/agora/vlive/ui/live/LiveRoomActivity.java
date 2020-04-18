@@ -19,13 +19,19 @@ import androidx.appcompat.widget.AppCompatEditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.agora.rtc.IRtcEngineEventHandler;
+import io.agora.rtm.ErrorInfo;
+import io.agora.rtm.ResultCallback;
 import io.agora.vlive.Config;
 import io.agora.vlive.R;
+import io.agora.vlive.agora.rtm.model.GiftRankMessage;
+import io.agora.vlive.agora.rtm.model.NotificationMessage;
 import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.proxy.struts.model.UserProfile;
 import io.agora.vlive.proxy.struts.request.CreateRoomRequest;
 import io.agora.vlive.proxy.struts.request.Request;
 import io.agora.vlive.proxy.struts.request.RoomRequest;
+import io.agora.vlive.proxy.struts.request.SendGiftRequest;
 import io.agora.vlive.proxy.struts.response.AudienceListResponse;
 import io.agora.vlive.proxy.struts.response.CreateRoomResponse;
 import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
@@ -37,10 +43,12 @@ import io.agora.vlive.ui.actionsheets.LiveRoomUserListActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
+import io.agora.vlive.ui.components.GiftAnimWindow;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
 import io.agora.vlive.ui.components.LiveRoomMessageList;
 import io.agora.vlive.ui.components.LiveRoomUserLayout;
+import io.agora.vlive.utils.GiftUtil;
 import io.agora.vlive.utils.Global;
 
 public abstract class LiveRoomActivity extends LiveBaseActivity implements
@@ -52,7 +60,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         VoiceActionSheet.VoiceActionSheetListener,
         LiveBottomButtonLayout.LiveBottomButtonListener,
         TextView.OnEditorActionListener,
-        LiveRoomUserLayout.UserLayoutListener {
+        LiveRoomUserLayout.UserLayoutListener,
+        LiveRoomUserListActionSheet.OnUserSelectedListener {
 
     private static final String TAG = LiveRoomActivity.class.getSimpleName();
     private static final int IDEAL_MIN_KEYBOARD_HEIGHT = 200;
@@ -89,11 +98,14 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
         mInputMethodManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
+    }
 
+    @Override
+    protected void onPermissionGranted() {
         if (getIntent().getBooleanExtra(Global.Constants.KEY_CREATE_ROOM, false)) {
             createRoom();
         } else {
-            enterRoom();
+            enterRoom(roomId);
         }
     }
 
@@ -163,13 +175,11 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onCreateRoomResponse(CreateRoomResponse response) {
         roomId = response.data;
-        enterRoom();
+        enterRoom(roomId);
     }
 
-    private void enterRoom() {
-        RoomRequest request = new RoomRequest();
-        request.roomId = roomId;
-        request.token = config().getUserProfile().getToken();
+    protected void enterRoom(String roomId) {
+        RoomRequest request = new RoomRequest(config().getUserProfile().getToken(), roomId);
         sendRequest(Request.ENTER_ROOM, request);
     }
 
@@ -188,7 +198,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             joinRtcChannel();
             joinRtmChannel();
 
-            initUserCount(response.data.room.total,
+            initUserCount(response.data.room.currentUsers,
                     response.data.room.rankUsers);
         }
     }
@@ -227,16 +237,22 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetResolutionSelected(int index) {
         Log.i(TAG, "onActionSheetResolutionSelected:" + index);
+        config().setResolutionIndex(index);
+        setVideoConfiguration();
     }
 
     @Override
     public void onActionSheetFrameRateSelected(int index) {
         Log.i(TAG, "onActionSheetFrameRateSelected:" + index);
+        config().setFrameRateIndex(index);
+        setVideoConfiguration();
     }
 
     @Override
     public void onActionSheetBitrateSelected(int bitrate) {
         Log.i(TAG, "onActionSheetBitrateSelected:" + bitrate);
+        config().setVideoBitrate(bitrate);
+        setVideoConfiguration();
     }
 
     @Override
@@ -265,15 +281,16 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onActionSheetGiftSend(String name, int index, int value) {
-        Log.i(TAG, "onActionSheetGiftSend:" + name);
         dismissActionSheetDialog();
-        messageList.addMessage(LiveRoomMessageList.MSG_TYPE_GIFT, "me", null, index);
+        SendGiftRequest request = new SendGiftRequest(config().
+                getUserProfile().getToken(), roomId, index);
+        sendRequest(Request.SEND_GIFT, request);
     }
 
     @Override
-    public void onActionSheetVoiceClicked() {
-        Log.i(TAG, "onActionSheetVoiceClicked");
-        showActionSheetDialog(ACTION_SHEET_VOICE, isHost, false, this);
+    public void onActionSheetEarMonitoringClicked(boolean monitor) {
+        Log.i(TAG, "onActionSheetEarMonitoringClicked:" + monitor);
+        rtcEngine().enableInEarMonitoring(monitor);
     }
 
     @Override
@@ -296,13 +313,12 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public void onActionSheetRotateClicked() {
         Log.i(TAG, "onActionSheetRotateClicked");
         switchCamera();
-        dismissActionSheetDialog();
     }
 
     @Override
     public void onActionSheetVideoClicked(boolean muted) {
         Log.i(TAG, "onActionSheetVideoClicked:" + muted);
-        if (isHost) rtcEngine().muteLocalVideoStream(true);
+        if (isHost) rtcEngine().muteLocalVideoStream(muted);
     }
 
     @Override
@@ -343,8 +359,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             if (TextUtils.isEmpty(editable)) {
                 showShortToast(getResources().getString(R.string.live_send_empty_message));
             } else {
-                String message = editable.toString();
-                messageList.addMessage(LiveRoomMessageList.MSG_TYPE_CHAT, "me", message);
+                sendChatMessage(editable.toString());
                 mMessageEditText.setText("");
             }
 
@@ -352,6 +367,23 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             return true;
         }
         return false;
+    }
+
+    private void sendChatMessage(String content) {
+        Config.UserProfile profile = config().getUserProfile();
+        getMessageManager().sendChatMessage(profile.getUserId(),
+                profile.getUserName(), content, new ResultCallback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+
+            @Override
+            public void onFailure(ErrorInfo errorInfo) {
+
+            }
+        });
+        messageList.addMessage(LiveRoomMessageList.MSG_TYPE_CHAT, profile.getUserName(), content);
     }
 
     protected boolean isCurDialogShowing() {
@@ -366,9 +398,10 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onUserLayoutShowUserList(View view) {
+        // Show all user info list
         mRoomUserActionSheet = (LiveRoomUserListActionSheet)
                 showActionSheetDialog(ACTION_SHEET_ROOM_USER, isHost, true, this);
-        mRoomUserActionSheet.setRoomInfo(proxy(), this, roomId, config().getUserProfile().getToken());
+        mRoomUserActionSheet.setup(proxy(), this, roomId, config().getUserProfile().getToken());
         mRoomUserActionSheet.requestMoreAudience();
     }
 
@@ -380,11 +413,18 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             profile.setUserId(info.userId);
             profile.setUserName(info.userName);
             profile.setAvatar(info.avatar);
+            userList.add(profile);
         }
 
         if (mRoomUserActionSheet != null && mRoomUserActionSheet.getVisibility() == View.VISIBLE) {
-            mRoomUserActionSheet.appendUsers(userList);
+            runOnUiThread(() -> mRoomUserActionSheet.appendUsers(userList));
         }
+    }
+
+    @Override
+    public void onActionSheetUserListItemSelected(String userId, String userName) {
+        // Called when clicking an online user's name, and want to see the detail
+        Log.d(TAG, "onActionSheetUserListItemSelected:" + userId);
     }
 
     @Override
@@ -393,19 +433,107 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     }
 
     @Override
+    public void onRtmRoomGiftRankChanged(int total, List<GiftRankMessage.GiftRankItem> list) {
+        // The rank of user sending gifts has changed. The client
+        // needs to update UI in this callback.
+        if (list == null) return;
+
+        List<EnterRoomResponse.RankInfo> rankList = new ArrayList<>();
+        for (GiftRankMessage.GiftRankItem item : list) {
+            EnterRoomResponse.RankInfo info = new EnterRoomResponse.RankInfo();
+            info.userId = item.userId;
+            info.userName = item.userName;
+            info.avatar = item.avatar;
+            rankList.add(info);
+        }
+
+        runOnUiThread(() -> participants.reset(rankList));
+    }
+
+    @Override
+    public void onRtmGiftMessage(String fromUserId, String fromUserName, String toUserId, String toUserName, int giftId) {
+        runOnUiThread(() -> {
+            String from = TextUtils.isEmpty(fromUserName) ? fromUserId : fromUserName;
+            String to = TextUtils.isEmpty(toUserName) ? toUserId : toUserName;
+            messageList.addMessage(LiveRoomMessageList.MSG_TYPE_GIFT, from, to, giftId);
+
+            GiftAnimWindow window = new GiftAnimWindow(LiveRoomActivity.this, R.style.gift_anim_window);
+            window.setAnimResource(GiftUtil.getGiftAnimRes(giftId));
+            window.show();
+        });
+    }
+
+    @Override
+    public void onRtmChannelNotification(int total, List<NotificationMessage.NotificationItem> list) {
+        // User enter & leave notifications.
+        runOnUiThread(() -> {
+            // update room user count
+            participants.reset(total);
+
+            for (NotificationMessage.NotificationItem item : list) {
+                if (ownerId.equals(item.userId) && item.state == LiveRoomMessageList.MSG_SYSTEM_STATE_LEAVE) {
+                    // Leave the room if the room owner already leaves the room
+                } else {
+                    messageList.addMessage(LiveRoomMessageList.MSG_TYPE_SYSTEM, item.userName, "", item.state);
+                }
+            }
+        });
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
-        if (isHost && !config().isVideoMuted()) {
+        if ((isOwner || isHost) && !config().isVideoMuted()) {
             startCameraCapture();
         }
     }
 
     @Override
+    public void onRtcRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
+        Log.d(TAG, "onRtcRemoteVideoStateChanged: " + (uid & 0xFFFFFFFFL) +
+                " state:" + state + " reason:" + reason);
+    }
+
+    @Override
+    public void onRtcStats(IRtcEngineEventHandler.RtcStats stats) {
+
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-        if (isHost && !config().isVideoMuted() && !mActivityFinished) {
+        if ((isHost || isOwner) && !config().isVideoMuted()) {
+            // If now the app goes to background, stop the camera
+            // capture if the host is displaying his video.
             stopCameraCapture();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        showExitDialog();
+    }
+
+    private void showExitDialog() {
+        int titleRes;
+        int messageRes;
+        if (isHost) {
+            titleRes = R.string.finish_broadcast_title_owner;
+            messageRes = R.string.finish_broadcast_message_owner;
+        } else {
+            titleRes = R.string.finish_broadcast_title_audience;
+            messageRes = R.string.finish_broadcast_message_audience;
+        }
+        curDialog = showDialog(titleRes, messageRes, view -> {
+            leaveRoom(roomId);
+            finish();
+            closeDialog();
+        });
+    }
+
+    protected void leaveRoom(String roomId) {
+        sendRequest(Request.LEAVE_ROOM, new RoomRequest(
+                config().getUserProfile().getToken(), roomId));
     }
 
     @Override

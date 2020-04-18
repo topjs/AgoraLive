@@ -6,7 +6,8 @@ import io.agora.rtc.Constants;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtm.RtmClient;
 import io.agora.vlive.AgoraLiveApplication;
-import io.agora.vlive.R;
+import io.agora.vlive.agora.rtc.AgoraRtcHandler;
+import io.agora.vlive.agora.rtc.RtcEventHandler;
 import io.agora.vlive.agora.rtm.RtmMessageManager;
 import io.agora.vlive.utils.UserUtil;
 
@@ -18,17 +19,16 @@ public class AgoraEngine {
 
     private RtmClient mRtmClient;
 
-    public AgoraEngine(@NonNull AgoraLiveApplication application) {
+    public AgoraEngine(@NonNull AgoraLiveApplication application, String appId) {
         try {
-            mRtcEngine = RtcEngine.create(application, application.
-                    getResources().getString(R.string.private_app_id), mRtcEventHandler);
+            mRtcEngine = RtcEngine.create(application, appId, mRtcEventHandler);
             mRtcEngine.enableVideo();
             mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
             mRtcEngine.enableDualStreamMode(false);
             mRtcEngine.setLogFile(UserUtil.rtcLogFilePath(application));
+            // mRtcEngine.setParameters("{\"rtc.log_filter\":65535}");
 
-            mRtmClient = RtmClient.createInstance(application, application.
-                    getResources().getString(R.string.private_app_id), RtmMessageManager.instance());
+            mRtmClient = RtmClient.createInstance(application, appId, RtmMessageManager.instance());
             mRtmClient.setLogFile(UserUtil.rtmLogFilePath(application));
         } catch (Exception e) {
             e.printStackTrace();

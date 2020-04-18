@@ -22,6 +22,7 @@ import io.agora.framework.VideoModule;
 import io.agora.framework.channels.CameraVideoChannel;
 import io.agora.framework.channels.ChannelManager;
 import io.agora.rtc.Constants;
+import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtm.ErrorInfo;
@@ -29,9 +30,13 @@ import io.agora.rtm.ResultCallback;
 import io.agora.rtm.RtmChannelAttribute;
 import io.agora.rtm.RtmChannelMember;
 import io.agora.vlive.R;
-import io.agora.vlive.agora.RtcEventHandler;
+import io.agora.vlive.agora.rtc.RtcEventHandler;
 import io.agora.vlive.agora.rtm.RtmMessageManager;
 import io.agora.vlive.agora.rtm.RtmMessageListener;
+import io.agora.vlive.agora.rtm.model.GiftRankMessage;
+import io.agora.vlive.agora.rtm.model.NotificationMessage;
+import io.agora.vlive.agora.rtm.model.PKMessage;
+import io.agora.vlive.agora.rtm.model.SeatStateMessage;
 import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
 
@@ -165,6 +170,7 @@ public abstract class LiveBaseActivity extends BaseActivity
     protected void joinRtcChannel() {
         rtcEngine().setClientRole(myRtcRole);
         rtcEngine().setVideoSource(mRtcConsumer);
+        setVideoConfiguration();
         rtcEngine().joinChannel(config().getUserProfile().getRtcToken(),
                 rtcChannelName, null, (int) config().getUserProfile().getAgoraUid());
     }
@@ -174,6 +180,14 @@ public abstract class LiveBaseActivity extends BaseActivity
         rtcEngine().setupRemoteVideo(new VideoCanvas(
                 surfaceView, VideoCanvas.RENDER_MODE_HIDDEN, uid));
         return surfaceView;
+    }
+
+    protected void remoteRemoteVideo(int uid) {
+        rtcEngine().setupRemoteVideo(new VideoCanvas(null, VideoCanvas.RENDER_MODE_HIDDEN, uid));
+    }
+
+    protected void setVideoConfiguration() {
+        rtcEngine().setVideoEncoderConfiguration(config().createVideoEncoderConfig());
     }
 
     protected void startCameraCapture() {
@@ -206,7 +220,7 @@ public abstract class LiveBaseActivity extends BaseActivity
         mMessageManager.joinChannel(rtcChannelName, new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
+                Log.i(LiveBaseActivity.class.getSimpleName(), "on rtm join channel success");
             }
 
             @Override
@@ -214,6 +228,10 @@ public abstract class LiveBaseActivity extends BaseActivity
 
             }
         });
+    }
+
+    protected void leaveRtmChannel(ResultCallback<Void> callback) {
+        mMessageManager.leaveChannel(callback);
     }
 
     @Override
@@ -262,6 +280,16 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
+    public void onRtmInvitationAccepted(String peerId, String nickname, int index) {
+
+    }
+
+    @Override
+    public void onRtmApplicationAccepted(String peerId, String nickname, int index) {
+
+    }
+
+    @Override
     public void onRtmInvitationRejected(String peerId, String nickname) {
 
     }
@@ -272,7 +300,7 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
-    public void onRtmPkReceivedFromAnotherHost(String peerId, String nickname) {
+    public void onRtmPkReceivedFromAnotherHost(String peerId, String nickname, String pkRoomId) {
 
     }
 
@@ -292,22 +320,32 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
-    public void onRtmHostStateChanged(String uid, int index, int operate) {
+    public void onRtmRoomGiftRankChanged(int total, List<GiftRankMessage.GiftRankItem> list) {
 
     }
 
     @Override
-    public void onRtmPkStartStateReceived() {
+    public void onRtmOwnerStateChanged(String userId, String userName, int uid, int enableAudio, int enableVideo) {
 
     }
 
     @Override
-    public void onRtmPkEndStateReceived() {
+    public void onRtmSeatStateChanged(List<SeatStateMessage.SeatStateMessageDataItem> data) {
 
     }
 
     @Override
-    public void onRtmGiftMessageReceived(String fromUid, String toUid, String giftId) {
+    public void onRtmPkStateChanged(PKMessage.PKMessageData messageData) {
+
+    }
+
+    @Override
+    public void onRtmGiftMessage(String fromUserId, String fromUserName, String toUserId, String toUserName, int giftId) {
+
+    }
+
+    @Override
+    public void onRtmChannelNotification(int total, List<NotificationMessage.NotificationItem> list) {
 
     }
 
@@ -317,11 +355,41 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
+    public void onRtcRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
+
+    }
+
+    @Override
+    public void onRtcStats(IRtcEngineEventHandler.RtcStats stats) {
+
+    }
+
+    @Override
+    public void onChannelMediaRelayStateChanged(int state, int code) {
+
+    }
+
+    @Override
+    public void onChannelMediaRelayEvent(int code) {
+
+    }
+
+    @Override
     public void finish() {
         super.finish();
         removeRtcHandler(this);
         rtcEngine().leaveChannel();
         mMessageManager.removeMessageHandler(this);
-        mMessageManager.leaveChannel(null);
+        mMessageManager.leaveChannel(new ResultCallback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i("messagemanager", "rtm leave success");
+            }
+
+            @Override
+            public void onFailure(ErrorInfo errorInfo) {
+
+            }
+        });
     }
 }

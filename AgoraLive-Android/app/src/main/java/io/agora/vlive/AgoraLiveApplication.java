@@ -7,13 +7,10 @@ import android.util.Log;
 
 import com.faceunity.FURenderer;
 
-import io.agora.framework.PreprocessorFaceUnity;
-import io.agora.framework.VideoModule;
-import io.agora.framework.channels.ChannelManager;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtm.RtmClient;
 import io.agora.vlive.agora.AgoraEngine;
-import io.agora.vlive.agora.RtcEventHandler;
+import io.agora.vlive.agora.rtc.RtcEventHandler;
 import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.utils.Global;
 
@@ -30,7 +27,6 @@ public class AgoraLiveApplication extends Application {
         super.onCreate();
         mPref = getSharedPreferences(Global.Constants.SF_NAME, Context.MODE_PRIVATE);
         mConfig = new Config(this);
-        mAgoraEngine = new AgoraEngine(this);
         initFaceUnityGlobally();
     }
 
@@ -42,12 +38,16 @@ public class AgoraLiveApplication extends Application {
         return mPref;
     }
 
+    public void initEngine(String appId) {
+        mAgoraEngine = new AgoraEngine(this, appId);
+    }
+
     public RtcEngine rtcEngine() {
-        return mAgoraEngine.rtcEngine();
+        return mAgoraEngine != null ? mAgoraEngine.rtcEngine() : null;
     }
 
     public RtmClient rtmClient() {
-        return mAgoraEngine.rtmClient();
+        return mAgoraEngine != null ? mAgoraEngine.rtmClient() : null;
     }
 
     public ClientProxy proxy() {

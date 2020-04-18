@@ -136,14 +136,14 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
         mOpTextViews[2] = findViewById(R.id.seat_item_dialog_op3);
         mOpTextViews[2].setOnClickListener(this);
 
-        if (mAudioMuteState == LiveMultiHostSeatLayout.AUDIO_MUTED_BY_OWNER) {
+        if (mAudioMuteState != LiveMultiHostSeatLayout.MUTE_NONE) {
             mOpTextViews[0].setText(mOperations[1]);
         } else {
             mOpTextViews[0].setText(mOperations[0]);
         }
 
         mOpTextViews[1].setText(mOperations[2]);
-        mOpTextViews[2].setText(mOperations[3]);
+        mOpTextViews[2].setText(mOperations[4]);
     }
 
     @Override
@@ -159,10 +159,10 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
                     } else if (mSeatState == LiveMultiHostSeatLayout.SEAT_CLOSED) {
                         op = Operation.open;
                     } else if (mSeatState == LiveMultiHostSeatLayout.SEAT_TAKEN) {
-                        if (mAudioMuteState == LiveMultiHostSeatLayout.AUDIO_MUTED_BY_OWNER) {
-                            op = Operation.unmute;
-                        } else if (mAudioMuteState == LiveMultiHostSeatLayout.MUTE_NONE) {
+                        if (mAudioMuteState == LiveMultiHostSeatLayout.MUTE_NONE) {
                             op = Operation.mute;
+                        } else {
+                            op = Operation.unmute;
                         }
                     }
                 }
@@ -175,8 +175,8 @@ public class SeatItemDialog extends Dialog implements View.OnClickListener {
                 op = Operation.close;
                 break;
         }
-        mListener.onSeatDialogItemClicked(mPosition, op);
         dismiss();
+        mListener.onSeatDialogItemClicked(mPosition, op);
     }
 
     private boolean isOwner() {

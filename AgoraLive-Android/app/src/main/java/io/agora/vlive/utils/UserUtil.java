@@ -1,10 +1,19 @@
 package io.agora.vlive.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
+import android.text.TextUtils;
+
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import java.io.File;
+
+import io.agora.vlive.proxy.struts.model.UserProfile;
 
 public class UserUtil {
     private static final String LOG_FOLDER_NAME = "logs";
@@ -20,6 +29,18 @@ public class UserUtil {
         } catch (NumberFormatException e) {
             return Global.Constants.PROFILE_BG_RES[0];
         }
+    }
+
+    public static Drawable getUserRoundIcon(Resources resources, String userId) {
+        int res = UserUtil.getUserProfileIcon(userId);
+        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(
+                resources, BitmapFactory.decodeResource(resources, res));
+        drawable.setCircular(true);
+        return drawable;
+    }
+
+    public static String getUserText(String userId, String userName) {
+        return !TextUtils.isEmpty(userName) ? userName : userId;
     }
 
     public static String rtcLogFilePath(Context context) {

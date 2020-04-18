@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.agora.vlive.R;
+import io.agora.vlive.agora.rtm.model.GiftRankMessage;
 import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.utils.UserUtil;
 
@@ -83,6 +84,15 @@ public class LiveRoomUserLayout extends RelativeLayout {
         setUserIcons(rankUsers);
     }
 
+    public void reset(List<EnterRoomResponse.RankInfo> rankUsers) {
+        setUserIcons(rankUsers);
+    }
+
+    public void reset(int total) {
+        String value = countToString(total);
+        mCountText.setText(value);
+    }
+
     private String countToString(int number) {
         if (number <  1e3f) {
             return String.valueOf(number);
@@ -102,6 +112,8 @@ public class LiveRoomUserLayout extends RelativeLayout {
         if (mIconLayout.getChildCount() > 0) {
             mIconLayout.removeAllViews();
         }
+
+        if (rankUsers == null) return;
 
         int id = 0;
         for (int i = 0; i < rankUsers.size(); i++) {

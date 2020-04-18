@@ -1,9 +1,12 @@
 package io.agora.vlive.agora.rtm;
 
 import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
@@ -22,20 +25,40 @@ import io.agora.rtm.RtmClient;
 import io.agora.rtm.RtmClientListener;
 import io.agora.rtm.RtmMessage;
 import io.agora.rtm.SendMessageOptions;
-import io.agora.vlive.agora.rtm.model.ChatMessageData;
-import io.agora.vlive.agora.rtm.model.GiftMessageData;
+import io.agora.vlive.agora.rtm.model.ChatMessage;
+import io.agora.vlive.agora.rtm.model.GiftMessage;
+import io.agora.vlive.agora.rtm.model.GiftRankMessage;
 import io.agora.vlive.agora.rtm.model.NotificationMessage;
+import io.agora.vlive.agora.rtm.model.OwnerStateMessage;
+import io.agora.vlive.agora.rtm.model.PKMessage;
 import io.agora.vlive.agora.rtm.model.PeerMessageData;
-import io.agora.vlive.agora.rtm.model.RoomMessageData;
+import io.agora.vlive.agora.rtm.model.SeatStateMessage;
 
 public class RtmMessageManager implements RtmClientListener, RtmChannelListener {
+    private static final String TAG = RtmMessageManager.class.getSimpleName();
+
     private static final int PEER_MSG_TYPE_CALL = 1;
     private static final int PEER_MSG_TYPE_PK = 2;
 
-    private static final int CHANNEL_MSG_TYPE_CHAT = 1;
+    public static final int CHANNEL_MSG_TYPE_CHAT = 1;
+
+    // Users enter or leave the room
     private static final int CHANNEL_MSG_TYPE_NOTIFY = 2;
-    private static final int CHANNEL_MSG_TYPE_ROOM = 3;
-    private static final int CHANNEL_MSG_TYPE_GIFT = 4;
+
+    // Where the UI needs to show the user rank of gift values
+    private static final int CHANNEL_MSG_TYPE_GIFT_RANK = 3;
+
+    // Notifies that the room owner has changed his state
+    private static final int CHANNEL_MSG_CMD_OWNER_STATE = 4;
+
+    // Notifies that the seats' states have changed,
+    // for multi-hosted rooms only
+    private static final int CHANNEL_MSG_TYPE_SEAT = 5;
+
+    // Notifies the PK states, for PK rooms only
+    private static final int CHANNEL_MSG_TYPE_PK = 6;
+
+    private static final int CHANNEL_MSG_TYPE_GIFT = 7;
 
     private static final int PEER_MSG_CMD_APPLY = 101;
     private static final int PEER_MSG_CMD_INVITE = 102;
@@ -47,23 +70,6 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
     private static final int PEER_MSG_CMD_PK = 201;
     private static final int PEER_MSG_CMD_PK_REJECT = 202;
     private static final int PEER_MSG_CMD_PK_ACCEPT = 203;
-
-    private static final int CHANNEL_MSG_CANCEL = 101;
-    private static final int CHANNEL_MSG_ACCEPT = 102;
-    private static final int CHANNEL_MSG_CLOSE = 103;
-    private static final int CHANNEL_MSG_OPEN = 104;
-    private static final int CHANNEL_MSG_MUTE = 105;
-    private static final int CHANNEL_MSG_UNMUTE = 106;
-
-    private static final int CHANNEL_MSG_MUTE_AUDIO = 201;
-    private static final int CHANNEL_MSG_UNMUTE_AUDIO = 202;
-    private static final int CHANNEL_MSG_MUTE_VIDEO = 203;
-    private static final int CHANNEL_MSG_UNMUTE_VIDEO = 204;
-
-    private static final int CHANNEL_START_PK = 401;
-    private static final int CHANNEL_END_PK = 402;
-
-    private static final int CHANNEL_SEND_GIFT = 501;
 
     private volatile static RtmMessageManager sInstance;
 
@@ -123,9 +129,9 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
         mRtmChannel.sendMessage(msg, mOptions, callback);
     }
 
-    public void apply(String userId, String nickname, int coindex, ResultCallback<Void> callback) {
+    public void apply(String peerId, String nickname, int coindex, ResultCallback<Void> callback) {
         String json = getPeerMessageDataJson(PEER_MSG_TYPE_CALL, nickname, PEER_MSG_CMD_APPLY, coindex);
-        sendPeerMessage(userId, json, callback);
+        sendPeerMessage(peerId, json, callback);
     }
 
     public void invite(String userId, String nickname, int coindex, ResultCallback<Void> callback) {
@@ -153,8 +159,8 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
         sendPeerMessage(userId, json, callback);
     }
 
-    public void applyPk(String userId, String nickname, ResultCallback<Void> callback) {
-        String json = getPeerMessageDataJson(PEER_MSG_TYPE_PK, nickname, PEER_MSG_CMD_PK);
+    public void applyPk(String userId, String nickname, String roomId, ResultCallback<Void> callback) {
+        String json = getPkPeerMessageDataJson(PEER_MSG_TYPE_PK, nickname, PEER_MSG_CMD_PK, roomId);
         sendPeerMessage(userId, json, callback);
     }
 
@@ -173,50 +179,23 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
         return new GsonBuilder().create().toJson(data);
     }
 
+    private String getPkPeerMessageDataJson(int cmd, String nickname, int operate, String roomId) {
+        PeerMessageData data = new PeerMessageData(cmd, nickname, operate, roomId);
+        return new GsonBuilder().create().toJson(data);
+    }
+
     private String getPeerMessageDataJson(int cmd, String nickname, int operate) {
         PeerMessageData data = new PeerMessageData(cmd, nickname, operate, 0);
         return new GsonBuilder().create().toJson(data);
     }
 
-    public void sendChatMessage(String nickname, String content, ResultCallback<Void> callback) {
-        String json = getChatMessageJsonString(nickname, content);
+    public void sendChatMessage(String userId, String nickname, String content, ResultCallback<Void> callback) {
+        String json = getChatMessageJsonString(userId, nickname, content);
         sendChannelMessage(json, callback);
     }
 
-    private String getChatMessageJsonString(String nickname, String content) {
-        ChatMessageData data = new ChatMessageData(CHANNEL_MSG_TYPE_CHAT, nickname, content);
-        return new GsonBuilder().create().toJson(data);
-    }
-
-    public void sendNotificationMessage(String userId, int index, int operate, ResultCallback<Void> callback) {
-        String json = getNotificationString(userId, index, operate);
-        sendChannelMessage(json, callback);
-    }
-
-    private String getNotificationString(String userId, int index, int operate) {
-        NotificationMessage message = new NotificationMessage(
-                CHANNEL_MSG_TYPE_NOTIFY, userId, index, operate);
-        return new GsonBuilder().create().toJson(message);
-    }
-
-    public void sendRoomMessage(int operate, ResultCallback<Void> callback) {
-        String json = getRoomMessageString(operate);
-        sendChannelMessage(json, callback);
-    }
-
-    private String getRoomMessageString(int operate) {
-        RoomMessageData data = new RoomMessageData(CHANNEL_MSG_TYPE_ROOM, operate);
-        return new GsonBuilder().create().toJson(data);
-    }
-
-    public void sendGiftMessage(String fromUid, String toUid, String giftId, ResultCallback<Void> callback) {
-        String json = getGiftMessageString(fromUid, toUid, giftId);
-        sendChannelMessage(json, callback);
-    }
-
-    private String getGiftMessageString(String fromUid, String toUid, String giftId) {
-        GiftMessageData data = new GiftMessageData(CHANNEL_MSG_TYPE_GIFT,
-                fromUid, toUid, giftId, CHANNEL_SEND_GIFT);
+    private String getChatMessageJsonString(String userId, String nickname, String content) {
+        ChatMessage data = new ChatMessage(userId, nickname, content);
         return new GsonBuilder().create().toJson(data);
     }
 
@@ -253,28 +232,35 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
     }
 
     private void handlePeerMessages(PeerMessageData message, String peerId, String nickname, int index) {
+        String name = TextUtils.isEmpty(nickname) ? peerId : nickname;
         for (RtmMessageListener listener : mMessageListeners) {
             switch (message.data.operate) {
                 case PEER_MSG_CMD_APPLY:
-                    listener.onRtmAppliedForSeat(peerId, nickname, index);
+                    listener.onRtmAppliedForSeat(peerId, name, index);
                     break;
                 case PEER_MSG_CMD_INVITE:
-                    listener.onRtmInvitedByOwner(peerId, nickname, index);
+                    listener.onRtmInvitedByOwner(peerId, name, index);
+                    break;
+                case PEER_MSG_CMD_APPLY_ACCEPTED:
+                    listener.onRtmApplicationAccepted(peerId, name, index);
+                    break;
+                case PEER_MSG_CMD_INVITE_ACCEPTED:
+                    listener.onRtmInvitationAccepted(peerId, name, index);
                     break;
                 case PEER_MSG_CMD_APPLY_REJECT:
-                    listener.onRtmApplicationRejected(peerId, nickname);
+                    listener.onRtmApplicationRejected(peerId, name);
                     break;
                 case PEER_MSG_CMD_INVITE_REJECT:
-                    listener.onRtmInvitationRejected(peerId, nickname);
+                    listener.onRtmInvitationRejected(peerId, name);
                     break;
                 case PEER_MSG_CMD_PK:
-                    listener.onRtmPkReceivedFromAnotherHost(peerId, nickname);
+                    listener.onRtmPkReceivedFromAnotherHost(peerId, name, message.data.pkRoomId);
                     break;
                 case PEER_MSG_CMD_PK_ACCEPT:
-                    listener.onRtmPkAcceptedByTargetHost(peerId, nickname);
+                    listener.onRtmPkAcceptedByTargetHost(peerId, name);
                     break;
                 case PEER_MSG_CMD_PK_REJECT:
-                    listener.onRtmPkRejectedByTargetHost(peerId, nickname);
+                    listener.onRtmPkRejectedByTargetHost(peerId, name);
                     break;
             }
         }
@@ -308,96 +294,109 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
     public void onMessageReceived(RtmMessage rtmMessage, RtmChannelMember fromMember) {
         // Where channel messages are received
         boolean error = false;
-        String peerId = fromMember.getChannelId();
         String json = rtmMessage.getText();
-        JSONObject messageObj;
+        Log.d(TAG, "on channel message received: " + json);
+        Gson gson = new Gson();
         int cmd = -1;
         try {
             JSONObject obj = new JSONObject(json);
             cmd = obj.getInt("cmd");
-            messageObj = obj.getJSONObject("data");
 
             for (final RtmMessageListener listener : mMessageListeners) {
                 switch (cmd) {
                     case CHANNEL_MSG_TYPE_CHAT:
-                        String account = messageObj.getString("account");
-                        String content = messageObj.getString("content");
-                        handleChatMessages(listener, peerId, account, content);
+                        ChatMessage chatMessage = gson.fromJson(json, ChatMessage.class);
+                        handleChatMessage(listener, chatMessage);
                         break;
                     case CHANNEL_MSG_TYPE_NOTIFY:
-                        String userId = messageObj.getString("uid");
-                        int index = messageObj.getInt("coindex");
-                        int operate = messageObj.getInt("operate");
-                        handleNotifyMessages(listener, userId, index, operate);
+                        NotificationMessage notification = gson.fromJson(json, NotificationMessage.class);
+                        handleNotificationMessage(listener, notification);
                         break;
-                    case CHANNEL_MSG_TYPE_ROOM:
-                        operate = messageObj.getInt("operate");
-                        handleRoomMessage(listener, operate);
+                    case CHANNEL_MSG_TYPE_GIFT_RANK:
+                        GiftRankMessage rankMessage = gson.fromJson(json, GiftRankMessage.class);
+                        handleGiftRankMessage(listener, rankMessage);
+                        break;
+                    case CHANNEL_MSG_CMD_OWNER_STATE:
+                        OwnerStateMessage ownerMessage = gson.fromJson(json, OwnerStateMessage.class);
+                        handleOwnerStateMessage(listener, ownerMessage);
+                        break;
+                    case CHANNEL_MSG_TYPE_SEAT:
+                        SeatStateMessage seat = gson.fromJson(json, SeatStateMessage.class);
+                        handleSeatStateMessage(listener, seat);
+                        break;
+                    case CHANNEL_MSG_TYPE_PK:
+                        PKMessage pkMessage = gson.fromJson(json, PKMessage.class);
+                        handlePKMessage(listener, pkMessage);
                         break;
                     case CHANNEL_MSG_TYPE_GIFT:
-                        String fromUid = messageObj.getString("fromUid");
-                        String toUid = messageObj.getString("toUid");
-                        String giftId = messageObj.getString("giftId");
-                        handleGiftMessage(listener, fromUid, toUid, giftId);
+                        GiftMessage giftMessage = gson.fromJson(json, GiftMessage.class);
+                        handleGiftMessage(listener, giftMessage);
                         break;
                 }
             }
         } catch (JSONException e) {
-            error = true;
             e.printStackTrace();
         }
     }
 
-    private void handleChatMessages(@NonNull RtmMessageListener listener, String userId, String account, String content) {
+    private void handleChatMessage(@NonNull RtmMessageListener listener, ChatMessage message) {
         if (mHandler != null) {
-            mHandler.post(() -> listener.onRtmChannelMessageReceived(userId, account, content));
+            mHandler.post(() -> listener.onRtmChannelMessageReceived(
+                    message.data.fromUserId, message.data.fromUserName, message.data.message));
         } else {
-            listener.onRtmChannelMessageReceived(userId, account, content);
+            listener.onRtmChannelMessageReceived(message.data.fromUserId, message.data.fromUserName, message.data.message);
         }
     }
 
-    private void handleNotifyMessages(@NonNull RtmMessageListener listener, String userId, int index, int operate) {
-        switch (operate) {
-            case CHANNEL_MSG_CANCEL:
-            case CHANNEL_MSG_ACCEPT:
-            case CHANNEL_MSG_CLOSE:
-            case CHANNEL_MSG_OPEN:
-            case CHANNEL_MSG_MUTE:
-            case CHANNEL_MSG_UNMUTE:
-            case CHANNEL_MSG_MUTE_AUDIO:
-            case CHANNEL_MSG_UNMUTE_AUDIO:
-            case CHANNEL_MSG_MUTE_VIDEO:
-            case CHANNEL_MSG_UNMUTE_VIDEO:
-                if (mHandler != null) {
-                    mHandler.post(() -> listener.onRtmHostStateChanged(userId, index, operate));
-                } else {
-                    listener.onRtmHostStateChanged(userId, index, operate);
-                }
-                break;
-        }
-    }
-
-    private void handleRoomMessage(@NonNull RtmMessageListener listener, int operate) {
+    private void handleNotificationMessage(@NonNull RtmMessageListener listener, NotificationMessage message) {
         if (mHandler != null) {
-            mHandler.post(() -> HandleRoomPKMessage(listener, operate));
+            mHandler.post(() -> listener.onRtmChannelNotification(message.data.total, message.data.list));
         } else {
-            HandleRoomPKMessage(listener, operate);
+            listener.onRtmChannelNotification(message.data.total, message.data.list);
         }
     }
 
-    private void HandleRoomPKMessage(@NonNull RtmMessageListener listener, int operate) {
-        if (operate == CHANNEL_START_PK) {
-            listener.onRtmPkStartStateReceived();
-        } else if (operate == CHANNEL_END_PK) {
-            listener.onRtmPkEndStateReceived();
-        }
-    }
-
-    private void handleGiftMessage(@NonNull RtmMessageListener listener, String fromUid, String toUid, String giftId) {
+    private void handleGiftRankMessage(@NonNull RtmMessageListener listener, GiftRankMessage message) {
         if (mHandler != null) {
-            mHandler.post(() -> listener.onRtmGiftMessageReceived(fromUid, toUid, giftId));
+            mHandler.post(() -> listener.onRtmRoomGiftRankChanged(message.data.total, message.data.list));
         } else {
-            listener.onRtmGiftMessageReceived(fromUid, toUid, giftId);
+            listener.onRtmRoomGiftRankChanged(message.data.total, message.data.list);
+        }
+    }
+
+    private void handleOwnerStateMessage(@NonNull RtmMessageListener listener, OwnerStateMessage message) {
+        OwnerStateMessage.OwnerState data = message.data;
+        if (mHandler != null) {
+            mHandler.post(() -> listener.onRtmOwnerStateChanged(data.userId, data.userName, data.uid, data.enableAudio, data.enableVideo));
+        } else {
+            listener.onRtmOwnerStateChanged(data.userId, data.userName, data.uid, data.enableAudio, data.enableVideo);
+        }
+    }
+
+    private void handleSeatStateMessage(@NonNull RtmMessageListener listener, SeatStateMessage message) {
+        List<SeatStateMessage.SeatStateMessageDataItem> data = message.data;
+        if (mHandler != null) {
+            mHandler.post(() -> listener.onRtmSeatStateChanged(data));
+        } else {
+            listener.onRtmSeatStateChanged(data);
+        }
+    }
+
+    private void handlePKMessage(@NonNull RtmMessageListener listener, PKMessage message) {
+        PKMessage.PKMessageData data = message.data;
+        if (mHandler != null) {
+            mHandler.post(() -> listener.onRtmPkStateChanged(message.data));
+        } else {
+            listener.onRtmPkStateChanged(message.data);
+        }
+    }
+
+    private void handleGiftMessage(@NonNull RtmMessageListener listener, GiftMessage message) {
+        GiftMessage.GiftMessageData data = message.data;
+        if (mHandler != null) {
+            mHandler.post(() -> listener.onRtmGiftMessage(data.fromUserId, data.fromUserName, data.toUserId, data.toUserName, data.giftId));
+        } else {
+            listener.onRtmGiftMessage(data.fromUserId, data.fromUserName, data.toUserId, data.toUserName, data.giftId);
         }
     }
 

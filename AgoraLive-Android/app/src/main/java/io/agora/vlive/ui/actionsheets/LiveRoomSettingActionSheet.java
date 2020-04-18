@@ -188,9 +188,9 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     }
 
     private void setMainPageText() {
-        mMainResolutionText.setText(Global.Constants.RESOLUTIONS[
+        mMainResolutionText.setText(Global.Constants.RESOLUTIONS_TEXT[
                 application().config().resolutionIndex()]);
-        mMainFrameRateText.setText(Global.Constants.FRAME_RATES[
+        mMainFrameRateText.setText(Global.Constants.FRAME_RATES_TEXT[
                 application().config().frameRateIndex()]);
         mBitrateSeekBar.setProgress(application().config().videoBitrate());
         mMainBitrateText.setText(String.format(mMainBitrateTextFormat,
@@ -235,14 +235,14 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ResolutionViewHolder resolutionHolder = (ResolutionViewHolder) holder;
-            resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS[position]);
+            resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS_TEXT[position]);
             holder.itemView.setActivated(position == application().config().resolutionIndex());
             resolutionHolder.setPosition(position);
         }
 
         @Override
         public int getItemCount() {
-            return Global.Constants.RESOLUTIONS.length;
+            return Global.Constants.RESOLUTIONS_TEXT.length;
         }
     }
 
@@ -279,7 +279,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             FrameRateViewHolder frameRateHolder = (FrameRateViewHolder) holder;
-            frameRateHolder.textView.setText(Global.Constants.FRAME_RATES[position]);
+            frameRateHolder.textView.setText(Global.Constants.FRAME_RATES_TEXT[position]);
             frameRateHolder.setPosition(position);
             holder.itemView.setActivated(
                     position == application().config().frameRateIndex());
@@ -287,7 +287,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
         @Override
         public int getItemCount() {
-            return Global.Constants.FRAME_RATES.length;
+            return Global.Constants.FRAME_RATES_TEXT.length;
         }
     }
 

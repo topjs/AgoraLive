@@ -66,11 +66,13 @@ public class ClientProxy {
                 mClient.requestOssPolicy(mReqId, ossRequest.token, ossRequest.type);
                 break;
             case Request.CREATE_USER:
-                mClient.createUser(mReqId);
+                UserRequest userRequest = (UserRequest) params;
+                mClient.createUser(mReqId, userRequest.userName);
                 break;
             case Request.EDIT_USER:
-                UserRequest userRequest = (UserRequest) params;
-                mClient.editUser(mReqId, userRequest.token, userRequest.userName, userRequest.avatar);
+                userRequest = (UserRequest) params;
+                mClient.editUser(mReqId, userRequest.token, userRequest.userId,
+                        userRequest.userName, userRequest.avatar);
                 break;
             case Request.USER_LOGIN:
                 String userId = (String) params;
@@ -78,7 +80,7 @@ public class ClientProxy {
                 break;
             case Request.ROOM_LIST:
                 RoomListRequest roomListRequest = (RoomListRequest) params;
-                mClient.requestRoomList(mReqId, roomListRequest.nextId,
+                mClient.requestRoomList(mReqId, roomListRequest.token, roomListRequest.nextId,
                         roomListRequest.count, roomListRequest.type, roomListRequest.pkState);
                 break;
             case Request.CREATE_ROOM:
@@ -101,7 +103,7 @@ public class ClientProxy {
                 break;
             case Request.SEND_GIFT:
                 SendGiftRequest sendGiftRequest = (SendGiftRequest) params;
-                mClient.sendGift(mReqId, sendGiftRequest.roomId,
+                mClient.sendGift(mReqId, sendGiftRequest.token, sendGiftRequest.roomId,
                         sendGiftRequest.giftId, sendGiftRequest.count);
                 break;
             case Request.GIFT_RANK:
@@ -129,7 +131,7 @@ public class ClientProxy {
                 break;
             case Request.PK_START_STOP:
                 PKRequest pkRequest = (PKRequest) params;
-                mClient.startStopPk(mReqId, pkRequest.myRoomId, pkRequest.targetRoomId);
+                mClient.startStopPk(mReqId, pkRequest.token, pkRequest.myRoomId, pkRequest.targetRoomId);
                 break;
         }
 

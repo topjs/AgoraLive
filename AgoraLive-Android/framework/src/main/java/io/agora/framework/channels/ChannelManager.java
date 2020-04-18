@@ -2,7 +2,7 @@ package io.agora.framework.channels;
 
 import android.content.Context;
 
-import io.agora.framework.comsumers.IVideoConsumer;
+import io.agora.framework.consumers.IVideoConsumer;
 import io.agora.framework.preprocess.IPreprocessor;
 import io.agora.framework.producers.IVideoProducer;
 

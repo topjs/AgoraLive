@@ -3,6 +3,7 @@ package io.agora.vlive.ui.main.fragments;
 import androidx.fragment.app.Fragment;
 
 import io.agora.vlive.AgoraLiveApplication;
+import io.agora.vlive.Config;
 import io.agora.vlive.proxy.ClientProxyListener;
 import io.agora.vlive.proxy.struts.response.AppVersionResponse;
 import io.agora.vlive.proxy.struts.response.AudienceListResponse;
@@ -32,6 +33,10 @@ public abstract class AbstractFragment extends Fragment implements ClientProxyLi
 
     MainActivity getContainer() {
         return (MainActivity) getActivity();
+    }
+
+    protected Config config() {
+        return application().config();
     }
 
     @Override

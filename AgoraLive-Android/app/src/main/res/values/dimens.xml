@@ -30,14 +30,19 @@
     <dimen name="room_tab_height">48dp</dimen>
     <dimen name="room_tab_item_selected_indicator_height">2dp</dimen>
     <dimen name="room_list_no_data_icon_size">164dp</dimen>
+    <dimen name="room_list_rect_corner">8dp</dimen>
 
     <!-- My profile Fragment -->
-    <dimen name="profile_background_height">226dp</dimen>
+    <dimen name="profile_background_height">252dp</dimen>
     <dimen name="profile_item_height">54dp</dimen>
     <dimen name="profile_item_divider_height">1dp</dimen>
     <dimen name="profile_portrait_background_size">102dp</dimen>
     <dimen name="profile_portrait_size">96dp</dimen>
-    <dimen name="profile_user_nickname_margin">4dp</dimen>
+    <dimen name="profile_user_nickname_margin">22dp</dimen>
+    <dimen name="modify_user_name_title_height">42dp</dimen>
+    <dimen name="modify_user_name_done_btn_width">62dp</dimen>
+    <dimen name="modify_user_name_done_btn_height">28dp</dimen>
+    <dimen name="modify_user_name_done_btn_corner">4dp</dimen>
 
     <!-- Live Prepare -->
     <dimen name="live_prepare_content_padding">24dp</dimen>
@@ -80,7 +85,7 @@
     <dimen name="live_host_in_seat_item_number_size">20dp</dimen>
     <dimen name="live_host_in_seat_item_margin">8dp</dimen>
     <dimen name="live_host_in_seat_item_operation_size">38dp</dimen>
-    <dimen name="live_host_in_seat_item_more_btn_size">22dp</dimen>
+    <dimen name="live_host_in_seat_item_more_btn_size">28dp</dimen>
 
     <dimen name="live_host_in_seat_item_dialog_width">64dp</dimen>
     <dimen name="live_host_in_seat_item_dialog_corner">8dp</dimen>
@@ -91,7 +96,23 @@
     <dimen name="live_host_in_seat_item_option_height">116dp</dimen>
     <dimen name="live_host_in_seat_item_padding">4dp</dimen>
 
+    <dimen name="live_pk_remaining_time_layout_height">28dp</dimen>
+    <dimen name="live_pk_remaining_time_text_margin">4dp</dimen>
+
     <dimen name="live_pk_start_button_size">76dp</dimen>
+    <dimen name="live_pk_layout_height">304dp</dimen>
+    <dimen name="live_pk_progress_layout_height">32dp</dimen>
+    <dimen name="live_pk_progress_layout_margin_top">16dp</dimen>
+    <dimen name="live_pk_progress_layout_corner">4dp</dimen>
+    <dimen name="live_pk_progress_layout_countdown_margin_end">8dp</dimen>
+    <dimen name="live_pk_progress_layout_padding">1dp</dimen>
+    <dimen name="live_pk_progress_text_margin">12dp</dimen>
+    <dimen name="live_pk_video_layout_margin_top">32dp</dimen>
+    <dimen name="live_pk_video_layout_height">224dp</dimen>
+    <dimen name="live_pk_video_layout_enter_other_room_btn_size">28dp</dimen>
+    <dimen name="live_pk_video_layout_other_host_name_margin_start">48dp</dimen>
+    <dimen name="live_pk_video_layout_other_host_name_margin_bottom">24dp</dimen>
+    <dimen name="live_pk_vs_icon_size">42dp</dimen>
 
     <dimen name="switch_width">42dp</dimen>
     <dimen name="switch_height">28dp</dimen>
@@ -141,7 +162,6 @@
     <dimen name="dialog_width">282dp</dimen>
     <dimen name="dialog_height">150dp</dimen>
     <dimen name="dialog_corner_size">12dp</dimen>
-    <dimen name="dialog_title_height">60dp</dimen>
-    <dimen name="dialog_message_height">40dp</dimen>
+    <dimen name="dialog_text_area_height">100dp</dimen>
     <dimen name="dialog_button_height">49dp</dimen>
 </resources>

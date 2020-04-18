@@ -3,6 +3,7 @@ package io.agora.framework;
 import android.opengl.EGLContext;
 import android.opengl.EGLSurface;
 import android.opengl.GLES20;
+import android.opengl.Matrix;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
@@ -11,7 +12,7 @@ import com.faceunity.gles.core.EglCore;
 
 import io.agora.framework.channels.ChannelManager;
 import io.agora.framework.channels.VideoChannel;
-import io.agora.framework.comsumers.IVideoConsumer;
+import io.agora.framework.consumers.IVideoConsumer;
 import io.agora.rtc.mediaio.IVideoFrameConsumer;
 import io.agora.rtc.mediaio.IVideoSource;
 import io.agora.rtc.mediaio.MediaIO;
@@ -33,6 +34,7 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
 
     private PushVideoFrameHandlerThread mPushThread;
     private Handler mPushHandler;
+    private float[] mIdentity = new float[16];
 
     public RtcVideoConsumer(VideoModule videoModule) {
         this(videoModule, ChannelManager.ChannelID.CAMERA);
@@ -41,12 +43,13 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
     private RtcVideoConsumer(VideoModule videoModule, int channelId) {
         mVideoModule = videoModule;
         mChannelId = channelId;
+        Matrix.setIdentityM(mIdentity, 0);
     }
 
-    private static class PushVideoFrameHandlerThread extends HandlerThread {
-        private EGLContext mEGLContext;
-        private EglCore mEglCore;
-        private EGLSurface mCurrentSurface;
+    static class PushVideoFrameHandlerThread extends HandlerThread {
+        EGLContext mEGLContext;
+        EglCore mEglCore;
+        EGLSurface mCurrentSurface;
 
         PushVideoFrameHandlerThread(String name) {
             super(name);
@@ -80,20 +83,15 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
     @Override
     public void onConsumeFrame(VideoCaptureFrame frame, VideoChannel.ChannelContext context) {
         if (mValidInRtc && mPushThread != null && mPushThread.isAlive()) {
-            Log.i(TAG, "consume is called");
             mPushHandler.post(() -> {
-                int format = frame.mFormat.getPixelFormat() == GLES20.GL_TEXTURE_2D
+                int format = frame.mFormat.getTexFormat() == GLES20.GL_TEXTURE_2D
                         ? AgoraVideoFrame.FORMAT_TEXTURE_2D
                         : AgoraVideoFrame.FORMAT_TEXTURE_OES;
-                long before = System.currentTimeMillis();
                 if (mRtcConsumer != null) {
-                    mRtcConsumer.consumeTextureFrame(frame.mTextureId,
-                            format, frame.mFormat.getWidth(),
-                            frame.mFormat.getHeight(), frame.mRotation,
-                            frame.mTimeStamp, frame.mTexMatrix);
+                    mRtcConsumer.consumeTextureFrame(frame.mTextureId, format,
+                            frame.mFormat.getWidth(), frame.mFormat.getHeight(),
+                            frame.mRotation, frame.mTimeStamp, mIdentity);
                 }
-                long after = System.currentTimeMillis();
-                Log.i(TAG, "onConsumeFrame:" + (after - before) + " ms");
             });
         }
     }
@@ -160,6 +158,8 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
     @Override
     public void onDispose() {
         Log.i(TAG , "onDispose");
+        mValidInRtc = false;
+        mRtcConsumer = null;
         disconnectChannel(mChannelId);
     }
 

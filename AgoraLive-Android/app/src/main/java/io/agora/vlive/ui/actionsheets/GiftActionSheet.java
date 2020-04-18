@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import io.agora.vlive.R;
+import io.agora.vlive.proxy.struts.model.GiftInfo;
+import io.agora.vlive.utils.GiftUtil;
 import io.agora.vlive.utils.Global;
 
 public class GiftActionSheet extends AbstractActionSheet implements View.OnClickListener {
     public interface GiftActionSheetListener {
-        void onActionSheetGiftSend(String name, int index, int value);
+        void onActionSheetGiftSend(String name, int id, int value);
     }
 
     private static final int SPAN_COUNT = 4;
@@ -60,7 +62,7 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_action_sheet_gift_send_btn) {
             if (mListener != null && mSelected != -1) mListener.onActionSheetGiftSend(
-                    mGiftNames[mSelected], mSelected, 0);
+                    application().config().getGiftList().get(mSelected).getGiftName(), mSelected, 0);
         }
     }
 
@@ -74,18 +76,18 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            GiftInfo info = application().config().getGiftList().get(position);
             GiftViewHolder giftViewHolder = (GiftViewHolder) holder;
-            giftViewHolder.name.setText(mGiftNames[position]);
-            giftViewHolder.value.setText(String.format(
-                    mValueFormat, 0));
+            giftViewHolder.name.setText(info.getGiftName());
+            giftViewHolder.value.setText(String.format(mValueFormat, info.getPoint()));
             giftViewHolder.setPosition(position);
             giftViewHolder.itemView.setActivated(mSelected == position);
-            giftViewHolder.icon.setImageResource(Global.Constants.GIFT_ICON_RES[position]);
+            giftViewHolder.icon.setImageResource(info.getRes());
         }
 
         @Override
         public int getItemCount() {
-            return Global.Constants.GIFT_ICON_RES.length;
+            return GiftUtil.GIFT_ICON_RES.length;
         }
     }
 

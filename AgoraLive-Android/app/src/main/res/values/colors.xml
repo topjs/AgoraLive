@@ -6,6 +6,7 @@
     <color name="gray_alpha">#65232323</color>
     <color name="gray">#878787</color>
     <color name="gray_darkest">#656565</color>
+    <color name="gray_normal">#f3f3f3</color>
     <color name="gray_light">#a3a3a3</color>
     <color name="gray_lighter">#cccccc</color>
     <color name="gray_lightest">#efefef</color>
@@ -16,5 +17,8 @@
     <color name="blue_original">#00AFF4</color>
     <color name="blue_alpha">#aa00AFF4</color>
     <color name="blue_light">#01F0F9FF</color>
+    <color name="blue_cancel">#BDE3FF</color>
     <color name="blue_background">#FAFAFA</color>
+
+    <color name="red">#FF007D</color>
 </resources>

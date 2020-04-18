@@ -28,8 +28,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginEnd="@dimen/live_participant_icon_margin_end"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_small"
-                android:text="345"/>
+                android:textSize="@dimen/text_size_small"/>
         </LinearLayout>
     </RelativeLayout>
     <RelativeLayout

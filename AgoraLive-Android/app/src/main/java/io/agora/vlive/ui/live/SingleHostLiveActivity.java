@@ -1,18 +1,21 @@
 package io.agora.vlive.ui.live;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import io.agora.framework.VideoModule;
+import io.agora.rtc.Constants;
 import io.agora.vlive.R;
+import io.agora.vlive.proxy.struts.model.SeatInfo;
 import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.proxy.struts.response.Response;
 import io.agora.vlive.ui.components.CameraTextureView;
+import io.agora.vlive.ui.components.LiveBottomButtonLayout;
 import io.agora.vlive.ui.components.LiveHostNameLayout;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
-import io.agora.vlive.ui.components.LiveRoomMessageList;
+import io.agora.vlive.utils.UserUtil;
 
 public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnClickListener {
     private static final String TAG = SingleHostLiveActivity.class.getSimpleName();
@@ -29,6 +32,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
     @Override
     protected void onPermissionGranted() {
         initUI();
+        super.onPermissionGranted();
     }
 
     private void initUI() {
@@ -41,7 +45,12 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
 
         bottomButtons = findViewById(R.id.single_live_bottom_layout);
         bottomButtons.setLiveBottomButtonListener(this);
-        bottomButtons.setHost(isOwner);
+        bottomButtons.setRole(isOwner ? LiveBottomButtonLayout.ROLE_OWNER :
+                isHost ? LiveBottomButtonLayout.ROLE_HOST :
+                        LiveBottomButtonLayout.ROLE_AUDIENCE);
+        if (isOwner || isHost) {
+            bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
+        }
 
         mVideoLayout = findViewById(R.id.single_live_video_layout);
 
@@ -79,8 +88,8 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_bottom_btn_close:
-                curDialog = showDialog(R.string.finish_broadcast_title,
-                        R.string.finish_broadcast_message, this);
+                curDialog = showDialog(R.string.finish_broadcast_title_owner,
+                        R.string.finish_broadcast_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
                 showActionSheetDialog(ACTION_SHEET_TOOL, isHost, true, this);
@@ -110,16 +119,56 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
     public void onEnterRoomResponse(EnterRoomResponse response) {
         super.onEnterRoomResponse(response);
         if (response.code == Response.SUCCESS) {
+            ownerId = response.data.room.owner.userId;
+            ownerRtcUid = response.data.room.owner.uid;
+
+            // Determine if I am the owner of a host here because
+            // I may leave the room unexpectedly and come once more.
+            String myId = config().getUserProfile().getUserId();
+            if (!isOwner && myId.equals(response.data.room.owner.userId)) {
+                isOwner = true;
+                myRtcRole = Constants.CLIENT_ROLE_BROADCASTER;
+                rtcEngine().setClientRole(myRtcRole);
+            }
+
             runOnUiThread(() -> {
+                if (isOwner) {
+                    becomesOwner(response.data.room.owner.enableAudio !=
+                                    SeatInfo.User.USER_AUDIO_ENABLE,
+                            response.data.room.owner.enableVideo !=
+                                    SeatInfo.User.USER_VIDEO_ENABLE);
+                } else {
+                    becomeAudience();
+                }
+
                 mNamePad.setName(response.data.room.owner.userName);
+                mNamePad.setIcon(UserUtil.getUserRoundIcon(getResources(),
+                        response.data.room.owner.userId));
             });
         }
     }
 
+    private void becomesOwner(boolean audioMuted, boolean videoMuted) {
+        if (!videoMuted) startCameraCapture();
+        bottomButtons.setRole(LiveBottomButtonLayout.ROLE_OWNER);
+        bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
+        config().setAudioMuted(audioMuted);
+        config().setVideoMuted(videoMuted);
+    }
+
+    private void becomeAudience() {
+        isHost = false;
+        stopCameraCapture();
+        bottomButtons.setRole(LiveBottomButtonLayout.ROLE_AUDIENCE);
+        rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
+        config().setAudioMuted(true);
+        config().setVideoMuted(true);
+    }
+
     @Override
     public void onBackPressed() {
-        curDialog = showDialog(R.string.finish_broadcast_title,
-                R.string.finish_broadcast_message, this);
+        curDialog = showDialog(R.string.finish_broadcast_title_owner,
+                R.string.finish_broadcast_message_owner, this);
     }
 
     @Override

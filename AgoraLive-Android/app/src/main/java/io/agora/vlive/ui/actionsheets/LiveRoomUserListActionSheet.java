@@ -1,7 +1,10 @@
 package io.agora.vlive.ui.actionsheets;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,19 +26,19 @@ import io.agora.vlive.proxy.ClientProxyListener;
 import io.agora.vlive.proxy.struts.model.UserProfile;
 import io.agora.vlive.proxy.struts.request.AudienceListRequest;
 import io.agora.vlive.proxy.struts.request.Request;
+import io.agora.vlive.utils.UserUtil;
 
 public class LiveRoomUserListActionSheet extends AbstractActionSheet {
     private static final String TAG = LiveRoomUserListActionSheet.class.getSimpleName();
 
     public interface OnUserSelectedListener extends AbsActionSheetListener {
-        void onActionSheetUserSelected();
+        void onActionSheetUserListItemSelected(String userId, String userName);
     }
 
     private OnUserSelectedListener mOnUserSelectedListener;
     private RoomUserAdapter mAdapter;
 
     private ClientProxy mProxy;
-    private ClientProxyListener mProxyListener;
     private String mRoomId;
     private String mToken;
 
@@ -43,9 +48,8 @@ public class LiveRoomUserListActionSheet extends AbstractActionSheet {
     }
 
     private void init() {
-        LayoutInflater.from(getContext()).inflate(
-                R.layout.action_room_host_in_invite_user_list, this, true);
-        RecyclerView recyclerView = findViewById(R.id.live_room_action_sheet_host_in_invite_user_list_recycler);
+        LayoutInflater.from(getContext()).inflate(R.layout.action_room_all_user_list, this, true);
+        RecyclerView recyclerView = findViewById(R.id.live_room_action_sheet_all_user_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(
                 getContext(), LinearLayoutManager.VERTICAL, false));
         mAdapter = new RoomUserAdapter();
@@ -65,10 +69,9 @@ public class LiveRoomUserListActionSheet extends AbstractActionSheet {
         });
     }
 
-    public void setRoomInfo(ClientProxy proxy, ClientProxyListener listener,
-                            String roomId, String token) {
+    public void setup(ClientProxy proxy, ClientProxyListener listener,
+                      String roomId, String token) {
         mProxy = proxy;
-        mProxyListener = listener;
         mRoomId = roomId;
         mToken = token;
     }
@@ -76,7 +79,7 @@ public class LiveRoomUserListActionSheet extends AbstractActionSheet {
     public void requestMoreAudience() {
         AudienceListRequest request = new AudienceListRequest(
                 mToken, mRoomId, mAdapter.getLastUserId(),
-                AudienceListRequest.TYPE_AUDIENCE);
+                AudienceListRequest.TYPE_ALL);
         mProxy.sendRequest(Request.AUDIENCE_LIST, request);
     }
 
@@ -108,10 +111,18 @@ public class LiveRoomUserListActionSheet extends AbstractActionSheet {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+            UserProfile profile = mUserList.get(position);
             RoomUserViewHolder viewHolder = (RoomUserViewHolder) holder;
+            viewHolder.name.setText(getUserText(profile));
+            viewHolder.icon.setImageDrawable(UserUtil.getUserRoundIcon(getResources(), profile.getUserId()));
             viewHolder.itemView.setOnClickListener(view -> {
-                if (mOnUserSelectedListener != null) mOnUserSelectedListener.onActionSheetUserSelected();
+                if (mOnUserSelectedListener != null) mOnUserSelectedListener
+                        .onActionSheetUserListItemSelected(profile.getUserId(), profile.getUserName());
             });
+        }
+
+        private String getUserText(UserProfile profile) {
+            return !TextUtils.isEmpty(profile.getUserName()) ? profile.getUserName() : profile.getUserId();
         }
 
         @Override

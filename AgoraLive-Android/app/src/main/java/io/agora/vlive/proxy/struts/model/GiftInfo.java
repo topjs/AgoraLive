@@ -1,13 +1,21 @@
 package io.agora.vlive.proxy.struts.model;
 
 public class GiftInfo {
-    String giftId;
+    int giftId;
     String giftName;
     String thumbnail;
     String animation;
-    int points;
+    int res;
+    int point;
 
-    public String getGiftId() {
+    public GiftInfo(int id, String name, int res, int point) {
+        this.giftId = id;
+        this.giftName = name;
+        this.res = res;
+        this.point = point;
+    }
+
+    public int getGiftId() {
         return giftId;
     }
 
@@ -23,7 +31,11 @@ public class GiftInfo {
         return animation;
     }
 
-    public int getPoints() {
-        return points;
+    public int getPoint() {
+        return point;
+    }
+
+    public int getRes() {
+        return res;
     }
 }

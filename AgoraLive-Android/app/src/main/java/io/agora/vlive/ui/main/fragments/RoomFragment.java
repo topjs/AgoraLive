@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
 
     private int mCurrentTap;
     private int mTitleTextSize;
+    private TabLayout mTabLayout;
     private String[] mTabTitles = new String[TAB_COUNT];
 
     @SuppressWarnings("unchecked")
@@ -55,15 +57,15 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
         getTabTitles();
-        TabLayout tabLayout = view.findViewById(R.id.room_tab_layout);
+        mTabLayout = view.findViewById(R.id.room_tab_layout);
 
         ViewPager2 viewPager = view.findViewById(R.id.room_list_pager);
         viewPager.setAdapter(new RoomAdapter(this));
 
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
+        new TabLayoutMediator(mTabLayout, viewPager, (tab, position) ->
             tab.setText(mTabTitles[position])).attach();
 
-        TabLayout.Tab tab = tabLayout.getTabAt(mCurrentTap);
+        TabLayout.Tab tab = mTabLayout.getTabAt(mCurrentTap);
         if (tab != null) {
             // When we navigate to this fragment from home fragment,
             // it's better not to switch to this fragment smoothly.
@@ -75,7 +77,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
         // Note tab selected listener should be set after
         // tab layout and view pager are attached together.
         // Before that, it cannot know how many tabs are there.
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mCurrentTap = tab.getPosition();
@@ -127,6 +129,18 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
         if (view == null) return;
         Typeface typeface = bold ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT;
         view.setTypeface(typeface);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (mTabLayout != null) {
+            RelativeLayout.LayoutParams params =
+                    (RelativeLayout.LayoutParams) mTabLayout.getLayoutParams();
+            int systemBarHeight = getContainer().getSystemBarHeight();
+            params.topMargin += systemBarHeight;
+            mTabLayout.setLayoutParams(params);
+        }
     }
 
     @Override

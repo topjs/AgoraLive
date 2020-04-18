@@ -5,7 +5,7 @@ import android.util.Log;
 
 import io.agora.framework.channels.ChannelManager;
 import io.agora.framework.channels.VideoChannel;
-import io.agora.framework.comsumers.IVideoConsumer;
+import io.agora.framework.consumers.IVideoConsumer;
 import io.agora.framework.preprocess.IPreprocessor;
 import io.agora.framework.producers.IVideoProducer;
 

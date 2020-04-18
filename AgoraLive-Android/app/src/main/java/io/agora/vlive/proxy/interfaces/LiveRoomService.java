@@ -1,6 +1,10 @@
 package io.agora.vlive.proxy.interfaces;
 
 import io.agora.vlive.proxy.struts.model.CreateRoomRequestBody;
+import io.agora.vlive.proxy.struts.model.ModifySeatStateRequestBody;
+import io.agora.vlive.proxy.struts.model.ModifyUserStateRequestBody;
+import io.agora.vlive.proxy.struts.model.PkRoomBody;
+import io.agora.vlive.proxy.struts.model.SendGiftBody;
 import io.agora.vlive.proxy.struts.response.AudienceListResponse;
 import io.agora.vlive.proxy.struts.response.CreateRoomResponse;
 import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
@@ -32,7 +36,7 @@ public interface LiveRoomService {
     Call<LeaveRoomResponse> requestLeaveLiveRoom(@Header("token") String token, @Header("reqId") long reqId,
                                                  @Header("reqType") int reqType, @Path("roomId") String roomId);
 
-    @GET("ent/v1/room/{roomId}/users")
+    @GET("ent/v1/room/{roomId}/user/page")
     Call<AudienceListResponse> requestAudienceList(@Header("token") String token, @Header("reqId") long reqId,
                                                    @Header("reqType") int reqType, @Path("roomId") String roomId,
                                                    @Query("nextId") String nextId, @Query("count") int count,
@@ -44,23 +48,23 @@ public interface LiveRoomService {
 
     @POST("ent/v1/room/{roomId}/user/{userId}")
     Call<ModifyUserStateResponse> requestModifyUserState(@Header("token") String token, @Path("roomId") String roomId,
-                                                         @Path("userId") String userId, @Body int enableAudio,
-                                                         @Body int enableVideo, @Body int enableChat);
+                                                         @Path("userId") String userId, @Body ModifyUserStateRequestBody body);
 
     @POST("ent/v1/room/{roomId}/seat")
     Call<ModifySeatStateResponse> requestModifySeatState(@Header("token") String token, @Header("reqId") long reqId,
                                                          @Header("reqType") int reqType, @Path("roomId") String roomId,
-                                                         @Body int no, @Body String userId, @Body int state);
+                                                         @Body ModifySeatStateRequestBody body);
 
-    @POST("v1/room/{roomId}/gift")
-    Call<SendGiftResponse> requestSendGift(@Header("reqId") long reqId, @Header("reqType") int reqType,
-                                           @Path("roomId") String roomId, @Body String giftId, @Body int count);
+    @POST("ent/v1/room/{roomId}/gift")
+    Call<SendGiftResponse> requestSendGift(@Header("token") String token, @Header("reqId") long reqId,
+                                           @Header("reqType") int reqType, @Path("roomId") String roomId,
+                                           @Body SendGiftBody body);
 
-    @GET("v1/room/{roomId}/ranks")
+    @GET("ent/v1/room/{roomId}/ranks")
     Call<GiftRankResponse> requestGiftRank(@Header("reqId") long reqId, @Header("reqType") int reqType,
                                            @Path("roomId") String roomId);
 
-    @POST("v1/room/{roomId}/pk")
-    Call<StartStopPkResponse> requestStartStopPk(@Header("reqId") long reqId, @Header("reqType") int reqType,
-                                                 @Path("roomId") String myRoomId, @Body String roomId);
+    @POST("ent/v1/room/{roomId}/pk")
+    Call<StartStopPkResponse> requestStartStopPk(@Header("token") String token, @Header("reqId") long reqId, @Header("reqType") int reqType,
+                                                 @Path("roomId") String myRoomId, @Body PkRoomBody body);
 }

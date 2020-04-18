@@ -12,7 +12,7 @@ public class AppVersionInfo {
     String upgradeUrl;
     int reviewing;
     int remindTimes;
-    AppId config;
+    public AppId config;
 
 
     public static class AppId {

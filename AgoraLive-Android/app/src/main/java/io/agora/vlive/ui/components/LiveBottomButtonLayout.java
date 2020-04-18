@@ -13,6 +13,10 @@ import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.R;
 
 public class LiveBottomButtonLayout extends RelativeLayout implements View.OnClickListener {
+    public static final int ROLE_AUDIENCE = 1;
+    public static final int ROLE_HOST = 2;
+    public static final int ROLE_OWNER = 3;
+
     public interface LiveBottomButtonListener {
         void onLiveBottomLayoutShowMessageEditor();
     }
@@ -26,7 +30,7 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
     private AppCompatImageView mFun1;
     private AppCompatImageView mFun2;
     private AppCompatTextView mInputText;
-    private boolean mIsHost;
+    private int mRole;
 
     private LiveBottomButtonListener mListener;
 
@@ -61,17 +65,20 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
         mInputText.setOnClickListener(this);
     }
 
-    public void setHost(boolean isHost) {
-        mIsHost = isHost;
+    public void setRole(int role) {
+        mRole = role;
 
-        if (isHost) {
+        if (mRole == ROLE_OWNER) {
             mFun1.setImageResource(R.drawable.live_bottom_button_music);
+            mFun2.setVisibility(View.VISIBLE);
             mFun2.setImageResource(R.drawable.live_bottom_button_beauty);
-        } else {
+        } else if (mRole == ROLE_HOST) {
+            mFun2.setVisibility(View.VISIBLE);
+            mFun2.setImageResource(R.drawable.live_bottom_button_beauty);
             mFun1.setImageResource(R.drawable.live_bottom_btn_present);
-            // Android client does not have super resolution,
-            // so hide this button for this moment.
+        } else if (mRole == ROLE_AUDIENCE) {
             mFun2.setVisibility(View.GONE);
+            mFun1.setImageResource(R.drawable.live_bottom_btn_present);
         }
     }
 
@@ -80,11 +87,11 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
     }
 
     public void setMusicPlaying(boolean playing) {
-        if (mIsHost) mFun1.setActivated(playing);
+        if (mRole == ROLE_OWNER) mFun1.setActivated(playing);
     }
 
     public void setBeautyEnabled(boolean enabled) {
-        if (mIsHost) mFun2.setActivated(enabled);
+        if (mRole == ROLE_OWNER || mRole == ROLE_HOST) mFun2.setActivated(enabled);
     }
 
     @Override

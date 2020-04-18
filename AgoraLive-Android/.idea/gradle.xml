@@ -14,7 +14,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/faceunity" />
             <option value="$PROJECT_DIR$/framework" />
-            <option value="$PROJECT_DIR$/video_capturer_and_renderer" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

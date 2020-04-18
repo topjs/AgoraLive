@@ -98,7 +98,7 @@ public class LiveHostNameLayout extends RelativeLayout {
     }
 
     public void setIcon(Drawable drawable) {
-
+        mIconImageView.setImageDrawable(drawable);
     }
 
     /**

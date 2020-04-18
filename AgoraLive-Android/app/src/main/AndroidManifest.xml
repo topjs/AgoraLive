@@ -43,5 +43,7 @@
             android:screenOrientation="portrait"
             android:keepScreenOn="true"/>
 
+        <activity android:name=".ui.profile.ModifyUserNameActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

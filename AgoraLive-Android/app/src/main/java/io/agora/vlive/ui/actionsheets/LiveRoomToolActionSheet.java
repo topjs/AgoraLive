@@ -16,34 +16,36 @@ import io.agora.vlive.R;
 
 public class LiveRoomToolActionSheet extends AbstractActionSheet {
     public interface LiveRoomToolActionSheetListener extends AbsActionSheetListener {
-        void onActionSheetVoiceClicked();
         void onActionSheetRealDataClicked();
         void onActionSheetShareClicked();
         void onActionSheetSettingClicked();
         void onActionSheetRotateClicked();
         void onActionSheetVideoClicked(boolean muted);
         void onActionSheetSpeakerClicked(boolean muted);
+        void onActionSheetEarMonitoringClicked(boolean monitor);
     }
 
     private static final int GRID_SPAN = 4;
-    private static final int FUNC_COUNT_GUEST = 3;
+    private static final int FUNC_COUNT_GUEST = 2;
 
-    private static final int VOICE_INDEX = 0;
-    private static final int DATA_INDEX = 1;
-    private static final int SHARE_INDEX = 2;
-    private static final int SETTING_INDEX = 3;
+    private static final int DATA_INDEX = 0;
+    private static final int SHARE_INDEX = 1;
+    private static final int SETTING_INDEX = 2;
+    private static final int EMPTY_INDEX = 3;
     private static final int ROTATE_INDEX = 4;
     private static final int VIDEO_INDEX = 5;
     private static final int SPEAKER_INDEX = 6;
+    private static final int EAR_MONITOR = 7;
 
-    private static final int ICON_RES[] = {
-            R.drawable.icon_voice,
+    private static final int[] ICON_RES = {
             R.drawable.icon_data,
             R.drawable.icon_share,
             R.drawable.icon_setting,
+            -1,
             R.drawable.icon_rotate,
             R.drawable.action_sheet_tool_video,
-            R.drawable.action_sheet_tool_speaker
+            R.drawable.action_sheet_tool_speaker,
+            R.drawable.action_sheet_tool_ear_monitor
     };
 
     private RecyclerView mRecycler;
@@ -52,6 +54,7 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
     private int mItemPadding;
     private boolean mMuteVideo;
     private boolean mMuteVoice;
+    private boolean mEarMonitoring;
     private LiveRoomToolActionSheetListener mListener;
 
     public LiveRoomToolActionSheet(Context context) {
@@ -68,6 +71,8 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
         mRecycler.setLayoutManager(new GridLayoutManager(getContext(), GRID_SPAN));
         mRecycler.setAdapter(new ToolAdapter());
         mRecycler.addItemDecoration(new PaddingDecoration());
+        mMuteVoice = application().config().isAudioMuted();
+        mMuteVideo = application().config().isVideoMuted();
     }
 
     public void setHost(boolean isHost) {
@@ -89,13 +94,20 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ToolViewHolder toolViewHolder = (ToolViewHolder) holder;
             toolViewHolder.setPosition(position);
-            toolViewHolder.name.setText(mToolNames[position]);
-            toolViewHolder.icon.setImageResource(ICON_RES[position]);
+            if (position == EMPTY_INDEX) {
+                toolViewHolder.name.setText("");
+                toolViewHolder.icon.setImageDrawable(null);
+            } else {
+                toolViewHolder.name.setText(mToolNames[position]);
+                toolViewHolder.icon.setImageResource(ICON_RES[position]);
+            }
 
             if (position == VIDEO_INDEX) {
                 holder.itemView.setActivated(!mMuteVideo);
             } else if (position == SPEAKER_INDEX) {
                 holder.itemView.setActivated(!mMuteVoice);
+            } else if (position == EAR_MONITOR) {
+                holder.itemView.setActivated(mEarMonitoring);
             }
         }
 
@@ -113,19 +125,19 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
             super(itemView);
             name = itemView.findViewById(R.id.live_room_action_sheet_tool_item_name);
             icon = itemView.findViewById(R.id.live_room_action_sheet_tool_item_icon);
-            icon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (position == VIDEO_INDEX) {
-                        mMuteVideo = !mMuteVideo;
-                        itemView.setActivated(!mMuteVideo);
-                    } else if (position == SPEAKER_INDEX) {
-                        mMuteVoice = !mMuteVoice;
-                        itemView.setActivated(!mMuteVoice);
-                    }
-                    mRecycler.getAdapter().notifyDataSetChanged();
-                    handleItemClicked(position);
+            icon.setOnClickListener(view ->  {
+                if (position == VIDEO_INDEX) {
+                    mMuteVideo = !mMuteVideo;
+                    itemView.setActivated(!mMuteVideo);
+                } else if (position == SPEAKER_INDEX) {
+                    mMuteVoice = !mMuteVoice;
+                    itemView.setActivated(!mMuteVoice);
+                } else if (position == EAR_MONITOR) {
+                    mEarMonitoring = !mEarMonitoring;
+                    itemView.setActivated(mEarMonitoring);
                 }
+                mRecycler.getAdapter().notifyDataSetChanged();
+                handleItemClicked(position);
             });
         }
 
@@ -138,9 +150,6 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
         if (mListener == null) return;
 
         switch (position) {
-            case VOICE_INDEX:
-                mListener.onActionSheetVoiceClicked();
-                break;
             case DATA_INDEX:
                 mListener.onActionSheetRealDataClicked();
                 break;
@@ -158,6 +167,9 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
                 break;
             case SPEAKER_INDEX:
                 mListener.onActionSheetSpeakerClicked(mMuteVoice);
+                break;
+            case EAR_MONITOR:
+                mListener.onActionSheetEarMonitoringClicked(mEarMonitoring);
                 break;
         }
     }

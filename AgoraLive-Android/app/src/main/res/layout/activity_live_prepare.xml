@@ -66,6 +66,7 @@
             android:paddingEnd="@dimen/prepare_padding"
             android:textAlignment="gravity"
             android:gravity="center_vertical"
+            android:textSize="@dimen/text_size_medium"
             android:textColor="@android:color/white"
             android:background="@null"
             android:lines="1"/>

@@ -25,6 +25,8 @@
     <string name="profile_item_title_avatar">设置头像</string>
     <string name="profile_item_title_nickname">设置昵称</string>
 
+    <string name="modify_user_title">输入名字</string>
+
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">直播间名字:</string>
     <string name="start_broadcast_text">开始直播</string>
@@ -40,6 +42,9 @@
     <string name="live_host_in_seat_state_open_host">邀请连麦</string>
     <string name="live_host_in_seat_state_closed">封麦</string>
 
+    <string name="live_system_notification_member_joined">进入房间</string>
+    <string name="live_system_notification_member_left">离开房间</string>
+
     <string-array name="live_host_in_seat_operations">
         <item>禁麦</item>
         <item>解禁</item>
@@ -47,6 +52,8 @@
         <item>解封</item>
         <item>封麦</item>
     </string-array>
+
+    <string name="live_pk_host_remaining_time_hint">PK剩余:</string>
 
     <!-- Messages -->
     <string name="live_message_gift_send">向主播赠送了一个</string>
@@ -72,6 +79,8 @@
     <string name="live_room_gift_action_sheet_send">赠送</string>
     <string name="live_room_gift_action_sheet_value_format">(%d金币)</string>
 
+    <string name="live_room_pk_room_list_title_format">房间列表(%d)</string>
+
     <string-array name="gift_names">
         <item>铃铛</item>
         <item>冰激凌</item>
@@ -83,16 +92,19 @@
         <item>火箭</item>
     </string-array>
 
+    <string name="live_room_gift_channel_message">赠送给 %s 一个</string>
+
     <string name="live_room_tool_action_sheet_title">工具</string>
 
     <string-array name="live_room_action_sheet_tool_names">
-        <item>声音</item>
         <item>实时数据</item>
         <item>分享</item>
         <item>设置</item>
+        <item>空</item>
         <item>翻转</item>
         <item>摄像头</item>
         <item>麦克风</item>
+        <item>耳返</item>
     </string-array>
 
     <string name="live_room_voice_action_sheet_title">声音</string>
@@ -117,6 +129,84 @@
     <string name="dialog_positive_button_accept">接受</string>
     <string name="dialog_negative_button_refuse">拒绝</string>
     
-    <string name="finish_broadcast_title">结束直播</string>
-    <string name="finish_broadcast_message">是否结束直播?</string>
+    <string name="finish_broadcast_title_owner">结束直播</string>
+    <string name="finish_broadcast_message_owner">是否结束直播?</string>
+
+    <string name="finish_broadcast_title_audience">离开房间</string>
+    <string name="finish_broadcast_message_audience">是否想要离开房间?</string>
+
+    <string name="dialog_multi_host_open_seat_title">解封</string>
+    <string name="dialog_multi_host_open_seat_message">解封此麦位?</string>
+
+    <string name="dialog_multi_host_close_seat_title">封麦</string>
+    <string name="dialog_multi_host_close_seat_message">将关闭该麦位，如果该位置上有用户，/n 将下麦该用户</string>
+
+    <string name="dialog_multi_host_mute_title">禁麦</string>
+    <string name="dialog_multi_host_mute_message">禁止"%s"发言？</string>
+
+    <string name="dialog_multi_host_unmute_title">解禁</string>
+    <string name="dialog_multi_host_unmute_message">解除 "%s" 禁言？</string>
+
+    <string name="dialog_multi_host_leave_title">下麦</string>
+    <string name="dialog_multi_host_leave_message_owner">确认 "%s" 下麦？</string>
+    <string name="dialog_multi_host_leave_message_host">确定下麦？</string>
+
+    <string name="live_room_pk_room_list_button_text">邀请PK</string>
+    <string name="live_room_pk_room_receive_pk_request_title">PK邀请</string>
+    <string name="live_room_pk_room_receive_pk_request_message">%s 邀请你去他的PK房间,\n 是否同意?</string>
+
+    <!-- Toasts -->
+    <string name="apply_seat_success">上麦成功</string>
+    <string name="invite_success">邀请成功</string>
+
+    <string name="live_room_pk_room_pk_invitation_accepted">对方已同意你的PK邀请</string>
+    <string name="live_room_pk_room_pk_invitation_rejected">对方拒绝了你的PK邀请</string>
+
+    <string name="modify_user_name_too_long">用户名不能超过15个字符</string>
+    <string name="modify_user_name_empty">用户名不能为空</string>
+    <string name="modify_user_name_error">修改用户名失败</string>
+
+    <string-array name="random_channel_names">
+        <item>陌上花开等你来</item>
+        <item>天天爱你</item>
+        <item>我爱你们</item>
+        <item>有人可以</item>
+        <item>风情万种</item>
+        <item>强势归来</item>
+        <item>哈哈哈</item>
+        <item>聊聊</item>
+        <item>美人舞江山</item>
+        <item>最美的回忆</item>
+        <item>遇见你</item>
+        <item>最长情的告白</item>
+        <item>全力以赴</item>
+        <item>简单点</item>
+        <item>早上好</item>
+        <item>春风十里不如你</item>
+    </string-array>
+
+    <string-array name="random_surnames">
+        <item>赵</item>
+        <item>钱</item>
+        <item>孙</item>
+        <item>李</item>
+        <item>周</item>
+        <item>吴</item>
+        <item>郑</item>
+        <item>王</item>
+    </string-array>
+
+    <string-array name="random_names">
+        <item>富贵</item>
+        <item>国强</item>
+        <item>建国</item>
+        <item>林</item>
+        <item>麒麟</item>
+        <item>宝强</item>
+        <item>强</item>
+        <item>相如</item>
+        <item>欢喜</item>
+    </string-array>
+
+    <string name="button_text_done">完成</string>
 </resources>

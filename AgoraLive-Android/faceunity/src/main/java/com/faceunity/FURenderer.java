@@ -439,7 +439,7 @@ public class FURenderer implements OnFUControlListener {
         // 获取 Nama SDK 版本信息
         Log.e(TAG, "fu sdk version " + faceunity.fuGetVersion());
         fuSetup(context, BUNDLE_AI_MODEL_FACE_PROCESSOR, authpack.A());
-        loadTongueModel(context, BUNDLE_TONGUE);
+        // loadTongueModel(context, BUNDLE_TONGUE);
         sIsInited = true;
     }
 

@@ -1,23 +1,22 @@
 package io.agora.vlive.agora.rtm.model;
 
-public class NotificationMessage {
-    int cmd;
+import java.util.List;
+
+public class NotificationMessage extends AbsRtmMessage {
     public Notification data;
 
-    public NotificationMessage(int cmd, String uid, int index, int operate) {
-        this.cmd = cmd;
-        data = new Notification(uid, index, operate);
+    public static class Notification {
+        public int total;
+        public List<NotificationItem> list;
     }
 
-    class Notification {
-        String uid;
-        int index;
-        int operate;
+    public static class NotificationItem {
+        public static final int NOTIFICATION_LEAVE_ROOM = 0;
+        public static final int NOTIFICATION_ENTER_ROOM = 1;
 
-        Notification(String uid, int index, int operate) {
-            this.uid = uid;
-            this.index = index;
-            this.operate = operate;
-        }
+        public String userId;
+        public String userName;
+        public int role;
+        public int state;
     }
 }

@@ -22,12 +22,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Stack;
 
-import io.agora.framework.camera.VideoCapture;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtm.RtmClient;
 import io.agora.vlive.AgoraLiveApplication;
 import io.agora.vlive.Config;
-import io.agora.vlive.agora.RtcEventHandler;
+import io.agora.vlive.agora.rtc.RtcEventHandler;
 import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.proxy.ClientProxyListener;
 import io.agora.vlive.proxy.struts.response.AppVersionResponse;
@@ -54,6 +53,7 @@ import io.agora.vlive.ui.actionsheets.GiftActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomUserListActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.ui.actionsheets.InviteUserActionSheet;
+import io.agora.vlive.ui.actionsheets.PkRoomListActionSheet;
 import io.agora.vlive.ui.actionsheets.VoiceActionSheet;
 import io.agora.vlive.R;
 import io.agora.vlive.ui.actionsheets.BackgroundMusicActionSheet;
@@ -75,6 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
     protected static final int ACTION_SHEET_VOICE = 5;
     protected static final int ACTION_SHEET_INVITE_AUDIENCE = 6;
     protected static final int ACTION_SHEET_ROOM_USER = 7;
+    protected static final int ACTION_SHEET_PK_ROOM_LIST = 8;
 
     private static final int ACTION_SHEET_DIALOG_STYLE_RES = R.style.live_room_dialog;
     private static final int TOAST_SHORT_INTERVAL = 2000;
@@ -218,6 +219,9 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
             case ACTION_SHEET_ROOM_USER:
                 actionSheet = new LiveRoomUserListActionSheet(this);
                 break;
+            case ACTION_SHEET_PK_ROOM_LIST:
+                actionSheet = new PkRoomListActionSheet(this);
+                break;
             default:
                 actionSheet = new LiveRoomSettingActionSheet(this);
                 ((LiveRoomSettingActionSheet) actionSheet).setFallback(!newStack);
@@ -255,6 +259,16 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         return dialog;
     }
 
+    protected Dialog showDialog(int title, int message,
+                                int positiveText, int negativeText,
+                                final View.OnClickListener positiveClickListener,
+                                final View.OnClickListener negativeClickListener) {
+        String titleStr = getResources().getString(title);
+        String messageStr = getResources().getString(message);
+        return showDialog(titleStr, messageStr, positiveText, negativeText,
+                positiveClickListener, negativeClickListener);
+    }
+
     protected Dialog showDialog(String title, String message,
                                 int positiveText, int negativeText,
                                 final View.OnClickListener positiveClickListener,
@@ -270,11 +284,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         msgTextView.setText(message);
 
         AppCompatTextView negativeButton = dialog.findViewById(R.id.dialog_negative_button);
-        negativeButton.setText(positiveText);
+        negativeButton.setText(negativeText);
         negativeButton.setOnClickListener(negativeClickListener);
 
         AppCompatTextView positiveButton = dialog.findViewById(R.id.dialog_positive_button);
-        positiveButton.setText(negativeText);
+        positiveButton.setText(positiveText);
         positiveButton.setOnClickListener(positiveClickListener);
 
         hideStatusBar(dialog.getWindow(), false);
