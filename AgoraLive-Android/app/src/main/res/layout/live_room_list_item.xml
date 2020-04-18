@@ -7,10 +7,12 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/room_list_item_corner"
     app:cardBackgroundColor="@color/gray_light">
+
     <io.agora.vlive.ui.components.SquareRelativeLayout
         android:id="@+id/live_room_list_item_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,26 +20,29 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/room_list_item_padding"
             android:layout_marginEnd="@dimen/room_list_item_padding"
-            android:paddingStart="@dimen/room_list_item_text_padding_big"
-            android:paddingEnd="@dimen/room_list_item_text_padding_big"
-            android:paddingTop="@dimen/room_list_item_text_padding_small"
-            android:paddingBottom="@dimen/room_list_item_text_padding_small"
             android:background="@drawable/round_scalable_gray_bg"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/room_list_item_text_padding_big"
+            android:paddingTop="@dimen/room_list_item_text_padding_small"
+            android:paddingEnd="@dimen/room_list_item_text_padding_big"
+            android:paddingBottom="@dimen/room_list_item_text_padding_small">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/live_participant_count_height"
                 android:layout_height="@dimen/live_participant_count_height"
                 android:layout_marginEnd="@dimen/room_list_item_text_padding_small"
-                android:src="@drawable/participants"/>
+                android:src="@drawable/icon_participants" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/live_room_list_item_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="gravity"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
+                android:textAlignment="gravity"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_small"/>
+                android:textSize="@dimen/text_size_small" />
         </LinearLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/live_room_list_item_room_name"
             android:layout_width="@dimen/room_list_item_name_width"
@@ -45,11 +50,11 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/room_list_item_padding"
-            android:textAllCaps="false"
             android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:lines="1"
             android:textAlignment="gravity"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white"/>
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
     </io.agora.vlive.ui.components.SquareRelativeLayout>
 </androidx.cardview.widget.CardView>

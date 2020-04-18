@@ -67,7 +67,8 @@ public class LiveHostNameLayout extends RelativeLayout {
         params = (RelativeLayout.LayoutParams) mNameTextView.getLayoutParams();
         params.addRule(RelativeLayout.END_OF, IMAGE_VIEW_ID);
         params.addRule(RelativeLayout.ALIGN_PARENT_END, RelativeLayout.TRUE);
-        params.rightMargin = mHeight / 6;
+        params.leftMargin = mHeight / 5;
+        params.rightMargin = params.leftMargin;
         params.width = LayoutParams.MATCH_PARENT;
         params.height = LayoutParams.MATCH_PARENT;
         mNameTextView.setLayoutParams(params);
