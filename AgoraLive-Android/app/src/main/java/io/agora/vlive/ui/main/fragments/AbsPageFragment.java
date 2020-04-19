@@ -180,12 +180,10 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
     public void onRoomListResponse(RoomListResponse response) {
         final List<RoomInfo> list = response.data.list;
         getContainer().runOnUiThread(() -> {
-            if (response.data.count <= 0) {
-                mAdapter.clear(true);
-            } else {
-                mAdapter.append(list, TextUtils.isEmpty(response.data.nextId));
-            }
-
+            // Next id being empty indicates this is the
+            // start of room list and we need to refresh
+            // the whole page.
+            mAdapter.append(list, TextUtils.isEmpty(response.data.nextId));
             checkRoomListEmpty();
             if (mSwipeRefreshLayout.isRefreshing()) {
                 mSwipeRefreshLayout.setRefreshing(false);
