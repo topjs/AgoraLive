@@ -471,8 +471,10 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             participants.reset(total);
 
             for (NotificationMessage.NotificationItem item : list) {
-                if (ownerId.equals(item.userId) && item.state == LiveRoomMessageList.MSG_SYSTEM_STATE_LEAVE) {
+                if (ownerId.equals(item.userId) && item.state == LiveRoomMessageList.MSG_SYSTEM_STATE_LEAVE
+                    && item.role == LiveRoomMessageList.MSG_SYSTEM_ROLE_OWNER) {
                     // Leave the room if the room owner already leaves the room
+                    leaveRoom();
                 } else {
                     messageList.addMessage(LiveRoomMessageList.MSG_TYPE_SYSTEM, item.userName, "", item.state);
                 }
@@ -524,11 +526,14 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
             titleRes = R.string.finish_broadcast_title_audience;
             messageRes = R.string.finish_broadcast_message_audience;
         }
-        curDialog = showDialog(titleRes, messageRes, view -> {
-            leaveRoom(roomId);
-            finish();
-            closeDialog();
-        });
+        curDialog = showDialog(titleRes, messageRes, view -> leaveRoom());
+    }
+
+    private void leaveRoom() {
+        leaveRoom(roomId);
+        finish();
+        closeDialog();
+        dismissActionSheetDialog();
     }
 
     protected void leaveRoom(String roomId) {

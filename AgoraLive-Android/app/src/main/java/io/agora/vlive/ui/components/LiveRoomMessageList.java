@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 import io.agora.vlive.R;
 import io.agora.vlive.utils.GiftUtil;
-import io.agora.vlive.utils.Global;
 
 public class LiveRoomMessageList extends RecyclerView {
     public static final int MSG_TYPE_SYSTEM = 0;
@@ -33,6 +32,10 @@ public class LiveRoomMessageList extends RecyclerView {
 
     public static final int MSG_SYSTEM_STATE_JOIN = 1;
     public static final int MSG_SYSTEM_STATE_LEAVE = 0;
+
+    public static final int MSG_SYSTEM_ROLE_OWNER = 1;
+    public static final int MSG_SYSTEM_ROLE_HOST = 2;
+    public static final int MSG_SYSTEM_ROLE_AUDIENCE = 3;
 
     private static final int DEFAULT_MESSAGE_TEXT_COLOR = Color.rgb(196, 196, 196);
     private static final int MAX_SAVED_MESSAGE = 50;
