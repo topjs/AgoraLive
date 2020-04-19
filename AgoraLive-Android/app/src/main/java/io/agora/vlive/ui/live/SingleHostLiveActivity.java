@@ -1,7 +1,7 @@
 package io.agora.vlive.ui.live;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -55,9 +55,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         mVideoLayout = findViewById(R.id.single_live_video_layout);
 
         if (isOwner) {
-            bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
-            startCameraCapture();
-            initLocalPreview();
+            becomesOwner(false, false);
         }
 
         findViewById(R.id.live_bottom_btn_close).setOnClickListener(this);
@@ -68,11 +66,6 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         messageList = findViewById(R.id.message_list);
         messageEditLayout = findViewById(R.id.message_edit_layout);
         mMessageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
-    }
-
-    private void initLocalPreview() {
-        CameraTextureView textureView = new CameraTextureView(this);
-        mVideoLayout.addView(textureView);
     }
 
     @Override
@@ -154,6 +147,12 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
         config().setAudioMuted(audioMuted);
         config().setVideoMuted(videoMuted);
+        initLocalPreview();
+    }
+
+    private void initLocalPreview() {
+        CameraTextureView textureView = new CameraTextureView(this);
+        mVideoLayout.addView(textureView);
     }
 
     private void becomeAudience() {
@@ -163,6 +162,12 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
         config().setAudioMuted(true);
         config().setVideoMuted(true);
+        setupRemotePreview();
+    }
+
+    private void setupRemotePreview() {
+        SurfaceView surfaceView = setupRemoteVideo(ownerRtcUid);
+        mVideoLayout.addView(surfaceView);
     }
 
     @Override

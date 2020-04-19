@@ -40,6 +40,7 @@ public class LiveRoomMessageList extends RecyclerView {
 
     private LiveRoomMessageAdapter mAdapter;
     private LayoutInflater mInflater;
+    private LinearLayoutManager mLayoutManager;
 
     private String mJoinNotificationText;
     private String mLeaveNotificationText;
@@ -62,11 +63,9 @@ public class LiveRoomMessageList extends RecyclerView {
     private void init() {
         mInflater = LayoutInflater.from(getContext());
         mAdapter = new LiveRoomMessageAdapter();
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(getContext(),
+        mLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
-        layoutManager.setStackFromEnd(true);
-        setLayoutManager(layoutManager);
+        setLayoutManager(mLayoutManager);
         setAdapter(mAdapter);
         addItemDecoration(new MessageItemDecorator());
 
@@ -89,11 +88,7 @@ public class LiveRoomMessageList extends RecyclerView {
             }
         }
         mAdapter.addMessage(item);
-        mAdapter.notifyDataSetChanged();
-    }
-
-
-    public void notifyDataSetChanged() {
+        mLayoutManager.scrollToPosition(mAdapter.getItemCount() - 1);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -137,12 +132,10 @@ public class LiveRoomMessageList extends RecyclerView {
                 mMessageList.remove(mMessageList.size() - 1);
             }
             mMessageList.add(item);
-            mAdapter.notifyDataSetChanged();
-            scrollToPosition(mMessageList.size() - 1);
         }
     }
 
-    private class MessageListViewHolder extends ViewHolder {
+    private static class MessageListViewHolder extends ViewHolder {
         private AppCompatTextView messageText;
         private AppCompatImageView giftIcon;
 
@@ -167,7 +160,7 @@ public class LiveRoomMessageList extends RecyclerView {
         }
     }
 
-    private class MessageItemDecorator extends ItemDecoration {
+    private static class MessageItemDecorator extends ItemDecoration {
         @Override
         public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
                                    @NonNull RecyclerView parent, @NonNull State state) {

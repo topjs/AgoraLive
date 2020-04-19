@@ -51,6 +51,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
     private boolean mPkStarted;
     private boolean mBroadcastStarted;
 
+    private int mMessageListHeightInNormalMode;
+
     private ResultCallback<Void> mMessageResultCallback = new ResultCallback<Void>() {
         @Override
         public void onSuccess(Void aVoid) {
@@ -76,6 +78,9 @@ public class HostPKLiveActivity extends LiveRoomActivity
     }
 
     private void initUI() {
+        mMessageListHeightInNormalMode = getResources().
+                getDimensionPixelOffset(R.dimen.live_message_list_height);
+
         setContentView(R.layout.activity_pk_host_in);
 
         mLayout = findViewById(R.id.live_room_pk_room_layout);
@@ -197,6 +202,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
             mVideoNormalLayout.setVisibility(View.VISIBLE);
         }
 
+        setupMessageListLayout(isPkMode);
         bottomButtons.setRole(isOwner ? LiveBottomButtonLayout.ROLE_OWNER
                 : LiveBottomButtonLayout.ROLE_AUDIENCE);
         bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
@@ -217,16 +223,22 @@ public class HostPKLiveActivity extends LiveRoomActivity
         if (isOwner) {
             startCameraCapture();
             CameraTextureView cameraTextureView = new CameraTextureView(this);
+            mPkLayout.getLeftVideoLayout().removeAllViews();
             mPkLayout.getLeftVideoLayout().addView(cameraTextureView);
             SurfaceView remoteSurfaceView = setupRemoteVideo(config.remote.uid);
+            mPkLayout.getRightVideoLayout().removeAllViews();
             mPkLayout.getRightVideoLayout().addView(remoteSurfaceView);
             rtcEngine().muteLocalAudioStream(false);
             rtcEngine().muteLocalVideoStream(false);
             startMediaRelay(config);
         } else {
             SurfaceView surfaceView = setupRemoteVideo(ownerRtcUid);
+            surfaceView.setZOrderMediaOverlay(true);
+            mPkLayout.getLeftVideoLayout().removeAllViews();
             mPkLayout.getLeftVideoLayout().addView(surfaceView);
             SurfaceView remoteSurfaceView = setupRemoteVideo(remoteUidForAudience);
+            remoteSurfaceView.setZOrderMediaOverlay(true);
+            mPkLayout.getRightVideoLayout().removeAllViews();
             mPkLayout.getRightVideoLayout().addView(remoteSurfaceView);
         }
     }
@@ -264,6 +276,19 @@ public class HostPKLiveActivity extends LiveRoomActivity
 
     private ChannelMediaInfo toChannelMediaInfo(PKMessage.ChannelRelayInfo proxy) {
         return new ChannelMediaInfo(proxy.channelName, proxy.token, proxy.uid);
+    }
+
+    private void setupMessageListLayout(boolean isPkMode) {
+        RelativeLayout.LayoutParams params =
+                (RelativeLayout.LayoutParams) messageList.getLayoutParams();
+        if (isPkMode) {
+            params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+            params.addRule(RelativeLayout.BELOW, R.id.pk_host_layout);
+        } else {
+            params.height = mMessageListHeightInNormalMode;
+            params.removeRule(RelativeLayout.BELOW);
+        }
+        messageList.setLayoutParams(params);
     }
 
     private void stopPkMode(boolean isOwner) {

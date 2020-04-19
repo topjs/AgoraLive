@@ -110,7 +110,7 @@
     <dimen name="live_pk_video_layout_margin_top">32dp</dimen>
     <dimen name="live_pk_video_layout_height">224dp</dimen>
     <dimen name="live_pk_video_layout_enter_other_room_btn_size">28dp</dimen>
-    <dimen name="live_pk_video_layout_other_host_name_margin_start">48dp</dimen>
+    <dimen name="live_pk_video_layout_other_host_name_margin_start">24dp</dimen>
     <dimen name="live_pk_video_layout_other_host_name_margin_bottom">24dp</dimen>
     <dimen name="live_pk_vs_icon_size">42dp</dimen>
 

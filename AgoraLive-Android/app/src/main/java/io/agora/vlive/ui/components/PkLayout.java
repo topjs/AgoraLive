@@ -79,11 +79,11 @@ public class PkLayout extends LinearLayout {
             localWeight = 1;
             remoteWeight = 1;
         } else if (localPoint == 0) {
-            localWeight = 5;
-            remoteWeight = 95;
+            localWeight = 10;
+            remoteWeight = 90;
         } else if (remotePoint == 0) {
-            localWeight = 95;
-            remoteWeight = 5;
+            localWeight = 90;
+            remoteWeight = 10;
         } else {
             localWeight = localPoint;
             remoteWeight = remotePoint;
