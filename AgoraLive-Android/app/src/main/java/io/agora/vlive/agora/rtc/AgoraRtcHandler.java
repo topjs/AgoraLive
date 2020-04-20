@@ -56,4 +56,11 @@ public class AgoraRtcHandler extends IRtcEngineEventHandler {
             handler.onChannelMediaRelayEvent(code);
         }
     }
+
+    @Override
+    public void onAudioVolumeIndication(AudioVolumeInfo[] speakers, int totalVolume) {
+        for (RtcEventHandler handler : mHandlers) {
+            handler.onAudioVolumeIndication(speakers, totalVolume);
+        }
+    }
 }

@@ -164,4 +164,5 @@
     <dimen name="dialog_corner_size">12dp</dimen>
     <dimen name="dialog_text_area_height">100dp</dimen>
     <dimen name="dialog_button_height">49dp</dimen>
+    <dimen name="dialog_message_padding">12dp</dimen>
 </resources>

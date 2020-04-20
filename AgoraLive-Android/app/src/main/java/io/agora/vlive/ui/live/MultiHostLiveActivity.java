@@ -2,7 +2,6 @@ package io.agora.vlive.ui.live;
 
 import android.graphics.Color;
 import android.graphics.Outline;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.agora.rtc.Constants;
+import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
 import io.agora.vlive.Config;
@@ -52,6 +52,9 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         LiveMultiHostSeatLayout.LiveHostInSeatOnClickedListener,
         InviteUserActionSheet.InviteUserActionSheetListener,
         SeatItemDialog.OnSeatDialogItemClickedListener {
+
+    private static final int VOICE_INDICATE_INTERVAL = 1500;
+    private static final int VOICE_INDICATE_SMOOTH = 3;
 
     /**
      * Helps control UI of the room owner position.
@@ -225,7 +228,6 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     private void initUI() {
         hideStatusBar(false);
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         setContentView(R.layout.activity_host_in);
         setRoomNameText();
 
@@ -262,6 +264,10 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         mSeatLayout.setHost(isHost);
         mSeatLayout.setMyUserId(config().getUserProfile().getUserId());
         mSeatLayout.setSeatListener(this);
+
+        // Start host speaking volume detection
+        rtcEngine().enableAudioVolumeIndication(VOICE_INDICATE_INTERVAL,
+                VOICE_INDICATE_SMOOTH,  false);
     }
 
     private void setRoomNameText() {
@@ -506,31 +512,32 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
     private void audienceApplyForSeat(int position) {
         Log.i(TAG, "audience apply for a seat:");
         Config.UserProfile profile = config().getUserProfile();
-        getMessageManager().apply(ownerId, profile.getUserName(),
-                position + 1, mMessageResultCallback);
+        getMessageManager().apply(String.valueOf(ownerRtcUid), profile.getUserName(),
+                config().getUserProfile().getUserId(), position + 1, mMessageResultCallback);
     }
 
     @Override
-    public void onRtmAppliedForSeat(String peerId, String nickname, int index) {
+    public void onRtmAppliedForSeat(String peerId, String nickname, String userId, int seatId) {
         // If I am the room owner, the method is called when
         // some audience applies to be a host, and he is
         // waiting for my response
         if (!isOwner) return;
         String title = getResources().getString(R.string.live_room_host_in_audience_apply_title);
         String message = getResources().getString(R.string.live_room_host_in_audience_apply_owner_message);
-        message = String.format(message, nickname, 0);
+        message = String.format(message, nickname, seatId);
+        final Config.UserProfile profile = config().getUserProfile();
         curDialog = showDialog(title, message,
                 R.string.dialog_positive_button_accept, R.string.dialog_negative_button_refuse,
                 view -> {
+
                     ModifySeatStateRequest request = new ModifySeatStateRequest(
-                            config().getUserProfile().getToken(), roomId,
-                            peerId, index, SeatInfo.TAKEN);
+                            profile.getToken(), roomId, userId, seatId, SeatInfo.TAKEN);
                     sendRequest(Request.MODIFY_SEAT_STATE, request);
-                    getMessageManager().acceptApplication(peerId, nickname, index, mMessageResultCallback);
+                    getMessageManager().acceptApplication(peerId, nickname, profile.getUserId(), seatId, mMessageResultCallback);
                     curDialog.dismiss();
                 },
                 view -> {
-                    getMessageManager().rejectApplication(peerId, nickname, mMessageResultCallback);
+                    getMessageManager().rejectApplication(peerId, nickname, profile.getUserId(), mMessageResultCallback);
                     curDialog.dismiss();
                 });
     }
@@ -582,6 +589,15 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
     public void onRtmSeatStateChanged(List<SeatStateMessage.SeatStateMessageDataItem> list) {
         // The server notifies via rtm messages that seat states have changed
         runOnUiThread(() -> mSeatLayout.updateStates(list));
+    }
+
+    @Override
+    public void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
+        StringBuilder builder = new StringBuilder();
+        for (IRtcEngineEventHandler.AudioVolumeInfo info : speakers) {
+            builder.append(info.uid).append(':').append(info.uid).append('|');
+        }
+        Log.d(TAG, builder.toString());
     }
 
     @Override
@@ -742,7 +758,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
     }
 
     @Override
-    public void onActionSheetAudienceInvited(int seatId, String userId, String userName) {
+    public void onActionSheetAudienceInvited(int seatId, String peerId, String userName) {
         Log.i(TAG, "onActionSheetAudienceInvited");
         // Called when the owner click the audience list and
         // want to "invite" this audience to be a host
@@ -752,7 +768,8 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             dismissActionSheetDialog();
         }
 
-        getMessageManager().invite(userId, userName, seatId, new ResultCallback<Void>() {
+        getMessageManager().invite(peerId, userName,
+                config().getUserProfile().getUserId(), seatId, new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 
@@ -772,18 +789,21 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         String title = getResources().getString(R.string.live_room_host_in_invite_user_list_action_sheet_title);
         String message = getResources().getString(R.string.live_room_host_in_invited_by_owner);
         message = String.format(message, nickname, index);
+        final Config.UserProfile profile = config().getUserProfile();
         curDialog = showDialog(title, message,
                 R.string.dialog_positive_button_accept, R.string.dialog_negative_button_refuse,
                 view -> {
                     ModifySeatStateRequest request = new ModifySeatStateRequest(
-                            config().getUserProfile().getToken(), roomId,
-                            config().getUserProfile().getUserId(), index, SeatInfo.TAKEN);
+                            profile.getToken(), roomId,
+                            profile.getUserId(), index, SeatInfo.TAKEN);
                     sendRequest(Request.MODIFY_SEAT_STATE, request);
-                    getMessageManager().acceptInvitation(peerId, nickname, index, mMessageResultCallback);
+                    getMessageManager().acceptInvitation(peerId, nickname,
+                            profile.getUserId(), index, mMessageResultCallback);
                     curDialog.dismiss();
                 },
                 view -> {
-                    getMessageManager().rejectInvitation(peerId, nickname, mMessageResultCallback);
+                    getMessageManager().rejectInvitation(peerId, nickname,
+                            profile.getUserId(), mMessageResultCallback);
                     curDialog.dismiss();
                 });
     }

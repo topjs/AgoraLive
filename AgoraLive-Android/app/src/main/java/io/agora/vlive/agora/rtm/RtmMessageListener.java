@@ -27,7 +27,7 @@ public interface RtmMessageListener {
 
     void onRtmInvitedByOwner(String peerId, String nickname, int index);
 
-    void onRtmAppliedForSeat(String peerId, String nickname, int index);
+    void onRtmAppliedForSeat(String peerId, String nickname, String userId, int index);
 
     void onRtmInvitationAccepted(String peerId, String nickname, int index);
 

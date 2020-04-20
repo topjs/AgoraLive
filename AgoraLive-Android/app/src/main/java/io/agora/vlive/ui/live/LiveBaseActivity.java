@@ -275,7 +275,7 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
-    public void onRtmAppliedForSeat(String ownerId, String nickname, int index) {
+    public void onRtmAppliedForSeat(String peerId, String nickname, String userId, int index) {
 
     }
 
@@ -371,6 +371,11 @@ public abstract class LiveBaseActivity extends BaseActivity
 
     @Override
     public void onChannelMediaRelayEvent(int code) {
+
+    }
+
+    @Override
+    public void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
 
     }
 

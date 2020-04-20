@@ -21,7 +21,7 @@ import io.agora.vlive.utils.UserUtil;
 
 public class InviteUserActionSheet extends AbstractActionSheet {
     public interface InviteUserActionSheetListener extends AbsActionSheetListener {
-        void onActionSheetAudienceInvited(int seatId, String userId, String userName);
+        void onActionSheetAudienceInvited(int seatId, String peerId, String userName);
     }
 
     private InviteUserActionSheetListener mListener;
@@ -82,7 +82,7 @@ public class InviteUserActionSheet extends AbstractActionSheet {
             viewHolder.name.setText(UserUtil.getUserText(info.userId, info.userName));
             viewHolder.icon.setImageDrawable(UserUtil.getUserRoundIcon(getResources(), info.userId));
             viewHolder.button.setOnClickListener(view -> {
-                if (mListener != null) mListener.onActionSheetAudienceInvited(mSeatNo, info.userId, info.userName);
+                if (mListener != null) mListener.onActionSheetAudienceInvited(mSeatNo, info.uid, info.userName);
             });
         }
 
@@ -92,7 +92,7 @@ public class InviteUserActionSheet extends AbstractActionSheet {
         }
     }
 
-    private class RoomUserViewHolder extends RecyclerView.ViewHolder {
+    private static class RoomUserViewHolder extends RecyclerView.ViewHolder {
         AppCompatImageView icon;
         AppCompatTextView name;
         AppCompatTextView button;

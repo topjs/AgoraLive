@@ -444,7 +444,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
                 R.string.dialog_positive_button_accept, R.string.dialog_negative_button_refuse,
                 view -> {
                     getMessageManager().acceptPk(peerId, UserUtil.getUserText(
-                            profile.getUserId(), profile.getUserName()), mMessageResultCallback);
+                            profile.getUserId(), profile.getUserName()),
+                            profile.getUserId(), mMessageResultCallback);
 
                     PKRequest request = new PKRequest(profile.getToken(), this.roomId, pkRoomId);
                     proxy().sendRequest(Request.PK_START_STOP, request);
@@ -452,7 +453,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
                 },
                 view -> {
                     getMessageManager().rejectPk(peerId, UserUtil.getUserText(
-                                profile.getUserId(), profile.getUserName()), mMessageResultCallback);
+                            profile.getUserId(), profile.getUserName()),
+                            profile.getUserId(), mMessageResultCallback);
                     closeDialog();
                 }));
     }

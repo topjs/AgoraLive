@@ -281,7 +281,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
 
                 setSeatStates(curSeatState, seat, user, surfaceView);
 
-                if (mListener != null && user.userId.equals(mMyUserId)) {
+                if (mListener != null && mMyUserId.equals(user.userId)) {
                     mListener.onSeatAdapterItemMyAudioMuted(position,
                             user.enableAudio != MUTE_NONE);
                 }

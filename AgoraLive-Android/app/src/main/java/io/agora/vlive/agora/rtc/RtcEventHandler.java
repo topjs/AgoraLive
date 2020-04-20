@@ -12,4 +12,6 @@ public interface RtcEventHandler {
     void onChannelMediaRelayStateChanged(int state, int code);
 
     void onChannelMediaRelayEvent(int code);
+
+    void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume);
 }
