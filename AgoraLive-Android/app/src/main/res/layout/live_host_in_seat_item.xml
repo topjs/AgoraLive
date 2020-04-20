@@ -67,4 +67,12 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/live_host_in_seat_item_margin"
         android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"/>
+    <io.agora.vlive.ui.components.VoiceIndicateGifView
+        android:id="@+id/host_in_seat_item_voice_indicate"
+        android:layout_width="@dimen/live_host_in_seat_item_voice_indicate_width"
+        android:layout_height="@dimen/live_host_in_seat_item_more_btn_size"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/live_host_in_seat_item_margin"
+        android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"/>
 </io.agora.vlive.ui.components.SquareRelativeLayout>

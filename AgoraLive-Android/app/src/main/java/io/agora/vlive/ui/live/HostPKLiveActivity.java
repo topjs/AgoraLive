@@ -326,7 +326,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
     }
 
     @Override
-    public void onChannelMediaRelayStateChanged(int state, int code) {
+    public void onRtcChannelMediaRelayStateChanged(int state, int code) {
         if (state == Constants.RELAY_STATE_CONNECTING) {
             Log.d(TAG, "channel media relay is connecting");
         } else if (state == Constants.RELAY_STATE_RUNNING) {
@@ -357,7 +357,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
     }
 
     @Override
-    public void onChannelMediaRelayEvent(int code) {
+    public void onRtcChannelMediaRelayEvent(int code) {
 
     }
 

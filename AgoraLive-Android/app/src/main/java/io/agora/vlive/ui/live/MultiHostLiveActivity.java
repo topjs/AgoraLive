@@ -46,15 +46,14 @@ import io.agora.vlive.ui.components.LiveBottomButtonLayout;
 import io.agora.vlive.ui.components.LiveMultiHostSeatLayout;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
 import io.agora.vlive.ui.components.SeatItemDialog;
+import io.agora.vlive.ui.components.VoiceIndicateGifView;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.utils.UserUtil;
 
 public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnClickListener,
         LiveMultiHostSeatLayout.LiveHostInSeatOnClickedListener,
         InviteUserActionSheet.InviteUserActionSheetListener,
         SeatItemDialog.OnSeatDialogItemClickedListener {
-
-    private static final int VOICE_INDICATE_INTERVAL = 1500;
-    private static final int VOICE_INDICATE_SMOOTH = 3;
 
     /**
      * Helps control UI of the room owner position.
@@ -72,6 +71,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         FrameLayout userLayout;
         AppCompatImageView profileImage;
         AppCompatImageView audioMuteIcon;
+        VoiceIndicateGifView mIndicateView;
 
         // for local rendering
         CameraTextureView localPreview;
@@ -89,6 +89,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             this.userId = userId;
             this.profileIconRes = UserUtil.getUserProfileIcon(userId);
             audioMuteIcon = layout.findViewById(R.id.live_host_in_owner_mute_icon);
+            mIndicateView = layout.findViewById(R.id.live_host_in_owner_voice_indicate);
 
             this.rtcUid = rtcUid;
             setOwner(iAmOwner);
@@ -100,6 +101,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             videoMuted = !iAmOwner;
             audioMuted = !iAmOwner;
             audioMuteIcon.setVisibility(audioMuted ? View.VISIBLE : View.GONE);
+            mIndicateView.setVisibility(audioMuted ? View.GONE : View.VISIBLE);
         }
 
         // Called only once after entering the room and
@@ -108,6 +110,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             iAmOwner = true;
             if (!videoMuted) showVideoUI();
             audioMuteIcon.setVisibility(audioMuted ? View.VISIBLE : View.GONE);
+            mIndicateView.setVisibility(audioMuted ? View.GONE : View.VISIBLE);
             rtcEngine().muteLocalAudioStream(audioMuted);
             this.videoMuted = videoMuted;
             this.audioMuted = audioMuted;
@@ -157,6 +160,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             if (muted == audioMuted && audioMuteIcon.getVisibility() == View.VISIBLE) return;
             audioMuted = muted;
             audioMuteIcon.setVisibility(audioMuted ? View.VISIBLE : View.GONE);
+            mIndicateView.setVisibility(audioMuted ? View.GONE : View.VISIBLE);
         }
 
         void setVideoMuted(boolean muted) {
@@ -175,6 +179,13 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
                 removeVideoUI(true);
             } else {
                 showVideoUI();
+            }
+        }
+
+        void startVoiceIndicateAnim() {
+            if (mIndicateView != null &&
+                mIndicateView.getVisibility() == View.VISIBLE) {
+                mIndicateView.start(Global.Constants.VOICE_INDICATE_INTERVAL);
             }
         }
     }
@@ -266,8 +277,9 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         mSeatLayout.setSeatListener(this);
 
         // Start host speaking volume detection
-        rtcEngine().enableAudioVolumeIndication(VOICE_INDICATE_INTERVAL,
-                VOICE_INDICATE_SMOOTH,  false);
+        rtcEngine().enableAudioVolumeIndication(
+                Global.Constants.VOICE_INDICATE_INTERVAL,
+                Global.Constants.VOICE_INDICATE_SMOOTH,  false);
     }
 
     private void setRoomNameText() {
@@ -592,12 +604,19 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
     }
 
     @Override
-    public void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
-        StringBuilder builder = new StringBuilder();
-        for (IRtcEngineEventHandler.AudioVolumeInfo info : speakers) {
-            builder.append(info.uid).append(':').append(info.uid).append('|');
-        }
-        Log.d(TAG, builder.toString());
+    public void onRtcAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
+        if (totalVolume <= 0) return;
+
+        runOnUiThread(() -> {
+            for (IRtcEngineEventHandler.AudioVolumeInfo info : speakers) {
+                if (isOwner && info.uid == 0 || info.uid == ownerRtcUid) {
+                    mOwnerUIManager.startVoiceIndicateAnim();
+                }
+
+                mSeatLayout.audioIndicate(speakers, (int) config().getUserProfile().getAgoraUid());
+            }
+
+        });
     }
 
     @Override

@@ -2,7 +2,6 @@ package io.agora.vlive.ui.components;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
@@ -18,9 +17,11 @@ import androidx.appcompat.widget.AppCompatTextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.vlive.R;
 import io.agora.vlive.agora.rtm.model.SeatStateMessage;
 import io.agora.vlive.proxy.struts.model.SeatInfo;
+import io.agora.vlive.utils.Global;
 import io.agora.vlive.utils.UserUtil;
 
 public class LiveMultiHostSeatLayout extends RelativeLayout {
@@ -96,6 +97,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
         AppCompatTextView nickname;
         AppCompatImageView popup;
         AppCompatImageView voiceState;
+        VoiceIndicateGifView voiceIndicate;
         SurfaceView surfaceView;
         public int position;
         public int seatState;
@@ -106,6 +108,13 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
         int rtcUid;
         public String userName;
         public String userId;
+
+        void startIndicate() {
+            if (voiceIndicate != null &&
+                    voiceIndicate.getVisibility() == View.VISIBLE) {
+                voiceIndicate.start(Global.Constants.VOICE_INDICATE_INTERVAL);
+            }
+        }
     }
 
     public static final int SEAT_OPEN = 0;
@@ -159,6 +168,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
         item.nickname = layout.findViewById(R.id.host_in_seat_item_nickname);
         item.popup = layout.findViewById(R.id.seat_item_owner_popup_btn);
         item.voiceState = layout.findViewById(R.id.host_in_seat_item_voice_state_icon);
+        item.voiceIndicate = layout.findViewById(R.id.host_in_seat_item_voice_indicate);
 
         item.operationIcon.setOnClickListener(view -> {
             if (item.seatState == SEAT_OPEN && mListener != null) {
@@ -391,6 +401,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
             item.voiceState.setVisibility(VISIBLE);
             item.operationIcon.setVisibility(GONE);
             item.operationText.setVisibility(GONE);
+            item.voiceIndicate.setVisibility(VISIBLE);
 
             if (item.audioMuteState != SeatInfo.User.USER_AUDIO_ENABLE) {
                 item.voiceState.setVisibility(VISIBLE);
@@ -404,6 +415,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
             item.videoLayout.setVisibility(GONE);
             item.voiceState.setVisibility(GONE);
             item.operationIcon.setVisibility(View.VISIBLE);
+            item.voiceIndicate.setVisibility(GONE);
 
             if (item.seatState == SEAT_OPEN) {
                 item.operationIcon.setImageResource(R.drawable.live_seat_invite);
@@ -421,6 +433,21 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
             item.popup.setVisibility(VISIBLE);
         } else {
             item.popup.setVisibility(GONE);
+        }
+    }
+
+    public void audioIndicate(IRtcEngineEventHandler.AudioVolumeInfo[] audioVolumes, int myRtcUid) {
+        for (IRtcEngineEventHandler.AudioVolumeInfo info : audioVolumes) {
+            for (SeatItem item : mSeatList) {
+                if (mIsHost && info.uid == 0 && myRtcUid == item.rtcUid) {
+                    // Need special care here because when I am one of the hosts,
+                    // the uid returned in volume indication is 0.
+                    // Double check is necessary to see if this is my seat
+                    item.startIndicate();
+                } else if (item.rtcUid == info.uid) {
+                    item.startIndicate();
+                }
+            }
         }
     }
 }

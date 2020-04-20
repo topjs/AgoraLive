@@ -94,5 +94,9 @@ public class Global {
                 R.drawable.profile_image_11,
                 R.drawable.profile_image_12
         };
+
+        public static final int VOICE_INDICATE_INTERVAL = 1500;
+
+        public static final int VOICE_INDICATE_SMOOTH = 3;
     }
 }

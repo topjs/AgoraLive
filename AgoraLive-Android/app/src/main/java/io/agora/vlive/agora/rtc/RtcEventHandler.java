@@ -9,9 +9,9 @@ public interface RtcEventHandler {
 
     void onRtcStats(IRtcEngineEventHandler.RtcStats stats);
 
-    void onChannelMediaRelayStateChanged(int state, int code);
+    void onRtcChannelMediaRelayStateChanged(int state, int code);
 
-    void onChannelMediaRelayEvent(int code);
+    void onRtcChannelMediaRelayEvent(int code);
 
-    void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume);
+    void onRtcAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume);
 }

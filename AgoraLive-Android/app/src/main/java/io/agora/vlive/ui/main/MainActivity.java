@@ -35,15 +35,12 @@ import io.agora.vlive.proxy.struts.response.Response;
 import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.utils.RandomUtil;
-import io.agora.vlive.utils.UserUtil;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private RelativeLayout mContainerLayout;
     private BottomNavigationView mNavView;
     private NavController mNavController;
-    private int mTopMargin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,10 +70,6 @@ public class MainActivity extends BaseActivity {
             // we do not want to refresh this fragment
             // by repeatedly selecting the same menu item.
             if (selectedId == currentId) return false;
-
-            // Profile fragment needs to be drawn
-            // to the top of the screen.
-            int top = selectedId == R.id.navigation_me ? 0 : mTopMargin;
             NavigationUI.onNavDestinationSelected(item, mNavController);
             hideStatusBar(getWindow(), true);
             return true;

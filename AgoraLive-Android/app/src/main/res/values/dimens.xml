@@ -86,6 +86,7 @@
     <dimen name="live_host_in_seat_item_margin">8dp</dimen>
     <dimen name="live_host_in_seat_item_operation_size">38dp</dimen>
     <dimen name="live_host_in_seat_item_more_btn_size">28dp</dimen>
+    <dimen name="live_host_in_seat_item_voice_indicate_width">34dp</dimen>
 
     <dimen name="live_host_in_seat_item_dialog_width">64dp</dimen>
     <dimen name="live_host_in_seat_item_dialog_corner">8dp</dimen>

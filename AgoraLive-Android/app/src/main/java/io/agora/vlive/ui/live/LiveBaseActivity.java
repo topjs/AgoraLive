@@ -225,7 +225,8 @@ public abstract class LiveBaseActivity extends BaseActivity
 
             @Override
             public void onFailure(ErrorInfo errorInfo) {
-
+                Log.e(LiveBaseActivity.class.getSimpleName(),
+                        "rtm join channel failed:" + errorInfo.toString());
             }
         });
     }
@@ -365,17 +366,17 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
-    public void onChannelMediaRelayStateChanged(int state, int code) {
+    public void onRtcChannelMediaRelayStateChanged(int state, int code) {
 
     }
 
     @Override
-    public void onChannelMediaRelayEvent(int code) {
+    public void onRtcChannelMediaRelayEvent(int code) {
 
     }
 
     @Override
-    public void onAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
+    public void onRtcAudioVolumeIndication(IRtcEngineEventHandler.AudioVolumeInfo[] speakers, int totalVolume) {
 
     }
 
