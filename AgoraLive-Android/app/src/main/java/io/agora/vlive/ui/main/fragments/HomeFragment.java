@@ -7,13 +7,11 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.navigation.Navigation;
 
-import io.agora.vlive.ui.main.MainActivity;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
@@ -21,13 +19,13 @@ public class HomeFragment extends AbstractFragment implements View.OnClickListen
     private static final int CATEGORY_IMAGE_WIDTH = 690;
     private static final int CATEGORY_IMAGE_HEIGHT = 299;
 
-    private AppCompatTextView mHomeTitleText;
+    private ScrollView mContentScrollView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container,false);
-        mHomeTitleText = view.findViewById(R.id.home_title);
+        mContentScrollView = view.findViewById(R.id.home_category_content_layout);
 
         ViewTreeObserver observer = view.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -71,12 +69,12 @@ public class HomeFragment extends AbstractFragment implements View.OnClickListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (mHomeTitleText != null) {
+        if (mContentScrollView != null) {
             RelativeLayout.LayoutParams params =
-                    (RelativeLayout.LayoutParams) mHomeTitleText.getLayoutParams();
+                    (RelativeLayout.LayoutParams) mContentScrollView.getLayoutParams();
             int systemBarHeight = getContainer().getSystemBarHeight();
             params.topMargin += systemBarHeight;
-            mHomeTitleText.setLayoutParams(params);
+            mContentScrollView.setLayoutParams(params);
         }
     }
 
