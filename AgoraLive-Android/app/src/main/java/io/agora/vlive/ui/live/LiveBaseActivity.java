@@ -385,17 +385,20 @@ public abstract class LiveBaseActivity extends BaseActivity
         super.finish();
         removeRtcHandler(this);
         rtcEngine().leaveChannel();
-        mMessageManager.removeMessageHandler(this);
-        mMessageManager.leaveChannel(new ResultCallback<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.i("messagemanager", "rtm leave success");
-            }
 
-            @Override
-            public void onFailure(ErrorInfo errorInfo) {
+        if (mMessageManager != null) {
+            mMessageManager.removeMessageHandler(this);
+            mMessageManager.leaveChannel(new ResultCallback<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.i("messagemanager", "rtm leave success");
+                }
 
-            }
-        });
+                @Override
+                public void onFailure(ErrorInfo errorInfo) {
+
+                }
+            });
+        }
     }
 }
