@@ -1,6 +1,5 @@
 package io.agora.vlive.ui.components;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Movie;
@@ -8,19 +7,17 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import java.io.IOException;
 
-@TargetApi(26)
-public class VoiceIndicateGifView extends View {
+public class VoiceIndicateGifView extends AppCompatImageView {
     private static final String VOICE_INDICATE_NAME = "voice.gif";
 
     private Movie mMovie;
     private boolean mStarted;
     private long mMovieStartTimeStamp;
     private long mMovieStopTimeStamp = -1;
-    private float mScaleX;
-    private float mScaleY;
 
     public VoiceIndicateGifView(Context context) {
         super(context);
@@ -30,6 +27,7 @@ public class VoiceIndicateGifView extends View {
     public VoiceIndicateGifView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setDefaultImage();
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     private void setDefaultImage() {
@@ -60,21 +58,13 @@ public class VoiceIndicateGifView extends View {
         }
 
         if (mMovie != null) {
-            if (mScaleX == 0 || mScaleY == 0) {
-                int width = mMovie.width();
-                int height = mMovie.height();
-                int canvasW = getMeasuredWidth();
-                int canvasH = getMeasuredHeight();
-                mScaleX = canvasW / (float) width;
-                mScaleY = canvasH / (float) height;
-            }
-
             int duration = mMovie.duration();
             int time = (int) ((now - mMovieStartTimeStamp) % duration);
             mMovie.setTime(time);
-            canvas.scale(mScaleX, mScaleY);
+            canvas.save();
             mMovie.draw(canvas, 0, 0);
-            invalidate();
+            canvas.restore();
+            postInvalidateOnAnimation();
         }
     }
 
@@ -107,9 +97,5 @@ public class VoiceIndicateGifView extends View {
             mMovieStopTimeStamp = -1;
             invalidate();
         }
-    }
-
-    public boolean hasStarted() {
-        return mStarted;
     }
 }
