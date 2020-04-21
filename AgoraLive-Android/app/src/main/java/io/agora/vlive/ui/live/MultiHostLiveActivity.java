@@ -261,7 +261,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
         messageList = findViewById(R.id.message_list);
         messageEditLayout = findViewById(R.id.message_edit_layout);
-        mMessageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
+        messageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
 
         mOwnerUIManager = new OwnerUIManager(findViewById(
                 R.id.room_owner_layout), ownerId, isOwner, ownerRtcUid);
@@ -280,6 +280,8 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         rtcEngine().enableAudioVolumeIndication(
                 Global.Constants.VOICE_INDICATE_INTERVAL,
                 Global.Constants.VOICE_INDICATE_SMOOTH,  false);
+
+        rtcStatsView = findViewById(R.id.multi_host_rtc_stats);
     }
 
     private void setRoomNameText() {

@@ -57,4 +57,16 @@
         android:paddingBottom="@dimen/live_message_text_margin"
         android:layout_alignParentBottom="true"
         android:visibility="gone"/>
+
+    <io.agora.vlive.ui.components.RtcStatsView
+        android:id="@+id/single_host_rtc_stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/single_live_top_participant_layout"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:background="@drawable/color_round_rect_gray_light"
+        android:visibility="gone"/>
 </RelativeLayout>

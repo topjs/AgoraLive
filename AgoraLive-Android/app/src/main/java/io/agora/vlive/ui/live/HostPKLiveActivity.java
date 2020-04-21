@@ -106,7 +106,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
         mStartPkButton.setOnClickListener(this);
 
         messageEditLayout = findViewById(R.id.message_edit_layout);
-        mMessageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
+        messageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
 
         mPkLayout = findViewById(R.id.pk_host_layout);
 

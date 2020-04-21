@@ -209,4 +209,6 @@
     </string-array>
 
     <string name="button_text_done">完成</string>
+
+    <string name="rtc_stats_format">接收码率: %.2f kbps%n接收丢包率: %.2f%% %n发送码率: %.2f kbps%n发送丢包率: %.2f%% </string>
 </resources>

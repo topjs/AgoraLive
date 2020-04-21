@@ -48,6 +48,7 @@ import io.agora.vlive.ui.components.LiveBottomButtonLayout;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
 import io.agora.vlive.ui.components.LiveRoomMessageList;
 import io.agora.vlive.ui.components.LiveRoomUserLayout;
+import io.agora.vlive.ui.components.RtcStatsView;
 import io.agora.vlive.utils.GiftUtil;
 import io.agora.vlive.utils.Global;
 
@@ -75,7 +76,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     protected LiveRoomMessageList messageList;
     protected LiveBottomButtonLayout bottomButtons;
     protected LiveMessageEditLayout messageEditLayout;
-    protected AppCompatEditText mMessageEditText;
+    protected AppCompatEditText messageEditText;
+    protected RtcStatsView rtcStatsView;
     protected Dialog curDialog;
 
     protected InputMethodManager mInputMethodManager;
@@ -145,8 +147,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         messageEditLayout.setLayoutParams(params);
 
         if (shown) {
-            mMessageEditText.requestFocus();
-            mMessageEditText.setOnEditorActionListener(this);
+            messageEditText.requestFocus();
+            messageEditText.setOnEditorActionListener(this);
         } else {
             messageEditLayout.setVisibility(View.GONE);
         }
@@ -296,6 +298,17 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetRealDataClicked() {
         Log.i(TAG, "onActionSheetRealDataClicked");
+        if (rtcStatsView != null) {
+            runOnUiThread(() -> {
+                int visibility = rtcStatsView.getVisibility();
+                if (visibility == View.VISIBLE) {
+                    rtcStatsView.setVisibility(View.GONE);
+                } else if (visibility == View.GONE) {
+                    rtcStatsView.setVisibility(View.VISIBLE);
+                    rtcStatsView.setLocalStats(0, 0, 0, 0);
+                }
+            });
+        }
     }
 
     @Override
@@ -347,23 +360,23 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public void onLiveBottomLayoutShowMessageEditor() {
         if (messageEditLayout != null) {
             messageEditLayout.setVisibility(View.VISIBLE);
-            mMessageEditText.requestFocus();
-            mInputMethodManager.showSoftInput(mMessageEditText, 0);
+            messageEditText.requestFocus();
+            mInputMethodManager.showSoftInput(messageEditText, 0);
         }
     }
 
     @Override
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            Editable editable = mMessageEditText.getText();
+            Editable editable = messageEditText.getText();
             if (TextUtils.isEmpty(editable)) {
                 showShortToast(getResources().getString(R.string.live_send_empty_message));
             } else {
                 sendChatMessage(editable.toString());
-                mMessageEditText.setText("");
+                messageEditText.setText("");
             }
 
-            mInputMethodManager.hideSoftInputFromWindow(mMessageEditText.getWindowToken(), 0);
+            mInputMethodManager.hideSoftInputFromWindow(messageEditText.getWindowToken(), 0);
             return true;
         }
         return false;
@@ -498,7 +511,13 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onRtcStats(IRtcEngineEventHandler.RtcStats stats) {
-
+        runOnUiThread(() -> {
+            if (rtcStatsView != null && rtcStatsView.getVisibility() == View.VISIBLE) {
+                rtcStatsView.setLocalStats(stats.rxKBitRate,
+                        stats.rxPacketLossRate, stats.txKBitRate,
+                        stats.txPacketLossRate);
+            }
+        });
     }
 
     @Override

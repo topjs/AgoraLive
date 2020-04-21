@@ -208,4 +208,6 @@
     </string-array>
 
     <string name="button_text_done">Done</string>
+
+    <string name="rtc_stats_format">Receiving Bitrate: %.2f kbps%nReceiving Loss Rate: %.2f%% %nSending Bitrate: %.2f kbps%nSending Loss Rate: %.2f%%</string>
 </resources>
