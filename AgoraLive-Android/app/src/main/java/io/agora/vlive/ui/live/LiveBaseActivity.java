@@ -391,12 +391,12 @@ public abstract class LiveBaseActivity extends BaseActivity
             mMessageManager.leaveChannel(new ResultCallback<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Log.i("messagemanager", "rtm leave success");
+                    Log.e(LiveBaseActivity.class.getSimpleName(), "rtm leave success");
                 }
 
                 @Override
                 public void onFailure(ErrorInfo errorInfo) {
-
+                    Log.e(LiveBaseActivity.class.getSimpleName(), errorInfo.toString());
                 }
             });
         }
