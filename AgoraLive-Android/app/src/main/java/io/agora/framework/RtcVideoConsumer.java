@@ -32,8 +32,6 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
     private volatile VideoModule mVideoModule;
     private int mChannelId;
 
-    private PushVideoFrameHandlerThread mPushThread;
-    private Handler mPushHandler;
     private float[] mIdentity = new float[16];
 
     public RtcVideoConsumer(VideoModule videoModule) {
@@ -46,53 +44,17 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
         Matrix.setIdentityM(mIdentity, 0);
     }
 
-    static class PushVideoFrameHandlerThread extends HandlerThread {
-        EGLContext mEGLContext;
-        EglCore mEglCore;
-        EGLSurface mCurrentSurface;
-
-        PushVideoFrameHandlerThread(String name) {
-            super(name);
-        }
-
-        PushVideoFrameHandlerThread(String name, EGLContext eglContext) {
-            this(name);
-            mEGLContext = eglContext;
-        }
-
-        @Override
-        public void run() {
-            initOpenGLContext();
-            super.run();
-            releaseOpenGL();
-        }
-
-        private void initOpenGLContext() {
-            mEglCore = new EglCore(mEGLContext, 0);
-            mCurrentSurface = mEglCore.createOffscreenSurface(1, 1);
-            mEglCore.makeCurrent(mCurrentSurface);
-        }
-
-        private void releaseOpenGL() {
-            mEglCore.makeNothingCurrent();
-            mEglCore.releaseSurface(mCurrentSurface);
-            mEglCore.release();
-        }
-    }
-
     @Override
     public void onConsumeFrame(VideoCaptureFrame frame, VideoChannel.ChannelContext context) {
-        if (mValidInRtc && mPushThread != null && mPushThread.isAlive()) {
-            mPushHandler.post(() -> {
-                int format = frame.mFormat.getTexFormat() == GLES20.GL_TEXTURE_2D
-                        ? AgoraVideoFrame.FORMAT_TEXTURE_2D
-                        : AgoraVideoFrame.FORMAT_TEXTURE_OES;
-                if (mRtcConsumer != null) {
-                    mRtcConsumer.consumeTextureFrame(frame.mTextureId, format,
-                            frame.mFormat.getWidth(), frame.mFormat.getHeight(),
-                            frame.mRotation, frame.mTimeStamp, mIdentity);
-                }
-            });
+        if (mValidInRtc) {
+            int format = frame.mFormat.getTexFormat() == GLES20.GL_TEXTURE_2D
+                    ? AgoraVideoFrame.FORMAT_TEXTURE_2D
+                    : AgoraVideoFrame.FORMAT_TEXTURE_OES;
+            if (mRtcConsumer != null) {
+                mRtcConsumer.consumeTextureFrame(frame.mTextureId, format,
+                        frame.mFormat.getWidth(), frame.mFormat.getHeight(),
+                        frame.mRotation, frame.mTimeStamp, mIdentity);
+            }
         }
     }
 
@@ -101,20 +63,11 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
         // Rtc transmission is an off-screen rendering procedure.
         VideoChannel channel = mVideoModule.connectConsumer(
                 this, channelId, IVideoConsumer.TYPE_OFF_SCREEN);
-        mPushThread = new PushVideoFrameHandlerThread(TAG,
-                channel.getChannelContext().getEglContext());
-        mPushThread.start();
-        mPushHandler = new Handler(mPushThread.getLooper());
     }
 
     @Override
     public void disconnectChannel(int channelId) {
         mVideoModule.disconnectConsumer(this, channelId);
-        if (mPushThread != null && mPushThread.isAlive()) {
-            mPushHandler.removeCallbacksAndMessages(null);
-            mPushHandler = null;
-            mPushThread.quit();
-        }
     }
 
     @Override
