@@ -22,6 +22,7 @@ public class VoiceIndicateGifView extends AppCompatImageView {
     public VoiceIndicateGifView(Context context) {
         super(context);
         setDefaultImage();
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     public VoiceIndicateGifView(Context context, @Nullable AttributeSet attrs) {
