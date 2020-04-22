@@ -67,10 +67,11 @@
     <string name="live_room_beauty_action_sheet_brightness">Brightness</string>
     <string name="live_room_beauty_action_sheet_smooth">Smooth</string>
     <string name="live_room_beauty_action_sheet_temperature">Color Temp</string>
-    <string name="live_room_beauty_action_sheet_contrast">Contrast</string>
-    <string name="live_room_beauty_action_sheet_contrast_low">Low</string>
-    <string name="live_room_beauty_action_sheet_contrast_medium">Medium</string>
-    <string name="live_room_beauty_action_sheet_contrast_high">High</string>
+
+    <string name="live_room_beauty_action_sheet_blur">Blur</string>
+    <string name="live_room_beauty_action_sheet_color">Whiten</string>
+    <string name="live_room_beauty_action_sheet_cheek_thinning">Cheek</string>
+    <string name="live_room_beauty_action_sheet_eye_enlarge">Eye</string>
 
     <string name="live_room_bg_music_action_sheet_title">Background Music</string>
 

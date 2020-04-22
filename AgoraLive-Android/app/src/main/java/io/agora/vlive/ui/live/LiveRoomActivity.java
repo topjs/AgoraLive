@@ -217,23 +217,27 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     }
 
     @Override
-    public void onActionSheetBrightnessSelected(float brightness) {
-        Log.i(TAG, "onActionSheetBrightnessSelected:" + brightness);
+    public void onActionSheetBlurSelected(float blur) {
+        Log.i(TAG, "onActionSheetBrightnessSelected:" + blur);
+        setBlurValue(blur);
     }
 
     @Override
-    public void onActionSheetSmoothSelected(float smooth) {
-        Log.i(TAG, "onActionSheetSmoothSelected:" + smooth);
+    public void onActionSheetWhitenSelected(float whiten) {
+        Log.i(TAG, "onActionSheetWhitenSelected:" + whiten);
+        setWhitenValue(whiten);
     }
 
     @Override
-    public void onActionSheetColorTemperatureSelected(float temperature) {
-        Log.i(TAG, "onActionSheetColorTemperatureSelected:" + temperature);
+    public void onActionSheetCheekSelected(float cheek) {
+        Log.i(TAG, "onActionSheetCheekSelected:" + cheek);
+        setCheekValue(cheek);
     }
 
     @Override
-    public void onActionSheetContrastSelected(int type) {
-        Log.i(TAG, "onActionSheetContrastSelected:" + type);
+    public void onActionSheetEyeEnlargeSelected(float eye) {
+        Log.i(TAG, "onActionSheetEyeEnlargeSelected:" + eye);
+        setEyeValue(eye);
     }
 
     @Override

@@ -70,7 +70,7 @@ public abstract class LiveBaseActivity extends BaseActivity
     protected String rtcChannelName;
 
     private RtmMessageManager mMessageManager;
-    private CameraVideoChannel mCameraChannel;
+    protected CameraVideoChannel cameraChannel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,7 +139,7 @@ public abstract class LiveBaseActivity extends BaseActivity
         registerRtcHandler(this);
 
         initVideoModule();
-        mCameraChannel = (CameraVideoChannel) VideoModule.instance()
+        cameraChannel = (CameraVideoChannel) VideoModule.instance()
                 .getVideoChannel(ChannelManager.ChannelID.CAMERA);
     }
 
@@ -186,28 +186,52 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     protected void startCameraCapture() {
-        if (mCameraChannel != null && !mCameraChannel.hasCaptureStarted()) {
+        if (cameraChannel != null && !cameraChannel.hasCaptureStarted()) {
             Log.i("LiveBaseActivity", "startCameraCapture");
             enablePreProcess(config().isBeautyEnabled());
-            mCameraChannel.startCapture();
+            cameraChannel.startCapture();
         }
     }
 
     protected void switchCamera() {
-        if (mCameraChannel != null) {
-            mCameraChannel.switchCamera();
+        if (cameraChannel != null) {
+            cameraChannel.switchCamera();
         }
     }
 
     protected void stopCameraCapture() {
-        if (mCameraChannel != null && mCameraChannel.hasCaptureStarted()) {
-            mCameraChannel.stopCapture();
+        if (cameraChannel != null && cameraChannel.hasCaptureStarted()) {
+            cameraChannel.stopCapture();
         }
     }
 
     protected void enablePreProcess(boolean enabled) {
-        if (mCameraChannel != null) {
-            mCameraChannel.enablePreProcess(enabled);
+        if (cameraChannel != null) {
+            cameraChannel.enablePreProcess(enabled);
+        }
+    }
+
+    protected void setBlurValue(float blur) {
+        if (cameraChannel != null) {
+            cameraChannel.setBlurValue(blur);
+        }
+    }
+
+    protected void setWhitenValue(float whiten) {
+        if (cameraChannel != null) {
+            cameraChannel.setWhitenValue(whiten);
+        }
+    }
+
+    protected void setCheekValue(float cheek) {
+        if (cameraChannel != null) {
+            cameraChannel.setCheekValue(cheek);
+        }
+    }
+
+    protected void setEyeValue(float eye) {
+        if (cameraChannel != null) {
+            cameraChannel.setEyeValue(eye);
         }
     }
 

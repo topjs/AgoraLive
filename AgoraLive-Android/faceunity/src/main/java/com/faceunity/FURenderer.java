@@ -736,6 +736,7 @@ public class FURenderer implements OnFUControlListener {
         // 修改美颜参数
         if (mIsNeedUpdateFaceBeauty && mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX] > 0) {
             int itemBeauty = mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX];
+            Log.d(TAG, "beauty drawn");
             faceunity.fuItemSetParam(itemBeauty, BeautificationParams.IS_BEAUTY_ON, 1.0);
             // filter_name 滤镜名称
             faceunity.fuItemSetParam(itemBeauty, BeautificationParams.FILTER_NAME, mFilterName);

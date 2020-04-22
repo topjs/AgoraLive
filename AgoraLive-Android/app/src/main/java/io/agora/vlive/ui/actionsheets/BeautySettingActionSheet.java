@@ -14,25 +14,22 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
     public interface BeautyActionSheetListener extends AbsActionSheetListener {
         void onActionSheetBeautyEnabled(boolean enabled);
-        void onActionSheetBrightnessSelected(float brightness);
-        void onActionSheetSmoothSelected(float smooth);
-        void onActionSheetColorTemperatureSelected(float temperature);
-        void onActionSheetContrastSelected(int type);
+        void onActionSheetBlurSelected(float blur);
+        void onActionSheetWhitenSelected(float whiten);
+        void onActionSheetCheekSelected(float cheek);
+        void onActionSheetEyeEnlargeSelected(float eye);
     }
 
-    public static final int CONTRAST_LOW = 0;
-    public static final int CONTRAST_MEDIUM = 1;
-    public static final int CONTRAST_HIGH = 2;
+    private SeekBar mBlurSeekBar;
+    private SeekBar mWhitenSeekBar;
+    private SeekBar mCheekSeekBar;
+    private SeekBar mEyeSeekBar;
 
-    private SeekBar mBrightnessSeekBar;
-    private SeekBar mSmoothSeekBar;
-    private SeekBar mColorTempSeekBar;
-    private AppCompatTextView mBrightnessValue;
-    private AppCompatTextView mSmoothValue;
-    private AppCompatTextView mColorTempValue;
-    private AppCompatTextView mContrastLowBtn;
-    private AppCompatTextView mContrastMediumBtn;
-    private AppCompatTextView mContrastHighBtn;
+    private AppCompatTextView mBlurValue;
+    private AppCompatTextView mWhitenValue;
+    private AppCompatTextView mCheekValue;
+    private AppCompatTextView mEyeValue;
+
     private View mBeautySwitch;
 
     private BeautyActionSheetListener mListener;
@@ -56,39 +53,36 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         addView(LayoutInflater.from(getContext()).
                 inflate(R.layout.action_beauty, this, false));
 
-        mBrightnessSeekBar = findViewById(R.id.beauty_brightness_progress_bar);
-        mSmoothSeekBar = findViewById(R.id.beauty_smooth_progress_bar);
-        mColorTempSeekBar = findViewById(R.id.beauty_temperature_progress_bar);
+        mBlurSeekBar = findViewById(R.id.beauty_blur_progress_bar);
+        mWhitenSeekBar = findViewById(R.id.beauty_whiten_progress_bar);
+        mCheekSeekBar = findViewById(R.id.beauty_cheek_progress_bar);
+        mEyeSeekBar = findViewById(R.id.beauty_eye_progress_bar);
 
-        mBrightnessSeekBar.setOnSeekBarChangeListener(this);
-        mSmoothSeekBar.setOnSeekBarChangeListener(this);
-        mColorTempSeekBar.setOnSeekBarChangeListener(this);
+        mBlurSeekBar.setOnSeekBarChangeListener(this);
+        mWhitenSeekBar.setOnSeekBarChangeListener(this);
+        mCheekSeekBar.setOnSeekBarChangeListener(this);
+        mEyeSeekBar.setOnSeekBarChangeListener(this);
 
-        mBrightnessValue = findViewById(R.id.beauty_value_brightness);
-        mSmoothValue = findViewById(R.id.beauty_value_smooth);
-        mColorTempValue = findViewById(R.id.beauty_value_temperature);
+        mBlurValue = findViewById(R.id.beauty_value_blur);
+        mWhitenValue = findViewById(R.id.beauty_value_whiten);
+        mCheekValue = findViewById(R.id.beauty_value_cheek);
+        mEyeValue = findViewById(R.id.beauty_value_eye);
 
-        float value = application().config().beautyBrightness();
-        mBrightnessSeekBar.setProgress(valueToProgress(value));
-        mBrightnessValue.setText(String.valueOf(value));
+        float value = application().config().blurValue();
+        mBlurSeekBar.setProgress(valueToProgress(value));
+        mBlurValue.setText(String.valueOf(value));
 
-        value = application().config().beautySmooth();
-        mSmoothSeekBar.setProgress(valueToProgress(value));
-        mSmoothValue.setText(String.valueOf(value));
+        value = application().config().whitenValue();
+        mWhitenSeekBar.setProgress(valueToProgress(value));
+        mWhitenValue.setText(String.valueOf(value));
 
-        value = application().config().beautyColorTemp();
-        mColorTempSeekBar.setProgress(valueToProgress(value));
-        mColorTempValue.setText(String.valueOf(value));
+        value = application().config().cheekValue();
+        mCheekSeekBar.setProgress(valueToProgress(value));
+        mCheekValue.setText(String.valueOf(value));
 
-        mContrastLowBtn = findViewById(R.id.beauty_contrast_low);
-        mContrastMediumBtn = findViewById(R.id.beauty_contrast_medium);
-        mContrastHighBtn = findViewById(R.id.beauty_contrast_high);
-        mContrastLowBtn.setOnClickListener(this);
-        mContrastMediumBtn.setOnClickListener(this);
-        mContrastHighBtn.setOnClickListener(this);
-
-        contrastTypeToButton(application().config().
-                beautyContrast()).setActivated(true);
+        value = application().config().eyeValue();
+        mEyeSeekBar.setProgress(valueToProgress(value));
+        mEyeValue.setText(String.valueOf(value));
 
         mBeautySwitch = findViewById(R.id.beauty_switch);
         mBeautySwitch.setOnClickListener(this);
@@ -103,31 +97,7 @@ public class BeautySettingActionSheet extends AbstractActionSheet
             mBeautySwitch.setActivated(activated);
             application().config().setBeautyEnabled(activated);
             if (mListener != null) mListener.onActionSheetBeautyEnabled(activated);
-            return;
         }
-
-        mContrastLowBtn.setActivated(false);
-        mContrastMediumBtn.setActivated(false);
-        mContrastHighBtn.setActivated(false);
-
-        int type = CONTRAST_LOW;
-        switch (view.getId()) {
-            case R.id.beauty_contrast_low:
-                mContrastLowBtn.setActivated(true);
-                type = CONTRAST_LOW;
-                break;
-            case R.id.beauty_contrast_medium:
-                mContrastMediumBtn.setActivated(true);
-                type = CONTRAST_MEDIUM;
-                break;
-            case R.id.beauty_contrast_high:
-                mContrastHighBtn.setActivated(true);
-                type = CONTRAST_HIGH;
-                break;
-        }
-
-        application().config().setContrast(type);
-        if (mListener != null) mListener.onActionSheetContrastSelected(type);
     }
 
     @Override
@@ -144,20 +114,25 @@ public class BeautySettingActionSheet extends AbstractActionSheet
     public void onStopTrackingTouch(SeekBar seekBar) {
         float value = progressToValue(seekBar.getProgress());
         switch (seekBar.getId()) {
-            case R.id.beauty_brightness_progress_bar:
-                mBrightnessValue.setText(String.valueOf(value));
-                application().config().setBeautyBrightness(value);
-                if (mListener != null) mListener.onActionSheetBrightnessSelected(value);
+            case R.id.beauty_blur_progress_bar:
+                mBlurValue.setText(String.valueOf(value));
+                application().config().setBlurValue(value);
+                if (mListener != null) mListener.onActionSheetBlurSelected(value);
                 break;
-            case R.id.beauty_smooth_progress_bar:
-                mSmoothValue.setText(String.valueOf(value));
-                application().config().setBeautySmooth(value);
-                if (mListener != null) mListener.onActionSheetSmoothSelected(value);
+            case R.id.beauty_whiten_progress_bar:
+                mWhitenValue.setText(String.valueOf(value));
+                application().config().setWhitenValue(value);
+                if (mListener != null) mListener.onActionSheetWhitenSelected(value);
                 break;
-            case R.id.beauty_temperature_progress_bar:
-                mColorTempValue.setText(String.valueOf(value));
-                application().config().setBeautyColorTemp(value);
-                if (mListener != null) mListener.onActionSheetColorTemperatureSelected(value);
+            case R.id.beauty_cheek_progress_bar:
+                mCheekValue.setText(String.valueOf(value));
+                application().config().setCheekValue(value);
+                if (mListener != null) mListener.onActionSheetCheekSelected(value);
+                break;
+            case R.id.beauty_eye_progress_bar:
+                mEyeValue.setText(String.valueOf(value));
+                application().config().setEyeValue(value);
+                if (mListener != null) mListener.onActionSheetEyeEnlargeSelected(value);
                 break;
         }
     }
@@ -168,17 +143,6 @@ public class BeautySettingActionSheet extends AbstractActionSheet
 
     private float progressToValue(int progress) {
         return progress / 10.0f;
-    }
-
-    private AppCompatTextView contrastTypeToButton(int type) {
-        switch (type) {
-            case CONTRAST_LOW:
-                return mContrastLowBtn;
-            case CONTRAST_MEDIUM:
-                return mContrastMediumBtn;
-            default:
-                return mContrastHighBtn;
-        }
     }
 
     @Override

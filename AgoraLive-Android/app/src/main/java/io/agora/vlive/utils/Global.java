@@ -10,10 +10,10 @@ public class Global {
         // Shared reference keys
         public static final String SF_NAME = "sf-agora-live";
         public static final String KEY_BEAUTY_ENABLED = "key-beauty-enabled";
-        public static final String KEY_BRIGHTNESS = "key-brightness";
-        public static final String KEY_SMOOTH = "key-smooth";
-        public static final String KEY_TEMPERATURE = "key-color-temperature";
-        public static final String KEY_CONTRAST = "key-contrast";
+        public static final String KEY_BLUR = "key-blur";
+        public static final String KEY_WHITEN = "key-whiten";
+        public static final String KEY_CHEEK = "key-cheek";
+        public static final String KEY_EYE = "key-eye";
 
         public static final String KEY_RESOLUTION = "key-resolution";
         public static final String KEY_FRAME_RATE = "key-framerate";

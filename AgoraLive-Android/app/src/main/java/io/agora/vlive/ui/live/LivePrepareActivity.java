@@ -202,46 +202,50 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     }
 
     @Override
-    public void onActionSheetBrightnessSelected(float brightness) {
-        Log.i(TAG, "onActionSheetBrightnessSelected:" + brightness);
+    public void onActionSheetBlurSelected(float blur) {
+        Log.d(TAG, "onActionSheetBlurSelected:" + blur);
+        setBlurValue(blur);
     }
 
     @Override
-    public void onActionSheetSmoothSelected(float smooth) {
-        Log.i(TAG, "onActionSheetSmoothSelected:" + smooth);
+    public void onActionSheetWhitenSelected(float whiten) {
+        Log.d(TAG, "onActionSheetWhitenSelected:" + whiten);
+        setWhitenValue(whiten);
     }
 
     @Override
-    public void onActionSheetColorTemperatureSelected(float temperature) {
-        Log.i(TAG, "onActionSheetColorTemperatureSelected:" + temperature);
+    public void onActionSheetCheekSelected(float cheek) {
+        Log.d(TAG, "onActionSheetCheekSelected:" + cheek);
+        setCheekValue(cheek);
     }
 
     @Override
-    public void onActionSheetContrastSelected(int type) {
-        Log.i(TAG, "onActionSheetContrastSelected:" + type);
+    public void onActionSheetEyeEnlargeSelected(float eye) {
+        Log.d(TAG, "onActionSheetEyeEnlargeSelected:" + eye);
+        setEyeValue(eye);
     }
 
     @Override
     public void onActionSheetResolutionSelected(int index) {
-        Log.i(TAG, "onActionSheetResolutionSelected:" + index);
+        Log.d(TAG, "onActionSheetResolutionSelected:" + index);
         config().setResolutionIndex(index);
     }
 
     @Override
     public void onActionSheetFrameRateSelected(int index) {
-        Log.i(TAG, "onActionSheetFrameRateSelected:" + index);
+        Log.d(TAG, "onActionSheetFrameRateSelected:" + index);
         config().setFrameRateIndex(index);
     }
 
     @Override
     public void onActionSheetBitrateSelected(int bitrate) {
-        Log.i(TAG, "onActionSheetBitrateSelected:" + bitrate);
+        Log.d(TAG, "onActionSheetBitrateSelected:" + bitrate);
         config().setVideoBitrate(bitrate);
     }
 
     @Override
     public void onActionSheetSettingBackPressed() {
-        Log.i(TAG, "onActionSheetSettingBackPressed:");
+        Log.d(TAG, "onActionSheetSettingBackPressed:");
     }
 
     @Override

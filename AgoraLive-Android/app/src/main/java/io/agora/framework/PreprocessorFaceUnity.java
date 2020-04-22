@@ -11,6 +11,11 @@ import io.agora.framework.preprocess.IPreprocessor;
 public class PreprocessorFaceUnity implements IPreprocessor {
     private final static String TAG = PreprocessorFaceUnity.class.getSimpleName();
 
+    public static final float DEFAULT_BLUR_VALUE = 0.7f;
+    public static final float DEFAULT_WHITEN_VALUE = 0.3f;
+    public static final float DEFAULT_CHEEK_VALUE = 0f;
+    public static final float DEFAULT_EYE_VALUE = 0.4f;
+
     private FURenderer mFURenderer;
     private Context mContext;
     private boolean mEnabled;
@@ -42,6 +47,10 @@ public class PreprocessorFaceUnity implements IPreprocessor {
         mFURenderer = new FURenderer.Builder(mContext).
                 inputImageFormat(FURenderer.FU_ADM_FLAG_EXTERNAL_OES_TEXTURE).build();
         mFURenderer.onSurfaceCreated();
+        mFURenderer.onBlurLevelSelected(DEFAULT_BLUR_VALUE);
+        mFURenderer.onColorLevelSelected(DEFAULT_WHITEN_VALUE);
+        mFURenderer.onCheekVSelected(DEFAULT_CHEEK_VALUE);
+        mFURenderer.onEyeEnlargeSelected(DEFAULT_EYE_VALUE);
     }
 
     @Override
@@ -53,6 +62,34 @@ public class PreprocessorFaceUnity implements IPreprocessor {
     public void releasePreprocessor(VideoChannel.ChannelContext context) {
         if (mFURenderer != null) {
             mFURenderer.onSurfaceDestroyed();
+        }
+    }
+
+    @Override
+    public void setBlurValue(float blur) {
+        if (mFURenderer != null) {
+            mFURenderer.onBlurLevelSelected(blur);
+        }
+    }
+
+    @Override
+    public void setWhitenValue(float whiten) {
+        if (mFURenderer != null) {
+            mFURenderer.onColorLevelSelected(whiten);
+        }
+    }
+
+    @Override
+    public void setCheekValue(float cheek) {
+        if (mFURenderer != null) {
+            mFURenderer.onCheekThinningSelected(cheek);
+        }
+    }
+
+    @Override
+    public void setEyeValue(float eye) {
+        if (mFURenderer != null) {
+            mFURenderer.onEyeEnlargeSelected(eye);
         }
     }
 }

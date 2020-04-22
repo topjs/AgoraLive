@@ -68,13 +68,13 @@
     <string name="live_room_beauty_action_sheet_brightness">亮度</string>
     <string name="live_room_beauty_action_sheet_smooth">光滑</string>
     <string name="live_room_beauty_action_sheet_temperature">色温</string>
-    <string name="live_room_beauty_action_sheet_contrast">对比度</string>
-    <string name="live_room_beauty_action_sheet_contrast_low">低</string>
-    <string name="live_room_beauty_action_sheet_contrast_medium">中</string>
-    <string name="live_room_beauty_action_sheet_contrast_high">高</string>
+
+    <string name="live_room_beauty_action_sheet_blur">磨皮</string>
+    <string name="live_room_beauty_action_sheet_color">美白</string>
+    <string name="live_room_beauty_action_sheet_cheek_thinning">瘦脸</string>
+    <string name="live_room_beauty_action_sheet_eye_enlarge">大眼</string>
 
     <string name="live_room_bg_music_action_sheet_title">背景音乐</string>
-
     <string name="live_room_gift_action_sheet_title">礼物</string>
     <string name="live_room_gift_action_sheet_send">赠送</string>
     <string name="live_room_gift_action_sheet_value_format">(%d金币)</string>

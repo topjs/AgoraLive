@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/live_room_action_sheet_beauty_height"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/round_top_corner_white_bg">
     <RelativeLayout
@@ -38,16 +37,16 @@
         android:paddingStart="@dimen/live_room_action_sheet_margin"
         android:paddingEnd="@dimen/live_room_action_sheet_margin">
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/beauty_title_brightness"
+            android:id="@+id/beauty_title_blur"
             android:layout_width="@dimen/live_room_action_sheet_beauty_title_width"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="@string/live_room_beauty_action_sheet_brightness"
+            android:text="@string/live_room_beauty_action_sheet_blur"
             android:textAlignment="gravity"
             android:gravity="start"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/beauty_value_brightness"
+            android:id="@+id/beauty_value_blur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -55,12 +54,12 @@
             android:textAlignment="gravity"
             android:gravity="center"/>
         <androidx.appcompat.widget.AppCompatSeekBar
-            android:id="@+id/beauty_brightness_progress_bar"
+            android:id="@+id/beauty_blur_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/live_room_setting_progress_height"
+            android:layout_toEndOf="@id/beauty_title_blur"
+            android:layout_toStartOf="@id/beauty_value_blur"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/beauty_value_brightness"
-            android:layout_toEndOf="@id/beauty_title_brightness"
             style="@style/action_sheet_beauty_seek_bar"/>
     </RelativeLayout>
     <RelativeLayout
@@ -69,16 +68,16 @@
         android:paddingStart="@dimen/live_room_action_sheet_margin"
         android:paddingEnd="@dimen/live_room_action_sheet_margin">
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/beauty_title_smooth"
+            android:id="@+id/beauty_title_whiten"
             android:layout_width="@dimen/live_room_action_sheet_beauty_title_width"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="@string/live_room_beauty_action_sheet_smooth"
+            android:text="@string/live_room_beauty_action_sheet_color"
             android:textAlignment="gravity"
             android:gravity="start"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/beauty_value_smooth"
+            android:id="@+id/beauty_value_whiten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -86,11 +85,11 @@
             android:textAlignment="gravity"
             android:gravity="center"/>
         <androidx.appcompat.widget.AppCompatSeekBar
-            android:id="@+id/beauty_smooth_progress_bar"
+            android:id="@+id/beauty_whiten_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/live_room_setting_progress_height"
-            android:layout_toEndOf="@id/beauty_title_smooth"
-            android:layout_toStartOf="@id/beauty_value_smooth"
+            android:layout_toEndOf="@id/beauty_title_whiten"
+            android:layout_toStartOf="@id/beauty_value_whiten"
             android:layout_centerVertical="true"
             style="@style/action_sheet_beauty_seek_bar"/>
     </RelativeLayout>
@@ -99,18 +98,17 @@
         android:layout_height="@dimen/live_room_action_sheet_seek_bar_item_height"
         android:paddingStart="@dimen/live_room_action_sheet_margin"
         android:paddingEnd="@dimen/live_room_action_sheet_margin">
-
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/beauty_title_temperature"
-            android:layout_width="84dp"
+            android:id="@+id/beauty_title_cheek"
+            android:layout_width="@dimen/live_room_action_sheet_beauty_title_width"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:gravity="start"
-            android:text="@string/live_room_beauty_action_sheet_temperature"
+            android:text="@string/live_room_beauty_action_sheet_cheek_thinning"
             android:textAlignment="gravity"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/beauty_value_temperature"
+            android:id="@+id/beauty_value_cheek"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -118,58 +116,43 @@
             android:textAlignment="gravity"
             android:gravity="center"/>
         <androidx.appcompat.widget.AppCompatSeekBar
-            android:id="@+id/beauty_temperature_progress_bar"
+            android:id="@+id/beauty_cheek_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/live_room_setting_progress_height"
-            android:layout_toEndOf="@id/beauty_title_temperature"
-            android:layout_toStartOf="@id/beauty_value_temperature"
+            android:layout_toEndOf="@id/beauty_title_cheek"
+            android:layout_toStartOf="@id/beauty_value_cheek"
             android:layout_centerVertical="true"
             style="@style/action_sheet_beauty_seek_bar"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/live_room_action_sheet_seek_bar_item_height"
-        android:layout_marginBottom="@dimen/live_room_action_sheet_margin"
         android:paddingStart="@dimen/live_room_action_sheet_margin"
         android:paddingEnd="@dimen/live_room_action_sheet_margin">
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/beauty_title_contrast"
-            android:layout_width="84dp"
+            android:id="@+id/beauty_title_eye"
+            android:layout_width="@dimen/live_room_action_sheet_beauty_title_width"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:gravity="start"
-            android:text="@string/live_room_beauty_action_sheet_contrast"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
+            android:text="@string/live_room_beauty_action_sheet_eye_enlarge"
+            android:textAlignment="gravity"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/beauty_value_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textAlignment="gravity"
+            android:gravity="center"/>
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/beauty_eye_progress_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/beauty_title_contrast"
-            android:layout_alignParentEnd="true">
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/beauty_contrast_low"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/beauty_contrast_medium"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/live_room_beauty_action_sheet_contrast_low"
-                style="@style/beauty_action_sheet_button"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/beauty_contrast_medium"
-                app:layout_constraintStart_toEndOf="@id/beauty_contrast_low"
-                app:layout_constraintEnd_toStartOf="@id/beauty_contrast_high"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/live_room_beauty_action_sheet_contrast_medium"
-                style="@style/beauty_action_sheet_button"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/beauty_contrast_high"
-                app:layout_constraintStart_toEndOf="@id/beauty_contrast_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/live_room_beauty_action_sheet_contrast_high"
-                style="@style/beauty_action_sheet_button"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="@dimen/live_room_setting_progress_height"
+            android:layout_toEndOf="@id/beauty_title_eye"
+            android:layout_toStartOf="@id/beauty_value_eye"
+            android:layout_centerVertical="true"
+            style="@style/action_sheet_beauty_seek_bar"/>
     </RelativeLayout>
 </LinearLayout>

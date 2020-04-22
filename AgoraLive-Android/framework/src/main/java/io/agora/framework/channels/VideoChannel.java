@@ -271,6 +271,30 @@ public class VideoChannel extends HandlerThread {
         mOffScreenMode = enabled;
     }
 
+    public void setBlurValue(float blur) {
+        if (mPreprocessor != null) {
+            mPreprocessor.setBlurValue(blur);
+        }
+    }
+
+    public void setWhitenValue(float whiten) {
+        if (mPreprocessor != null) {
+            mPreprocessor.setWhitenValue(whiten);
+        }
+    }
+
+    public void setCheekValue(float cheek) {
+        if (mPreprocessor != null) {
+            mPreprocessor.setCheekValue(cheek);
+        }
+    }
+
+    public void setEyeValue(float eye) {
+        if (mPreprocessor != null) {
+            mPreprocessor.setEyeValue(eye);
+        }
+    }
+
     public static class ChannelContext {
         private Context mContext;
         private EglCore mEglCore;

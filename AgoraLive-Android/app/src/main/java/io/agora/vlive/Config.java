@@ -7,6 +7,7 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.agora.framework.PreprocessorFaceUnity;
 import io.agora.framework.camera.Constant;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 import io.agora.vlive.proxy.struts.model.AppVersionInfo;
@@ -105,19 +106,14 @@ public class Config {
 
         mBeautyEnabled = sp.getBoolean(Global.Constants.KEY_BEAUTY_ENABLED, true);
 
-        // The default value should come from FaceUnity
-        // module, which will be completed soon
-        mBrightnessValue = sp.getFloat(Global.Constants.KEY_BRIGHTNESS, 0.3f);
-        mSmoothValue = sp.getFloat(Global.Constants.KEY_SMOOTH, 0.3f);
-        mColorTemperatureValue = sp.getFloat(Global.Constants.KEY_TEMPERATURE, 0.3f);
-
-        mContrast = sp.getInt(Global.Constants.KEY_CONTRAST,
-                BeautySettingActionSheet.CONTRAST_MEDIUM);
+        mBlurValue = sp.getFloat(Global.Constants.KEY_BLUR, PreprocessorFaceUnity.DEFAULT_BLUR_VALUE);
+        mWhitenValue = sp.getFloat(Global.Constants.KEY_WHITEN, PreprocessorFaceUnity.DEFAULT_WHITEN_VALUE);
+        mCheekValue = sp.getFloat(Global.Constants.KEY_CHEEK, PreprocessorFaceUnity.DEFAULT_CHEEK_VALUE);
+        mEyeValue = sp.getFloat(Global.Constants.KEY_EYE, PreprocessorFaceUnity.DEFAULT_EYE_VALUE);
 
         mResolutionIndex = sp.getInt(Global.Constants.KEY_RESOLUTION, Global.Constants.VIDEO_DEFAULT_RESOLUTION_INDEX);
         mFrameRateIndex = sp.getInt(Global.Constants.KEY_FRAME_RATE, Global.Constants.VIDEO_DEFAULT_FRAME_RATE_INDEX);
         mBitrate = sp.getInt(Global.Constants.KEY_BITRATE, Global.Constants.VIDEO_DEFAULT_BITRATE);
-
     }
 
     private UserProfile mUserProfile;
@@ -131,10 +127,10 @@ public class Config {
 
     // Beautification configs
     private boolean mBeautyEnabled;
-    private float mBrightnessValue;
-    private float mSmoothValue;
-    private float mColorTemperatureValue;
-    private int mContrast;
+    private float mBlurValue;
+    private float mWhitenValue;
+    private float mCheekValue;
+    private float mEyeValue;
 
     // Video configs
     private int mResolutionIndex;
@@ -189,44 +185,44 @@ public class Config {
         this.mCameraFacing = facing;
     }
 
-    public float beautyBrightness() {
-        return mBrightnessValue;
+    public float blurValue() {
+        return mBlurValue;
     }
 
-    public void setBeautyBrightness(float brightness) {
-        mBrightnessValue = brightness;
+    public void setBlurValue(float blur) {
+        mBlurValue = blur;
         mApplication.preferences().edit()
-                .putFloat(Global.Constants.KEY_BRIGHTNESS, brightness).apply();
+                .putFloat(Global.Constants.KEY_BLUR, blur).apply();
     }
 
-    public float beautySmooth() {
-        return mSmoothValue;
+    public float whitenValue() {
+        return mWhitenValue;
     }
 
-    public void setBeautySmooth(float smooth) {
-        mSmoothValue = smooth;
+    public void setWhitenValue(float whiten) {
+        mWhitenValue = whiten;
         mApplication.preferences().edit()
-                .putFloat(Global.Constants.KEY_SMOOTH, smooth).apply();
+                .putFloat(Global.Constants.KEY_WHITEN, whiten).apply();
     }
 
-    public float beautyColorTemp() {
-        return mColorTemperatureValue;
+    public float cheekValue() {
+        return mCheekValue;
     }
 
-    public void setBeautyColorTemp(float temperature) {
-        mColorTemperatureValue = temperature;
+    public void setCheekValue(float cheek) {
+        mCheekValue = cheek;
         mApplication.preferences().edit()
-                .putFloat(Global.Constants.KEY_TEMPERATURE, temperature).apply();
+                .putFloat(Global.Constants.KEY_CHEEK, cheek).apply();
     }
 
-    public int beautyContrast() {
-        return mContrast;
+    public float eyeValue() {
+        return mEyeValue;
     }
 
-    public void setContrast(int contrast) {
-        mContrast = contrast;
+    public void setEyeValue(float eye) {
+        mEyeValue = eye;
         mApplication.preferences().edit()
-                .putInt(Global.Constants.KEY_CONTRAST, contrast).apply();
+                .putFloat(Global.Constants.KEY_EYE, eye).apply();
     }
 
     public int resolutionIndex() {
