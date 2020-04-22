@@ -120,6 +120,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
         // If I am the room owner, I will start single broadcasting
         // right now and do not need to start in "enter room" response
         if (isOwner) mBroadcastStarted = true;
+
+        rtcStatsView = findViewById(R.id.host_pk_rtc_stats);
     }
 
     @Override
