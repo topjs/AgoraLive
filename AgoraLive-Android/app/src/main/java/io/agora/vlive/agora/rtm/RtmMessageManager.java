@@ -60,6 +60,8 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
 
     private static final int CHANNEL_MSG_TYPE_GIFT = 7;
 
+    private static final int CHANNEL_MSG_TYPE_LEAVE = 8;
+
     private static final int PEER_MSG_CMD_APPLY = 101;
     private static final int PEER_MSG_CMD_INVITE = 102;
     private static final int PEER_MSG_CMD_APPLY_REJECT = 103;
@@ -336,6 +338,8 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
                     case CHANNEL_MSG_TYPE_GIFT:
                         GiftMessage giftMessage = gson.fromJson(json, GiftMessage.class);
                         handleGiftMessage(listener, giftMessage);
+                    case CHANNEL_MSG_TYPE_LEAVE:
+                        handleLeaveMessage(listener);
                         break;
                 }
             }
@@ -402,6 +406,14 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
             mHandler.post(() -> listener.onRtmGiftMessage(data.fromUserId, data.fromUserName, data.toUserId, data.toUserName, data.giftId));
         } else {
             listener.onRtmGiftMessage(data.fromUserId, data.fromUserName, data.toUserId, data.toUserName, data.giftId);
+        }
+    }
+
+    private void handleLeaveMessage(@NonNull RtmMessageListener listener) {
+        if (mHandler != null) {
+            mHandler.post(listener::onRtmLeaveMessage);
+        } else {
+            listener.onRtmLeaveMessage();
         }
     }
 

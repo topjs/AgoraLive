@@ -56,4 +56,6 @@ public interface RtmMessageListener {
     void onRtmPkStateChanged(PKMessage.PKMessageData messageData);
 
     void onRtmGiftMessage(String fromUserId, String fromUserName, String toUserId, String toUserName, int giftId);
+
+    void onRtmLeaveMessage();
 }

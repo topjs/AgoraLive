@@ -351,6 +351,11 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
+    public void onRtmLeaveMessage() {
+
+    }
+
+    @Override
     public void onRtcJoinChannelSuccess(String channel, int uid, int elapsed) {
 
     }

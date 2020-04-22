@@ -482,17 +482,15 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         runOnUiThread(() -> {
             // update room user count
             participants.reset(total);
-
             for (NotificationMessage.NotificationItem item : list) {
-                if (ownerId.equals(item.userId) && item.state == LiveRoomMessageList.MSG_SYSTEM_STATE_LEAVE
-                    && item.role == LiveRoomMessageList.MSG_SYSTEM_ROLE_OWNER) {
-                    // Leave the room if the room owner already leaves the room
-                    leaveRoom();
-                } else {
-                    messageList.addMessage(LiveRoomMessageList.MSG_TYPE_SYSTEM, item.userName, "", item.state);
-                }
+                messageList.addMessage(LiveRoomMessageList.MSG_TYPE_SYSTEM, item.userName, "", item.state);
             }
         });
+    }
+
+    @Override
+    public void onRtmLeaveMessage() {
+        runOnUiThread(this::leaveRoom);
     }
 
     @Override

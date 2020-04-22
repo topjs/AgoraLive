@@ -2,6 +2,7 @@ package io.agora.vlive.proxy.struts.response;
 
 import java.util.List;
 
+import io.agora.vlive.agora.rtm.model.PKMessage;
 import io.agora.vlive.proxy.struts.model.EnterRoomUserInfo;
 import io.agora.vlive.proxy.struts.model.SeatInfo;
 
@@ -49,5 +50,6 @@ public class EnterRoomResponse extends AbsResponse {
         public int hostRoomRank;
         public long countDown;
         public Owner pkRoomOwner;
+        public PKMessage.RelayConfig relayConfig;
     }
 }

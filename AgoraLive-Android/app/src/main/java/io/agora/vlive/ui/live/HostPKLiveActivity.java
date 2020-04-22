@@ -173,13 +173,15 @@ public class HostPKLiveActivity extends LiveRoomActivity
                                 SeatInfo.User.USER_VIDEO_ENABLE;
                     }
 
+                    setupUIMode(false, isOwner);
                     setupSingleBroadcastBehavior(isOwner, audioMuted, videoMuted);
                     mBroadcastStarted = true;
                 } else {
                     mBroadcastStarted = false;
                     setupUIMode(true, isOwner);
                     setupPkBehavior(isOwner, response.data.room.pk.countDown,
-                            response.data.room.pk.pkRoomOwner.userName, null,
+                            response.data.room.pk.pkRoomOwner.userName,
+                            response.data.room.pk.relayConfig,
                             response.data.room.pk.pkRoomOwner.uid);
                     updatePkGiftRank(response.data.room.pk.hostRoomRank,
                             response.data.room.pk.pkRoomRank);
@@ -267,6 +269,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
         config().setVideoMuted(videoMuted);
         rtcEngine().muteLocalAudioStream(audioMuted);
         rtcEngine().muteLocalVideoStream(videoMuted);
+        bottomButtons.setRole(isOwner ? LiveBottomButtonLayout.ROLE_OWNER : LiveBottomButtonLayout.ROLE_AUDIENCE);
     }
 
     private void startMediaRelay(PKMessage.RelayConfig config) {
