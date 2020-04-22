@@ -497,6 +497,6 @@ public class HostPKLiveActivity extends LiveRoomActivity
 
     @Override
     public void onRtcRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
-        Log.i(TAG, "onRtcRemoteVideoStateChanged uid:" + uid + " state:" + state);
+
     }
 }
