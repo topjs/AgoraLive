@@ -502,6 +502,11 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     }
 
     @Override
+    public void onRtcJoinChannelSuccess(String channel, int uid, int elapsed) {
+        Log.d(TAG, "onRtcJoinChannelSuccess:" + channel + " uid:" + (uid & 0xFFFFFFFFL));
+    }
+
+    @Override
     public void onRtcRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
         Log.d(TAG, "onRtcRemoteVideoStateChanged: " + (uid & 0xFFFFFFFFL) +
                 " state:" + state + " reason:" + reason);

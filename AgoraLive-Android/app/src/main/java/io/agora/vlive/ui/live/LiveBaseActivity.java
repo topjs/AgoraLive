@@ -69,10 +69,6 @@ public abstract class LiveBaseActivity extends BaseActivity
     // and obtained when entering the room.
     protected String rtcChannelName;
 
-    // Used to receive video from video channel,
-    // and push video frames to rtc engine
-    private RtcVideoConsumer mRtcConsumer;
-
     private RtmMessageManager mMessageManager;
     private CameraVideoChannel mCameraChannel;
 
@@ -143,7 +139,6 @@ public abstract class LiveBaseActivity extends BaseActivity
         registerRtcHandler(this);
 
         initVideoModule();
-        mRtcConsumer = new RtcVideoConsumer(VideoModule.instance());
         mCameraChannel = (CameraVideoChannel) VideoModule.instance()
                 .getVideoChannel(ChannelManager.ChannelID.CAMERA);
     }
@@ -169,7 +164,7 @@ public abstract class LiveBaseActivity extends BaseActivity
 
     protected void joinRtcChannel() {
         rtcEngine().setClientRole(myRtcRole);
-        rtcEngine().setVideoSource(mRtcConsumer);
+        rtcEngine().setVideoSource(new RtcVideoConsumer(VideoModule.instance()));
         setVideoConfiguration();
         rtcEngine().joinChannel(config().getUserProfile().getRtcToken(),
                 rtcChannelName, null, (int) config().getUserProfile().getAgoraUid());

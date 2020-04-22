@@ -338,6 +338,7 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
                     case CHANNEL_MSG_TYPE_GIFT:
                         GiftMessage giftMessage = gson.fromJson(json, GiftMessage.class);
                         handleGiftMessage(listener, giftMessage);
+                        break;
                     case CHANNEL_MSG_TYPE_LEAVE:
                         handleLeaveMessage(listener);
                         break;

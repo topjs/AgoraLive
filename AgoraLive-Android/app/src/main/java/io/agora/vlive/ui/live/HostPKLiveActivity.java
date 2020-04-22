@@ -51,6 +51,14 @@ public class HostPKLiveActivity extends LiveRoomActivity
     private boolean mPkStarted;
     private boolean mBroadcastStarted;
 
+    // When the owner returns to his room and the room
+    // is in pk mode before he left, the owner needs to
+    // start pk mode. But he also needs to join rtc channel
+    // first. This pending request records the case.
+    private boolean mPendingStartPkRequest;
+
+    private PKMessage.RelayConfig mPendingPkConfig;
+
     private int mMessageListHeightInNormalMode;
 
     private ResultCallback<Void> mMessageResultCallback = new ResultCallback<Void>() {
@@ -138,6 +146,15 @@ public class HostPKLiveActivity extends LiveRoomActivity
     @Override
     public void onEnterRoomResponse(EnterRoomResponse response) {
         if (response.code == Response.SUCCESS) {
+            Config.UserProfile profile = config().getUserProfile();
+            profile.setRtcToken(response.data.user.rtcToken);
+            profile.setRtmToken(response.data.user.rtmToken);
+            profile.setAgoraUid(response.data.user.uid);
+
+            rtcChannelName = response.data.room.channelName;
+            roomId = response.data.room.roomId;
+            roomName = response.data.room.roomName;
+
             ownerId = response.data.room.owner.userId;
             ownerRtcUid = response.data.room.owner.uid;
 
@@ -157,6 +174,9 @@ public class HostPKLiveActivity extends LiveRoomActivity
                 mNamePad.setIcon(UserUtil.getUserRoundIcon(getResources(),
                         response.data.room.owner.userId));
 
+                participants.reset(response.data.room.currentUsers,
+                        response.data.room.rankUsers);
+
                 if (!mPkStarted) {
                     boolean audioMuted = config().isAudioMuted();
                     boolean videoMuted = config().isVideoMuted();
@@ -166,7 +186,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
                         // not long ago.
                         // This time I came from room list as an audience at first,
                         // but from the server response, I know that this is my room.
-                        // I can start my broadcasting right now if not muted.  `
+                        // I can start my broadcasting right now if not muted.
                         audioMuted = response.data.room.owner.enableAudio !=
                                 SeatInfo.User.USER_AUDIO_ENABLE;
                         videoMuted = response.data.room.owner.enableVideo !=
@@ -178,6 +198,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
                     mBroadcastStarted = true;
                 } else {
                     mBroadcastStarted = false;
+                    mPendingStartPkRequest = true;
+                    mPendingPkConfig = response.data.room.pk.relayConfig;
                     setupUIMode(true, isOwner);
                     setupPkBehavior(isOwner, response.data.room.pk.countDown,
                             response.data.room.pk.pkRoomOwner.userName,
@@ -186,10 +208,11 @@ public class HostPKLiveActivity extends LiveRoomActivity
                     updatePkGiftRank(response.data.room.pk.hostRoomRank,
                             response.data.room.pk.pkRoomRank);
                 }
+
+                joinRtcChannel();
+                joinRtmChannel();
             });
         }
-
-        super.onEnterRoomResponse(response);
     }
 
     private void setupUIMode(boolean isPkMode, boolean isOwner) {
@@ -217,6 +240,9 @@ public class HostPKLiveActivity extends LiveRoomActivity
      */
     private void setupPkBehavior(boolean isOwner, long remaining,
                                  String remoteName, PKMessage.RelayConfig config, int remoteUidForAudience) {
+        myRtcRole = isOwner ? Constants.CLIENT_ROLE_BROADCASTER : Constants.CLIENT_ROLE_AUDIENCE;
+        rtcEngine().setClientRole(myRtcRole);
+
         mPkLayout.setHost(isOwner);
         mPkLayout.setOtherHostName(remoteName);
         mPkLayout.startCountDownTimer(remaining);
@@ -234,7 +260,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
             mPkLayout.getRightVideoLayout().addView(remoteSurfaceView);
             rtcEngine().muteLocalAudioStream(false);
             rtcEngine().muteLocalVideoStream(false);
-            startMediaRelay(config);
+            config().setAudioMuted(false);
+            config().setVideoMuted(false);
         } else {
             SurfaceView surfaceView = setupRemoteVideo(ownerRtcUid);
             surfaceView.setZOrderMediaOverlay(true);
@@ -281,6 +308,14 @@ public class HostPKLiveActivity extends LiveRoomActivity
 
     private ChannelMediaInfo toChannelMediaInfo(PKMessage.ChannelRelayInfo proxy) {
         return new ChannelMediaInfo(proxy.channelName, proxy.token, proxy.uid);
+    }
+
+    @Override
+    public void onRtcJoinChannelSuccess(String channel, int uid, int elapsed) {
+        if (isOwner && mPendingStartPkRequest && mPendingPkConfig != null) {
+            startMediaRelay(mPendingPkConfig);
+            mPendingStartPkRequest = false;
+        }
     }
 
     private void setupMessageListLayout(boolean isPkMode) {
@@ -337,27 +372,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
         } else if (state == Constants.RELAY_STATE_RUNNING) {
             Log.d(TAG, "channel media relay is running");
         } else if (state == Constants.RELAY_STATE_FAILURE) {
-            Log.d(TAG, "channel media relay fails");
-            handleChannelMediaRelayFailure(code);
-        }
-    }
-
-    private void handleChannelMediaRelayFailure(int code) {
-        switch (code) {
-            case Constants.RELAY_ERROR_FAILED_JOIN_SRC:
-                break;
-            case Constants.RELAY_ERROR_FAILED_JOIN_DEST:
-                break;
-            case Constants.RELAY_ERROR_FAILED_PACKET_RECEIVED_FROM_SRC:
-                break;
-            case Constants.RELAY_ERROR_FAILED_PACKET_SENT_TO_DEST:
-                break;
-            case Constants.RELAY_ERROR_SERVER_CONNECTION_LOST:
-                break;
-            case Constants.RELAY_ERROR_SRC_TOKEN_EXPIRED:
-                break;
-            case Constants.RELAY_ERROR_DEST_TOKEN_EXPIRED:
-                break;
+            Log.e(TAG, "channel media relay fails");
         }
     }
 
@@ -488,6 +503,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
                 setupUIMode(true, isOwner);
                 setupPkBehavior(isOwner, messageData.countDown, messageData.pkRoomOwner.userName,
                         messageData.relayConfig, 0);
+                startMediaRelay(messageData.relayConfig);
                 updatePkGiftRank(messageData.hostRoomRank, messageData.pkRoomRank);
             } else if (mPkStarted && messageData.state == PK_STATE_STOP) {
                 stopPkMode(isOwner);

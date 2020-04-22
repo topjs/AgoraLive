@@ -87,7 +87,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
                         R.string.finish_broadcast_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
-                showActionSheetDialog(ACTION_SHEET_TOOL, isHost, true, this);
+                showActionSheetDialog(ACTION_SHEET_TOOL, isOwner, true, this);
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (isHost) {
