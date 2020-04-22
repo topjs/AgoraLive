@@ -128,10 +128,10 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
                 gotoBroadcastActivity();
                 break;
             case R.id.live_prepare_beauty_btn:
-                showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
+                showActionSheetDialog(ACTION_SHEET_BEAUTY, tabIdToLiveType(tabId), true, true, this);
                 break;
             case R.id.live_prepare_setting_btn:
-                showActionSheetDialog(ACTION_SHEET_VIDEO, true, true, this);
+                showActionSheetDialog(ACTION_SHEET_VIDEO, tabIdToLiveType(tabId), true, true, this);
                 break;
         }
     }

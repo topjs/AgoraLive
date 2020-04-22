@@ -323,7 +323,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetSettingClicked() {
         Log.i(TAG, "onActionSheetSettingClicked");
-        showActionSheetDialog(ACTION_SHEET_VIDEO, isHost, false, this);
+        showActionSheetDialog(ACTION_SHEET_VIDEO, tabIdToLiveType(tabId), isHost, false, this);
     }
 
     @Override
@@ -417,7 +417,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public void onUserLayoutShowUserList(View view) {
         // Show all user info list
         mRoomUserActionSheet = (LiveRoomUserListActionSheet)
-                showActionSheetDialog(ACTION_SHEET_ROOM_USER, isHost, true, this);
+                showActionSheetDialog(ACTION_SHEET_ROOM_USER, tabIdToLiveType(tabId), isHost, true, this);
         mRoomUserActionSheet.setup(proxy(), this, roomId, config().getUserProfile().getToken());
         mRoomUserActionSheet.requestMoreAudience();
     }

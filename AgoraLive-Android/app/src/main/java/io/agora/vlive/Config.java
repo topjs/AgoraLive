@@ -13,7 +13,6 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 import io.agora.vlive.proxy.struts.model.AppVersionInfo;
 import io.agora.vlive.proxy.struts.model.GiftInfo;
 import io.agora.vlive.proxy.struts.model.MusicInfo;
-import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.utils.GiftUtil;
 import io.agora.vlive.utils.Global;
 
@@ -96,6 +95,10 @@ public class Config {
             this.userIcon = new SoftReference<>(userProfileDrawable);
         }
     }
+
+    public static final int LIVE_TYPE_MULTI_HOST = 1;
+    public static final int LIVE_TYPE_SINGLE_HOST = 2;
+    public static final int LIVE_TYPE_PK_HOST = 3;
 
     private AgoraLiveApplication mApplication;
 
@@ -231,8 +234,6 @@ public class Config {
 
     public void setResolutionIndex(int index) {
         mResolutionIndex = index;
-        mApplication.preferences().edit()
-                .putInt(Global.Constants.KEY_RESOLUTION, index).apply();
     }
 
     public int frameRateIndex() {
@@ -241,8 +242,6 @@ public class Config {
 
     public void setFrameRateIndex(int index) {
         mFrameRateIndex = index;
-        mApplication.preferences().edit()
-                .putInt(Global.Constants.KEY_FRAME_RATE, index).apply();
     }
 
     public int videoBitrate() {
@@ -251,17 +250,30 @@ public class Config {
 
     public void setVideoBitrate(int bitrate) {
         mBitrate = bitrate;
-        mApplication.preferences().edit()
-                .putInt(Global.Constants.KEY_BITRATE, bitrate).apply();
     }
 
-    public VideoEncoderConfiguration createVideoEncoderConfig() {
-        return new VideoEncoderConfiguration(
-                Global.Constants.RESOLUTIONS[mResolutionIndex],
-                Global.Constants.FRAME_RATES[mFrameRateIndex],
-                mBitrate,
-                VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE
-        );
+    public VideoEncoderConfiguration createVideoEncoderConfig(int type) {
+        switch (type) {
+            case LIVE_TYPE_MULTI_HOST:
+                return new VideoEncoderConfiguration(
+                        Global.Constants.RESOLUTIONS_MULTI_HOST[0],
+                        Global.Constants.FRAME_RATES[0],
+                        VideoEncoderConfiguration.STANDARD_BITRATE,
+                        VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
+            case LIVE_TYPE_SINGLE_HOST:
+                return new VideoEncoderConfiguration(
+                        Global.Constants.RESOLUTIONS_MULTI_HOST[mResolutionIndex],
+                        Global.Constants.FRAME_RATES[0],
+                        VideoEncoderConfiguration.STANDARD_BITRATE,
+                        VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
+            case LIVE_TYPE_PK_HOST:
+                return new VideoEncoderConfiguration(
+                        Global.Constants.RESOLUTIONS_PK_HOST[0],
+                        Global.Constants.FRAME_RATES[0],
+                        VideoEncoderConfiguration.STANDARD_BITRATE,
+                        VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
+            default: return null;
+        }
     }
 
     public int currentMusicIndex() {

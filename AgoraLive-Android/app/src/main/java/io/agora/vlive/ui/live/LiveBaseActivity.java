@@ -29,6 +29,7 @@ import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
 import io.agora.rtm.RtmChannelAttribute;
 import io.agora.rtm.RtmChannelMember;
+import io.agora.vlive.Config;
 import io.agora.vlive.R;
 import io.agora.vlive.agora.rtc.RtcEventHandler;
 import io.agora.vlive.agora.rtm.RtmMessageManager;
@@ -37,6 +38,7 @@ import io.agora.vlive.agora.rtm.model.GiftRankMessage;
 import io.agora.vlive.agora.rtm.model.NotificationMessage;
 import io.agora.vlive.agora.rtm.model.PKMessage;
 import io.agora.vlive.agora.rtm.model.SeatStateMessage;
+import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
 
@@ -128,7 +130,7 @@ public abstract class LiveBaseActivity extends BaseActivity
         ownerId = intent.getStringExtra(Global.Constants.KEY_ROOM_OWNER_ID);
         isHost = isOwner;
         myRtcRole = isOwner ? Constants.CLIENT_ROLE_BROADCASTER : Constants.CLIENT_ROLE_AUDIENCE;
-        tabId = intent.getIntExtra(Global.Constants.TAB_KEY, -1);
+        tabId = intent.getIntExtra(Global.Constants.TAB_KEY, 0);
 
         mMessageManager = RtmMessageManager.instance();
         mMessageManager.init(rtmClient());
@@ -182,7 +184,19 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     protected void setVideoConfiguration() {
-        rtcEngine().setVideoEncoderConfiguration(config().createVideoEncoderConfig());
+        rtcEngine().setVideoEncoderConfiguration(config().createVideoEncoderConfig(tabIdToLiveType(tabId)));
+    }
+
+    protected int tabIdToLiveType(int tabId) {
+        switch(tabId) {
+            case ClientProxy.ROOM_TYPE_HOST_IN:
+                return Config.LIVE_TYPE_MULTI_HOST;
+            case ClientProxy.ROOM_TYPE_SINGLE:
+                return Config.LIVE_TYPE_SINGLE_HOST;
+            case ClientProxy.ROOM_TYPE_PK:
+                return Config.LIVE_TYPE_PK_HOST;
+            default: return 0;
+        }
     }
 
     protected void startCameraCapture() {

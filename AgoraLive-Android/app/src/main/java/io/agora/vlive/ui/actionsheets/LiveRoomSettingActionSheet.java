@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import io.agora.vlive.Config;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
@@ -53,6 +54,8 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
     // Whether the sheet can fallback to previous action sheets
     private boolean mCanFallback;
+
+    private int mLiveType;
 
     private LiveRoomSettingActionSheetListener mListener;
 
@@ -95,6 +98,10 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     public void setFallback(boolean canFallback) {
         mCanFallback = canFallback;
         mBackIcon.setVisibility(mCanFallback ? VISIBLE : GONE);
+    }
+
+    public void setLiveType(int type) {
+        mLiveType = type;
     }
 
     @Override
@@ -188,7 +195,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     }
 
     private void setMainPageText() {
-        mMainResolutionText.setText(Global.Constants.RESOLUTIONS_TEXT[
+        mMainResolutionText.setText(Global.Constants.RESOLUTIONS_SINGLE_HOST_TEXT[
                 application().config().resolutionIndex()]);
         mMainFrameRateText.setText(Global.Constants.FRAME_RATES_TEXT[
                 application().config().frameRateIndex()]);
@@ -235,14 +242,35 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ResolutionViewHolder resolutionHolder = (ResolutionViewHolder) holder;
-            resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS_TEXT[position]);
+
+            switch (mLiveType) {
+                case Config.LIVE_TYPE_MULTI_HOST:
+                    resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS_MULTI_HOST_TEXT[position]);
+                    break;
+                case Config.LIVE_TYPE_SINGLE_HOST:
+                    resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS_SINGLE_HOST_TEXT[position]);
+                    break;
+                case Config.LIVE_TYPE_PK_HOST:
+                    resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS_PK_HOST_TEXT[position]);
+                    break;
+                default: break;
+            }
+
             holder.itemView.setActivated(position == application().config().resolutionIndex());
             resolutionHolder.setPosition(position);
         }
 
         @Override
         public int getItemCount() {
-            return Global.Constants.RESOLUTIONS_TEXT.length;
+            switch (mLiveType) {
+                case Config.LIVE_TYPE_MULTI_HOST:
+                    return Global.Constants.RESOLUTIONS_MULTI_HOST.length;
+                case Config.LIVE_TYPE_SINGLE_HOST:
+                    return Global.Constants.RESOLUTIONS_SINGLE_HOST.length;
+                case Config.LIVE_TYPE_PK_HOST:
+                    return Global.Constants.RESOLUTIONS_PK_HOST.length;
+                default: return 0;
+            }
         }
     }
 

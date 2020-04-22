@@ -87,20 +87,20 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
                         R.string.finish_broadcast_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
-                showActionSheetDialog(ACTION_SHEET_TOOL, isOwner, true, this);
+                showActionSheetDialog(ACTION_SHEET_TOOL, tabIdToLiveType(tabId), isOwner, true, this);
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (isHost) {
-                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, true, true, this);
+                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, tabIdToLiveType(tabId), true, true, this);
                 } else {
-                    showActionSheetDialog(ACTION_SHEET_GIFT, false, true, this);
+                    showActionSheetDialog(ACTION_SHEET_GIFT, tabIdToLiveType(tabId), false, true, this);
                 }
                 break;
             case R.id.live_bottom_btn_fun2:
                 // this button is hidden when
                 // current user is not host.
                 if (isHost) {
-                    showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
+                    showActionSheetDialog(ACTION_SHEET_BEAUTY, tabIdToLiveType(tabId), true, true, this);
                 }
                 break;
             case R.id.dialog_positive_button:

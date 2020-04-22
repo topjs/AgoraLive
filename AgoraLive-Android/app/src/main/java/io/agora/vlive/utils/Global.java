@@ -56,28 +56,41 @@ public class Global {
                 R.string.home_category_title_pk
         };
 
-        public static final String[] RESOLUTIONS_TEXT = {
-                "1920x1080",
-                "1280x720",
-                "960x640",
-                "640x480"
+        public static final String[] RESOLUTIONS_MULTI_HOST_TEXT = {
+                "240x240"
         };
 
-        public static final VideoEncoderConfiguration.VideoDimensions[] RESOLUTIONS = {
-                new VideoEncoderConfiguration.VideoDimensions(1920, 1080),
+        public static final VideoEncoderConfiguration.VideoDimensions[] RESOLUTIONS_MULTI_HOST = {
+                VideoEncoderConfiguration.VD_240x240
+        };
+
+        public static final String[] RESOLUTIONS_SINGLE_HOST_TEXT = {
+                "360x640",
+                "480x848",
+                "720x1280"
+        };
+
+        public static final VideoEncoderConfiguration.VideoDimensions[] RESOLUTIONS_SINGLE_HOST = {
+                VideoEncoderConfiguration.VD_640x360,
+                new VideoEncoderConfiguration.VideoDimensions(848, 480),
                 VideoEncoderConfiguration.VD_1280x720,
-                new VideoEncoderConfiguration.VideoDimensions(960, 640),
-                VideoEncoderConfiguration.VD_640x480,
+
+        };
+
+        public static final String[] RESOLUTIONS_PK_HOST_TEXT = {
+                "360x640"
+        };
+
+        public static final VideoEncoderConfiguration.VideoDimensions[] RESOLUTIONS_PK_HOST = {
+                VideoEncoderConfiguration.VD_640x360
         };
 
         public static final String[] FRAME_RATES_TEXT = {
-                "15", "24", "30"
+                "15"
         };
 
         public static final VideoEncoderConfiguration.FRAME_RATE[] FRAME_RATES = {
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24,
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_30,
+                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15
         };
 
         public static final int[] PROFILE_BG_RES = {

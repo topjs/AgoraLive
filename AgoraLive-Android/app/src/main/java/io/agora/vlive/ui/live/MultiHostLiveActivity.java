@@ -319,19 +319,19 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
                         R.string.finish_broadcast_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
-                showActionSheetDialog(ACTION_SHEET_TOOL, isHost, true, this);
+                showActionSheetDialog(ACTION_SHEET_TOOL, tabIdToLiveType(tabId), isHost, true, this);
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (isOwner) {
-                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, true, true, this);
+                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, tabIdToLiveType(tabId), true, true, this);
                 } else {
-                    showActionSheetDialog(ACTION_SHEET_GIFT, false, true, this);
+                    showActionSheetDialog(ACTION_SHEET_GIFT, tabIdToLiveType(tabId), false, true, this);
                 }
                 break;
             case R.id.live_bottom_btn_fun2:
                 if (isOwner || isHost) {
                     // this button is hidden when current user is not host.
-                    showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
+                    showActionSheetDialog(ACTION_SHEET_BEAUTY, tabIdToLiveType(tabId), true, true, this);
                 }
                 break;
             case R.id.dialog_positive_button:
@@ -491,7 +491,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
     public void onSeatAdapterHostInviteClicked(int position, View view) {
         Log.i(TAG, "onSeatAdapterHostInviteClicked:" + position);
         mInviteUserListActionSheet = (InviteUserActionSheet) showActionSheetDialog(
-                ACTION_SHEET_INVITE_AUDIENCE, isHost, true, this);
+                ACTION_SHEET_INVITE_AUDIENCE, tabIdToLiveType(tabId), isHost, true, this);
         // Seat no starts from 1
         mInviteUserListActionSheet.setSeatNo(position + 1);
         requestAudienceList();

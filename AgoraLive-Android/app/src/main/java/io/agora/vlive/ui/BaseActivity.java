@@ -193,10 +193,10 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         mSheetDialog.show();
     }
 
-    protected AbstractActionSheet showActionSheetDialog(int type, boolean isHost, boolean newStack,
+    protected AbstractActionSheet showActionSheetDialog(int sheetType, int liveType, boolean isHost, boolean newStack,
                                          AbstractActionSheet.AbsActionSheetListener listener) {
         AbstractActionSheet actionSheet;
-        switch (type) {
+        switch (sheetType) {
             case ACTION_SHEET_BEAUTY:
                 actionSheet = new BeautySettingActionSheet(this);
                 break;
@@ -225,6 +225,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
             default:
                 actionSheet = new LiveRoomSettingActionSheet(this);
                 ((LiveRoomSettingActionSheet) actionSheet).setFallback(!newStack);
+                ((LiveRoomSettingActionSheet) actionSheet).setLiveType(liveType);
         }
 
         actionSheet.setActionSheetListener(listener);

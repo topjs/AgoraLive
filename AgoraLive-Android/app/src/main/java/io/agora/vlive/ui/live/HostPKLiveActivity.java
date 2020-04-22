@@ -397,19 +397,19 @@ public class HostPKLiveActivity extends LiveRoomActivity
                         R.string.finish_broadcast_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
-                showActionSheetDialog(ACTION_SHEET_TOOL, isOwner, true, this);
+                showActionSheetDialog(ACTION_SHEET_TOOL, tabIdToLiveType(tabId), isOwner, true, this);
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (isOwner) {
-                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, true, true, this);
+                    showActionSheetDialog(ACTION_SHEET_BG_MUSIC, tabIdToLiveType(tabId), true, true, this);
                 } else {
-                    showActionSheetDialog(ACTION_SHEET_GIFT, false, true, this);
+                    showActionSheetDialog(ACTION_SHEET_GIFT, tabIdToLiveType(tabId), false, true, this);
                 }
                 break;
             case R.id.live_bottom_btn_fun2:
                 // this button is hidden when current user is not host.
                 if (isOwner) {
-                    showActionSheetDialog(ACTION_SHEET_BEAUTY, true, true, this);
+                    showActionSheetDialog(ACTION_SHEET_BEAUTY, tabIdToLiveType(tabId), true, true, this);
                 }
                 break;
             case R.id.dialog_positive_button:
@@ -419,7 +419,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
             case R.id.start_pk_button:
                 if (isOwner) {
                     mPkRoomListActionSheet = (PkRoomListActionSheet)
-                            showActionSheetDialog(ACTION_SHEET_PK_ROOM_LIST, true, true, this);
+                            showActionSheetDialog(ACTION_SHEET_PK_ROOM_LIST, tabIdToLiveType(tabId), true, true, this);
                     mPkRoomListActionSheet.setup(proxy(), config().getUserProfile().getToken());
                     mPkRoomListActionSheet.requestMorePkRoom();
                 }
