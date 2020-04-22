@@ -147,6 +147,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         if (!videoMuted) startCameraCapture();
         bottomButtons.setRole(LiveBottomButtonLayout.ROLE_OWNER);
         bottomButtons.setBeautyEnabled(config().isBeautyEnabled());
+        rtcEngine().setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
         config().setAudioMuted(audioMuted);
         config().setVideoMuted(videoMuted);
         initLocalPreview();
