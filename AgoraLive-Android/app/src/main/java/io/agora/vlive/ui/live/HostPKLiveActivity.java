@@ -264,13 +264,13 @@ public class HostPKLiveActivity extends LiveRoomActivity
             config().setVideoMuted(false);
         } else {
             SurfaceView surfaceView = setupRemoteVideo(ownerRtcUid);
-            surfaceView.setZOrderMediaOverlay(true);
             mPkLayout.getLeftVideoLayout().removeAllViews();
             mPkLayout.getLeftVideoLayout().addView(surfaceView);
+            surfaceView.setZOrderMediaOverlay(true);
             SurfaceView remoteSurfaceView = setupRemoteVideo(remoteUidForAudience);
-            remoteSurfaceView.setZOrderMediaOverlay(true);
             mPkLayout.getRightVideoLayout().removeAllViews();
             mPkLayout.getRightVideoLayout().addView(remoteSurfaceView);
+            remoteSurfaceView.setZOrderMediaOverlay(true);
         }
     }
 
@@ -502,7 +502,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
                 pkRoomId = messageData.pkRoomId;
                 setupUIMode(true, isOwner);
                 setupPkBehavior(isOwner, messageData.countDown, messageData.pkRoomOwner.userName,
-                        messageData.relayConfig, 0);
+                        messageData.relayConfig, messageData.relayConfig.remote.uid);
                 startMediaRelay(messageData.relayConfig);
                 updatePkGiftRank(messageData.hostRoomRank, messageData.pkRoomRank);
             } else if (mPkStarted && messageData.state == PK_STATE_STOP) {

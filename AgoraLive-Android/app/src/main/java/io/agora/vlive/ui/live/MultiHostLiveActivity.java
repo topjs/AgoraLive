@@ -136,6 +136,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
                 userLayout.addView(localPreview);
             } else {
                 remotePreview = setupRemoteVideo(rtcUid);
+                remotePreview.setZOrderMediaOverlay(true);
                 remotePreview.setClipToOutline(true);
                 remotePreview.setOutlineProvider(new RoomOwnerOutline());
                 userLayout.addView(remotePreview);
