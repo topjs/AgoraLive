@@ -311,6 +311,10 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
                     rtcStatsView.setVisibility(View.VISIBLE);
                     rtcStatsView.setLocalStats(0, 0, 0, 0);
                 }
+
+                // Only clicking data button will dismiss
+                // the action sheet dialog.
+                dismissActionSheetDialog();
             });
         }
     }
