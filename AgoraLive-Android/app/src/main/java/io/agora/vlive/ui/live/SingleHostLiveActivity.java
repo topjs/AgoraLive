@@ -73,10 +73,12 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
     @Override
     protected void onGlobalLayoutCompleted() {
         View topLayout = findViewById(R.id.single_live_top_participant_layout);
-        RelativeLayout.LayoutParams params =
-                (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
-        params.topMargin += systemBarHeight;
-        topLayout.setLayoutParams(params);
+        if (topLayout != null) {
+            RelativeLayout.LayoutParams params =
+                    (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
+            params.topMargin += systemBarHeight;
+            topLayout.setLayoutParams(params);
+        }
     }
 
     @Override

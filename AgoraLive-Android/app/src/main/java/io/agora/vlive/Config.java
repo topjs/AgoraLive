@@ -262,7 +262,7 @@ public class Config {
                         VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
             case LIVE_TYPE_SINGLE_HOST:
                 return new VideoEncoderConfiguration(
-                        Global.Constants.RESOLUTIONS_MULTI_HOST[mResolutionIndex],
+                        Global.Constants.RESOLUTIONS_SINGLE_HOST[mResolutionIndex],
                         Global.Constants.FRAME_RATES[0],
                         VideoEncoderConfiguration.STANDARD_BITRATE,
                         VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
