@@ -62,6 +62,7 @@
     <string name="live_room_setting_title_framerate">Frame Rate</string>
     <string name="live_room_setting_title_bitrate">Bitrate</string>
     <string name="live_room_setting_bitrate_value_format" translatable="false">%d kbps</string>
+    <string name="live_room_setting_bitrate_value_default">Default</string>
 
     <string name="live_room_beauty_action_sheet_title">Beauty</string>
     <string name="live_room_beauty_action_sheet_brightness">Brightness</string>

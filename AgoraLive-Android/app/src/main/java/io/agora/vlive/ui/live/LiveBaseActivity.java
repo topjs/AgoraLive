@@ -188,21 +188,18 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     protected int tabIdToLiveType(int tabId) {
-        switch(tabId) {
-            case ClientProxy.ROOM_TYPE_HOST_IN:
-                return Config.LIVE_TYPE_MULTI_HOST;
-            case ClientProxy.ROOM_TYPE_SINGLE:
-                return Config.LIVE_TYPE_SINGLE_HOST;
-            case ClientProxy.ROOM_TYPE_PK:
-                return Config.LIVE_TYPE_PK_HOST;
-            default: return 0;
-        }
+        if (tabId == Config.LIVE_TYPE_MULTI_HOST ||
+            tabId == Config.LIVE_TYPE_SINGLE_HOST ||
+            tabId == Config.LIVE_TYPE_PK_HOST) {
+            return tabId;
+        } else return 0;
     }
 
     protected void startCameraCapture() {
         if (cameraChannel != null && !cameraChannel.hasCaptureStarted()) {
-            Log.i("LiveBaseActivity", "startCameraCapture");
-            enablePreProcess(config().isBeautyEnabled());
+            boolean beautyEnabled = config().isBeautyEnabled();
+            Log.i("LiveBaseActivity", "startCameraCapture. Beauty Enabled:" + beautyEnabled);
+            enablePreProcess(beautyEnabled);
             cameraChannel.startCapture();
         }
     }

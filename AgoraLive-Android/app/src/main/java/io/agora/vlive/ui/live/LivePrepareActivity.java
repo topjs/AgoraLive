@@ -21,6 +21,7 @@ import io.agora.framework.VideoModule;
 import io.agora.framework.channels.CameraVideoChannel;
 import io.agora.framework.channels.ChannelManager;
 import io.agora.framework.consumers.TextureViewConsumer;
+import io.agora.vlive.Config;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
 import io.agora.vlive.utils.Global;
@@ -173,15 +174,16 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
         Intent intent;
         switch (roomType) {
-            case Global.Constants.TAB_ID_SINGLE:
+            case Config.LIVE_TYPE_SINGLE_HOST:
                 intent = new Intent(this, SingleHostLiveActivity.class);
                 break;
-            case Global.Constants.TAB_ID_PK:
+            case Config.LIVE_TYPE_PK_HOST:
                 intent = new Intent(this, HostPKLiveActivity.class);
                 break;
-            default:
+            case Config.LIVE_TYPE_MULTI_HOST:
                 intent = new Intent(this, MultiHostLiveActivity.class);
                 break;
+            default: return;
         }
 
         if (getIntent().getExtras() != null) {

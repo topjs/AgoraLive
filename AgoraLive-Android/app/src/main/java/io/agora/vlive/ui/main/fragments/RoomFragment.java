@@ -147,7 +147,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_start_broadcast) {
             Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
-            intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap);
+            intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap + 1);
             intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, true);
             intent.putExtra(Global.Constants.KEY_CREATE_ROOM, true);
             intent.putExtra(Global.Constants.KEY_ROOM_OWNER_ID,

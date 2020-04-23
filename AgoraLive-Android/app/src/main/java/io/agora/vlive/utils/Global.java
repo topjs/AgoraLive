@@ -40,9 +40,9 @@ public class Global {
 
         public static final int DIVIDER_COLOR = Color.rgb(239, 239, 239);
 
-        public static final int VIDEO_MAX_BITRATE = 4000;
-        public static final int VIDEO_MIN_BITRATE = 150;
-        public static final int VIDEO_DEFAULT_BITRATE = 800;
+        public static final int VIDEO_MAX_BITRATE = 2000;
+        public static final int VIDEO_MIN_BITRATE = 0;
+        public static final int VIDEO_DEFAULT_BITRATE = VideoEncoderConfiguration.STANDARD_BITRATE;
         public static final int VIDEO_DEFAULT_RESOLUTION_INDEX = 0;
         public static final int VIDEO_DEFAULT_FRAME_RATE_INDEX = 0;
 

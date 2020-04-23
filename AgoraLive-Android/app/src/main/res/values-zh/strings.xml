@@ -63,6 +63,7 @@
     <string name="live_room_setting_title_resolution">分辨率</string>
     <string name="live_room_setting_title_framerate">帧率</string>
     <string name="live_room_setting_title_bitrate">码率</string>
+    <string name="live_room_setting_bitrate_value_default">默认</string>
 
     <string name="live_room_beauty_action_sheet_title">美颜</string>
     <string name="live_room_beauty_action_sheet_brightness">亮度</string>

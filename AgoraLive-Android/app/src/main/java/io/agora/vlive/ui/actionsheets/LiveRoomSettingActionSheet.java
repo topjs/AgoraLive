@@ -91,8 +91,6 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
         mTitle = layout.findViewById(R.id.live_room_action_sheet_bg_music_title);
         mMain.findViewById(R.id.live_room_setting_resolution).setOnClickListener(this);
         mMain.findViewById(R.id.live_room_setting_framerate).setOnClickListener(this);
-
-        gotoMainPage();
     }
 
     public void setFallback(boolean canFallback) {
@@ -102,6 +100,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
 
     public void setLiveType(int type) {
         mLiveType = type;
+        gotoMainPage();
     }
 
     @Override
@@ -135,8 +134,7 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
             }
 
             application().config().setVideoBitrate(progress);
-            mMainBitrateText.setText(String.format(
-                    mMainBitrateTextFormat, progress));
+            mMainBitrateText.setText(getBitrateText(progress));
             if (mListener != null) mListener.onActionSheetBitrateSelected(progress);
         }
     }
@@ -195,13 +193,35 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
     }
 
     private void setMainPageText() {
-        mMainResolutionText.setText(Global.Constants.RESOLUTIONS_SINGLE_HOST_TEXT[
-                application().config().resolutionIndex()]);
+        mMainResolutionText.setText(getResolutionText());
         mMainFrameRateText.setText(Global.Constants.FRAME_RATES_TEXT[
                 application().config().frameRateIndex()]);
         mBitrateSeekBar.setProgress(application().config().videoBitrate());
-        mMainBitrateText.setText(String.format(mMainBitrateTextFormat,
-                application().config().videoBitrate()));
+        mMainBitrateText.setText(getBitrateText());
+    }
+
+    private String getResolutionText() {
+        switch (mLiveType) {
+            case Config.LIVE_TYPE_MULTI_HOST:
+                return Global.Constants.RESOLUTIONS_MULTI_HOST_TEXT[application().config().resolutionIndex()];
+            case Config.LIVE_TYPE_SINGLE_HOST:
+                return Global.Constants.RESOLUTIONS_SINGLE_HOST_TEXT[application().config().resolutionIndex()];
+            case Config.LIVE_TYPE_PK_HOST:
+                return Global.Constants.RESOLUTIONS_PK_HOST_TEXT[application().config().resolutionIndex()];
+            default: return null;
+        }
+    }
+
+    private String getBitrateText(int bitrate) {
+        if (bitrate == 0) {
+            return getContext().getResources().getString(R.string.live_room_setting_bitrate_value_default);
+        } else {
+            return String.format(mMainBitrateTextFormat, application().config().videoBitrate());
+        }
+    }
+
+    private String getBitrateText() {
+        return getBitrateText(application().config().videoBitrate());
     }
 
     private void gotoResolutionPage() {

@@ -164,11 +164,11 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     private int getChannelTypeByTabId() {
         switch (tabId) {
-            case Global.Constants.TAB_ID_MULTI:
+            case Config.LIVE_TYPE_MULTI_HOST:
                 return ClientProxy.ROOM_TYPE_HOST_IN;
-            case Global.Constants.TAB_ID_PK:
+            case Config.LIVE_TYPE_PK_HOST:
                 return ClientProxy.ROOM_TYPE_PK;
-            case Global.Constants.TAB_ID_SINGLE:
+            case Config.LIVE_TYPE_SINGLE_HOST:
                 return ClientProxy.ROOM_TYPE_SINGLE;
         }
         return -1;
