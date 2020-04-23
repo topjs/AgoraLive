@@ -21,4 +21,6 @@
     <color name="blue_background">#FAFAFA</color>
 
     <color name="red">#FF007D</color>
+
+    <color name="transparent_70_per">#4D000000</color>
 </resources>

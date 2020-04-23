@@ -16,6 +16,7 @@
     <dimen name="room_list_item_corner">12dp</dimen>
     <dimen name="room_list_item_padding">8dp</dimen>
     <dimen name="room_list_item_name_width">72dp</dimen>
+    <dimen name="room_list_item_name_height">42dp</dimen>
     <dimen name="room_list_item_text_padding_big">6dp</dimen>
     <dimen name="room_list_item_text_padding_small">2dp</dimen>
 

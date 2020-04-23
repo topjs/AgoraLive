@@ -45,16 +45,16 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/live_room_list_item_room_name"
-            android:layout_width="@dimen/room_list_item_name_width"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/room_list_item_name_height"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/room_list_item_padding"
             android:ellipsize="end"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:lines="1"
             android:textAlignment="gravity"
             android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:background="@drawable/live_room_list_item_room_name_background"/>
     </io.agora.vlive.ui.components.SquareRelativeLayout>
 </androidx.cardview.widget.CardView>
