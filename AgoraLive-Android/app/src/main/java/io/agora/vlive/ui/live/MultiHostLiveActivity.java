@@ -72,6 +72,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         AppCompatImageView profileImage;
         AppCompatImageView audioMuteIcon;
         VoiceIndicateGifView mIndicateView;
+        AppCompatTextView ownerNameText;
 
         // for local rendering
         CameraTextureView localPreview;
@@ -90,6 +91,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             this.profileIconRes = UserUtil.getUserProfileIcon(userId);
             audioMuteIcon = layout.findViewById(R.id.live_host_in_owner_mute_icon);
             mIndicateView = layout.findViewById(R.id.live_host_in_owner_voice_indicate);
+            ownerNameText = layout.findViewById(R.id.live_host_in_owner_name);
 
             this.rtcUid = rtcUid;
             setOwner(iAmOwner);
@@ -102,6 +104,10 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             audioMuted = !iAmOwner;
             audioMuteIcon.setVisibility(audioMuted ? View.VISIBLE : View.GONE);
             mIndicateView.setVisibility(audioMuted ? View.GONE : View.VISIBLE);
+        }
+
+        private void setOwnerName(String name) {
+            ownerNameText.setText(name);
         }
 
         // Called only once after entering the room and
@@ -269,6 +275,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         if (isOwner) {
              startCameraCapture();
              mOwnerUIManager.showVideoUI();
+             mOwnerUIManager.setOwnerName(config().getUserProfile().getUserName());
         }
 
         mSeatLayout = findViewById(R.id.live_host_in_seat_layout);
@@ -396,6 +403,8 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
             final boolean videoMutedAsHost = hostVideoMuted;
 
             runOnUiThread(() -> {
+                mOwnerUIManager.setOwnerName(response.data.room.owner.userName);
+
                 // Update seat UI
                 mSeatInfoList = response.data.room.coVideoSeats;
                 if (mSeatInfoList != null && !mSeatInfoList.isEmpty()) {

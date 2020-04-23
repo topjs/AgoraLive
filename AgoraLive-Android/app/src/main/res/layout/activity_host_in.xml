@@ -23,8 +23,6 @@
                 android:layout_height="@dimen/live_host_in_seat_item_more_btn_size"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="@dimen/live_host_in_seat_item_margin"
-                android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"
                 android:src="@drawable/host_seat_item_mute_icon"/>
             <io.agora.vlive.ui.components.VoiceIndicateGifView
                 android:id="@+id/live_host_in_owner_voice_indicate"
@@ -34,6 +32,17 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="@dimen/live_host_in_seat_item_margin"
                 android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/live_host_in_owner_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/live_host_in_seat_item_margin"
+                android:layout_marginStart="@dimen/live_host_in_seat_item_margin"
+                android:textAlignment="gravity"
+                android:gravity="start"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small"/>
         </RelativeLayout>
         <io.agora.vlive.ui.components.LiveRoomUserLayout
             android:id="@+id/host_in_participant"
