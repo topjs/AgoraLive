@@ -139,7 +139,7 @@
     <string name="dialog_multi_host_open_seat_message">解封此麦位?</string>
 
     <string name="dialog_multi_host_close_seat_title">封麦</string>
-    <string name="dialog_multi_host_close_seat_message">将关闭该麦位，如果该位置上有用户，/n 将下麦该用户</string>
+    <string name="dialog_multi_host_close_seat_message">将关闭该麦位，如果该位置上有用户, 将下麦该用户</string>
 
     <string name="dialog_multi_host_mute_title">禁麦</string>
     <string name="dialog_multi_host_mute_message">禁止"%s"发言？</string>

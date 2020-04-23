@@ -425,7 +425,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
                         R.string.live_host_in_seat_state_open_audience);
             } else if (item.seatState == SEAT_CLOSED) {
                 item.operationIcon.setImageResource(R.drawable.live_seat_close);
-                item.operationText.setVisibility(GONE);
+                item.operationText.setVisibility(VISIBLE);
                 item.operationText.setText(R.string.live_host_in_seat_state_closed);
             }
         }
