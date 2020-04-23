@@ -407,7 +407,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
                 item.voiceState.setVisibility(VISIBLE);
                 item.voiceState.setImageResource(R.drawable.host_seat_item_mute_icon);
             } else {
-                item.voiceState.setVisibility(GONE );
+                item.voiceState.setVisibility(GONE);
             }
         } else {
             item.nickname.setVisibility(View.GONE);
@@ -426,6 +426,7 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
             } else if (item.seatState == SEAT_CLOSED) {
                 item.operationIcon.setImageResource(R.drawable.live_seat_close);
                 item.operationText.setVisibility(GONE);
+                item.operationText.setText(R.string.live_host_in_seat_state_closed);
             }
         }
 
