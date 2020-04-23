@@ -26,22 +26,18 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
     }
 
     private static final int GRID_SPAN = 4;
-    private static final int FUNC_COUNT_GUEST = 2;
+    private static final int FUNC_COUNT_GUEST = 1;
 
     private static final int DATA_INDEX = 0;
-    private static final int SHARE_INDEX = 1;
-    private static final int SETTING_INDEX = 2;
-    private static final int EMPTY_INDEX = 3;
-    private static final int ROTATE_INDEX = 4;
-    private static final int VIDEO_INDEX = 5;
-    private static final int SPEAKER_INDEX = 6;
-    private static final int EAR_MONITOR = 7;
+    private static final int SETTING_INDEX = 1;
+    private static final int ROTATE_INDEX = 2;
+    private static final int VIDEO_INDEX = 3;
+    private static final int SPEAKER_INDEX = 4;
+    private static final int EAR_MONITOR = 5;
 
     private static final int[] ICON_RES = {
             R.drawable.icon_data,
-            R.drawable.icon_share,
             R.drawable.icon_setting,
-            -1,
             R.drawable.icon_rotate,
             R.drawable.action_sheet_tool_video,
             R.drawable.action_sheet_tool_speaker,
@@ -94,13 +90,8 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ToolViewHolder toolViewHolder = (ToolViewHolder) holder;
             toolViewHolder.setPosition(position);
-            if (position == EMPTY_INDEX) {
-                toolViewHolder.name.setText("");
-                toolViewHolder.icon.setImageDrawable(null);
-            } else {
-                toolViewHolder.name.setText(mToolNames[position]);
-                toolViewHolder.icon.setImageResource(ICON_RES[position]);
-            }
+            toolViewHolder.name.setText(mToolNames[position]);
+            toolViewHolder.icon.setImageResource(ICON_RES[position]);
 
             if (position == VIDEO_INDEX) {
                 holder.itemView.setActivated(!mMuteVideo);
@@ -152,9 +143,6 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
         switch (position) {
             case DATA_INDEX:
                 mListener.onActionSheetRealDataClicked();
-                break;
-            case SHARE_INDEX:
-                mListener.onActionSheetShareClicked();
                 break;
             case SETTING_INDEX:
                 mListener.onActionSheetSettingClicked();

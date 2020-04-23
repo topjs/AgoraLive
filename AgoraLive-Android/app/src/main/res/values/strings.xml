@@ -98,7 +98,6 @@
     <string name="live_room_tool_action_sheet_title">Tool</string>
     <string-array name="live_room_action_sheet_tool_names">
         <item>Data</item>
-        <item>Share</item>
         <item>Setting</item>
         <item>Empty</item>
         <item>Rotate</item>

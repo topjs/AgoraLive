@@ -99,7 +99,6 @@
 
     <string-array name="live_room_action_sheet_tool_names">
         <item>实时数据</item>
-        <item>分享</item>
         <item>设置</item>
         <item>空</item>
         <item>翻转</item>
