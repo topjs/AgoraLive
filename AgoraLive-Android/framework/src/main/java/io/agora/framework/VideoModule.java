@@ -93,6 +93,12 @@ public class VideoModule {
         }
     }
 
+    public void enablePreprocessor(int channelId, boolean enabled) {
+        if (getPreprocessor(channelId) != null) {
+            mChannelManager.getVideoChannel(channelId).enablePreProcess(enabled);
+        }
+    }
+
     public IPreprocessor getPreprocessor(int channelId) {
         return mChannelManager.getPreprocessor(channelId);
     }

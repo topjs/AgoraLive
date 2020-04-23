@@ -153,9 +153,12 @@ public abstract class LiveBaseActivity extends BaseActivity
         int channelId = ChannelManager.ChannelID.CAMERA;
         videoModule.setPreprocessor(channelId,
                 new PreprocessorFaceUnity(getApplicationContext()));
+
         // enables off-screen frame consumers like rtc engine.
         videoModule.enableOffscreenMode(channelId, true);
         videoModule.startChannel(channelId);
+
+        videoModule.enablePreprocessor(channelId, config().isBeautyEnabled());
     }
 
     protected abstract void onPermissionGranted();
