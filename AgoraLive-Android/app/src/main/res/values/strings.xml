@@ -99,7 +99,6 @@
     <string-array name="live_room_action_sheet_tool_names">
         <item>Data</item>
         <item>Setting</item>
-        <item>Empty</item>
         <item>Rotate</item>
         <item>Camera</item>
         <item>Speaker</item>
