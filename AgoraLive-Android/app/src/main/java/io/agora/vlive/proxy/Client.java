@@ -49,9 +49,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.internal.EverythingIsNonNull;
 
 class Client {
-    private static final boolean DEBUG = true;
-    private static final String MOCK_URL = "http://115.231.168.26:3000/mock/12/";
-    private static final String DEV_URL = "http://115.231.168.26:8088";
+    private static final boolean DEBUG = false;
+    private static final String PRODUCT_URL = "https://api-solutions-dev.sh.agoralab.co";
     private static final String MSG_NULL_RESPONSE = "Response content is null";
     private static final int MAX_RESPONSE_THREAD = 10;
 
@@ -68,7 +67,7 @@ class Client {
 
     Client() {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(DEV_URL)
+                .baseUrl(PRODUCT_URL)
                 .callbackExecutor(Executors.newFixedThreadPool(MAX_RESPONSE_THREAD))
                 .addConverterFactory(GsonConverterFactory.create());
 
