@@ -106,9 +106,10 @@ public class VideoCaptureCamera2 extends VideoCapture {
                 // capture result details. A CrImageReaderListener will be triggered every time a
                 // downloaded image is ready. Since |handler| is null, we'll work on the current
                 // Thread Looper.
-                mPreviewSession.setRepeatingRequest(
-                        mPreviewRequest, null, null);
-
+                if (mCameraState == CameraState.CONFIGURING) {
+                    mPreviewSession.setRepeatingRequest(
+                            mPreviewRequest, null, null);
+                }
             } catch (CameraAccessException | SecurityException | IllegalStateException
                     | IllegalArgumentException ex) {
                 Log.e(TAG, "setRepeatingRequest: ", ex);
@@ -246,8 +247,10 @@ public class VideoCaptureCamera2 extends VideoCapture {
         mPreviewRequest = mPreviewRequestBuilder.build();
 
         try {
-            mCameraDevice.createCaptureSession(surfaceList,
-                    new CameraPreviewSessionListener(mPreviewRequest), null);
+            if (mCameraState == CameraState.CONFIGURING) {
+                mCameraDevice.createCaptureSession(surfaceList,
+                        new CameraPreviewSessionListener(mPreviewRequest), null);
+            }
         } catch (CameraAccessException | IllegalArgumentException | SecurityException ex) {
             Log.e(TAG, "createCaptureSession: ", ex);
             return false;
@@ -428,18 +431,14 @@ public class VideoCaptureCamera2 extends VideoCapture {
         // next startCapture will fail. So wait camera to be STARTED.
         Log.d(TAG, "stopCaptureAndBlockUntilStopped");
         synchronized (mCameraStateLock) {
-            while (mCameraState != CameraState.STARTED && mCameraState != CameraState.STOPPED) {
-                try {
-                    mCameraStateLock.wait();
-                } catch (InterruptedException ex) {
-                    Log.e(TAG, "CaptureStartedEvent: ", ex);
-                }
+            if (mCameraState != CameraState.STOPPED &&
+                    mCameraState != CameraState.STOPPING) {
+                mCameraDevice.close();
+                changeCameraStateAndNotify(CameraState.STOPPING);
+            } else {
+                Log.w(TAG, "Camera is already stopped.");
             }
-            if (mCameraState == CameraState.STOPPED) return;
         }
-
-        mCameraDevice.close();
-        changeCameraStateAndNotify(CameraState.STOPPING);
     }
 
     @Override
