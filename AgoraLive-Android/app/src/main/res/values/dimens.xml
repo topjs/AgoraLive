@@ -67,6 +67,8 @@
     <dimen name="live_message_text_margin">8dp</dimen>
     <dimen name="live_message_edit_height">58dp</dimen>
 
+    <dimen name="live_stats_close_button_size">32dp</dimen>
+
     <dimen name="live_participant_layout_height">32dp</dimen>
     <dimen name="live_participant_count_width">68dp</dimen>
     <dimen name="live_participant_count_height">22dp</dimen>

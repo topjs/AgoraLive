@@ -130,6 +130,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
         if (isOwner) mBroadcastStarted = true;
 
         rtcStatsView = findViewById(R.id.host_pk_rtc_stats);
+        rtcStatsView.setCloseListener(view -> rtcStatsView.setVisibility(View.GONE));
     }
 
     @Override

@@ -290,6 +290,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
                 Global.Constants.VOICE_INDICATE_SMOOTH,  false);
 
         rtcStatsView = findViewById(R.id.multi_host_rtc_stats);
+        rtcStatsView.setCloseListener(view -> rtcStatsView.setVisibility(View.GONE));
     }
 
     private void setRoomNameText() {
