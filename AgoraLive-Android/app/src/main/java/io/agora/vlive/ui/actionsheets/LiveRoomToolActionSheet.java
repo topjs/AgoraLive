@@ -17,12 +17,11 @@ import io.agora.vlive.R;
 public class LiveRoomToolActionSheet extends AbstractActionSheet {
     public interface LiveRoomToolActionSheetListener extends AbsActionSheetListener {
         void onActionSheetRealDataClicked();
-        void onActionSheetShareClicked();
         void onActionSheetSettingClicked();
         void onActionSheetRotateClicked();
         void onActionSheetVideoClicked(boolean muted);
         void onActionSheetSpeakerClicked(boolean muted);
-        void onActionSheetEarMonitoringClicked(boolean monitor);
+        boolean onActionSheetEarMonitoringClicked(boolean monitor);
     }
 
     private static final int GRID_SPAN = 4;
@@ -123,12 +122,8 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
                 } else if (position == SPEAKER_INDEX) {
                     mMuteVoice = !mMuteVoice;
                     itemView.setActivated(!mMuteVoice);
-                } else if (position == EAR_MONITOR) {
-                    mEarMonitoring = !mEarMonitoring;
-                    itemView.setActivated(mEarMonitoring);
                 }
-                mRecycler.getAdapter().notifyDataSetChanged();
-                handleItemClicked(position);
+                handleItemClicked(view, position);
             });
         }
 
@@ -137,7 +132,7 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
         }
     }
 
-    private void handleItemClicked(int position) {
+    private void handleItemClicked(View view, int position) {
         if (mListener == null) return;
 
         switch (position) {
@@ -157,7 +152,11 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
                 mListener.onActionSheetSpeakerClicked(mMuteVoice);
                 break;
             case EAR_MONITOR:
-                mListener.onActionSheetEarMonitoringClicked(mEarMonitoring);
+                boolean allowed = mListener.onActionSheetEarMonitoringClicked(!mEarMonitoring);
+                if (allowed) {
+                    mEarMonitoring = !mEarMonitoring;
+                    view.setActivated(mEarMonitoring);
+                }
                 break;
         }
     }

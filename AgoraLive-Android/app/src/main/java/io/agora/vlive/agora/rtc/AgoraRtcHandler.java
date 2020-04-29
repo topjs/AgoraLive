@@ -63,4 +63,11 @@ public class AgoraRtcHandler extends IRtcEngineEventHandler {
             handler.onRtcAudioVolumeIndication(speakers, totalVolume);
         }
     }
+
+    @Override
+    public void onAudioRouteChanged(int routing) {
+        for (RtcEventHandler handler : mHandlers) {
+            handler.onRtcAudioRouteChanged(routing);
+        }
+    }
 }

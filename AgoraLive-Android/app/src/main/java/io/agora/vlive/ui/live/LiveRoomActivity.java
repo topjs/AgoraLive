@@ -19,6 +19,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
@@ -90,6 +91,9 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     private volatile long mLastMusicPlayedTimeStamp;
 
     private boolean mActivityFinished;
+
+    private int mCurrentAudioRoute;
+    private boolean mInEarMonitorEnabled;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -293,10 +297,33 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         sendRequest(Request.SEND_GIFT, request);
     }
 
+    /**
+     *
+     * @param monitor the ideal monitoring state to be checked
+     * @return true if the current audio route is wired or wire-less
+     * headset with microphone, the audio route can be enabled.
+     * Returns true if the state is allowed to be changed.
+     */
     @Override
-    public void onActionSheetEarMonitoringClicked(boolean monitor) {
+    public boolean onActionSheetEarMonitoringClicked(boolean monitor) {
         Log.i(TAG, "onActionSheetEarMonitoringClicked:" + monitor);
-        rtcEngine().enableInEarMonitoring(monitor);
+        if (monitor) {
+            if (mCurrentAudioRoute == Constants.AUDIO_ROUTE_HEADSET ||
+                    mCurrentAudioRoute == Constants.AUDIO_ROUTE_HEADSETBLUETOOTH) {
+                rtcEngine().enableInEarMonitoring(true);
+                mInEarMonitorEnabled = true;
+                return true;
+            } else {
+                showShortToast(getResources().getString(R.string.in_ear_monitoring_failed));
+                mInEarMonitorEnabled = false;
+                return false;
+            }
+        } else {
+            rtcEngine().enableInEarMonitoring(false);
+            mInEarMonitorEnabled = false;
+            // It is always allowed to disable the in-ear monitoring.
+            return true;
+        }
     }
 
     @Override
@@ -317,11 +344,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
                 dismissActionSheetDialog();
             });
         }
-    }
-
-    @Override
-    public void onActionSheetShareClicked() {
-        Log.i(TAG, "onActionSheetShareClicked");
     }
 
     @Override
@@ -529,6 +551,11 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
                         stats.txPacketLossRate);
             }
         });
+    }
+
+    @Override
+    public void onRtcAudioRouteChanged(int routing) {
+        mCurrentAudioRoute = routing;
     }
 
     @Override

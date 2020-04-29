@@ -165,6 +165,8 @@
     <string name="modify_user_name_empty">用户名不能为空</string>
     <string name="modify_user_name_error">修改用户名失败</string>
 
+    <string name="in_ear_monitoring_failed">请插入有线耳机或使用蓝牙耳机</string>
+
     <string-array name="random_channel_names">
         <item>陌上花开等你来</item>
         <item>天天爱你</item>

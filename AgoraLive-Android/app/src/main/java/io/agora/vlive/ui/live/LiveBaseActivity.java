@@ -419,6 +419,11 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     @Override
+    public void onRtcAudioRouteChanged(int routing) {
+
+    }
+
+    @Override
     public void finish() {
         super.finish();
         removeRtcHandler(this);

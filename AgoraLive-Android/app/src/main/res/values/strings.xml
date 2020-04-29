@@ -165,6 +165,8 @@
     <string name="modify_user_name_empty">User name cannot be empty</string>
     <string name="modify_user_name_error">Modify user name failed</string>
 
+    <string name="in_ear_monitoring_failed">Please use wire or wireless headsets</string>
+
     <string-array name="random_channel_names">
         <item>Cheer</item>
         <item>Vibe</item>
