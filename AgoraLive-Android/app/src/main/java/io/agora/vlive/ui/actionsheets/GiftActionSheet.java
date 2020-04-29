@@ -56,6 +56,11 @@ public class GiftActionSheet extends AbstractActionSheet implements View.OnClick
 
         AppCompatTextView sendBtn = findViewById(R.id.live_room_action_sheet_gift_send_btn);
         sendBtn.setOnClickListener(this);
+
+        // The first gift is selected by default
+        if (mRecycler.getAdapter().getItemCount() > 0) {
+            mSelected = 0;
+        }
     }
 
     @Override
