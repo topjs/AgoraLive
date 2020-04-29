@@ -87,6 +87,8 @@ public class BeautySettingActionSheet extends AbstractActionSheet
         mBeautySwitch = findViewById(R.id.beauty_switch);
         mBeautySwitch.setOnClickListener(this);
         mBeautySwitch.setActivated(application().config().isBeautyEnabled());
+
+        enableOptions(application().config().isBeautyEnabled());
     }
 
     @Override
@@ -96,8 +98,21 @@ public class BeautySettingActionSheet extends AbstractActionSheet
             boolean activated = !mBeautySwitch.isActivated();
             mBeautySwitch.setActivated(activated);
             application().config().setBeautyEnabled(activated);
-            if (mListener != null) mListener.onActionSheetBeautyEnabled(activated);
+            if (mListener != null) {
+                mListener.onActionSheetBeautyEnabled(activated);
+
+                // If the beauty is disabled, all the options will not
+                // be changed using any UI components
+                enableOptions(application().config().isBeautyEnabled());
+            }
         }
+    }
+
+    private void enableOptions(boolean enabled) {
+        mBlurSeekBar.setEnabled(enabled);
+        mWhitenSeekBar.setEnabled(enabled);
+        mCheekSeekBar.setEnabled(enabled);
+        mEyeSeekBar.setEnabled(enabled);
     }
 
     @Override
