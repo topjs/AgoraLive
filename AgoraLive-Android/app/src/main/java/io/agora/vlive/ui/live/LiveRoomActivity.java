@@ -576,7 +576,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     private void showExitDialog() {
         int titleRes;
         int messageRes;
-        if (isHost) {
+        if (isHost || isOwner) {
             titleRes = R.string.finish_broadcast_title_owner;
             messageRes = R.string.finish_broadcast_message_owner;
         } else {

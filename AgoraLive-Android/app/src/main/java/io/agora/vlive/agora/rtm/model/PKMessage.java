@@ -5,6 +5,7 @@ public class PKMessage extends AbsRtmMessage {
 
     public static class PKMessageData {
         public int state;
+        public int result;
         public String pkRoomId;
         public String pkChannelName;
         public long pkStartTime;

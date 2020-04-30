@@ -1,12 +1,15 @@
 package io.agora.vlive.ui.components;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -17,13 +20,23 @@ import io.agora.vlive.R;
 public class PkLayout extends LinearLayout {
     private static final int TIMER_TICK_PERIOD = 1000;
 
+    private static final int PK_RESULT_LOSE = 0;
+    private static final int PK_RESULT_WIN = 1;
+    private static final int PK_RESULT_DRAW = 2;
+
     private AppCompatTextView mLeftPoint;
     private AppCompatTextView mRightPoint;
-    private FrameLayout mLeftFrameLayout;
+    private RelativeLayout mHostVideoContainer;
+    private RelativeLayout mLeftFrameLayout;
     private FrameLayout mRightFrameLayout;
+    private RelativeLayout mRightVideoContainer;
     private AppCompatImageView mToOtherRoomBtn;
     private AppCompatTextView mRemainsText;
     private AppCompatTextView mOtherHostName;
+
+    private int mResultIconWidth;
+
+    private AppCompatImageView mPkResultImage;
 
     private long mTimerStopTimestamp;
     private Handler mTimerHandler;
@@ -49,11 +62,16 @@ public class PkLayout extends LinearLayout {
     }
 
     private void init() {
+        Resources resources = getResources();
+        mResultIconWidth = resources.getDimensionPixelSize(R.dimen.live_pk_result_icon_size);
+
         LayoutInflater.from(getContext()).inflate(
                 R.layout.pk_video_layout, this, true);
+        mHostVideoContainer = findViewById(R.id.pk_host_video_layout_container);
+        mRightVideoContainer = findViewById(R.id.pk_host_video_layout_right_container);
         mLeftPoint = findViewById(R.id.pk_progress_left_text);
         mRightPoint = findViewById(R.id.pk_progress_right_text);
-        mLeftFrameLayout = findViewById(R.id.pk_host_video_layout_left);
+        mLeftFrameLayout = findViewById(R.id.pk_host_video_layout_left_container);
         mRightFrameLayout = findViewById(R.id.pk_host_video_layout_right);
         mToOtherRoomBtn = findViewById(R.id.pk_video_layout_enter_other_room_btn);
         mRemainsText = findViewById(R.id.pk_host_remaining_time_text);
@@ -103,7 +121,7 @@ public class PkLayout extends LinearLayout {
         textView.setLayoutParams(params);
     }
 
-    public FrameLayout getLeftVideoLayout() {
+    public RelativeLayout getLeftVideoLayout() {
         return mLeftFrameLayout;
     }
 
@@ -137,5 +155,37 @@ public class PkLayout extends LinearLayout {
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = remainSecond < 10 ? "0" + remainSecond : "" + remainSecond;
         return minuteString + ":" + secondString;
+    }
+
+    public void setResult(int result) {
+        mPkResultImage = new AppCompatImageView(getContext());
+        if (result == PK_RESULT_LOSE || result == PK_RESULT_WIN) {
+            mPkResultImage.setImageResource(R.drawable.icon_pk_result_win);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    mResultIconWidth, mResultIconWidth);
+            params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+            RelativeLayout container = result == PK_RESULT_LOSE
+                    ? mRightVideoContainer
+                    : mLeftFrameLayout;
+            container.addView(mPkResultImage, params);
+        } else if (result == PK_RESULT_DRAW) {
+            mPkResultImage.setImageResource(R.drawable.icon_pk_result_draw);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    mResultIconWidth, mResultIconWidth);
+            params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+            mHostVideoContainer.addView(mPkResultImage, params);
+        }
+    }
+
+    public void removeResult() {
+        if (mPkResultImage == null) {
+            return;
+        }
+
+        ViewGroup parent = (ViewGroup) mPkResultImage.getParent();
+        if (parent != null) {
+            parent.removeView(mPkResultImage);
+            mPkResultImage = null;
+        }
     }
 }

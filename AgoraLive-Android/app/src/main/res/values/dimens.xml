@@ -118,6 +118,7 @@
     <dimen name="live_pk_video_layout_other_host_name_margin_start">24dp</dimen>
     <dimen name="live_pk_video_layout_other_host_name_margin_bottom">24dp</dimen>
     <dimen name="live_pk_vs_icon_size">42dp</dimen>
+    <dimen name="live_pk_result_icon_size">130dp</dimen>
 
     <dimen name="switch_width">42dp</dimen>
     <dimen name="switch_height">28dp</dimen>

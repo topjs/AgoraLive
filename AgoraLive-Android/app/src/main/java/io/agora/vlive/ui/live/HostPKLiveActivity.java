@@ -1,6 +1,7 @@
 package io.agora.vlive.ui.live;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -37,8 +38,12 @@ public class HostPKLiveActivity extends LiveRoomActivity
         implements View.OnClickListener, PkRoomListActionSheet.OnPkRoomSelectedListener {
     private static final String TAG = HostPKLiveActivity.class.getSimpleName();
 
-    private static final int PK_STATE_STOP = 0;
+    private static final int PK_RESULT_DISPLAY_LAST = 2000;
+
+    private static final int PK_STATE_NOT_PK = 0;
     private static final int PK_STATE_START = 1;
+    private static final int PK_STATE_IN_PK = 2;
+    private static final int PK_STATE_STOP = 3;
 
     private RelativeLayout mLayout;
     private FrameLayout mVideoNormalLayout;
@@ -167,7 +172,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
             }
 
             // Result from server if the channel is in PK mode
-            mPkStarted = response.data.room.pk.state == PK_STATE_START;
+            mPkStarted = response.data.room.pk.state == PK_STATE_IN_PK;
             if (mPkStarted) pkRoomId = response.data.room.pk.pkRoomId;
 
             runOnUiThread(() -> {
@@ -226,6 +231,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
         } else {
             mLayout.setBackground(null);
             mStartPkButton.setVisibility(isOwner ? View.VISIBLE : View.GONE);
+            mPkLayout.removeResult();
             mPkLayout.setVisibility(View.GONE);
             mVideoNormalLayout.setVisibility(View.VISIBLE);
         }
@@ -394,8 +400,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_bottom_btn_close:
-                curDialog = showDialog(R.string.finish_broadcast_title_owner,
-                        R.string.finish_broadcast_message_owner, this);
+                onBackPressed();
                 break;
             case R.id.live_bottom_btn_more:
                 showActionSheetDialog(ACTION_SHEET_TOOL, tabIdToLiveType(tabId), isOwner, true, this);
@@ -430,8 +435,11 @@ public class HostPKLiveActivity extends LiveRoomActivity
 
     @Override
     public void onBackPressed() {
-        curDialog = showDialog(R.string.finish_broadcast_title_owner,
-                R.string.finish_broadcast_message_owner, this);
+        //if (isOwner && mPkStarted) {
+
+        //} else {
+            super.onBackPressed();
+        //}
     }
 
     @Override
@@ -498,7 +506,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
     @Override
     public void onRtmPkStateChanged(PKMessage.PKMessageData messageData) {
         runOnUiThread(() -> {
-            if (!mPkStarted && messageData.state == PK_STATE_START) {
+            if (messageData.state == PK_STATE_START) {
                 mPkStarted = true;
                 pkRoomId = messageData.pkRoomId;
                 setupUIMode(true, isOwner);
@@ -506,17 +514,13 @@ public class HostPKLiveActivity extends LiveRoomActivity
                         messageData.relayConfig, messageData.relayConfig.remote.uid);
                 startMediaRelay(messageData.relayConfig);
                 updatePkGiftRank(messageData.hostRoomRank, messageData.pkRoomRank);
-            } else if (mPkStarted && messageData.state == PK_STATE_STOP) {
-                stopPkMode(isOwner);
+            } else if (messageData.state == PK_STATE_STOP) {
+                mPkLayout.setResult(messageData.result);
+                new Handler(getMainLooper()).postDelayed(() -> stopPkMode(isOwner), PK_RESULT_DISPLAY_LAST);
                 mPkStarted = false;
-            } else if (mPkStarted) {
+            } else if (mPkStarted && messageData.state == PK_STATE_IN_PK) {
                 updatePkGiftRank(messageData.hostRoomRank, messageData.pkRoomRank);
             }
         });
-    }
-
-    @Override
-    public void onRtcRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
-
     }
 }
