@@ -76,6 +76,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
         mEditText = findViewById(R.id.room_name_edit);
         mEditText.addTextChangedListener(this);
+        setRandomRoomName();
 
         mNameTooLongToastMsg = String.format(getResources().getString(
                 R.string.live_prepare_name_too_long_toast_format), MAX_NAME_LENGTH);
