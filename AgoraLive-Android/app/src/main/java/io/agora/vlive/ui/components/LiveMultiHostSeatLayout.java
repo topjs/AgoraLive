@@ -409,6 +409,8 @@ public class LiveMultiHostSeatLayout extends RelativeLayout {
             } else {
                 item.voiceState.setVisibility(GONE);
             }
+
+            item.nickname.setText(item.userName);
         } else {
             item.nickname.setVisibility(View.GONE);
             item.videoLayout.removeAllViews();
