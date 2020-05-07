@@ -77,6 +77,11 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
         }
     }
 
+    public void setEnableInEarMonitoring(boolean enabled) {
+        mEarMonitoring = enabled;
+        mRecycler.getAdapter().notifyDataSetChanged();
+    }
+
     private class ToolAdapter extends RecyclerView.Adapter {
         @NonNull
         @Override

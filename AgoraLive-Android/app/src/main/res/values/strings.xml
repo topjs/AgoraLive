@@ -165,7 +165,7 @@
     <string name="modify_user_name_empty">User name cannot be empty</string>
     <string name="modify_user_name_error">Modify user name failed</string>
 
-    <string name="in_ear_monitoring_failed">Please use wire or wireless headsets</string>
+    <string name="in_ear_monitoring_failed">Please use wired headsets</string>
 
     <string name="pk_ends">PK Ends</string>
 

@@ -26,6 +26,7 @@ import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.proxy.struts.response.Response;
 import io.agora.vlive.proxy.struts.response.RoomListResponse;
 import io.agora.vlive.proxy.struts.response.StartStopPkResponse;
+import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.ui.actionsheets.PkRoomListActionSheet;
 import io.agora.vlive.ui.components.CameraTextureView;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
@@ -403,7 +404,9 @@ public class HostPKLiveActivity extends LiveRoomActivity
                 onBackPressed();
                 break;
             case R.id.live_bottom_btn_more:
-                showActionSheetDialog(ACTION_SHEET_TOOL, tabIdToLiveType(tabId), isOwner, true, this);
+                LiveRoomToolActionSheet toolSheet = (LiveRoomToolActionSheet) showActionSheetDialog(
+                        ACTION_SHEET_TOOL, tabIdToLiveType(tabId), isOwner, true, this);
+                toolSheet.setEnableInEarMonitoring(inEarMonitorEnabled);
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (isOwner) {

@@ -1,8 +1,12 @@
 package io.agora.vlive.ui.live;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Rect;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -19,7 +23,6 @@ import androidx.appcompat.widget.AppCompatEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtm.ErrorInfo;
 import io.agora.rtm.ResultCallback;
@@ -91,9 +94,21 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     private volatile long mLastMusicPlayedTimeStamp;
 
     private boolean mActivityFinished;
+    protected boolean inEarMonitorEnabled;
+    private boolean mHeadsetWithMicrophonePlugged;
 
-    private int mCurrentAudioRoute;
-    private boolean mInEarMonitorEnabled;
+    private BroadcastReceiver mHeadPhoneReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (AudioManager.ACTION_HEADSET_PLUG.equals(action)) {
+                boolean plugged = intent.getIntExtra("state", -1) == 1;
+                boolean hasMic = intent.getIntExtra("microphone", -1) == 1;
+                mHeadsetWithMicrophonePlugged = plugged && hasMic;
+                Log.d(TAG, "Wired headset is plugged：" + mHeadsetWithMicrophonePlugged);
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +119,10 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
         mInputMethodManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        IntentFilter headPhoneFilter = new IntentFilter();
+        headPhoneFilter.addAction(AudioManager.ACTION_HEADSET_PLUG);
+        registerReceiver(mHeadPhoneReceiver, headPhoneFilter);
     }
 
     @Override
@@ -308,20 +327,19 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public boolean onActionSheetEarMonitoringClicked(boolean monitor) {
         Log.i(TAG, "onActionSheetEarMonitoringClicked:" + monitor);
         if (monitor) {
-            if (mCurrentAudioRoute == Constants.AUDIO_ROUTE_HEADSET ||
-                    mCurrentAudioRoute == Constants.AUDIO_ROUTE_HEADSETBLUETOOTH) {
+            if (mHeadsetWithMicrophonePlugged) {
                 rtcEngine().enableInEarMonitoring(true);
-                mInEarMonitorEnabled = true;
+                inEarMonitorEnabled = true;
                 return true;
             } else {
                 showShortToast(getResources().getString(R.string.in_ear_monitoring_failed));
-                mInEarMonitorEnabled = false;
+                // In ear monitor state does not change here.
                 return false;
             }
         } else {
             rtcEngine().enableInEarMonitoring(false);
-            mInEarMonitorEnabled = false;
             // It is always allowed to disable the in-ear monitoring.
+            inEarMonitorEnabled = false;
             return true;
         }
     }
@@ -554,11 +572,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     }
 
     @Override
-    public void onRtcAudioRouteChanged(int routing) {
-        mCurrentAudioRoute = routing;
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         if ((isHost || isOwner) && !config().isVideoMuted()) {
@@ -602,5 +615,11 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public void finish() {
         super.finish();
         mActivityFinished = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mHeadPhoneReceiver);
     }
 }

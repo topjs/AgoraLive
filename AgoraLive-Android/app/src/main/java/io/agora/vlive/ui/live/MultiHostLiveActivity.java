@@ -40,6 +40,7 @@ import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.proxy.struts.response.Response;
 import io.agora.vlive.proxy.struts.response.SeatStateResponse;
 import io.agora.vlive.ui.actionsheets.InviteUserActionSheet;
+import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
 import io.agora.vlive.ui.components.CameraSurfaceView;
 import io.agora.vlive.ui.components.CameraTextureView;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
@@ -327,7 +328,10 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
                         R.string.finish_broadcast_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
-                showActionSheetDialog(ACTION_SHEET_TOOL, tabIdToLiveType(tabId), isHost, true, this);
+                LiveRoomToolActionSheet toolSheet = (LiveRoomToolActionSheet)
+                        showActionSheetDialog(ACTION_SHEET_TOOL,
+                                tabIdToLiveType(tabId), isHost, true, this);
+                toolSheet.setEnableInEarMonitoring(inEarMonitorEnabled);
                 break;
             case R.id.live_bottom_btn_fun1:
                 if (isOwner) {
