@@ -518,6 +518,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
                 mPkLayout.setResult(messageData.result);
                 new Handler(getMainLooper()).postDelayed(() -> stopPkMode(isOwner), PK_RESULT_DISPLAY_LAST);
                 mPkStarted = false;
+                showShortToast(getResources().getString(R.string.pk_ends));
             } else if (mPkStarted && messageData.state == PK_STATE_IN_PK) {
                 updatePkGiftRank(messageData.hostRoomRank, messageData.pkRoomRank);
             }

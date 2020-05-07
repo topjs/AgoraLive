@@ -167,6 +167,8 @@
 
     <string name="in_ear_monitoring_failed">请插入有线耳机或使用蓝牙耳机</string>
 
+    <string name="pk_ends">PK 结束</string>
+
     <string-array name="random_channel_names">
         <item>陌上花开等你来</item>
         <item>天天爱你</item>

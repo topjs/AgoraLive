@@ -167,6 +167,8 @@
 
     <string name="in_ear_monitoring_failed">Please use wire or wireless headsets</string>
 
+    <string name="pk_ends">PK Ends</string>
+
     <string-array name="random_channel_names">
         <item>Cheer</item>
         <item>Vibe</item>
