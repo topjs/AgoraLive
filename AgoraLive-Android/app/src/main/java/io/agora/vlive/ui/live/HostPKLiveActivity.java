@@ -233,6 +233,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
             mLayout.setBackground(null);
             mStartPkButton.setVisibility(isOwner ? View.VISIBLE : View.GONE);
             mPkLayout.removeResult();
+            mPkLayout.getLeftVideoLayout().removeAllViews();
+            mPkLayout.getRightVideoLayout().removeAllViews();
             mPkLayout.setVisibility(View.GONE);
             mVideoNormalLayout.setVisibility(View.VISIBLE);
         }
