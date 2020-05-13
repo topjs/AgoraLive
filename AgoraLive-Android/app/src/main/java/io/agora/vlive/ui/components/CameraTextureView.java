@@ -19,6 +19,6 @@ public class CameraTextureView extends TextureView {
     }
 
     private void setTextureViewConsumer() {
-        setSurfaceTextureListener(new TextureViewConsumer(VideoModule.instance()));
+        setSurfaceTextureListener(new TextureViewConsumer());
     }
 }

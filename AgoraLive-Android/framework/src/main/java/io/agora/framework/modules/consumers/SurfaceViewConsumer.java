@@ -49,19 +49,12 @@ public class SurfaceViewConsumer extends BaseWindowConsumer implements SurfaceHo
         surfaceDestroyed = false;
         needResetSurface = true;
         connectChannel(CHANNEL_ID);
-
-        if (videoChannel != null) {
-            pSurfaceRotation = getSurfaceRotation(videoChannel.getChannelContext().getContext());
-        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
         needResetSurface = true;
-        if (videoChannel != null) {
-            pSurfaceRotation = getSurfaceRotation(videoChannel.getChannelContext().getContext());
-        }
     }
 
     @Override

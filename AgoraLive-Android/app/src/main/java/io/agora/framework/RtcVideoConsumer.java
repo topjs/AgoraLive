@@ -44,9 +44,6 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
                     ? AgoraVideoFrame.FORMAT_TEXTURE_2D
                     : AgoraVideoFrame.FORMAT_TEXTURE_OES;
             if (mRtcConsumer != null) {
-                Log.d(TAG, "textureId:" + frame.textureId + " width:" + frame.format.getWidth() +
-                        " height:" + frame.format.getHeight() +
-                        " rotation:" + frame.rotation);
                 mRtcConsumer.consumeTextureFrame(frame.textureId, format,
                         frame.format.getWidth(), frame.format.getHeight(),
                         frame.rotation, frame.timestamp, frame.textureTransform);

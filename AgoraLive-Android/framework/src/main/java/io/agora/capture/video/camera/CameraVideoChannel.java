@@ -31,20 +31,34 @@ public class CameraVideoChannel extends VideoChannel {
     }
 
     /**
-     * Configuration of camera, must be called before the capture is started.
-     * The width is usually larger than the height. The width, height and
-     * frame rate that are actually chosen depend on the hardware capabilities.
-     * @param width expected width of camera capture
-     * @param height expected height of camera capture
-     * @param frameRate expected capture frame rate
-     * @param facing io.agora.capture.video.camera.Constant.CAMERA_FACING_FRONT or
-     *               io.agora.capture.video.camera.Constant.CAMERA_FACING_BACK
+     * Set the current camera facing
+     * @param facing must be one of Constant.CAMERA_FACING_FRONT
+     *               or Constant.CAMERA_FACING_BACK
+     * Will not take effect until next startCapture or
+     * switchCamera succeeds.
      */
-    public void config(int width, int height, int frameRate, int facing) {
+    public void setFacing(int facing) {
+        mFacing = facing;
+    }
+
+    /**
+     * Set the ideal capture image size in pixels.
+     * Note the size is only a reference to find the
+     * most closest size that the camera hardware supports.
+     * The size is usually horizontal, that is, the width
+     * is larger than the height, or the picture will be
+     * cropped more than desired.
+     * The default picture size is 1920 * 1080
+     * Will not take effect until next startCapture or
+     * switchCamera succeeds.
+     */
+    public void setPictureSize(int width, int height) {
         mWidth = width;
         mHeight = height;
+    }
+
+    public void setIdealFrameRate(int frameRate) {
         mFrameRate = frameRate;
-        mFacing = facing;
     }
 
     public void startCapture() {

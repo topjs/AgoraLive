@@ -8,7 +8,7 @@ import io.agora.framework.helpers.gles.core.Drawable2d;
 import io.agora.framework.helpers.gles.core.GlUtil;
 import io.agora.framework.helpers.gles.core.Program;
 
-public class RotateProgram extends Program {
+public class RotateProgram2D extends Program {
     // Simple vertex shader, used for all programs.
     private static final String CAMERA_INPUT_VERTEX_SHADER =
         "uniform mat4 uTexMatrix;\n" +
@@ -58,7 +58,7 @@ public class RotateProgram extends Program {
     private int mWidth;
     private int mHeight;
 
-    public RotateProgram() {
+    public RotateProgram2D() {
         super(CAMERA_INPUT_VERTEX_SHADER, FRAGMENT_SHADER_2D);
         mVertexBuffer = getDrawable2d().vertexArray();
         mTextureBuffer = getDrawable2d().texCoordArray();

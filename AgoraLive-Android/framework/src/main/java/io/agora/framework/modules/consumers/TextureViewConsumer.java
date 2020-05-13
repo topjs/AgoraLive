@@ -16,8 +16,8 @@ public class TextureViewConsumer extends BaseWindowConsumer implements TextureVi
     private int mWidth;
     private int mHeight;
 
-    public TextureViewConsumer(VideoModule videoModule) {
-        super(videoModule);
+    public TextureViewConsumer() {
+        super(VideoModule.instance());
     }
 
     @Override
@@ -52,10 +52,6 @@ public class TextureViewConsumer extends BaseWindowConsumer implements TextureVi
         needResetSurface = true;
         setSize(width, height);
         connectChannel(CHANNEL_ID);
-
-        if (videoChannel != null) {
-            pSurfaceRotation = getSurfaceRotation(videoChannel.getChannelContext().getContext());
-        }
     }
 
     @Override
@@ -63,9 +59,6 @@ public class TextureViewConsumer extends BaseWindowConsumer implements TextureVi
         GLES20.glViewport(0, 0, width, height);
         setSize(width, height);
         needResetSurface = true;
-        if (videoChannel != null) {
-            pSurfaceRotation = getSurfaceRotation(videoChannel.getChannelContext().getContext());
-        }
     }
 
     private void setSize(int width, int height) {

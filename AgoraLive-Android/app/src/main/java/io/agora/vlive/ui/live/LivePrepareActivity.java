@@ -92,7 +92,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
         FrameLayout localPreviewLayout = findViewById(R.id.local_preview_layout);
         TextureView textureView = new TextureView(this);
-        TextureViewConsumer consumer = new TextureViewConsumer(VideoModule.instance());
+        TextureViewConsumer consumer = new TextureViewConsumer();
         textureView.setSurfaceTextureListener(consumer);
         localPreviewLayout.addView(textureView);
 

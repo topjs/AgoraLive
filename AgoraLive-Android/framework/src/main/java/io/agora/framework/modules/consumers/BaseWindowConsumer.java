@@ -29,23 +29,6 @@ public abstract class BaseWindowConsumer implements IVideoConsumer {
     private float[] mMVPMatrix = new float[16];
     private boolean mMVPInit;
 
-    // Refers to the rotation of current Activity
-    // window obtained from the Display
-    int pSurfaceRotation;
-
-    int getSurfaceRotation(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        int rotation = wm != null ? wm.getDefaultDisplay().getRotation() : Surface.ROTATION_0;
-
-        switch (rotation) {
-            case Surface.ROTATION_90: return 90;
-            case Surface.ROTATION_180: return 180;
-            case Surface.ROTATION_270: return 270;
-            case Surface.ROTATION_0:
-            default: return 0;
-        }
-    }
-
     BaseWindowConsumer(VideoModule videoModule) {
         this.videoModule = videoModule;
     }

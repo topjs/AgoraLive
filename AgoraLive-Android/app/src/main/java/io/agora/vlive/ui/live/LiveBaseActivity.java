@@ -1,6 +1,7 @@
 package io.agora.vlive.ui.live;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -16,10 +17,10 @@ import androidx.core.content.ContextCompat;
 import java.util.List;
 import java.util.Map;
 
+import io.agora.capture.video.camera.CameraManager;
 import io.agora.framework.PreprocessorFaceUnity;
 import io.agora.framework.RtcVideoConsumer;
 import io.agora.capture.video.camera.VideoModule;
-import io.agora.capture.video.camera.CameraVideoChannel;
 import io.agora.framework.modules.channels.ChannelManager;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
@@ -71,7 +72,10 @@ public abstract class LiveBaseActivity extends BaseActivity
     protected String rtcChannelName;
 
     private RtmMessageManager mMessageManager;
-    protected CameraVideoChannel cameraChannel;
+
+    private CameraManager mCameraManager;
+
+    private PreprocessorFaceUnity mFUPreprocessor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,24 +143,17 @@ public abstract class LiveBaseActivity extends BaseActivity
         proxy().registerProxyListener(this);
         registerRtcHandler(this);
 
-        initVideoModule();
-        cameraChannel = (CameraVideoChannel) VideoModule.instance()
-                .getVideoChannel(ChannelManager.ChannelID.CAMERA);
+        initCamera();
     }
 
-    private void initVideoModule() {
-        VideoModule videoModule = VideoModule.instance();
-        if (videoModule.hasInitialized()) return;
-        videoModule.init(getApplicationContext());
+    private void initCamera() {
+        Context application = getApplicationContext();
+        mCameraManager = new CameraManager(application,
+                new PreprocessorFaceUnity(application));
+        mCameraManager.enablePreprocessor(config().isBeautyEnabled());
+        mFUPreprocessor = (PreprocessorFaceUnity) VideoModule.instance()
+            .getPreprocessor(ChannelManager.ChannelID.CAMERA);
 
-        int channelId = ChannelManager.ChannelID.CAMERA;
-        videoModule.setPreprocessor(channelId,
-                new PreprocessorFaceUnity(getApplicationContext()));
-
-        videoModule.enableOffscreenMode(channelId, false);
-        videoModule.startChannel(channelId);
-
-        videoModule.enablePreprocessor(channelId, config().isBeautyEnabled());
     }
 
     protected abstract void onPermissionGranted();
@@ -197,53 +194,51 @@ public abstract class LiveBaseActivity extends BaseActivity
     }
 
     protected void startCameraCapture() {
-        if (cameraChannel != null && !cameraChannel.hasCaptureStarted()) {
-            boolean beautyEnabled = config().isBeautyEnabled();
-            Log.i("LiveBaseActivity", "startCameraCapture. Beauty Enabled:" + beautyEnabled);
-            enablePreProcess(beautyEnabled);
-            cameraChannel.startCapture();
+        if (mCameraManager != null) {
+            enablePreProcess(config().isBeautyEnabled());
+            mCameraManager.startCapture();
         }
     }
 
     protected void switchCamera() {
-        if (cameraChannel != null) {
-            cameraChannel.switchCamera();
+        if (mCameraManager != null) {
+            mCameraManager.switchCamera();
         }
     }
 
     protected void stopCameraCapture() {
-        if (cameraChannel != null && cameraChannel.hasCaptureStarted()) {
-            cameraChannel.stopCapture();
+        if (mCameraManager != null) {
+            mCameraManager.stopCapture();
         }
     }
 
     protected void enablePreProcess(boolean enabled) {
-        if (cameraChannel != null) {
-            cameraChannel.enablePreProcess(enabled);
+        if (mCameraManager != null) {
+            mCameraManager.enablePreprocessor(enabled);
         }
     }
 
     protected void setBlurValue(float blur) {
-        if (cameraChannel != null) {
-            cameraChannel.setBlurValue(blur);
+        if (mFUPreprocessor != null) {
+            mFUPreprocessor.setBlurValue(blur);
         }
     }
 
     protected void setWhitenValue(float whiten) {
-        if (cameraChannel != null) {
-            cameraChannel.setWhitenValue(whiten);
+        if (mFUPreprocessor != null) {
+            mFUPreprocessor.setWhitenValue(whiten);
         }
     }
 
     protected void setCheekValue(float cheek) {
-        if (cameraChannel != null) {
-            cameraChannel.setCheekValue(cheek);
+        if (mFUPreprocessor != null) {
+            mFUPreprocessor.setCheekValue(cheek);
         }
     }
 
     protected void setEyeValue(float eye) {
-        if (cameraChannel != null) {
-            cameraChannel.setEyeValue(eye);
+        if (mFUPreprocessor != null) {
+            mFUPreprocessor.setEyeValue(eye);
         }
     }
 
