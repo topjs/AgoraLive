@@ -1,7 +1,6 @@
 package io.agora.vlive.ui.main.fragments;
 
 import android.content.Intent;
-import android.graphics.Outline;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.agora.vlive.Config;
 import io.agora.vlive.R;
 import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.proxy.struts.model.RoomInfo;
@@ -209,8 +207,18 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
             itemHolder.count.setText(String.valueOf(info.currentUsers));
             itemHolder.layout.setBackgroundResource(UserUtil.getUserProfileIcon(info.roomId));
             itemHolder.itemView.setOnClickListener((view) -> {
-                goLiveRoom(mRoomList.get(position), onGetRoomListType());
+                goLiveRoom(mRoomList.get(position),
+                        serverTypeToTabType(onGetRoomListType()));
             });
+        }
+
+        private int serverTypeToTabType(int serverType) {
+            switch (serverType) {
+                case ClientProxy.ROOM_TYPE_SINGLE: return Config.LIVE_TYPE_SINGLE_HOST;
+                case ClientProxy.ROOM_TYPE_PK: return Config.LIVE_TYPE_PK_HOST;
+                case ClientProxy.ROOM_TYPE_HOST_IN:
+                default: return Config.LIVE_TYPE_MULTI_HOST;
+            }
         }
 
         @Override
