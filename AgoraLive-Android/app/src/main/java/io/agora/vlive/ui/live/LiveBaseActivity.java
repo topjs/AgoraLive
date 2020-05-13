@@ -18,9 +18,9 @@ import java.util.Map;
 
 import io.agora.framework.PreprocessorFaceUnity;
 import io.agora.framework.RtcVideoConsumer;
-import io.agora.framework.VideoModule;
-import io.agora.framework.channels.CameraVideoChannel;
-import io.agora.framework.channels.ChannelManager;
+import io.agora.capture.video.camera.VideoModule;
+import io.agora.capture.video.camera.CameraVideoChannel;
+import io.agora.framework.modules.channels.ChannelManager;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
@@ -38,7 +38,6 @@ import io.agora.vlive.agora.rtm.model.GiftRankMessage;
 import io.agora.vlive.agora.rtm.model.NotificationMessage;
 import io.agora.vlive.agora.rtm.model.PKMessage;
 import io.agora.vlive.agora.rtm.model.SeatStateMessage;
-import io.agora.vlive.proxy.ClientProxy;
 import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
 
@@ -154,8 +153,7 @@ public abstract class LiveBaseActivity extends BaseActivity
         videoModule.setPreprocessor(channelId,
                 new PreprocessorFaceUnity(getApplicationContext()));
 
-        // enables off-screen frame consumers like rtc engine.
-        videoModule.enableOffscreenMode(channelId, true);
+        videoModule.enableOffscreenMode(channelId, false);
         videoModule.startChannel(channelId);
 
         videoModule.enablePreprocessor(channelId, config().isBeautyEnabled());

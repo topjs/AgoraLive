@@ -17,10 +17,10 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import org.jetbrains.annotations.NotNull;
 
-import io.agora.framework.VideoModule;
-import io.agora.framework.channels.CameraVideoChannel;
-import io.agora.framework.channels.ChannelManager;
-import io.agora.framework.consumers.TextureViewConsumer;
+import io.agora.capture.video.camera.VideoModule;
+import io.agora.capture.video.camera.CameraVideoChannel;
+import io.agora.framework.modules.channels.ChannelManager;
+import io.agora.framework.modules.consumers.TextureViewConsumer;
 import io.agora.vlive.Config;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;

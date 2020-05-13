@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.TextureView;
 
-import io.agora.framework.VideoModule;
-import io.agora.framework.consumers.TextureViewConsumer;
+import io.agora.capture.video.camera.VideoModule;
+import io.agora.framework.modules.consumers.TextureViewConsumer;
 
 public class CameraTextureView extends TextureView {
     public CameraTextureView(Context context) {

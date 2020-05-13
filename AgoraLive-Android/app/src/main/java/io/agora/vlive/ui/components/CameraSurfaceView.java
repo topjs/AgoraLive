@@ -4,8 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
-import io.agora.framework.VideoModule;
-import io.agora.framework.consumers.SurfaceViewConsumer;
+import io.agora.framework.modules.consumers.SurfaceViewConsumer;
 
 public class CameraSurfaceView extends SurfaceView {
     public CameraSurfaceView(Context context) {

@@ -5,8 +5,9 @@ import android.opengl.GLES20;
 
 import com.faceunity.FURenderer;
 
-import io.agora.framework.channels.VideoChannel;
-import io.agora.framework.preprocess.IPreprocessor;
+import io.agora.capture.video.camera.VideoCaptureFrame;
+import io.agora.framework.modules.channels.VideoChannel;
+import io.agora.framework.modules.processors.IPreprocessor;
 
 public class PreprocessorFaceUnity implements IPreprocessor {
     private final static String TAG = PreprocessorFaceUnity.class.getSimpleName();
@@ -31,15 +32,13 @@ public class PreprocessorFaceUnity implements IPreprocessor {
             return outFrame;
         }
 
-        VideoCaptureFrame frame = new VideoCaptureFrame(outFrame);
-
-        frame.mTextureId = mFURenderer.onDrawFrame(frame.mImage,
-                frame.mTextureId, frame.mFormat.getWidth(),
-                frame.mFormat.getHeight());
+        outFrame.textureId = mFURenderer.onDrawFrame(outFrame.image,
+                outFrame.textureId, outFrame.format.getWidth(),
+                outFrame.format.getHeight());
 
         // The texture is transformed to texture2D by beauty module.
-        frame.mFormat.setTexFormat(GLES20.GL_TEXTURE_2D);
-        return frame;
+        outFrame.format.setTexFormat(GLES20.GL_TEXTURE_2D);
+        return outFrame;
     }
 
     @Override

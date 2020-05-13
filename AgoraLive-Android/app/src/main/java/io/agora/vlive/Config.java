@@ -7,8 +7,8 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.agora.capture.video.camera.Constant;
 import io.agora.framework.PreprocessorFaceUnity;
-import io.agora.framework.camera.Constant;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 import io.agora.vlive.proxy.struts.model.AppVersionInfo;
 import io.agora.vlive.proxy.struts.model.GiftInfo;

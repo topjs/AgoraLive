@@ -1,18 +1,14 @@
 package io.agora.framework;
 
-import android.opengl.EGLContext;
-import android.opengl.EGLSurface;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
-import com.faceunity.gles.core.EglCore;
-
-import io.agora.framework.channels.ChannelManager;
-import io.agora.framework.channels.VideoChannel;
-import io.agora.framework.consumers.IVideoConsumer;
+import io.agora.capture.video.camera.VideoCaptureFrame;
+import io.agora.capture.video.camera.VideoModule;
+import io.agora.framework.modules.channels.ChannelManager;
+import io.agora.framework.modules.channels.VideoChannel;
+import io.agora.framework.modules.consumers.IVideoConsumer;
 import io.agora.rtc.mediaio.IVideoFrameConsumer;
 import io.agora.rtc.mediaio.IVideoSource;
 import io.agora.rtc.mediaio.MediaIO;
@@ -32,8 +28,6 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
     private volatile VideoModule mVideoModule;
     private int mChannelId;
 
-    private float[] mIdentity = new float[16];
-
     public RtcVideoConsumer(VideoModule videoModule) {
         this(videoModule, ChannelManager.ChannelID.CAMERA);
     }
@@ -41,19 +35,21 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
     private RtcVideoConsumer(VideoModule videoModule, int channelId) {
         mVideoModule = videoModule;
         mChannelId = channelId;
-        Matrix.setIdentityM(mIdentity, 0);
     }
 
     @Override
     public void onConsumeFrame(VideoCaptureFrame frame, VideoChannel.ChannelContext context) {
         if (mValidInRtc) {
-            int format = frame.mFormat.getTexFormat() == GLES20.GL_TEXTURE_2D
+            int format = frame.format.getTexFormat() == GLES20.GL_TEXTURE_2D
                     ? AgoraVideoFrame.FORMAT_TEXTURE_2D
                     : AgoraVideoFrame.FORMAT_TEXTURE_OES;
             if (mRtcConsumer != null) {
-                mRtcConsumer.consumeTextureFrame(frame.mTextureId, format,
-                        frame.mFormat.getWidth(), frame.mFormat.getHeight(),
-                        frame.mRotation, frame.mTimeStamp, mIdentity);
+                Log.d(TAG, "textureId:" + frame.textureId + " width:" + frame.format.getWidth() +
+                        " height:" + frame.format.getHeight() +
+                        " rotation:" + frame.rotation);
+                mRtcConsumer.consumeTextureFrame(frame.textureId, format,
+                        frame.format.getWidth(), frame.format.getHeight(),
+                        frame.rotation, frame.timestamp, frame.textureTransform);
             }
         }
     }
