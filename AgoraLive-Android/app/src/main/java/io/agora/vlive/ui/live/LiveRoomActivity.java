@@ -379,13 +379,19 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetVideoClicked(boolean muted) {
         Log.i(TAG, "onActionSheetVideoClicked:" + muted);
-        if (isHost) rtcEngine().muteLocalVideoStream(muted);
+        if (isHost) {
+            rtcEngine().muteLocalVideoStream(muted);
+            config().setVideoMuted(muted);
+        }
     }
 
     @Override
     public void onActionSheetSpeakerClicked(boolean muted) {
         Log.i(TAG, "onActionSheetSpeakerClicked:" + muted);
-        if (isHost) rtcEngine().muteLocalAudioStream(muted);
+        if (isHost) {
+            rtcEngine().muteLocalAudioStream(muted);
+            config().setAudioMuted(muted);
+        }
     }
 
     @Override
