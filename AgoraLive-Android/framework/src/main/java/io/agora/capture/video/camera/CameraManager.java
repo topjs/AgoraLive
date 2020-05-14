@@ -18,6 +18,9 @@ import io.agora.framework.modules.processors.IPreprocessor;
  * It can be seen as a particular utility class to control the
  * camera video channel, which is defined as one implementation
  * of the video channel designed in the framework.
+ * Maintaining a single CameraManager instance globally is enough.
+ * Although it is ok to create an instance every time it needs
+ * control over cameras, such behavior is unlikely to bring benefits.
  */
 public class CameraManager {
     // CameraManager only controls camera channel
@@ -25,7 +28,6 @@ public class CameraManager {
 
     private static final int DEFAULT_FACING = Constant.CAMERA_FACING_FRONT;
 
-    private VideoModule mVideoModule;
     private CameraVideoChannel mCameraChannel;
 
     /**
@@ -57,17 +59,17 @@ public class CameraManager {
      * @see io.agora.capture.video.camera.Constant
      */
     private void init(Context context, IPreprocessor preprocessor, int facing) {
-        mVideoModule = VideoModule.instance();
-        if (!mVideoModule.hasInitialized()) {
-            mVideoModule.init(context);
+        VideoModule videoModule = VideoModule.instance();
+        if (!videoModule.hasInitialized()) {
+            videoModule.init(context);
         }
 
         // The preprocessor must be set before
         // the video channel starts
-        mVideoModule.setPreprocessor(CHANNEL_ID, preprocessor);
-        mVideoModule.startChannel(CHANNEL_ID);
+        videoModule.setPreprocessor(CHANNEL_ID, preprocessor);
+        videoModule.startChannel(CHANNEL_ID);
         mCameraChannel = (CameraVideoChannel)
-                mVideoModule.getVideoChannel(CHANNEL_ID);
+                videoModule.getVideoChannel(CHANNEL_ID);
         mCameraChannel.setFacing(facing);
     }
 

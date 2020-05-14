@@ -148,12 +148,9 @@ public abstract class LiveBaseActivity extends BaseActivity
 
     private void initCamera() {
         Context application = getApplicationContext();
-        mCameraManager = new CameraManager(application,
-                new PreprocessorFaceUnity(application));
+        mFUPreprocessor = new PreprocessorFaceUnity(application);
+        mCameraManager = new CameraManager(application, mFUPreprocessor);
         mCameraManager.enablePreprocessor(config().isBeautyEnabled());
-        mFUPreprocessor = (PreprocessorFaceUnity) VideoModule.instance()
-            .getPreprocessor(ChannelManager.ChannelID.CAMERA);
-
     }
 
     protected abstract void onPermissionGranted();
