@@ -96,7 +96,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
                 toolSheet.setEnableInEarMonitoring(inEarMonitorEnabled);
                 break;
             case R.id.live_bottom_btn_fun1:
-                if (isHost) {
+                if (isHost || isOwner) {
                     showActionSheetDialog(ACTION_SHEET_BG_MUSIC, tabIdToLiveType(tabId), true, true, this);
                 } else {
                     showActionSheetDialog(ACTION_SHEET_GIFT, tabIdToLiveType(tabId), false, true, this);
@@ -105,7 +105,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
             case R.id.live_bottom_btn_fun2:
                 // this button is hidden when
                 // current user is not host.
-                if (isHost) {
+                if (isHost || isOwner) {
                     showActionSheetDialog(ACTION_SHEET_BEAUTY, tabIdToLiveType(tabId), true, true, this);
                 }
                 break;
@@ -128,6 +128,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
             String myId = config().getUserProfile().getUserId();
             if (!isOwner && myId.equals(response.data.room.owner.userId)) {
                 isOwner = true;
+                isHost = true;
                 myRtcRole = Constants.CLIENT_ROLE_BROADCASTER;
                 rtcEngine().setClientRole(myRtcRole);
             }
