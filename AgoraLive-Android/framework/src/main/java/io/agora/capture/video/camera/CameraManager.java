@@ -5,6 +5,7 @@ import android.view.SurfaceView;
 import android.view.TextureView;
 
 import io.agora.framework.modules.channels.ChannelManager;
+import io.agora.framework.modules.consumers.IVideoConsumer;
 import io.agora.framework.modules.consumers.SurfaceViewConsumer;
 import io.agora.framework.modules.consumers.TextureViewConsumer;
 import io.agora.framework.modules.processors.IPreprocessor;
@@ -86,9 +87,8 @@ public class CameraManager {
      * is removed from the consumer list.
      * @param textureView
      */
-    public void setPreview(TextureView textureView) {
-        TextureViewConsumer consumer = new TextureViewConsumer();
-        textureView.setSurfaceTextureListener(consumer);
+    public void setLocalPreview(TextureView textureView) {
+        textureView.setSurfaceTextureListener(new TextureViewConsumer());
     }
 
     /**
@@ -101,7 +101,7 @@ public class CameraManager {
      * is removed from the consumer list.
      * @param surfaceView
      */
-    public void setPreview(SurfaceView surfaceView) {
+    public void setLocalPreview(SurfaceView surfaceView) {
         surfaceView.getHolder().addCallback(
                 new SurfaceViewConsumer(surfaceView));
     }
@@ -115,6 +115,26 @@ public class CameraManager {
     public void setPictureSize(int width, int height) {
         if (mCameraChannel != null) {
             mCameraChannel.setPictureSize(width, height);
+        }
+    }
+
+    /**
+     * Attach an off-screen consumer to the camera channel.
+     * The consumer does not render on-screen frames.
+     * The on-screen and off-screen consumers can be
+     * attached and detached dynamically without affecting
+     * the others.
+     * @param consumer the consumer implementation
+     */
+    public void attachOffScreenConsumer(IVideoConsumer consumer) {
+        if (mCameraChannel != null) {
+            mCameraChannel.connectConsumer(consumer, IVideoConsumer.TYPE_OFF_SCREEN);
+        }
+    }
+
+    public void detachOffScreenConsumer(IVideoConsumer consumer) {
+        if (mCameraChannel != null) {
+            mCameraChannel.disconnectConsumer(consumer);
         }
     }
 

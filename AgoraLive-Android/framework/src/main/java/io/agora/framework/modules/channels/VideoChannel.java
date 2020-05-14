@@ -199,7 +199,13 @@ public class VideoChannel extends HandlerThread {
         mProducer = null;
     }
 
-    void connectConsumer(final IVideoConsumer consumer, int type) {
+    /**
+     * Attach a consumer to the channel
+     * @param consumer consumer to be attached
+     * @param type on-screen or off-screen
+     * @see io.agora.framework.modules.consumers.IVideoConsumer
+     */
+    public void connectConsumer(final IVideoConsumer consumer, int type) {
         checkThreadRunningState();
 
         mHandler.post(() -> {
@@ -217,7 +223,7 @@ public class VideoChannel extends HandlerThread {
         });
     }
 
-    void disconnectConsumer(IVideoConsumer consumer) {
+    public void disconnectConsumer(IVideoConsumer consumer) {
         checkThreadRunningState();
 
         mHandler.post(() -> {
