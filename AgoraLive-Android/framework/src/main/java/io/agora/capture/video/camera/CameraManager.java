@@ -168,4 +168,12 @@ public class CameraManager {
             mCameraChannel.switchCamera();
         }
     }
+
+    public IPreprocessor getPreprocessor() {
+        if (mCameraChannel != null) {
+            return VideoModule.instance().getPreprocessor(CHANNEL_ID);
+        }
+
+        return null;
+    }
 }

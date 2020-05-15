@@ -46,6 +46,7 @@ public class SurfaceViewConsumer extends BaseWindowConsumer implements SurfaceHo
 
     @Override
     public void surfaceCreated(final SurfaceHolder holder) {
+        Log.i(TAG, "surfaceCreated");
         surfaceDestroyed = false;
         needResetSurface = true;
         connectChannel(CHANNEL_ID);
@@ -53,6 +54,7 @@ public class SurfaceViewConsumer extends BaseWindowConsumer implements SurfaceHo
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        Log.i(TAG, "surfaceChanged:" + width + "x" + height);
         GLES20.glViewport(0, 0, width, height);
         needResetSurface = true;
     }
