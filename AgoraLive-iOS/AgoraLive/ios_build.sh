@@ -19,18 +19,25 @@ rm -rf *.xcarchive
 BUILD_DATE=`date +%Y-%m-%d-%H.%M.%S`
 ArchivePath=${APP_TARGET}-${BUILD_DATE}.xcarchive
 
+if [[ $APP_TARGET =~ "Release" ]] 
+then
+Export_Plist_File=exportPlist_release.plist
+else 
+Export_Plist_File=exportPlist.plist
+fi
+
 TARGET_FILE=""
 if [ ! -f "Podfile" ];then
 TARGET_FILE="${APP_Project}.xcodeproj"
 xcodebuild clean -project ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration Release
 xcodebuild -project ${TARGET_FILE} -scheme "${APP_TARGET}" -archivePath ${ArchivePath} archive
-xcodebuild -exportArchive -exportOptionsPlist exportPlist.plist -archivePath ${ArchivePath} -exportPath .
+xcodebuild -exportArchive -exportOptionsPlist ${Export_Plist_File} -archivePath ${ArchivePath} -exportPath .
 else
 pod install
 TARGET_FILE="${APP_Project}.xcworkspace"
 xcodebuild clean -workspace ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration Release
 xcodebuild -workspace ${TARGET_FILE} -scheme "${APP_TARGET}" -archivePath ${ArchivePath} archive
-xcodebuild -exportArchive -exportOptionsPlist exportPlist.plist -archivePath ${ArchivePath} -exportPath .
+xcodebuild -exportArchive -exportOptionsPlist ${Export_Plist_File} -archivePath ${ArchivePath} -exportPath .
 fi
 
 mkdir app

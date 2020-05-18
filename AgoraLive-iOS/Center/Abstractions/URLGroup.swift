@@ -11,6 +11,8 @@ import UIKit
 struct URLGroup {
     #if PREPRODUCT
     private static let ip = "https://api-solutions-pre.sh.agoralab.co/"
+    #elseif PRODUCT
+    private static let ip = "https://api-solutions.sh.agoralab.co/"
     #else
     private static let ip = "https://api-solutions-dev.sh.agoralab.co/"
     #endif
