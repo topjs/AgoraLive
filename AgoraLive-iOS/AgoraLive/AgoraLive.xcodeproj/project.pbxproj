@@ -683,7 +683,7 @@
 		A7952C5B2417636D00479811 /* ALJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALJson.swift; sourceTree = "<group>"; };
 		A795CEC12451683700220EF4 /* LabelShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelShadowView.swift; sourceTree = "<group>"; };
 		A7A9795B245140DB00A82265 /* AgoraLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgoraLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A7CEAEF3247252E00041124B /* AgoraLive-Release.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AgoraLive-Release.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7CEAEF3247252E00041124B /* AgoraLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgoraLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CEF1EA2423495E004FB752 /* LiveSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSession.swift; sourceTree = "<group>"; };
 		A7CEF1EC24238389004FB752 /* LiveRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRole.swift; sourceTree = "<group>"; };
 		A7CEF1EE24249BC0004FB752 /* LiveAudienceListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAudienceListVM.swift; sourceTree = "<group>"; };
@@ -875,7 +875,7 @@
 			children = (
 				A76BD11D23F1035500B2732B /* AgoraLive.app */,
 				A7A9795B245140DB00A82265 /* AgoraLive.app */,
-				A7CEAEF3247252E00041124B /* AgoraLive-Release.app */,
+				A7CEAEF3247252E00041124B /* AgoraLive.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1343,7 +1343,7 @@
 			);
 			name = "AgoraLive-Release";
 			productName = AgoraLive;
-			productReference = A7CEAEF3247252E00041124B /* AgoraLive-Release.app */;
+			productReference = A7CEAEF3247252E00041124B /* AgoraLive.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2144,7 +2144,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLive;
+				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraAppsDevProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "AgoraLive/AgoraLive-Bridging-Header.h";
@@ -2180,7 +2180,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLive;
+				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraAppsDevProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = "AgoraLive/AgoraLive-Bridging-Header.h";
@@ -2215,7 +2215,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLive;
+				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraIOTest2019;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PREPRODUCT";
@@ -2252,7 +2252,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLive;
+				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraIOTest2019;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PREPRODUCT;
@@ -2288,8 +2288,8 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLive;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
+				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraAppsDevProfile;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PRODUCT";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgoraLive/AgoraLive-Bridging-Header.h";
@@ -2326,7 +2326,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraLiveDistribution;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PRODUCT;
 				SWIFT_OBJC_BRIDGING_HEADER = "AgoraLive/AgoraLive-Bridging-Header.h";
