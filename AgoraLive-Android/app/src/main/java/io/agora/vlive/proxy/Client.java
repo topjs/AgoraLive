@@ -50,7 +50,7 @@ import retrofit2.internal.EverythingIsNonNull;
 
 class Client {
     private static final boolean DEBUG = false;
-    private static final String PRODUCT_URL = "https://api-solutions-pre.sh.agoralab.co";
+    private static final String PRODUCT_URL = "https://api-solutions.sh.agoralab.co";
     private static final String MSG_NULL_RESPONSE = "Response content is null";
     private static final int MAX_RESPONSE_THREAD = 10;
 
