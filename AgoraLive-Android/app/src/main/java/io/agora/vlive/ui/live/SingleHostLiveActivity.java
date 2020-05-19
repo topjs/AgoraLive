@@ -23,6 +23,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
 
     private LiveHostNameLayout mNamePad;
     private FrameLayout mVideoLayout;
+    private boolean mTopLayoutCalculated;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,16 +71,21 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
 
         rtcStatsView = findViewById(R.id.single_host_rtc_stats);
         rtcStatsView.setCloseListener(view -> rtcStatsView.setVisibility(View.GONE));
+
+        // In case that the UI is not relocated because
+        // the permission request dialog consumes the chance
+        onGlobalLayoutCompleted();
     }
 
     @Override
     protected void onGlobalLayoutCompleted() {
         View topLayout = findViewById(R.id.single_live_top_participant_layout);
-        if (topLayout != null) {
+        if (topLayout != null && !mTopLayoutCalculated) {
             RelativeLayout.LayoutParams params =
                     (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
             params.topMargin += systemBarHeight;
             topLayout.setLayoutParams(params);
+            mTopLayoutCalculated = true;
         }
     }
 

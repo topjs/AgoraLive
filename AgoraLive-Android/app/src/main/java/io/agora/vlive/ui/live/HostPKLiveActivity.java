@@ -52,6 +52,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
     private PkRoomListActionSheet mPkRoomListActionSheet;
     private AppCompatImageView mStartPkButton;
     private PkLayout mPkLayout;
+    private boolean mTopLayoutCalculated;
 
     private String pkRoomId;
     private boolean mPkStarted;
@@ -142,11 +143,12 @@ public class HostPKLiveActivity extends LiveRoomActivity
     @Override
     protected void onGlobalLayoutCompleted() {
         View topLayout = findViewById(R.id.pk_host_in_top_participant_layout);
-        if (topLayout != null) {
+        if (topLayout != null && !mTopLayoutCalculated) {
             RelativeLayout.LayoutParams params =
                     (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
             params.topMargin += systemBarHeight;
             topLayout.setLayoutParams(params);
+            mTopLayoutCalculated = true;
         }
     }
 
