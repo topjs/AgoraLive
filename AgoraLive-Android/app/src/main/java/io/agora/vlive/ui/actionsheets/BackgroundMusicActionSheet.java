@@ -1,9 +1,14 @@
 package io.agora.vlive.ui.actionsheets;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +26,9 @@ import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
 public class BackgroundMusicActionSheet extends AbstractActionSheet {
+    private static final int HINT_COLOR = Color.BLACK;
+    private static final int LINK_COLOR = Color.parseColor("#0088EB");
+
     public interface BackgroundMusicActionSheetListener {
         void onActionSheetMusicSelected(int index, String name, String url);
         void onActionSheetMusicStopped();
@@ -30,6 +38,7 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
     private int mPaddingHorizontal;
     private int mDividerHeight;
     private int mSelected = -1;
+    private AppCompatTextView mCreditText;
 
     private BackgroundMusicActionSheetListener mListener;
 
@@ -56,9 +65,10 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
     }
 
     private void init() {
-        mPaddingHorizontal = getResources().getDimensionPixelSize(
+        Resources resources = getResources();
+        mPaddingHorizontal = resources.getDimensionPixelSize(
                 R.dimen.live_room_action_sheet_margin);
-        mDividerHeight = getResources().getDimensionPixelSize(
+        mDividerHeight = resources.getDimensionPixelSize(
                 R.dimen.live_room_action_sheet_item_divider_height);
         LayoutInflater.from(getContext()).inflate(
                 R.layout.action_room_background_music, this, true);
@@ -71,6 +81,21 @@ public class BackgroundMusicActionSheet extends AbstractActionSheet {
         recyclerView.addItemDecoration(new LineDecorator());
 
         mSelected = application().config().currentMusicIndex();
+
+        mCreditText = findViewById(R.id.live_room_action_sheet_bg_music_credit_text);
+        String hint = resources.getString(R.string.live_room_bg_music_action_sheet_credit_hint);
+        String link = resources.getString(R.string.live_room_bg_music_action_sheet_credit_link);
+        showCredit(hint, link);
+    }
+
+    private void showCredit(String hint, String link) {
+        String credit = hint + link;
+        SpannableString creditSpan = new SpannableString(credit);
+        creditSpan.setSpan(new ForegroundColorSpan(HINT_COLOR),
+                0, hint.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
+        creditSpan.setSpan(new ForegroundColorSpan(LINK_COLOR),
+                hint.length(), credit.length(), SpannableStringBuilder.SPAN_INCLUSIVE_EXCLUSIVE);
+        mCreditText.setText(creditSpan);
     }
 
     private class BgMusicAdapter extends RecyclerView.Adapter {

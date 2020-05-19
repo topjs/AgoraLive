@@ -75,6 +75,8 @@
     <string name="live_room_beauty_action_sheet_eye_enlarge">Eye</string>
 
     <string name="live_room_bg_music_action_sheet_title">Background Music</string>
+    <string name="live_room_bg_music_action_sheet_credit_hint">Music:&#160;&#160;</string>
+    <string name="live_room_bg_music_action_sheet_credit_link">https://www.bensound.com</string>
 
     <string name="live_room_gift_action_sheet_title">Presents</string>
     <string name="live_room_gift_action_sheet_send">Send</string>

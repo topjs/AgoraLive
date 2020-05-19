@@ -149,6 +149,7 @@
     <dimen name="live_room_bg_music_action_sheet_height">540dp</dimen>
     <dimen name="live_room_bg_music_action_sheet_icon_size">28dp</dimen>
     <dimen name="live_room_bg_music_action_sheet_item_height">52dp</dimen>
+    <dimen name="live_room_bg_music_action_sheet_credit_height">38dp</dimen>
 
     <dimen name="live_room_gift_action_sheet_height">418dp</dimen>
     <dimen name="live_room_gift_action_sheet_send_btn_width">86dp</dimen>

@@ -76,6 +76,8 @@
     <string name="live_room_beauty_action_sheet_eye_enlarge">大眼</string>
 
     <string name="live_room_bg_music_action_sheet_title">背景音乐</string>
+    <string name="live_room_bg_music_action_sheet_credit_hint">音乐:&#160;&#160;</string>
+
     <string name="live_room_gift_action_sheet_title">礼物</string>
     <string name="live_room_gift_action_sheet_send">赠送</string>
     <string name="live_room_gift_action_sheet_value_format">(%d金币)</string>
