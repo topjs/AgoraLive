@@ -21,6 +21,10 @@ extension DictionaryGetable {
         return try getValue(of: key, type: Int.self, funcName: funcName)
     }
     
+    func getInt64Value(of key: String, funcName: String = #function) throws -> Int64 {
+        return try getValue(of: key, type: Int64.self, funcName: funcName)
+    }
+    
     func getUIntValue(of key: String, funcName: String = #function) throws -> UInt {
         let value = try getValue(of: key, type: Int.self, funcName: funcName)
         if value >= 0 {

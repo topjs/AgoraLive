@@ -16,14 +16,14 @@ class InviteButton: UIButton {
         let w: CGFloat = self.bounds.width
         let h: CGFloat = 17
         let x: CGFloat = 0.0
-        let y: CGFloat = self.bounds.height - h - 31.0
+        let y: CGFloat = (self.bounds.height * 0.5) + 14.5
         return CGRect(x: x, y: y, width: w, height: h)
     }
     
     override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
         let wh: CGFloat = 38.0
         let x: CGFloat = (self.bounds.width - wh) * 0.5
-        let y: CGFloat = 32.0
+        let y: CGFloat = (self.bounds.height * 0.5) - (38 - 7.5)
         return CGRect(x: x, y: y, width: wh, height: wh)
     }
     

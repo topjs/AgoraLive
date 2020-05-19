@@ -32,6 +32,7 @@ class MusicCell: UITableViewCell {
 
 class MusicViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var musicLinkLabel: UILabel!
     
     var playingImage = UIImage(named: "icon-pause")
     var pauseImage = UIImage(named: "icon-play")
@@ -48,5 +49,24 @@ class MusicViewController: UITableViewController {
         self.titleLabel.text = NSLocalizedString("BGM")
         
         self.tableView.rowHeight = 58.0
+        
+        let music = "Music: "
+        let link = "https://www.bensound.com"
+        
+        let content = (music + link) as NSString
+        let attrContent = NSMutableAttributedString(string: (content as String))
+        
+        attrContent.addAttributes([.foregroundColor: UIColor(hexString: "#333333"),
+                                   .font: UIFont.systemFont(ofSize: 12)],
+                                  range: NSRange(location: 0, length: music.count))
+        
+        attrContent.addAttributes([.foregroundColor: UIColor(hexString: "#0088EB"),
+                                   .font: UIFont.systemFont(ofSize: 12)],
+                                  range: NSRange(location: music.count, length: link.count))
+        
+        musicLinkLabel.attributedText = attrContent
+        musicLinkLabel.backgroundColor = UIColor(hexString: "#EEEEEE")
+        musicLinkLabel.cornerRadius(4)
+        musicLinkLabel.layer.masksToBounds = true
     }
 }

@@ -80,7 +80,7 @@ struct PKStatistics {
     }
     
     var state: State
-    var startTime: Int
+    var startTime: Int64
     var countDown: Int
     
     var currentGift: Int
@@ -105,7 +105,7 @@ struct PKStatistics {
         
         if self.state.isDuring {
             self.countDown = try dic.getIntValue(of: "countDown")
-            self.startTime = try dic.getIntValue(of: "pkStartTime")
+            self.startTime = try dic.getInt64Value(of: "pkStartTime")
             self.currentGift = try dic.getIntValue(of: "hostRoomRank")
             self.opponentRoomId = try dic.getStringValue(of: "pkRoomId")
             self.opponentGift = try dic.getIntValue(of: "pkRoomRank")

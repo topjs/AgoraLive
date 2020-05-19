@@ -1065,7 +1065,6 @@
                                 <rect key="frame" x="0.0" y="184" width="414" height="276"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="lsH-lt-0Qb" secondAttribute="height" multiplier="3:2" id="1UT-B4-g3i"/>
-                                    <constraint firstAttribute="width" constant="414" id="pHY-0Y-DQe"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="YL5-FC-olJ" kind="embed" identifier="LiveSeatViewController" id="Car-gg-4So"/>
@@ -1427,7 +1426,7 @@
             <objects>
                 <tableViewController id="Qus-to-FXv" customClass="ChatViewController" customModule="AgoraLive" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lj9-IB-nJK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="219"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="319"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -1676,6 +1675,25 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="0rU-DZ-DNK">
+                            <rect key="frame" x="0.0" y="164" width="414" height="84"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywd-bo-FXQ">
+                                    <rect key="frame" x="17" y="20" width="382" height="44"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="ywd-bo-FXQ" secondAttribute="trailing" constant="15" id="3F8-nb-vIP"/>
+                                <constraint firstItem="ywd-bo-FXQ" firstAttribute="top" secondItem="0rU-DZ-DNK" secondAttribute="top" constant="20" id="HvW-P2-hfZ"/>
+                                <constraint firstAttribute="bottom" secondItem="ywd-bo-FXQ" secondAttribute="bottom" constant="20" id="dYA-xa-rAQ"/>
+                                <constraint firstItem="ywd-bo-FXQ" firstAttribute="leading" secondItem="0rU-DZ-DNK" secondAttribute="leading" constant="17" id="vI1-3y-Sof"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MusicCell" rowHeight="58" id="I8D-0d-r1W" customClass="MusicCell" customModule="AgoraLive" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="78" width="414" height="58"/>
@@ -1733,6 +1751,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="musicLinkLabel" destination="ywd-bo-FXQ" id="xIj-LO-6I8"/>
                         <outlet property="titleLabel" destination="onX-hj-JKK" id="qY2-BJ-oe2"/>
                     </connections>
                 </tableViewController>
@@ -1982,7 +2001,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mtg-xT-5UU">
                                 <rect key="frame" x="0.0" y="104" width="414" height="266"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="266" id="lxZ-h4-Ye4"/>
+                                    <constraint firstAttribute="width" secondItem="mtg-xT-5UU" secondAttribute="height" multiplier="207:133" id="glK-nD-ObR"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="YAe-UU-ydk" kind="embed" identifier="PKViewController" id="trg-94-nSg"/>
@@ -2186,8 +2205,8 @@
         <image name="pic-placeholding" width="159" height="156"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3rl-lE-vD6"/>
-        <segue reference="1OZ-Av-dpY"/>
-        <segue reference="ZMS-ad-BgQ"/>
+        <segue reference="Qza-nv-z7O"/>
+        <segue reference="8xd-ja-Pru"/>
+        <segue reference="Wdi-z2-q7b"/>
     </inferredMetricsTieBreakers>
 </document>

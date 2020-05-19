@@ -52,7 +52,7 @@ extension UIView {
         }
         
         underline.frame = CGRect(x: tX,
-                                 y: self.bounds.height,
+                                 y: self.bounds.height - h,
                                  width: w,
                                  height: h)
         
