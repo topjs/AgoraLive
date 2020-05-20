@@ -3,6 +3,7 @@ package io.agora.vlive.ui;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -361,6 +362,15 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
             // avoid showing the toast too frequently
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             mLastToastTime = current;
+        }
+    }
+
+    public String getAppVersion() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

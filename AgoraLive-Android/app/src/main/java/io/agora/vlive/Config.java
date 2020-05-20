@@ -3,6 +3,8 @@ package io.agora.vlive;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +123,7 @@ public class Config {
 
     private UserProfile mUserProfile;
     private AppVersionInfo mVersionInfo;
+    private String mAppId;
     private List<GiftInfo> mGiftInfoList = new ArrayList<>();
     private List<MusicInfo> mMusicInfoList = new ArrayList<>();
     private int mLastTabPosition = Global.Constants.TAB_ID_MULTI;
@@ -156,6 +159,14 @@ public class Config {
 
     public void setVersionInfo(AppVersionInfo mVersionInfo) {
         this.mVersionInfo = mVersionInfo;
+    }
+
+    public void setAppId(String appId) {
+        mAppId = appId;
+    }
+
+    public boolean appIdObtained() {
+        return !TextUtils.isEmpty(mAppId);
     }
 
     public boolean hasCheckedVersion() {

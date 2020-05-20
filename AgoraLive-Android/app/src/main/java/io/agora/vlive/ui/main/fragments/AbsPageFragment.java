@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -207,9 +208,22 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
             itemHolder.count.setText(String.valueOf(info.currentUsers));
             itemHolder.layout.setBackgroundResource(UserUtil.getUserProfileIcon(info.roomId));
             itemHolder.itemView.setOnClickListener((view) -> {
-                goLiveRoom(mRoomList.get(position),
-                        serverTypeToTabType(onGetRoomListType()));
+                if (config().appIdObtained()) {
+                    goLiveRoom(mRoomList.get(position),
+                            serverTypeToTabType(onGetRoomListType()));
+                } else {
+                    Toast.makeText(getContext(), R.string.agora_app_id_failed,
+                            Toast.LENGTH_SHORT).show();
+                    checkUpdate();
+                }
             });
+        }
+
+        private void checkUpdate() {
+            if (!config().hasCheckedVersion()) {
+                getContainer().proxy().sendRequest(
+                        Request.APP_VERSION, getContainer().getAppVersion());
+            }
         }
 
         private int serverTypeToTabType(int serverType) {

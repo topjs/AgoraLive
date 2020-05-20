@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -146,13 +147,18 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_start_broadcast) {
-            Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
-            intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap + 1);
-            intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, true);
-            intent.putExtra(Global.Constants.KEY_CREATE_ROOM, true);
-            intent.putExtra(Global.Constants.KEY_ROOM_OWNER_ID,
-                    getContainer().config().getUserProfile().getUserId());
-            startActivity(intent);
+            if (config().appIdObtained()) {
+                Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
+                intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap + 1);
+                intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, true);
+                intent.putExtra(Global.Constants.KEY_CREATE_ROOM, true);
+                intent.putExtra(Global.Constants.KEY_ROOM_OWNER_ID,
+                        getContainer().config().getUserProfile().getUserId());
+                startActivity(intent);
+            } else {
+                Toast.makeText(getContext(), R.string.agora_app_id_failed,
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

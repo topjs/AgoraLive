@@ -171,6 +171,8 @@
 
     <string name="pk_ends">PK 结束</string>
 
+    <string name="agora_app_id_failed">未获取正确的 Agora app id, 请检查你的网络状况</string>
+
     <string-array name="random_channel_names">
         <item>陌上花开等你来</item>
         <item>天天爱你</item>

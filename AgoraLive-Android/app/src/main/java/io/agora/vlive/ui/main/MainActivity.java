@@ -2,19 +2,14 @@ package io.agora.vlive.ui.main;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.TooltipCompat;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,6 +33,7 @@ import io.agora.vlive.utils.RandomUtil;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int NETWORK_CHECK_INTERVAL = 10000;
 
     private BottomNavigationView mNavView;
     private NavController mNavController;
@@ -116,18 +112,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private String getAppVersion() {
-        try {
-            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     @Override
     public void onAppVersionResponse(AppVersionResponse response) {
         config().setVersionInfo(response.data);
+        config().setAppId(response.data.config.appId);
         application().initEngine(response.data.config.appId);
         login();
     }
@@ -222,5 +210,11 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onResponseError(int requestType, int error, String message) {
         Log.e(TAG, "request:" + requestType + " error:" + error + " msg:" + message);
+        switch (requestType) {
+            case Request.APP_VERSION:
+                new Handler(getMainLooper()).postDelayed(
+                        MainActivity.this::checkUpdate, NETWORK_CHECK_INTERVAL);
+                break;
+        }
     }
 }

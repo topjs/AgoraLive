@@ -171,6 +171,8 @@
 
     <string name="pk_ends">PK Ends</string>
 
+    <string name="agora_app_id_failed">Agora app id not found, please check your network</string>
+
     <string-array name="random_channel_names">
         <item>Cheer</item>
         <item>Vibe</item>
