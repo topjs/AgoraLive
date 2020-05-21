@@ -22,6 +22,9 @@ ArchivePath=${APP_TARGET}-${BUILD_DATE}.xcarchive
 if [[ $APP_TARGET =~ "Release" ]] 
 then
 Export_Plist_File=exportPlist_release.plist
+elif [[ $APP_TARGET =~ "QA" ]] 
+then
+Export_Plist_File=exportPlist_qa.plist
 else 
 Export_Plist_File=exportPlist.plist
 fi
