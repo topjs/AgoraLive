@@ -1,6 +1,5 @@
 package io.agora.vlive.ui.main;
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -34,9 +33,11 @@ import io.agora.vlive.utils.RandomUtil;
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int NETWORK_CHECK_INTERVAL = 10000;
+    private static final int MAX_PERIODIC_APP_ID_TRY_COUNT = 5;
 
     private BottomNavigationView mNavView;
     private NavController mNavController;
+    private int mAppIdTryCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,7 @@ public class MainActivity extends BaseActivity {
         config().setVersionInfo(response.data);
         config().setAppId(response.data.config.appId);
         application().initEngine(response.data.config.appId);
+        mAppIdTryCount = 0;
         login();
     }
 
@@ -212,8 +214,11 @@ public class MainActivity extends BaseActivity {
         Log.e(TAG, "request:" + requestType + " error:" + error + " msg:" + message);
         switch (requestType) {
             case Request.APP_VERSION:
-                new Handler(getMainLooper()).postDelayed(
-                        MainActivity.this::checkUpdate, NETWORK_CHECK_INTERVAL);
+                if (mAppIdTryCount <= MAX_PERIODIC_APP_ID_TRY_COUNT) {
+                    new Handler(getMainLooper()).postDelayed(
+                            MainActivity.this::checkUpdate, NETWORK_CHECK_INTERVAL);
+                    mAppIdTryCount++;
+                }
                 break;
         }
     }
