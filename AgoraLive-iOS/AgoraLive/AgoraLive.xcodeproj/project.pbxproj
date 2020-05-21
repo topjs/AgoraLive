@@ -48,6 +48,12 @@
 		A71AAF282435D7A900820096 /* StatisticsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AAF272435D7A900820096 /* StatisticsInfo.swift */; };
 		A71AAF2A2435D8BE00820096 /* RealDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AAF292435D8BE00820096 /* RealDataViewController.swift */; };
 		A71AAF88243D740F00820096 /* UIImage+CSClipToCycle.m in Sources */ = {isa = PBXBuildFile; fileRef = A71AAF87243D740F00820096 /* UIImage+CSClipToCycle.m */; };
+		A722F07E2476924400132129 /* srmetal.metallib in Resources */ = {isa = PBXBuildFile; fileRef = A722F07C2476924400132129 /* srmetal.metallib */; };
+		A722F07F2476924400132129 /* model.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A722F07D2476924400132129 /* model.bundle */; };
+		A722F08024769E3F00132129 /* model.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A722F07D2476924400132129 /* model.bundle */; };
+		A722F08124769E5100132129 /* srmetal.metallib in Resources */ = {isa = PBXBuildFile; fileRef = A722F07C2476924400132129 /* srmetal.metallib */; };
+		A722F08224769E5900132129 /* model.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A722F07D2476924400132129 /* model.bundle */; };
+		A722F08324769E5F00132129 /* srmetal.metallib in Resources */ = {isa = PBXBuildFile; fileRef = A722F07C2476924400132129 /* srmetal.metallib */; };
 		A72B7BE42444161400E965FB /* SingleBroadcasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B7BE32444161400E965FB /* SingleBroadcasterViewController.swift */; };
 		A72B7BE8244459F000E965FB /* PKBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B7BE7244459F000E965FB /* PKBroadcastersViewController.swift */; };
 		A72B7BEA24445D5B00E965FB /* PKVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B7BE924445D5B00E965FB /* PKVM.swift */; };
@@ -535,6 +541,8 @@
 		A71AAF292435D8BE00820096 /* RealDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealDataViewController.swift; sourceTree = "<group>"; };
 		A71AAF86243D740F00820096 /* UIImage+CSClipToCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CSClipToCycle.h"; sourceTree = "<group>"; };
 		A71AAF87243D740F00820096 /* UIImage+CSClipToCycle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CSClipToCycle.m"; sourceTree = "<group>"; };
+		A722F07C2476924400132129 /* srmetal.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; name = srmetal.metallib; path = ../../SDK/AgoraRtcKit.framework/AgoraResources/srmetal.metallib; sourceTree = "<group>"; };
+		A722F07D2476924400132129 /* model.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = model.bundle; path = ../../SDK/AgoraRtcKit.framework/AgoraResources/model.bundle; sourceTree = "<group>"; };
 		A72B7BE32444161400E965FB /* SingleBroadcasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBroadcasterViewController.swift; sourceTree = "<group>"; };
 		A72B7BE7244459F000E965FB /* PKBroadcastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKBroadcastersViewController.swift; sourceTree = "<group>"; };
 		A72B7BE924445D5B00E965FB /* PKVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKVM.swift; sourceTree = "<group>"; };
@@ -917,6 +925,8 @@
 				A76BD12E23F1035600B2732B /* Info.plist */,
 				A76BD13C23F25F6500B2732B /* Localizable.strings */,
 				A7952C29241633DE00479811 /* AgoraLive-Bridging-Header.h */,
+				A722F07D2476924400132129 /* model.bundle */,
+				A722F07C2476924400132129 /* srmetal.metallib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1388,6 +1398,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A722F08324769E5F00132129 /* srmetal.metallib in Resources */,
+				A722F08224769E5900132129 /* model.bundle in Resources */,
 				A7847F9624581A5800469187 /* sound.gif in Resources */,
 				A7952C0F24162EBC00479811 /* release_note.txt in Resources */,
 				A711AB7B243EF78A00C2A3FD /* SuperRocket.gif in Resources */,
@@ -1413,6 +1425,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A722F08124769E5100132129 /* srmetal.metallib in Resources */,
+				A722F08024769E3F00132129 /* model.bundle in Resources */,
 				A7847F9724581A5800469187 /* sound.gif in Resources */,
 				A7A978DD245140DB00A82265 /* release_note.txt in Resources */,
 				A7A978DE245140DB00A82265 /* SuperRocket.gif in Resources */,
@@ -1438,6 +1452,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A722F07E2476924400132129 /* srmetal.metallib in Resources */,
+				A722F07F2476924400132129 /* model.bundle in Resources */,
 				A7CEAEDB247252E00041124B /* sound.gif in Resources */,
 				A7CEAEDC247252E00041124B /* release_note.txt in Resources */,
 				A7CEAEDD247252E00041124B /* SuperRocket.gif in Resources */,
