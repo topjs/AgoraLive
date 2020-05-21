@@ -1,6 +1,7 @@
 WORKING_PATH="./"
 APP_Project="AgoraLive"
 APP_TARGET=$1
+MODE=$2
 
 echo "WORKING_PATH: ${WORKING_PATH}"
 echo "APP_TARGET: ${APP_TARGET}"
@@ -29,19 +30,30 @@ else
 Export_Plist_File=exportPlist.plist
 fi
 
+if [[ $MODE =~ "Debug" ]] 
+then
+    if [[ $APP_TARGET =~ "Release" ]] 
+    then
+    Export_Plist_File=exportPlist.plist
+    fi    
+MODE=Debug
+else 
+MODE=Release
+fi 
+
 TARGET_FILE=""
 if [ ! -f "Podfile" ];then
 TARGET_FILE="${APP_Project}.xcodeproj"
-xcodebuild clean -project ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration Release
-xcodebuild -project ${TARGET_FILE} -scheme "${APP_TARGET}" -archivePath ${ArchivePath} archive
-xcodebuild -exportArchive -exportOptionsPlist ${Export_Plist_File} -archivePath ${ArchivePath} -exportPath .
+xcodebuild clean -project ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration ${MODE}
+xcodebuild -project ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration ${MODE} -archivePath ${ArchivePath} archive
 else
 pod install
 TARGET_FILE="${APP_Project}.xcworkspace"
-xcodebuild clean -workspace ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration Release
-xcodebuild -workspace ${TARGET_FILE} -scheme "${APP_TARGET}" -archivePath ${ArchivePath} archive
-xcodebuild -exportArchive -exportOptionsPlist ${Export_Plist_File} -archivePath ${ArchivePath} -exportPath .
+xcodebuild clean -workspace ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration ${MODE}
+xcodebuild -workspace ${TARGET_FILE} -scheme "${APP_TARGET}" -configuration ${MODE} -archivePath ${ArchivePath} archive
 fi
+
+xcodebuild -exportArchive -exportOptionsPlist ${Export_Plist_File} -archivePath ${ArchivePath} -exportPath .
 
 mkdir app
 mv *.ipa app && mv *.xcarchive app
