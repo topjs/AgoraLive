@@ -16,7 +16,8 @@
         app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="@android:color/black"
         app:tabTextColor="@color/gray_darkest"
-        app:tabIndicatorColor="@color/blue_original"/>
+        app:tabIndicatorColor="@color/blue_original"
+        app:tabMode="scrollable"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/room_list_pager"

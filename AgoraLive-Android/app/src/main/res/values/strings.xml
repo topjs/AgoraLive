@@ -11,11 +11,13 @@
     <string name="home_category_title_multi">Multi Hosts</string>
     <string name="home_category_title_single">Solo Host</string>
     <string name="home_category_title_pk">PK Host-in</string>
+    <string name="home_category_title_virtual_host">Virtual Host</string>
     <string name="home_category_title_blind_date">Coming Soon</string>
 
     <string name="home_category_desp_multi">Live streaming featuring audience participation</string>
     <string name="home_category_desp_single">Live streaming by single host</string>
     <string name="home_category_desp_pk">Two channel hosts interact and merge stream for broadcasting</string>
+    <string name="home_category_desp_virtual_host"></string>
 
     <string name="room_list_no_data_hint">Please Create a Room</string>
     <string name="room_list_fail_to_obtain_data_hint">Loading Data failed, please try later</string>

@@ -23,6 +23,7 @@ public class Global {
         public static final int TAB_ID_MULTI = 0;
         public static final int TAB_ID_SINGLE = 1;
         public static final int TAB_ID_PK = 2;
+        public static final int TAB_ID_VIRTUAL = 3;
 
         public static final String KEY_ROOM_ID = "room-id";
         public static final String KEY_ROOM_NAME = "room-name";
@@ -53,7 +54,8 @@ public class Global {
         public static final int[] TAB_IDS_RES = {
                 R.string.home_category_title_multi,
                 R.string.home_category_title_single,
-                R.string.home_category_title_pk
+                R.string.home_category_title_pk,
+                R.string.home_category_title_virtual_host
         };
 
         public static final String[] RESOLUTIONS_MULTI_HOST_TEXT = {

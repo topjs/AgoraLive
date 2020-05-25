@@ -28,23 +28,16 @@ import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
 public class RoomFragment extends AbstractFragment implements View.OnClickListener {
-    private static final int TAB_COUNT = 3;
+    private static final int TAB_COUNT = 4;
     private static final int TAB_TEXT_VIEW_INDEX = 1;
 
     private int mCurrentTap;
-    private int mTitleTextSize;
     private TabLayout mTabLayout;
     private String[] mTabTitles = new String[TAB_COUNT];
 
     @SuppressWarnings("unchecked")
     private SoftReference<TextView>[] mTabTexts =
             (SoftReference<TextView>[]) Array.newInstance(SoftReference.class, TAB_COUNT);
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mTitleTextSize = getResources().getDimensionPixelSize(R.dimen.text_size_large);
-    }
 
     @Nullable
     @Override
@@ -173,6 +166,7 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
             switch (position) {
                 case 1: return new SingleHostFragment();
                 case 2: return new PKHostInFragment();
+                case 3: return new VirtualHostFragment();
                 default: return new HostInFragment();
             }
         }
