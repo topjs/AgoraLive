@@ -1,0 +1,116 @@
+/* 
+  Localizable.strings
+  AgoraLive
+
+  Created by CavanSu on 2020/2/11.
+  Copyright © 2020 Agora. All rights reserved.
+*/
+
+Cancel="Cancel";
+Done="Done";
+Confirm="Confirm";
+Reject="Reject";
+End="End";
+
+// Main Page
+Multi_Broadcasters="Multi-Hosted Live Streaming";
+Multi_Broadcasters_Description="Live streaming featuring audience participation";
+Single_Broadcaster="Solo-hosted Live Streaming";
+Single_Broadcaster_Description="Live streaming by single host";
+PK_Live="PK Host-in Live Streaming";
+PK_Live_Description="Two hosts from different channels interact in a merged video stream for broadcasting. ";
+Virtual_Live="Virtual-hosted Live Streaming";
+Comming_Soon="Comming Soon";
+
+// Create Room Page
+Create_A_Live_Room="Create a room to start";
+Create_Start="Go Live";
+Create_NameLabel="Channel name: ";
+
+// Mine
+Mine_Head="Profile";
+Mine_Name="Nickname";
+Input_Name="Input";
+
+// Media
+Resolution="Resolution";
+FrameRate="Frame rate";
+BitRate="Bitrate";
+
+Switch_Camera="Switch camera";
+Camera="Camera";
+Mic="Mic";
+Audio_Loop="Listen to mic";
+
+Beauty="Image enhancement";
+BlurLevel="Skin smooth";
+ColorLevel="Whiten";
+CheekThining="Cheek thining";
+EyeEnlarging="Eye enlarging";
+
+// Live Room
+Live_Room="Channel";
+Live_Text_Input_Placeholder="Say something...";
+Live_Room_Settings="Channel settings";
+BGM="Background music";
+Tool="Tools";
+Real_Data="Statistics";
+
+Join_Live_Room="entered the room";
+Leave_Live_Room="left the room";
+
+Send_Chat_Message_Fail="send message fail";
+Give_Owner_A_Gift="gives";
+Present_Gift_Fail="gives gift fail";
+User_List="Member listing";
+Live_End="Live End";
+Confirm_End_Live="Do you want to end this live streaming?";
+Confirm_End_Broadcasting="End broadcasting?";
+Please_Input_Headset="Plug in a headphone";
+Super_Resolution_Enabled="Super Resolution enabled";
+
+// Live Seat
+Invite_Broadcasting="Invite a host";
+Seat_Ban="Mute";
+Seat_Unban="Un-mute";
+Owner_Forces_You_End_Broadcasting="Owner forces you end broadcasting";
+Seat_Close="Position blocked";
+Seat_Release="Unblock position";
+End_Broadcasting="End hosting";
+Apply_For_Broadcasting="Become a host";
+Force_To_Audience="End hosting";
+Force_To_Audience_Message="将下麦?";
+Invite_A_Broadcast="Invite a host";
+Became_A_Host="became a host";
+Stopped_Hosting="stopped hosting";
+
+Owner_Reject_Broadcasting_Application="Owner reject your application";
+Audience_Reject_Broadcasting="Audience reject";
+Invite_Broadcasting_Fail="Invite a host fail";
+Apply_For_Broadcasting_Fail="Apply to be a host fail";
+Seat_Command_Fail="Command fail";
+Seat_Colse="Block position";
+
+// Gift
+Gift="Gift";
+Small_Bell="Bell";
+Ice_Cream="Ice cream";
+Wine="Wine";
+Cake="Cake";
+Ring="Ring";
+Watch="Watch";
+Crystal="Diamond";
+Rocket="Rocket";
+Coin="Coin";
+Present="Give";
+
+// PK
+Invite_PK="PK invitation";
+PK_Recieved_Invite="Received PK invitation";
+PK_Invite_Fail="PK hosts failed to connect";
+PK_Invite_Reject="Reject";
+PK_Remaining="PK remaining";
+Join_Other_Live_Room_Fail="Join the other channel fail";
+PK_End="PK End";
+End_PK="End PK";
+End_PK_Message="（倒计时还未结束退出pk）";

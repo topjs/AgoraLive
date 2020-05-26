@@ -1,0 +1,117 @@
+/* 
+  Localizable.strings
+  AgoraLive
+
+  Created by CavanSu on 2020/2/11.
+  Copyright © 2020 Agora. All rights reserved.
+*/
+
+
+Cancel="取消";
+Done="完成";
+Confirm="确定";
+Reject="拒绝";
+End="结束";
+
+// Main Page
+Multi_Broadcasters="多人连麦直播";
+Multi_Broadcasters_Description="观众与主播连麦互动直播";
+Single_Broadcaster="单主播直播";
+Single_Broadcaster_Description="单主播直播";
+PK_Live="PK直播";
+PK_Live_Description="两个不同直播间的主播跨频道连麦PK，引爆直播间";
+Virtual_Live="虚拟主播";
+Comming_Soon="Comming Soon";
+
+// Create Room Page
+Create_A_Live_Room="请创建一个房间";
+Create_Start="开始直播";
+Create_NameLabel="直播间的名字: ";
+
+// Mine
+Mine_Head="设置头像";
+Mine_Name="设置昵称";
+Input_Name="输入名字";
+
+// Media
+Resolution="分辨率";
+FrameRate="帧率";
+BitRate="码率";
+
+Switch_Camera="反转";
+Camera="摄像头";
+Mic="麦克风";
+Audio_Loop="耳返";
+
+Beauty="美颜";
+BlurLevel="磨皮";
+ColorLevel="美白";
+CheekThining="瘦脸";
+EyeEnlarging="大眼";
+
+// Live Room
+Live_Room="房间";
+Live_Text_Input_Placeholder="说点什么...";
+Live_Room_Settings="直播间设置";
+BGM="背景音乐";
+Tool="工具";
+Real_Data="实时数据";
+
+Join_Live_Room="进入直播间";
+Leave_Live_Room="离开直播间";
+
+Send_Chat_Message_Fail="发送聊天消息失败";
+Present_Gift_Fail="赠送礼物失败";
+Give_Owner_A_Gift="向主播赠送一个";
+User_List="成员列表";
+Live_End="直播结束";
+Confirm_End_Live="是否结束直播？";
+Confirm_End_Broadcasting="确定是否下麦？";
+Please_Input_Headset="请插上耳机";
+Super_Resolution_Enabled="已切换成超级分辨率！";
+
+// Live Seat
+Invite_Broadcasting="邀请上麦";
+Seat_Ban="禁麦";
+Seat_Unban="解禁";
+Owner_Forces_You_End_Broadcasting="房主强制你下麦";
+Seat_Close="封麦";
+Seat_Release="解封";
+End_Broadcasting="下麦";
+Apply_For_Broadcasting="申请上麦";
+Force_To_Audience="下麦";
+Force_To_Audience_Message="将下麦?";
+Invite_A_Broadcast="邀请上麦";
+Became_A_Host="上麦";
+Stopped_Hosting="下麦";
+
+Owner_Reject_Broadcasting_Application="房主拒绝你的申请";
+Audience_Reject_Broadcasting="观众拒绝连麦";
+Invite_Broadcasting_Fail="邀请上麦失败";
+Apply_For_Broadcasting_Fail="申请上麦失败";
+Seat_Command_Fail="麦位命令失败";
+Seat_Colse="封麦";
+
+// Gift
+Small_Bell="铃铛";
+Ice_Cream="冰淇淋";
+Wine="红酒";
+Cake="蛋糕";
+Ring="戒指";
+Watch="手表";
+Crystal="钻石";
+Rocket="火箭";
+Coin="金币";
+Present="赠送";
+Gift="礼物";
+
+// PK
+Invite_PK="PK邀请";
+PK_Remaining="PK剩余";
+PK_Recieved_Invite="收到邀请";
+PK_Invite_Fail="PK邀请失败";
+PK_Invite_Reject="拒绝PK";
+Join_Other_Live_Room_Fail="进入另一个直播间失败";
+PK_End="PK结束";
+End_PK="结束PK";
+End_PK_Message="（倒计时还未结束退出pk）";
