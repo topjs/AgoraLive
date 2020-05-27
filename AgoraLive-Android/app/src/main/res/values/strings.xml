@@ -29,7 +29,7 @@
 
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">Room Name:</string>
-    <string name="start_broadcast_text">Start Broadcast</string>
+    <string name="go_live_text">Go Live</string>
     <string name="live_prepare_name_too_long_toast_format">Room name cannot be longer than %d characters</string>
     <string name="live_prepare_no_room_name">Please enter your room name</string>
 
@@ -52,6 +52,10 @@
         <item>Open</item>
         <item>close</item>
     </string-array>
+
+    <!-- Virtual Host -->
+    <string name="live_virtual_image_select_title">Select Image</string>
+    <string name="live_virtual_image_select_confirm">Confirm</string>
 
     <string name="live_pk_host_remaining_time_hint">PK left:</string>
 

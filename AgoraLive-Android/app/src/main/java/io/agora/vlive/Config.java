@@ -101,6 +101,7 @@ public class Config {
     public static final int LIVE_TYPE_MULTI_HOST = 1;
     public static final int LIVE_TYPE_SINGLE_HOST = 2;
     public static final int LIVE_TYPE_PK_HOST = 3;
+    public static final int LIVE_TYPE_VIRTUAL_HOST = 4;
 
     private AgoraLiveApplication mApplication;
 
@@ -281,6 +282,12 @@ public class Config {
                 return new VideoEncoderConfiguration(
                         Global.Constants.RESOLUTIONS_PK_HOST[0],
                         Global.Constants.FRAME_RATES[0],
+                        VideoEncoderConfiguration.STANDARD_BITRATE,
+                        VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
+            case LIVE_TYPE_VIRTUAL_HOST:
+                return new VideoEncoderConfiguration(
+                        VideoEncoderConfiguration.VD_360x360,
+                        VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
                         VideoEncoderConfiguration.STANDARD_BITRATE,
                         VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
             default: return null;

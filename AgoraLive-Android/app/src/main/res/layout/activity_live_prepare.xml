@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,15 +20,13 @@
             android:layout_width="@dimen/button_height"
             android:layout_height="@dimen/button_height"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/close_button_white"/>
+            android:layout_centerVertical="true"/>
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/live_prepare_switch_camera"
             android:layout_width="@dimen/button_height"
             android:layout_height="@dimen/button_height"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/switch_camera_btn"/>
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -36,8 +35,7 @@
         android:layout_height="@dimen/button_height"
         android:layout_below="@id/prepare_top_btn_layout"
         android:layout_marginStart="@dimen/live_prepare_content_padding"
-        android:layout_marginEnd="@dimen/live_prepare_content_padding"
-        android:background="@drawable/room_edit_layout_bg">
+        android:layout_marginEnd="@dimen/live_prepare_content_padding">
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/room_name_edit_hint"
             android:layout_width="wrap_content"
@@ -46,7 +44,6 @@
             android:layout_marginStart="@dimen/prepare_padding"
             android:layout_centerVertical="true"
             android:text="@string/live_prepare_hint"
-            android:textColor="@color/gray_lightest"
             android:textSize="@dimen/text_size_small"/>
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/random_btn"
@@ -54,7 +51,6 @@
             android:layout_height="@dimen/button_height"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/prepare_padding"
-            android:src="@drawable/random_button"
             android:scaleType="fitCenter"/>
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/room_name_edit"
@@ -67,7 +63,6 @@
             android:textAlignment="gravity"
             android:gravity="center_vertical"
             android:textSize="@dimen/text_size_medium"
-            android:textColor="@android:color/white"
             android:background="@null"
             android:lines="1"/>
     </RelativeLayout>
@@ -99,7 +94,7 @@
             android:layout_marginStart="@dimen/bottom_btn_padding"
             android:textAlignment="gravity"
             android:gravity="center"
-            android:text="@string/start_broadcast_text"
+            android:text="@string/go_live_text"
             android:textSize="@dimen/text_size_normal"
             android:textColor="@color/live_action_button_text_color"
             android:background="@drawable/live_action_button_bg"/>

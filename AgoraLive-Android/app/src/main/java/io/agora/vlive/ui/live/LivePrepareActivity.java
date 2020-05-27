@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,8 +36,15 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     private static final String TAG = LivePrepareActivity.class.getSimpleName();
     private static final int MAX_NAME_LENGTH = 25;
 
-    private AppCompatEditText mEditText;
     private AppCompatTextView mStartBroadBtn;
+    private AppCompatImageView mCloseBtn;
+    private AppCompatImageView mSwitchBtn;
+    private AppCompatImageView mRandomBtn;
+    private RelativeLayout mEditLayout;
+    private AppCompatTextView mEditHint;
+    private AppCompatEditText mEditText;
+    private AppCompatImageView mBeautyBtn;
+    private AppCompatImageView mSettingBtn;
     private Dialog mExitDialog;
 
     private int roomType;
@@ -82,13 +90,22 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
                 R.string.live_prepare_name_too_long_toast_format), MAX_NAME_LENGTH);
 
         mStartBroadBtn = findViewById(R.id.live_room_action_sheet_gift_send_btn);
-        mStartBroadBtn.setOnClickListener(this);
+        mCloseBtn = findViewById(R.id.live_prepare_close);
+        mSwitchBtn = findViewById(R.id.live_prepare_switch_camera);
+        mRandomBtn = findViewById(R.id.random_btn);
+        mEditLayout = findViewById(R.id.prepare_name_edit_layout);
+        mEditHint = findViewById(R.id.room_name_edit_hint);
+        mBeautyBtn = findViewById(R.id.live_prepare_beauty_btn);
+        mSettingBtn = findViewById(R.id.live_prepare_setting_btn);
 
-        findViewById(R.id.random_btn).setOnClickListener(this);
-        findViewById(R.id.live_prepare_beauty_btn).setOnClickListener(this);
-        findViewById(R.id.live_prepare_setting_btn).setOnClickListener(this);
-        findViewById(R.id.live_prepare_close).setOnClickListener(this);
-        findViewById(R.id.live_prepare_switch_camera).setOnClickListener(this);
+        mStartBroadBtn.setOnClickListener(this);
+        mRandomBtn.setOnClickListener(this);
+        mCloseBtn.setOnClickListener(this);
+        mSwitchBtn.setOnClickListener(this);
+        mBeautyBtn.setOnClickListener(this);
+        mSettingBtn.setOnClickListener(this);
+
+        changeUIStyles();
 
         FrameLayout localPreviewLayout = findViewById(R.id.local_preview_layout);
         TextureView textureView = new TextureView(this);
@@ -97,6 +114,29 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         localPreviewLayout.addView(textureView);
 
         startCaptureIfStopped();
+    }
+
+    private void changeUIStyles() {
+        if (tabId == Config.LIVE_TYPE_VIRTUAL_HOST) {
+            // It only accepts front camera frames for virtual images.
+            mSwitchBtn.setVisibility(View.GONE);
+            mCloseBtn.setImageResource(R.drawable.icon_back_black);
+            mRandomBtn.setImageResource(R.drawable.random_button_black);
+            mEditHint.setTextColor(getResources().getColor(R.color.gray_alpha2));
+            mEditText.setTextColor(getResources().getColor(android.R.color.black));
+            mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_white);
+            RelativeLayout layout = findViewById(R.id.activity_layout);
+            layout.setBackgroundColor(getResources().getColor(R.color.virtual_image_background));
+            mBeautyBtn.setVisibility(View.GONE);
+            mSettingBtn.setVisibility(View.GONE);
+        } else {
+            mCloseBtn.setImageResource(R.drawable.close_button_white);
+            mSwitchBtn.setImageResource(R.drawable.switch_camera_white);
+            mRandomBtn.setImageResource(R.drawable.random_button_white);
+            mEditHint.setTextColor(getResources().getColor(R.color.gray_lightest));
+            mEditText.setTextColor(getResources().getColor(android.R.color.white));
+            mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_gray);
+        }
     }
 
     @Override
@@ -183,6 +223,9 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
                 break;
             case Config.LIVE_TYPE_MULTI_HOST:
                 intent = new Intent(this, MultiHostLiveActivity.class);
+                break;
+            case Config.LIVE_TYPE_VIRTUAL_HOST:
+                intent = new Intent(this, VirtualHostLiveActivity.class);
                 break;
             default: return;
         }

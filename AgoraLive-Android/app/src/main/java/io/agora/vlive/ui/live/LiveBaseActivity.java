@@ -185,7 +185,8 @@ public abstract class LiveBaseActivity extends BaseActivity
     protected int tabIdToLiveType(int tabId) {
         if (tabId == Config.LIVE_TYPE_MULTI_HOST ||
             tabId == Config.LIVE_TYPE_SINGLE_HOST ||
-            tabId == Config.LIVE_TYPE_PK_HOST) {
+            tabId == Config.LIVE_TYPE_PK_HOST ||
+            tabId == Config.LIVE_TYPE_VIRTUAL_HOST) {
             return tabId;
         } else return 0;
     }

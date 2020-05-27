@@ -20,7 +20,12 @@
     <color name="blue_cancel">#BDE3FF</color>
     <color name="blue_background">#FAFAFA</color>
 
+    <color name="virtual_image_background">#DBEFFF</color>
+
     <color name="red">#FF007D</color>
 
     <color name="transparent_70_per">#4D000000</color>
+
+    <color name="virtual_image_top">#9ED5FF</color>
+    <color name="virtual_image_bottom">#F3FAFF</color>
 </resources>

@@ -83,6 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
 
     protected int systemBarHeight;
     protected int displayHeight;
+    protected int displayWidth;
 
     private Stack<AbstractActionSheet> mActionSheetStack = new Stack<>();
     private BottomSheetDialog mSheetDialog;
@@ -94,7 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setGlobalLayoutListener();
         systemBarHeight = getStatusBarHeight();
-        displayHeight = getDisplayHeight();
+        getDisplaySize();
         proxy().registerProxyListener(this);
     }
 
@@ -150,10 +151,11 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
-    private int getDisplayHeight() {
+    private void getDisplaySize() {
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
-        return metric.heightPixels;
+        displayWidth = metric.widthPixels;
+        displayHeight = metric.heightPixels;
     }
 
     protected void showActionSheetDialog(final AbstractActionSheet sheet) {

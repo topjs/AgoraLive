@@ -24,6 +24,7 @@ import java.lang.ref.SoftReference;
 import java.lang.reflect.Array;
 
 import io.agora.vlive.ui.live.LivePrepareActivity;
+import io.agora.vlive.ui.live.VirtualImageSelectActivity;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 
@@ -141,7 +142,10 @@ public class RoomFragment extends AbstractFragment implements View.OnClickListen
     public void onClick(View view) {
         if (view.getId() == R.id.live_room_start_broadcast) {
             if (config().appIdObtained()) {
-                Intent intent = new Intent(getActivity(), LivePrepareActivity.class);
+                Class<?> activity = mCurrentTap == Global.Constants.TAB_ID_VIRTUAL ?
+                        VirtualImageSelectActivity.class :
+                        LivePrepareActivity.class;
+                Intent intent = new Intent(getActivity(), activity);
                 intent.putExtra(Global.Constants.TAB_KEY, mCurrentTap + 1);
                 intent.putExtra(Global.Constants.KEY_IS_ROOM_OWNER, true);
                 intent.putExtra(Global.Constants.KEY_CREATE_ROOM, true);

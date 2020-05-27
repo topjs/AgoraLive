@@ -124,6 +124,10 @@
     <dimen name="switch_height">28dp</dimen>
     <dimen name="switch_thumb_size">24dp</dimen>
 
+    <dimen name="virtual_image_close_btn_size">40dp</dimen>
+    <dimen name="virtual_image_margin">32dp</dimen>
+    <dimen name="virtual_image_option_radius">8dp</dimen>
+
     <!-- Action Sheets -->
     <dimen name="live_room_action_sheet_margin">24dp</dimen>
     <dimen name="live_room_action_sheet_text_margin">16dp</dimen>

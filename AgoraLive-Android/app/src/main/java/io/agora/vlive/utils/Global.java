@@ -30,6 +30,7 @@ public class Global {
         public static final String KEY_IS_ROOM_OWNER = "is-room-owner";
         public static final String KEY_ROOM_OWNER_ID = "room-owner-id";
         public static final String KEY_CREATE_ROOM = "create-room";
+        public static final String KEY_VIRTUAL_IMAGE = "virtual-image";
 
         public static final String KEY_PROFILE_UID = "key-profile-uid";
         public static final String KEY_USER_NAME = "key-user-name";
