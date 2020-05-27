@@ -13,8 +13,6 @@ import RxRelay
 class VideoEnhancementVM: NSObject {
     // Rx
     lazy var publishWork = BehaviorRelay(value: enhancement.work)
-    lazy var publishLightening = BehaviorRelay(value: enhancement.lightening)
-    lazy var publishRedness = BehaviorRelay(value: enhancement.redness)
     lazy var publishBlur = BehaviorRelay(value: enhancement.blurLevel)
     lazy var publishColor = BehaviorRelay(value: enhancement.colorLevel)
     lazy var publishCheekThing = BehaviorRelay(value: enhancement.cheekThining)
@@ -34,28 +32,6 @@ extension VideoEnhancementVM {
         
         get {
             return enhancement.work
-        }
-    }
-    
-    var lightening: Double {
-        set {
-            enhancement.lightening = newValue
-            publishLightening.accept(newValue)
-        }
-        
-        get {
-            return enhancement.lightening
-        }
-    }
-    
-    var redness: Double {
-        set {
-            enhancement.redness = newValue
-            publishRedness.accept(newValue)
-        }
-        
-        get {
-            return enhancement.redness
         }
     }
     

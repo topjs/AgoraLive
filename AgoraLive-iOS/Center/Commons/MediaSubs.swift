@@ -226,63 +226,115 @@ class VideoEnhancement: NSObject {
         FUManager.share()?.loadItems()
     }
     
-    var lightening: Double {
-        set {
-            FUManager.share()?.eyelightingLevel = newValue
+    static func getFUSkinParam(with tag: String) -> FUBeautyParam? {
+        var param: FUBeautyParam?
+        guard let array = FUManager.share()?.skinParams else {
+            return nil
         }
         
-        get {
-            return FUManager.share()?.eyelightingLevel ?? 0
+        for item in array {
+            let i = item as! FUBeautyParam
+            if i.mParam == tag {
+                param = i
+                break
+            }
         }
+        
+        return param
     }
     
-    var redness: Double {
-        set {
-            FUManager.share()?.redLevel = newValue
+    static func getFUShapeParam(with tag: String) -> FUBeautyParam? {
+        var param: FUBeautyParam?
+        guard let array = FUManager.share()?.shapeParams else {
+            return nil
         }
         
-        get {
-            return FUManager.share()?.redLevel ?? 0
+        for item in array {
+            let i = item as! FUBeautyParam
+            if i.mParam == tag {
+                param = i
+                break
+            }
         }
+        
+        return param
     }
     
     var blurLevel: Double {
         set {
-            FUManager.share()?.blurLevel = newValue
+            guard let param = VideoEnhancement.getFUSkinParam(with: "blur_level") else {
+                return
+            }
+            
+            param.mValue = Float(newValue)
+            
+            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue * 6)
         }
         
         get {
-            return FUManager.share()?.blurLevel ?? 0
+            guard let param = VideoEnhancement.getFUSkinParam(with: "blur_level") else {
+                return 0
+            }
+            return Double(param.mValue)
         }
     }
     
     var colorLevel: Double {
         set {
-            FUManager.share()?.whiteLevel = newValue
+            guard let param = VideoEnhancement.getFUSkinParam(with: "color_level") else {
+                return
+            }
+            
+            param.mValue = Float(newValue)
+            
+            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
         }
         
         get {
-            return FUManager.share()?.whiteLevel ?? 0
+            guard let param = VideoEnhancement.getFUSkinParam(with: "color_level") else {
+                return 0
+            }
+            return Double(param.mValue)
         }
     }
     
     var cheekThining: Double {
         set {
-            FUManager.share()?.thinningLevel = newValue
+            guard let param = VideoEnhancement.getFUShapeParam(with: "cheek_thinning") else {
+                return
+            }
+            
+            param.mValue = Float(newValue)
+            
+            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
         }
         
         get {
-            return FUManager.share()?.thinningLevel ?? 0
+            guard let param = VideoEnhancement.getFUShapeParam(with: "cheek_thinning") else {
+                return 0
+                
+            }
+            return Double(param.mValue)
         }
     }
     
     var eyeEnlarging: Double {
         set {
-            FUManager.share()?.enlargingLevel = newValue
+            guard let param = VideoEnhancement.getFUShapeParam(with: "eye_enlarging") else {
+                return
+            }
+            
+            param.mValue = Float(newValue)
+            
+            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
         }
         
         get {
-            return FUManager.share()?.enlargingLevel ?? 0
+            guard let param = VideoEnhancement.getFUShapeParam(with: "eye_enlarging") else {
+                return 0
+                
+            }
+            return Double(param.mValue)
         }
     }
 }

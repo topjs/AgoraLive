@@ -18,6 +18,7 @@ target 'AgoraLive-Dev' do
   pod 'AGEVideoLayout'
   pod 'FLAnimatedImage'
   pod 'MBProgressHUD'
+  pod 'SVProgressHUD'
   
   source 'https://github.com/CocoaPods/Specs.git'
 end
@@ -39,6 +40,7 @@ target 'AgoraLive-QA' do
   pod 'AGEVideoLayout'
   pod 'FLAnimatedImage'
   pod 'MBProgressHUD'
+  pod 'SVProgressHUD'
   
   source 'https://github.com/CocoaPods/Specs.git'
 end
@@ -60,6 +62,7 @@ target 'AgoraLive-Release' do
   pod 'AGEVideoLayout'
   pod 'FLAnimatedImage'
   pod 'MBProgressHUD'
+  pod 'SVProgressHUD'
   
   source 'https://github.com/CocoaPods/Specs.git'
 end

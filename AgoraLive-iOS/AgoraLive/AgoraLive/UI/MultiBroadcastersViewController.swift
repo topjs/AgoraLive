@@ -170,18 +170,12 @@ extension MultiBroadcastersViewController {
         }).disposed(by: bag)
 
         seatVC?.userAudioSilence.subscribe(onNext: { [unowned self] (user) in
-            guard let session = ALCenter.shared().liveSession else {
+            guard let session = ALCenter.shared().liveSession,
+                let local = session.role,
+                local.agoraUserId == user.agoraUserId else {
                 return
             }
-
-            guard let local = session.role else {
-                fatalError()
-            }
-
-            guard local.agoraUserId == user.agoraUserId else {
-               return
-            }
-
+            
             self.deviceVM.mic = user.status.contains(.mic) ? .on : .off
         }).disposed(by: bag)
 
