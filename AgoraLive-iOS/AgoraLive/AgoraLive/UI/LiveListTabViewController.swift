@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxRelay
 import MJRefresh
 import MBProgressHUD
 import AgoraRtcKit
@@ -20,6 +21,15 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
     private let bag = DisposeBag()
     private var listVC: LiveListViewController?
     private var timer: Timer?
+    private var firstAppear = true
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if firstAppear {
+            firstAppear = false
+            updateViewsWithListVM()
+        }
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -46,14 +56,6 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
         switch segueId {
         case "LiveListViewController":
             listVC = segue.destination as? LiveListViewController
-        case "CreateLiveViewController":
-            let vc = segue.destination as? CreateLiveViewController
-            vc?.liveType = self.listVM.presentingType
-            vc?.publicRoomSettings.subscribe(onNext: { [unowned self] (settings) in
-                DispatchQueue.main.async {
-                    self.startLivingWithLocalSettings(settings)
-                }
-            }).disposed(by: bag)
         case "MultiBroadcastersViewController":
             guard let sender = sender,
                 let info = sender as? LiveSession.JoinedInfo,
@@ -99,9 +101,17 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
 
 private extension LiveListTabViewController {
     func updateViews() {
-        self.createButton.layer.shadowOpacity = 1
-        self.createButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-        self.createButton.layer.shadowColor = UIColor.black.cgColor
+        createButton.layer.shadowOpacity = 1
+        createButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+        createButton.layer.shadowColor = UIColor.black.cgColor
+        
+        createButton.rx.tap.subscribe(onNext: { [unowned self] in
+            if self.listVM.presentingType != .virtualBroadcasters {
+                self.performSegue(withIdentifier: "CreateLiveNavigation", sender: nil)
+            } else {
+                self.performSegue(withIdentifier: "VirtualCreatNavigation", sender: nil)
+            }
+        }).disposed(by: bag)
     }
     
     func updateTabSelectView() {
@@ -118,6 +128,7 @@ private extension LiveListTabViewController {
             case 0: type = .multiBroadcasters
             case 1: type = .singleBroadcaster
             case 2: type = .pkBroadcasters
+            case 3: type = .virtualBroadcasters
             default: fatalError()
             }
             
@@ -232,20 +243,6 @@ private extension LiveListTabViewController {
 }
 
 extension LiveListTabViewController {
-    func startLivingWithLocalSettings(_ settings: LocalLiveSettings) {
-        self.showHUD()
-        
-        let center = ALCenter.shared()
-        center.createLiveSession(roomSettings: settings,
-                                 type: self.listVM.presentingType,
-                                 success: { [unowned self] (session) in
-                                    self.joinLiving(session: session)
-        }) { [unowned self] in
-            self.hiddenHUD()
-            self.showAlert(message:"start live fail")
-        }
-    }
-    
     func joinLiving(session: LiveSession) {
         self.showHUD()
         
@@ -261,6 +258,8 @@ extension LiveListTabViewController {
                 self.performSegue(withIdentifier: "SingleBroadcasterViewController", sender: info)
             case .pkBroadcasters:
                 self.performSegue(withIdentifier: "PKBroadcastersViewController", sender: info)
+            case .virtualBroadcasters:
+                break
             }
         }) {
             self.hiddenHUD()

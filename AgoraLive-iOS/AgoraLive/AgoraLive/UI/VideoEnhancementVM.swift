@@ -12,7 +12,7 @@ import RxRelay
 
 class VideoEnhancementVM: NSObject {
     // Rx
-    lazy var publishWork = BehaviorRelay(value: enhancement.work)
+    lazy var publishWork = BehaviorRelay(value: enhancement.beauty)
     lazy var publishBlur = BehaviorRelay(value: enhancement.blurLevel)
     lazy var publishColor = BehaviorRelay(value: enhancement.colorLevel)
     lazy var publishCheekThing = BehaviorRelay(value: enhancement.cheekThining)
@@ -24,14 +24,14 @@ extension VideoEnhancementVM {
        return  ALCenter.shared().centerProvideMediaHelper().enhancement
     }
     
-    var work: AGESwitch {
+    var beauty: AGESwitch {
         set {
-            enhancement.work = newValue
+            enhancement.beauty = newValue
             publishWork.accept(newValue)
         }
         
         get {
-            return enhancement.work
+            return enhancement.beauty
         }
     }
     
@@ -77,5 +77,19 @@ extension VideoEnhancementVM {
         get {
             return enhancement.eyeEnlarging
         }
+    }
+    
+    var virtualAppearance: VirtualAppearance {
+        set {
+            enhancement.virtualAppearance = newValue
+        }
+        
+        get {
+            return enhancement.virtualAppearance
+        }
+    }
+    
+    func reset() {
+        enhancement.reset()
     }
 }

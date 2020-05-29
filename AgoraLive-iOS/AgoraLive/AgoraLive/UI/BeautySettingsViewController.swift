@@ -83,7 +83,7 @@ class BeautySettingsViewController: UITableViewController {
         }).disposed(by: bag)
         
         self.workSwitch.rx.value.subscribe(onNext: { [unowned self] (value) in
-            self.enhanceVM.work = value ? .on : .off
+            self.enhanceVM.beauty = value ? .on : .off
         }).disposed(by: bag)
         
         self.slider1.rx.value.subscribe(onNext: { [unowned self] (value) in

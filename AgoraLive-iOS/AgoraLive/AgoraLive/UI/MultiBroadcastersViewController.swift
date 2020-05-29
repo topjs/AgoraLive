@@ -62,6 +62,7 @@ class MultiBroadcastersViewController: MaskViewController, LiveViewController {
     var giftVM = GiftVM()
     var deviceVM = MediaDeviceVM()
     var playerVM = PlayerVM()
+    var enhancementVM = VideoEnhancementVM()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

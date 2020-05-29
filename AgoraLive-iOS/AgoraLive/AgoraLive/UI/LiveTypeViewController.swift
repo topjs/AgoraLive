@@ -34,7 +34,7 @@ class LiveTypeCell: UITableViewCell {
     }
 }
 
-class LiveTypeViewController: UIViewController {
+class LiveTypeViewController: MaskViewController {
     struct `Type` {
         var background: UIImage
         var title: String
@@ -63,6 +63,14 @@ class LiveTypeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBarController?.tabBar.isUserInteractionEnabled = false
+        showHUD()
+        ALCenter.shared().isWorkNormally.subscribe(onNext: { [unowned self] (normal) in
+            if normal {
+                self.tabBarController?.tabBar.isUserInteractionEnabled = true
+                self.hiddenHUD()
+            }
+        }).disposed(by: disposeBag)
         
         // Frame
         let imageWith = UIScreen.main.bounds.width - 30.0

@@ -83,6 +83,17 @@ class LiveListVM: NSObject {
         }
     }
     
+    fileprivate var virtualBroadcastersList = [RoomBrief]() {
+        didSet {
+            switch presentingType {
+            case .virtualBroadcasters:
+                presentingList.accept(virtualBroadcastersList)
+            default:
+                break
+            }
+        }
+    }
+    
     var presentingType = LiveType.multiBroadcasters {
         didSet {
             switch presentingType {
@@ -92,6 +103,8 @@ class LiveListVM: NSObject {
                 presentingList.accept(singleBroadcasterList)
             case .pkBroadcasters:
                 presentingList.accept(pkBroadcastersList)
+            case .virtualBroadcasters:
+                presentingList.accept(virtualBroadcastersList)
             }
         }
     }
@@ -131,6 +144,8 @@ extension LiveListVM {
                 self.singleBroadcasterList.append(contentsOf: list)
             case .pkBroadcasters:
                 self.pkBroadcastersList.append(contentsOf: list)
+            case .virtualBroadcasters:
+                self.virtualBroadcastersList.append(contentsOf: list)
             }
             
             if let success = success {
@@ -177,6 +192,8 @@ extension LiveListVM {
                 self.singleBroadcasterList = list
             case .pkBroadcasters:
                 self.pkBroadcastersList = list
+            case .virtualBroadcasters:
+                self.virtualBroadcastersList = list
             }
             
             if let success = success {

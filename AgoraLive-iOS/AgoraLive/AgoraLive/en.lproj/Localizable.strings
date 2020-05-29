@@ -27,6 +27,8 @@ Create_A_Live_Room="Create a room to start";
 Create_Start="Go Live";
 Create_NameLabel="Channel name: ";
 
+Virtual_Appearance_Select="请选择一个形象";
+
 // Mine
 Mine_Head="Profile";
 Mine_Name="Nickname";

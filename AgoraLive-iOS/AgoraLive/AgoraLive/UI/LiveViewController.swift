@@ -11,8 +11,11 @@ import RxSwift
 import RxRelay
 import MJRefresh
 
-protocol LiveViewController: ShowAlertProtocol where Self: MaskViewController {
+protocol RxViewController where Self: UIViewController {
     var bag: DisposeBag {get set}
+}
+
+protocol LiveViewController: RxViewController, ShowAlertProtocol where Self: MaskViewController {
     var tintColor: UIColor {get set}
     
     var chatInputView: ChatInputView {get set}
@@ -39,6 +42,7 @@ protocol LiveViewController: ShowAlertProtocol where Self: MaskViewController {
     var giftVM: GiftVM {get set}
     var deviceVM: MediaDeviceVM {get set}
     var playerVM: PlayerVM {get set}
+    var enhancementVM: VideoEnhancementVM {get set}
 }
 
 // MARK: VM
@@ -671,8 +675,13 @@ extension LiveViewController {
 
 extension LiveViewController {
     func leave() {
+        enhancementVM.reset()
         ALCenter.shared().liveSession?.leave()
         ALCenter.shared().liveSession = nil
-        self.navigationController?.popViewController(animated: true)
+        if let _ = self.navigationController?.viewControllers.first as? LiveListTabViewController {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }

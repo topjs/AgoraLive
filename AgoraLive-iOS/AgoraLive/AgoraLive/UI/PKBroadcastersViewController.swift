@@ -183,6 +183,7 @@ class PKBroadcastersViewController: MaskViewController, LiveViewController {
     var giftVM = GiftVM()
     var deviceVM = MediaDeviceVM()
     var playerVM = PlayerVM()
+    var enhancementVM = VideoEnhancementVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()

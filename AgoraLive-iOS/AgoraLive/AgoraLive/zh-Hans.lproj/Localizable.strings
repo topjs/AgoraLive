@@ -28,6 +28,8 @@ Create_A_Live_Room="请创建一个房间";
 Create_Start="开始直播";
 Create_NameLabel="直播间的名字: ";
 
+Virtual_Appearance_Select="请选择一个形象";
+
 // Mine
 Mine_Head="设置头像";
 Mine_Name="设置昵称";

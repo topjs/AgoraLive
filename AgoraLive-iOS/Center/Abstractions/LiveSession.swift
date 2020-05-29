@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 
 enum LiveType: Int {
-    case singleBroadcaster = 1, multiBroadcasters, pkBroadcasters
+    case singleBroadcaster = 1, multiBroadcasters, pkBroadcasters, virtualBroadcasters
     
     var description: String {
         switch self {
@@ -21,12 +21,15 @@ enum LiveType: Int {
             return NSLocalizedString("Single_Broadcaster")
         case .pkBroadcasters:
             return NSLocalizedString("PK_Live")
+        case .virtualBroadcasters:
+            return NSLocalizedString("Virtual_Live")
         }
     }
     
     static let list: [LiveType] = [.multiBroadcasters,
                                    .singleBroadcaster,
-                                   .pkBroadcasters]
+                                   .pkBroadcasters,
+                                   .virtualBroadcasters]
 }
 
 class LiveSession: NSObject {

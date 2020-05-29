@@ -184,7 +184,7 @@ extension MediaKit: AGESingleCameraDelegate {
         
         let timeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         
-        if enhancement.work == .on {
+        if enhancement.beauty == .on || enhancement.virtualAppearance != .none {
             FUManager.share()?.renderItems(to: pixelBuffer)
         }
         
