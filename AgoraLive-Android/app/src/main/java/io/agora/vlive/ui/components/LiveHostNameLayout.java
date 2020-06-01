@@ -29,23 +29,25 @@ public class LiveHostNameLayout extends RelativeLayout {
 
     public LiveHostNameLayout(Context context) {
         super(context);
-        init();
     }
 
     public LiveHostNameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public LiveHostNameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
+    public void init(boolean lightMode) {
         mMaxWidth = getResources().getDimensionPixelSize(R.dimen.live_name_pad_max_width);
         mHeight = getResources().getDimensionPixelSize(R.dimen.live_name_pad_height);
-        setBackgroundResource(R.drawable.round_scalable_gray_bg);
+
+        if (lightMode) {
+            setBackgroundResource(R.drawable.round_scalable_white_bg);
+        } else {
+            setBackgroundResource(R.drawable.round_scalable_gray_bg);
+        }
 
         RelativeLayout.LayoutParams params;
 
@@ -75,7 +77,12 @@ public class LiveHostNameLayout extends RelativeLayout {
 
         int textSize = getResources().getDimensionPixelSize(R.dimen.text_size_small);
         mNameTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-        mNameTextView.setTextColor(Color.WHITE);
+        if (lightMode) {
+            mNameTextView.setTextColor(Color.BLACK);
+        } else {
+            mNameTextView.setTextColor(Color.WHITE);
+        }
+
         mNameTextView.setSingleLine(true);
         mNameTextView.setFocusable(true);
         mNameTextView.setFocusableInTouchMode(true);
@@ -84,6 +91,10 @@ public class LiveHostNameLayout extends RelativeLayout {
         mNameTextView.setMarqueeRepeatLimit(-1);
         mNameTextView.setTextAlignment(TextView.TEXT_ALIGNMENT_GRAVITY);
         mNameTextView.setGravity(Gravity.CENTER);
+    }
+
+    public void init() {
+        init(false);
     }
 
     @Override

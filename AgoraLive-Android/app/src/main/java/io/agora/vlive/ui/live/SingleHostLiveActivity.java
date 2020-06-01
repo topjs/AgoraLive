@@ -41,11 +41,14 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         setContentView(R.layout.activity_single_host);
 
         mNamePad = findViewById(R.id.single_live_name_pad);
+        mNamePad.init();
 
         participants = findViewById(R.id.single_live_participant);
+        participants.init();
         participants.setUserLayoutListener(this);
 
         bottomButtons = findViewById(R.id.single_live_bottom_layout);
+        bottomButtons.init();
         bottomButtons.setLiveBottomButtonListener(this);
         bottomButtons.setRole(isOwner ? LiveBottomButtonLayout.ROLE_OWNER :
                 isHost ? LiveBottomButtonLayout.ROLE_HOST :

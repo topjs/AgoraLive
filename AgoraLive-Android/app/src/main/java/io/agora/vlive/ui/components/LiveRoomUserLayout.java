@@ -37,33 +37,36 @@ public class LiveRoomUserLayout extends RelativeLayout {
 
     public LiveRoomUserLayout(Context context) {
         super(context);
-        init();
     }
 
     public LiveRoomUserLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public LiveRoomUserLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
+    public void init(boolean lightMode) {
         mHeight = getResources().getDimensionPixelSize(R.dimen.live_name_pad_height);
         mIconSize = getResources().getDimensionPixelSize(R.dimen.live_participant_layout_height);
         mIconMargin = getResources().getDimensionPixelSize(R.dimen.live_participant_margin_end);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View layout = inflater.inflate(R.layout.live_participant_layout, this, true);
+        View layout = inflater.inflate(lightMode ?
+                R.layout.live_participant_layout_light :
+                R.layout.live_participant_layout, this, true);
         mIconLayout = layout.findViewById(R.id.icon_layout);
         mCountText = layout.findViewById(R.id.live_participant_count_text);
 
         layout.findViewById(R.id.live_participant_total_layout)
-                .setOnClickListener(view -> {
-                    if (mListener != null) mListener.onUserLayoutShowUserList(view);
-                });
+            .setOnClickListener(view -> {
+                if (mListener != null) mListener.onUserLayoutShowUserList(view);
+            });
+    }
+
+    public void init() {
+        init(false);
     }
 
     public void setUserLayoutListener(UserLayoutListener listener) {

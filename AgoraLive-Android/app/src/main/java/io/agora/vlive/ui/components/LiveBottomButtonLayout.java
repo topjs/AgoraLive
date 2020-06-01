@@ -1,6 +1,7 @@
 package io.agora.vlive.ui.components;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,48 +22,45 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
         void onLiveBottomLayoutShowMessageEditor();
     }
 
-    private int mHeight;
-    private int mIconSize;
-    private int mIconMargin;
-
-    private AppCompatImageView mCloseBtn;
-    private AppCompatImageView mMoreBtn;
+    private AppCompatImageView mCancel;
+    private AppCompatImageView mMore;
     private AppCompatImageView mFun1;
     private AppCompatImageView mFun2;
     private AppCompatTextView mInputText;
     private int mRole;
+    private boolean mVirtualImage;
 
     private LiveBottomButtonListener mListener;
 
     public LiveBottomButtonLayout(Context context) {
         super(context);
-        init();
     }
 
     public LiveBottomButtonLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public LiveBottomButtonLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
-        mHeight = getResources().getDimensionPixelSize(R.dimen.live_bottom_layout_height);
-        mIconMargin = getResources().getDimensionPixelSize(R.dimen.live_bottom_btn_margin);
-        mIconSize = mHeight;
-
-        LayoutInflater.from(getContext()).inflate(
-                R.layout.live_bottom_button_layout, this, true);
-
-        mCloseBtn = findViewById(R.id.live_bottom_btn_close);
-        mMoreBtn = findViewById(R.id.live_bottom_btn_more);
+    public void init(boolean lightMode, boolean isVirtualImage) {
+        int layout = lightMode ?
+                R.layout.live_bottom_button_layout_light :
+                R.layout.live_bottom_button_layout;
+        LayoutInflater.from(getContext()).inflate(layout, this, true);
         mFun1 = findViewById(R.id.live_bottom_btn_fun1);
         mFun2 = findViewById(R.id.live_bottom_btn_fun2);
+        mFun2.setVisibility(isVirtualImage ? View.GONE : View.VISIBLE);
         mInputText = findViewById(R.id.live_bottom_message_input_hint);
         mInputText.setOnClickListener(this);
+        mCancel = findViewById(R.id.live_bottom_btn_close);
+        mMore = findViewById(R.id.live_bottom_btn_more);
+        mVirtualImage = isVirtualImage;
+    }
+
+    public void init() {
+        init(false, false);
     }
 
     public void setRole(int role) {
@@ -70,10 +68,10 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
 
         if (mRole == ROLE_OWNER) {
             mFun1.setImageResource(R.drawable.live_bottom_button_music);
-            mFun2.setVisibility(View.VISIBLE);
+            mFun2.setVisibility(mVirtualImage ? View.GONE : View.VISIBLE);
             mFun2.setImageResource(R.drawable.live_bottom_button_beauty);
         } else if (mRole == ROLE_HOST) {
-            mFun2.setVisibility(View.VISIBLE);
+            mFun2.setVisibility(mVirtualImage ? View.GONE : View.VISIBLE);
             mFun2.setImageResource(R.drawable.live_bottom_button_beauty);
             mFun1.setImageResource(R.drawable.live_bottom_btn_present);
         } else if (mRole == ROLE_AUDIENCE) {
@@ -97,8 +95,9 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
-        setMeasuredDimension(width, mHeight);
-        int heightSpec = MeasureSpec.makeMeasureSpec(mHeight, MeasureSpec.EXACTLY);
+        int height = getResources().getDimensionPixelSize(R.dimen.live_bottom_layout_height);
+        setMeasuredDimension(width, height);
+        int heightSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightSpec);
     }
 

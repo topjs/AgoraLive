@@ -880,9 +880,8 @@ public class FURenderer implements OnFUControlListener {
 
     @Override
     public void onEffectSelected(Effect effect) {
-        if (effect == null) {
-            return;
-        }
+        if (effect == null || effect == mDefaultEffect) return;
+
         mDefaultEffect = effect;
         if (mFuItemHandler == null) {
             queueEvent(new Runnable() {

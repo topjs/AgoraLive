@@ -101,12 +101,15 @@ public class HostPKLiveActivity extends LiveRoomActivity
         mLayout = findViewById(R.id.live_room_pk_room_layout);
         mVideoNormalLayout = findViewById(R.id.live_pk_video_normal_layout);
         mNamePad = findViewById(R.id.pk_host_in_name_pad);
+        mNamePad.init();
 
         participants = findViewById(R.id.pk_host_in_participant);
+        participants.init();
         participants.setUserLayoutListener(this);
 
         messageList = findViewById(R.id.message_list);
         bottomButtons = findViewById(R.id.pk_host_in_bottom_layout);
+        bottomButtons.init();
         bottomButtons.setLiveBottomButtonListener(this);
         bottomButtons.setRole(isOwner ? LiveBottomButtonLayout.ROLE_OWNER :
                 isHost ? LiveBottomButtonLayout.ROLE_HOST :

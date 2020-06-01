@@ -252,9 +252,11 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
         setRoomNameText();
 
         participants = findViewById(R.id.host_in_participant);
+        participants.init();
         participants.setUserLayoutListener(this);
 
         bottomButtons = findViewById(R.id.host_in_bottom_layout);
+        bottomButtons.init();
         bottomButtons.setLiveBottomButtonListener(this);
         bottomButtons.setRole(isOwner ? LiveBottomButtonLayout.ROLE_OWNER :
                 isHost ? LiveBottomButtonLayout.ROLE_HOST :

@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.agora.capture.video.camera.VideoModule;
 import io.agora.capture.video.camera.CameraVideoChannel;
+import io.agora.framework.PreprocessorFaceUnity;
 import io.agora.framework.modules.channels.ChannelManager;
 import io.agora.framework.modules.consumers.TextureViewConsumer;
 import io.agora.vlive.Config;
@@ -51,6 +52,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     private String mNameTooLongToastMsg;
 
     private CameraVideoChannel mCameraChannel;
+    private PreprocessorFaceUnity mPreprocessor;
 
     // If camera is to persist, the camera capture is not
     // stopped, and we want to keep the capture and transit
@@ -105,6 +107,11 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         mBeautyBtn.setOnClickListener(this);
         mSettingBtn.setOnClickListener(this);
 
+        mCameraChannel = (CameraVideoChannel) VideoModule.instance().
+                getVideoChannel(ChannelManager.ChannelID.CAMERA);
+        mPreprocessor = (PreprocessorFaceUnity) VideoModule.instance().
+                getPreprocessor(ChannelManager.ChannelID.CAMERA);
+
         changeUIStyles();
 
         FrameLayout localPreviewLayout = findViewById(R.id.local_preview_layout);
@@ -129,6 +136,8 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             layout.setBackgroundColor(getResources().getColor(R.color.virtual_image_background));
             mBeautyBtn.setVisibility(View.GONE);
             mSettingBtn.setVisibility(View.GONE);
+            int virtualImage = getIntent().getIntExtra(Global.Constants.KEY_VIRTUAL_IMAGE, -1);
+            mPreprocessor.onAnimojiSelected(virtualImage);
         } else {
             mCloseBtn.setImageResource(R.drawable.close_button_white);
             mSwitchBtn.setImageResource(R.drawable.switch_camera_white);
@@ -136,6 +145,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             mEditHint.setTextColor(getResources().getColor(R.color.gray_lightest));
             mEditText.setTextColor(getResources().getColor(android.R.color.white));
             mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_gray);
+            mPreprocessor.onAnimojiSelected(-1);
         }
     }
 
@@ -147,8 +157,6 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     }
 
     private void startCaptureIfStopped() {
-        mCameraChannel = (CameraVideoChannel) VideoModule.instance().
-                getVideoChannel(ChannelManager.ChannelID.CAMERA);
         if (mCameraChannel != null && !mCameraChannel.hasCaptureStarted()) {
             mCameraChannel.startCapture();
         }
@@ -336,6 +344,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         mActivityFinished = true;
         if (!mCameraPersist && mCameraChannel != null
                 && mCameraChannel.hasCaptureStarted()) {
+            mPreprocessor.onAnimojiSelected(-1);
             mCameraChannel.stopCapture();
         }
     }
