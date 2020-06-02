@@ -440,6 +440,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="8ad-fg-yah"/>
                     <connections>
+                        <outlet property="backButton" destination="Jcn-J3-VKB" id="tdw-Wx-9mC"/>
                         <outlet property="beautyButton" destination="Brp-SL-fPF" id="sBL-Tb-k0c"/>
                         <outlet property="cameraPreview" destination="SOF-2L-xaM" id="FmG-4Y-6ta"/>
                         <outlet property="nameBgView" destination="7VC-Az-E5v" id="sAj-Hh-Zl2"/>
@@ -447,9 +448,11 @@
                         <outlet property="nameTextField" destination="Sdo-vr-AU9" id="1TX-dR-dww"/>
                         <outlet property="settingsButton" destination="A7N-tk-mZM" id="uhS-qX-Gsf"/>
                         <outlet property="startButton" destination="b6s-4w-ptR" id="h6n-42-YSv"/>
+                        <outlet property="switchCameraButton" destination="TUJ-Cq-Lmb" id="UxH-RD-KVF"/>
                         <segue destination="ULD-ac-9zh" kind="show" identifier="MultiBroadcastersViewController" id="q3I-2V-0Kx"/>
                         <segue destination="0Rq-8I-D5I" kind="show" identifier="SingleBroadcasterViewController" id="Q62-nz-nPv"/>
                         <segue destination="1nP-NJ-6fR" kind="show" identifier="PKBroadcastersViewController" id="fh7-g9-fFy"/>
+                        <segue destination="XY0-cX-4Rz" kind="show" identifier="VirtualBroadcastersViewController" id="VtV-Zm-jwg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSZ-Nv-DGu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1043,6 +1046,7 @@
                         <segue destination="1nP-NJ-6fR" kind="show" identifier="PKBroadcastersViewController" id="8tO-8n-VDS"/>
                         <segue destination="FbF-Y8-nQg" kind="presentation" identifier="CreateLiveNavigation" id="Kax-AR-YtE"/>
                         <segue destination="Jke-m2-SZj" kind="show" identifier="VirtualCreatNavigation" id="cwX-3K-4g0"/>
+                        <segue destination="XY0-cX-4Rz" kind="show" identifier="VirtualBroadcastersViewController" id="BRB-IH-iNU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ekr-eF-LJJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2300,15 +2304,15 @@
             </objects>
             <point key="canvasLocation" x="5646" y="1647"/>
         </scene>
-        <!--Single Broadcaster View Controller-->
+        <!--Virtual Broadcasters View Controller-->
         <scene sceneID="8eZ-sj-T8E">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="XY0-cX-4Rz" customClass="SingleBroadcasterViewController" customModule="AgoraLive" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="XY0-cX-4Rz" customClass="VirtualBroadcastersViewController" customModule="AgoraLive" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IQo-cC-gSZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sM7-72-QCL">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sM7-72-QCL" customClass="AGEVideoContainer" customModule="AGEVideoLayout">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -2318,18 +2322,27 @@
                                     <constraint firstAttribute="width" constant="142" id="PIN-tV-hC5"/>
                                     <constraint firstAttribute="height" constant="28" id="qmK-Am-KHv"/>
                                 </constraints>
+                                <connections>
+                                    <segue destination="kUL-MZ-YPk" kind="embed" identifier="GiftAudienceViewController" id="reS-Gs-QCe"/>
+                                </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVC-T7-4tr">
                                 <rect key="frame" x="0.0" y="809" width="414" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="wuD-9B-d13"/>
                                 </constraints>
+                                <connections>
+                                    <segue destination="gO4-yf-OHR" kind="embed" identifier="BottomToolsViewController" id="Rzl-6U-2pE"/>
+                                </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bN-Hh-BAD">
                                 <rect key="frame" x="0.0" y="575" width="414" height="219"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="219" id="WyA-B6-ueI"/>
                                 </constraints>
+                                <connections>
+                                    <segue destination="Qus-to-FXv" kind="embed" identifier="ChatViewController" id="zjX-Y6-wKj"/>
+                                </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ws6-gn-DWH" customClass="IconTextView" customModule="AgoraLive" customModuleProvider="target">
                                 <rect key="frame" x="343" y="59" width="56" height="28"/>
@@ -2347,6 +2360,23 @@
                                     <constraint firstAttribute="height" constant="32" id="uQM-4V-fbM"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysV-be-phM">
+                                <rect key="frame" x="308" y="756" width="91" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="RYT-OI-59U"/>
+                                    <constraint firstAttribute="width" constant="91" id="zAj-bC-Fbx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="邀请">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="hexBackgroundColor" value="#0088EB"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="19"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -2356,12 +2386,14 @@
                             <constraint firstItem="31f-co-y3o" firstAttribute="centerY" secondItem="Ws6-gn-DWH" secondAttribute="centerY" id="6f9-NK-tXZ"/>
                             <constraint firstItem="sM7-72-QCL" firstAttribute="top" secondItem="IQo-cC-gSZ" secondAttribute="top" id="8Py-1W-8eE"/>
                             <constraint firstItem="eJM-ob-F9S" firstAttribute="trailing" secondItem="7bN-Hh-BAD" secondAttribute="trailing" id="9YG-hz-BjZ"/>
+                            <constraint firstItem="KVC-T7-4tr" firstAttribute="top" secondItem="ysV-be-phM" secondAttribute="bottom" constant="15" id="I4x-fn-Luc"/>
                             <constraint firstItem="eJM-ob-F9S" firstAttribute="trailing" secondItem="KVC-T7-4tr" secondAttribute="trailing" id="Ilq-zf-jVM"/>
                             <constraint firstItem="eJM-ob-F9S" firstAttribute="bottom" secondItem="KVC-T7-4tr" secondAttribute="bottom" constant="15" id="KS2-nq-kGt"/>
                             <constraint firstItem="Ws6-gn-DWH" firstAttribute="leading" secondItem="31f-co-y3o" secondAttribute="trailing" constant="10" id="RBy-Jn-nDc"/>
                             <constraint firstItem="sM7-72-QCL" firstAttribute="leading" secondItem="eJM-ob-F9S" secondAttribute="leading" id="T0R-2F-FQC"/>
                             <constraint firstItem="7bN-Hh-BAD" firstAttribute="leading" secondItem="eJM-ob-F9S" secondAttribute="leading" id="TQh-0a-VJa"/>
                             <constraint firstItem="eJM-ob-F9S" firstAttribute="trailing" secondItem="Ws6-gn-DWH" secondAttribute="trailing" constant="15" id="aJS-7v-ewP"/>
+                            <constraint firstItem="eJM-ob-F9S" firstAttribute="trailing" secondItem="ysV-be-phM" secondAttribute="trailing" constant="15" id="dXT-ex-w1U"/>
                             <constraint firstItem="KVC-T7-4tr" firstAttribute="leading" secondItem="eJM-ob-F9S" secondAttribute="leading" id="l5h-Fi-Ifd"/>
                             <constraint firstItem="Ws6-gn-DWH" firstAttribute="top" secondItem="eJM-ob-F9S" secondAttribute="top" constant="15" id="mpb-oZ-qtx"/>
                             <constraint firstAttribute="bottom" secondItem="sM7-72-QCL" secondAttribute="bottom" id="udv-G2-JHl"/>
@@ -2371,9 +2403,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="cqT-rU-oSU"/>
                     <connections>
+                        <outlet property="inviteButton" destination="ysV-be-phM" id="GEe-ak-Naw"/>
                         <outlet property="ownerView" destination="Ezh-Cb-hoY" id="Zlw-oI-mgb"/>
                         <outlet property="personCountView" destination="Ws6-gn-DWH" id="nc2-2Y-Vi8"/>
-                        <outlet property="renderView" destination="sM7-72-QCL" id="jSc-el-cQK"/>
+                        <outlet property="videoContainer" destination="sM7-72-QCL" id="Jog-9L-I9M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hwN-Nr-qYS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2417,12 +2450,13 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8tO-8n-VDS"/>
-        <segue reference="3rl-lE-vD6"/>
-        <segue reference="Uvw-Ck-KIo"/>
-        <segue reference="1OZ-Av-dpY"/>
-        <segue reference="uL9-kD-5nP"/>
-        <segue reference="ZMS-ad-BgQ"/>
+        <segue reference="VtV-Zm-jwg"/>
+        <segue reference="fh7-g9-fFy"/>
+        <segue reference="Rzl-6U-2pE"/>
+        <segue reference="Q62-nz-nPv"/>
+        <segue reference="zjX-Y6-wKj"/>
+        <segue reference="q3I-2V-0Kx"/>
+        <segue reference="reS-Gs-QCe"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icon-back" width="29" height="29"/>

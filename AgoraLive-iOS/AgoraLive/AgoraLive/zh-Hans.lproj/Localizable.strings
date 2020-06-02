@@ -117,3 +117,11 @@ Join_Other_Live_Room_Fail="进入另一个直播间失败";
 PK_End="PK结束";
 End_PK="结束PK";
 End_PK_Message="（倒计时还未结束退出pk）";
+
+// Virtual
+Confirm_Accept_Broadcasting="申请上麦，是否接受？";
+Confirm_Accept_Invitation="";
+Confirm_Apply_For_Broadcasting="你确定要\“申请上麦\”吗？";
+
+Broadcasting_Invitation="上麦邀请";
+Confirm_Accept_Broadcasting_Invitation="邀请您上麦是否接受？";

@@ -39,9 +39,11 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameBgView: UIView!
     
+    @IBOutlet weak var switchCameraButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var beautyButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
     
     private let bag = DisposeBag()
@@ -63,6 +65,12 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
         startButton.setTitle(NSLocalizedString("Create_Start"),
                              for: .normal)
         randomName()
+        
+        deviceVM.camera = .on
+        deviceVM.cameraPosition = .front
+        
+        playerVM.renderLocalVideoStream(id: 0,
+                                        view: self.cameraPreview)
         
         switch liveType {
         case .multiBroadcasters:
@@ -92,11 +100,10 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
             
             settingsButton.isHidden = true
             beautyButton.isHidden = true
+            switchCameraButton.isHidden = true
+            backButton.setImage(UIImage(named: "icon-back-black"),
+                                for: .normal)
         }
-        
-        deviceVM.camera = .on
-        playerVM.renderLocalVideoStream(id: 0,
-                                        view: self.cameraPreview)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -109,11 +116,10 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
             guard let sender = sender,
                 let info = sender as? LiveSession.JoinedInfo,
                 let seatInfo = info.seatInfo else {
-                fatalError()
+                    fatalError()
             }
             
             let vc = segue.destination as? MultiBroadcastersViewController
-            vc?.hidesBottomBarWhenPushed = true
             vc?.audienceListVM.updateGiftListWithJson(list: info.giftAudience)
             vc?.seatVM = try! LiveSeatVM(list: seatInfo)
         case "SingleBroadcasterViewController":
@@ -123,7 +129,6 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
             }
             
             let vc = segue.destination as? SingleBroadcasterViewController
-            vc?.hidesBottomBarWhenPushed = true
             vc?.audienceListVM.updateGiftListWithJson(list: info.giftAudience)
         case "PKBroadcastersViewController":
             guard let sender = sender,
@@ -140,8 +145,16 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
             }
             
             let vc = segue.destination as? PKBroadcastersViewController
-            vc?.hidesBottomBarWhenPushed = true
+            vc?.audienceListVM.updateGiftListWithJson(list: info.giftAudience)
             vc?.pkVM = PKVM(statistics: statistics)
+        case "VirtualBroadcastersViewController":
+            guard let sender = sender,
+                let info = sender as? LiveSession.JoinedInfo else {
+                    fatalError()
+            }
+            
+            let vc = segue.destination as? VirtualBroadcastersViewController
+            vc?.audienceListVM.updateGiftListWithJson(list: info.giftAudience)
         default:
             break
         }
@@ -160,13 +173,17 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
     }
     
     @IBAction func doClosePressed(_ sender: UIButton) {
-        self.showAlert("是否取消直播间创建",
-                       action1: NSLocalizedString("Cancel"),
-                       action2: NSLocalizedString("Confirm")) { [unowned self] (_) in
-                        self.enhancementVM.reset()
-                        self.deviceVM.camera = .off
-                        self.navigationController?.dismiss(animated: true,
-                                                           completion: nil)
+        if liveType != .virtualBroadcasters {
+            self.showAlert("是否取消直播间创建",
+                           action1: NSLocalizedString("Cancel"),
+                           action2: NSLocalizedString("Confirm")) { [unowned self] (_) in
+                            self.enhancementVM.reset()
+                            self.deviceVM.camera = .off
+                            self.navigationController?.dismiss(animated: true,
+                                                               completion: nil)
+            }
+        } else {
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -299,7 +316,7 @@ private extension CreateLiveViewController {
             case .pkBroadcasters:
                 self.performSegue(withIdentifier: "PKBroadcastersViewController", sender: info)
             case .virtualBroadcasters:
-                break
+                self.performSegue(withIdentifier: "VirtualBroadcastersViewController", sender: info)
             }
         }) {
             self.hiddenHUD()

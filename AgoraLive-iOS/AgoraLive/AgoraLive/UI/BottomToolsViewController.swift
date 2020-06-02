@@ -119,6 +119,14 @@ class BottomToolsViewController: UIViewController {
             beautyButton.isCycle = true
             
             lastButton = beautyButton
+        case (.virtualBroadcasters, .owner):
+            musicButton.frame = CGRect(x: extensionButton.frame.minX - space - buttonWH,
+                                       y: 0,
+                                       width: buttonWH,
+                                       height: buttonWH)
+            musicButton.isCycle = true
+            
+            lastButton = musicButton
         case (.multiBroadcasters, .broadcaster):
             giftButton.frame = CGRect(x: extensionButton.frame.minX - space - buttonWH,
                                       y: 0,
@@ -133,7 +141,16 @@ class BottomToolsViewController: UIViewController {
             beautyButton.isCycle = true
             
             lastButton = beautyButton
-        case (.pkBroadcasters, .audience):    fallthrough
+        case (.virtualBroadcasters, .broadcaster):
+            musicButton.frame = CGRect(x: extensionButton.frame.minX - space - buttonWH,
+                                       y: 0,
+                                       width: buttonWH,
+                                       height: buttonWH)
+            musicButton.isCycle = true
+            
+            lastButton = musicButton
+        case (.pkBroadcasters, .audience):      fallthrough
+        case (.virtualBroadcasters, .audience): fallthrough
         case (.multiBroadcasters, .audience):
             giftButton.frame = CGRect(x: extensionButton.frame.minX - space - buttonWH,
                                       y: 0,

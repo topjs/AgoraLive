@@ -407,6 +407,7 @@ extension LiveViewController {
         let extensionVC = UIStoryboard.initViewController(of: "ExtensionViewController",
                                                           class: ExtensionViewController.self)
         extensionVC.perspective = perspective
+        extensionVC.liveType = session.type
         self.extensionVC = extensionVC
         
         extensionVC.view.cornerRadius(10)

@@ -23,6 +23,18 @@ class MediaDeviceVM: NSObject {
         }
     }
     
+    var cameraPosition: Position {
+        get {
+            let mediaKit = ALCenter.shared().centerProvideMediaHelper()
+            return mediaKit.capture.cameraPostion
+        }
+        
+        set {
+            let mediaKit = ALCenter.shared().centerProvideMediaHelper()
+            mediaKit.capture.cameraPostion = newValue
+        }
+    }
+    
     var mic: AGESwitch {
         get {
             let mediaKit = ALCenter.shared().centerProvideMediaHelper()

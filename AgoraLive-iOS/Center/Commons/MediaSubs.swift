@@ -75,12 +75,13 @@ class Capture: NSObject {
     }
     
     #if os(iOS)
-    var cameraPostion: Position = .front {
-        didSet {
-            guard cameraPostion != oldValue else {
-                return
-            }
-            try? cameraSession?.switchPosition(cameraPostion)
+    var cameraPostion: Position {
+        get {
+            return cameraSession?.position ?? .front
+        }
+        
+        set {
+            try? cameraSession?.switchPosition(newValue)
         }
     }
     #endif
@@ -371,13 +372,16 @@ class VideoEnhancement: NSObject {
     var virtualAppearance: VirtualAppearance = .none {
         didSet {
             switch virtualAppearance {
-            case .none: FUManager.share()?.loadItem(virtualAppearance.item, completion: nil); FUManager.share()?.destoryItems()
-            case .dog:  FUManager.share()?.loadItem(virtualAppearance.item, completion: nil)
-            case .girl: FUManager.share()?.loadItem(virtualAppearance.item, completion: nil)
+            case .none:
+                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
+                FUManager.share()?.destoryItems()
+            case .dog:
+                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
+//                FUManager.share()?.loadItem("bj_lan", completion: nil);
+            case .girl:
+                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
+//                FUManager.share()?.loadItem("bj_lan", completion: nil);
             }
-            
-            FURenderer.itemSetParam(Int32(FUNamaHandleType.typeItem.rawValue),
-                                    withName: "{\"thing\":\"<global>\",\"param\":\"follow\"}", value: 0)
         }
     }
     

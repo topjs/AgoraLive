@@ -92,7 +92,17 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
             
             let vc = segue.destination as? PKBroadcastersViewController
             vc?.hidesBottomBarWhenPushed = true
+            vc?.audienceListVM.updateGiftListWithJson(list: info.giftAudience)
             vc?.pkVM = PKVM(statistics: statistics)
+        case "VirtualBroadcastersViewController":
+            guard let sender = sender,
+                let info = sender as? LiveSession.JoinedInfo else {
+                    fatalError()
+            }
+            
+            let vc = segue.destination as? VirtualBroadcastersViewController
+            vc?.hidesBottomBarWhenPushed = true
+            vc?.audienceListVM.updateGiftListWithJson(list: info.giftAudience)
         default:
             break
         }
@@ -259,7 +269,7 @@ extension LiveListTabViewController {
             case .pkBroadcasters:
                 self.performSegue(withIdentifier: "PKBroadcastersViewController", sender: info)
             case .virtualBroadcasters:
-                break
+                self.performSegue(withIdentifier: "VirtualBroadcastersViewController", sender: info)
             }
         }) {
             self.hiddenHUD()

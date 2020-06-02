@@ -114,6 +114,15 @@
 		A754FAEF242B717D0062B2F5 /* FilletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754FAEE242B717D0062B2F5 /* FilletView.swift */; };
 		A754FAF4242C5A920062B2F5 /* ChatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754FAF3242C5A920062B2F5 /* ChatVM.swift */; };
 		A754FAF6242C9B700062B2F5 /* LiveSeatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754FAF5242C9B700062B2F5 /* LiveSeatVM.swift */; };
+		A7584B09248114EA0088FACB /* VirtualBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */; };
+		A7584B0A248114EA0088FACB /* VirtualBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */; };
+		A7584B0B248114EA0088FACB /* VirtualBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */; };
+		A7584B4B2484DB290088FACB /* VirtualVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B4A2484DB290088FACB /* VirtualVM.swift */; };
+		A7584B4C2484DB290088FACB /* VirtualVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B4A2484DB290088FACB /* VirtualVM.swift */; };
+		A7584B4D2484DB290088FACB /* VirtualVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B4A2484DB290088FACB /* VirtualVM.swift */; };
+		A7584B4F2484F3B80088FACB /* bj_lan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7584B4E2484F3B80088FACB /* bj_lan.bundle */; };
+		A7584B502484F3B80088FACB /* bj_lan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7584B4E2484F3B80088FACB /* bj_lan.bundle */; };
+		A7584B512484F3B90088FACB /* bj_lan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7584B4E2484F3B80088FACB /* bj_lan.bundle */; };
 		A758851E242DF20E0011FCCF /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758851D242DF20E0011FCCF /* UserListViewController.swift */; };
 		A7588528242E01C10011FCCF /* BottomToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7588527242E01C10011FCCF /* BottomToolsViewController.swift */; };
 		A75D5B2A244FE77D00CE7528 /* CSNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */; };
@@ -644,6 +653,9 @@
 		A754FAEE242B717D0062B2F5 /* FilletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilletView.swift; sourceTree = "<group>"; };
 		A754FAF3242C5A920062B2F5 /* ChatVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVM.swift; sourceTree = "<group>"; };
 		A754FAF5242C9B700062B2F5 /* LiveSeatVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSeatVM.swift; sourceTree = "<group>"; };
+		A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualBroadcastersViewController.swift; sourceTree = "<group>"; };
+		A7584B4A2484DB290088FACB /* VirtualVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualVM.swift; sourceTree = "<group>"; };
+		A7584B4E2484F3B80088FACB /* bj_lan.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bj_lan.bundle; sourceTree = "<group>"; };
 		A758851D242DF20E0011FCCF /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		A7588527242E01C10011FCCF /* BottomToolsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolsViewController.swift; sourceTree = "<group>"; };
 		A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNavigationController.swift; sourceTree = "<group>"; };
@@ -971,6 +983,7 @@
 		A71ED4CC247FBF7F00BA9A32 /* Animoji */ = {
 			isa = PBXGroup;
 			children = (
+				A7584B4E2484F3B80088FACB /* bj_lan.bundle */,
 				A71ED4CD247FBF7F00BA9A32 /* douniuquan_Animoji.bundle */,
 				A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */,
 				A71ED4CF247FBF7F00BA9A32 /* douniuquan_Animoji.png */,
@@ -1407,6 +1420,7 @@
 			isa = PBXGroup;
 			children = (
 				A7D89D4B247E79060048B7EC /* VirtualHeadViewController.swift */,
+				A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */,
 			);
 			name = VirtualBroadcasting;
 			sourceTree = "<group>";
@@ -1425,6 +1439,7 @@
 				A7615014244AF35B007AAA7F /* MediaDeviceVM.swift */,
 				A77718152456FBDA00BF1F21 /* PlayerVM.swift */,
 				A7847F982458216600469187 /* VideoEnhancementVM.swift */,
+				A7584B4A2484DB290088FACB /* VirtualVM.swift */,
 			);
 			name = ViewModel;
 			path = UI;
@@ -1576,6 +1591,7 @@
 				A71ED5BA247FBF7F00BA9A32 /* hashiqi_Animoji.png in Resources */,
 				A71A96AD247E44F6002749E4 /* ai_humanpose.bundle in Resources */,
 				A711AB7C243EF78A00C2A3FD /* SuperWatch.gif in Resources */,
+				A7584B4F2484F3B80088FACB /* bj_lan.bundle in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
 				A71ED5B9247FBF7F00BA9A32 /* huangya_Animoji.png in Resources */,
 				A711AB8E244015E000C2A3FD /* SuperIcecream.gif in Resources */,
@@ -1602,6 +1618,7 @@
 				A7A97913245140DB00A82265 /* SuperDiamond.gif in Resources */,
 				A7A97925245140DB00A82265 /* LaunchScreen.storyboard in Resources */,
 				A7A9792C245140DB00A82265 /* SuperWatch.gif in Resources */,
+				A7584B502484F3B80088FACB /* bj_lan.bundle in Resources */,
 				A7A97930245140DB00A82265 /* Localizable.strings in Resources */,
 				A7A9794B245140DB00A82265 /* SuperIcecream.gif in Resources */,
 				A7A97953245140DB00A82265 /* Main.storyboard in Resources */,
@@ -1622,6 +1639,7 @@
 				A7D89D40247E67A70048B7EC /* ai_gesture.bundle in Resources */,
 				A7D89D41247E67A70048B7EC /* ai_facelandmarks75.bundle in Resources */,
 				A7D89D42247E67A70048B7EC /* ai_face_processor.bundle in Resources */,
+				A7584B512484F3B90088FACB /* bj_lan.bundle in Resources */,
 				A7D89D43247E67A70048B7EC /* ai_bgseg_green.bundle in Resources */,
 				A7D89D44247E67A70048B7EC /* ai_hairseg.bundle in Resources */,
 				A7D89D45247E67A70048B7EC /* ai_humanpose.bundle in Resources */,
@@ -1837,6 +1855,7 @@
 				A7952AB024162C1000479811 /* MediaKit.swift in Sources */,
 				A7952AAC24162C1000479811 /* Convert.swift in Sources */,
 				A7952AC024162C1000479811 /* ioapi_buf.c in Sources */,
+				A7584B09248114EA0088FACB /* VirtualBroadcastersViewController.swift in Sources */,
 				A719061524667DCE0031E91C /* UserData+CoreDataClass.swift in Sources */,
 				A7952AC524162C1000479811 /* aescrypt.c in Sources */,
 				A7952AD124162C1000479811 /* RTMExtension.swift in Sources */,
@@ -1847,6 +1866,7 @@
 				A719060924666D2B0031E91C /* AGESingleCamera.swift in Sources */,
 				A7BD767E247D0CA40062A6B3 /* FUMusicPlayer.m in Sources */,
 				A7952C5C2417636D00479811 /* ALJson.swift in Sources */,
+				A7584B4B2484DB290088FACB /* VirtualVM.swift in Sources */,
 				A7952AB724162C1000479811 /* DataExtension.swift in Sources */,
 				A72B7BEE24445EBB00E965FB /* PKBar.swift in Sources */,
 				A71A9482247E40B2002749E4 /* FUImageHelper.m in Sources */,
@@ -1968,6 +1988,7 @@
 				A7A97888245140DB00A82265 /* Convert.swift in Sources */,
 				A7A9788A245140DB00A82265 /* ioapi_buf.c in Sources */,
 				A7A9788B245140DB00A82265 /* aescrypt.c in Sources */,
+				A7584B0A248114EA0088FACB /* VirtualBroadcastersViewController.swift in Sources */,
 				A7A9788C245140DB00A82265 /* RTMExtension.swift in Sources */,
 				A7A9788D245140DB00A82265 /* AfterWorker.swift in Sources */,
 				A7A9788E245140DB00A82265 /* ALKeys.swift in Sources */,
@@ -1978,6 +1999,7 @@
 				A7A97892245140DB00A82265 /* AGELock.swift in Sources */,
 				A7A97893245140DB00A82265 /* ALCenter.swift in Sources */,
 				A7A97894245140DB00A82265 /* LiveListTabViewController.swift in Sources */,
+				A7584B4C2484DB290088FACB /* VirtualVM.swift in Sources */,
 				A7A97895245140DB00A82265 /* UIImage+CSClipToCycle.m in Sources */,
 				A7BD7683247D0CD40062A6B3 /* FUOpenGLView.m in Sources */,
 				A7A97896245140DB00A82265 /* MusicViewController.swift in Sources */,
@@ -2099,6 +2121,7 @@
 				A7CEAE91247252E00041124B /* MediaKit.swift in Sources */,
 				A7CEAE92247252E00041124B /* Convert.swift in Sources */,
 				A7CEAE94247252E00041124B /* ioapi_buf.c in Sources */,
+				A7584B0B248114EA0088FACB /* VirtualBroadcastersViewController.swift in Sources */,
 				A7CEAE95247252E00041124B /* UserData+CoreDataClass.swift in Sources */,
 				A7CEAE96247252E00041124B /* aescrypt.c in Sources */,
 				A7CEAE97247252E00041124B /* RTMExtension.swift in Sources */,
@@ -2109,6 +2132,7 @@
 				A7CEAE9C247252E00041124B /* AGESingleCamera.swift in Sources */,
 				A7CEAE9D247252E00041124B /* ALJson.swift in Sources */,
 				A7CEAE9E247252E00041124B /* DataExtension.swift in Sources */,
+				A7584B4D2484DB290088FACB /* VirtualVM.swift in Sources */,
 				A7CEAE9F247252E00041124B /* PKBar.swift in Sources */,
 				A7BD7684247D0CD50062A6B3 /* FUOpenGLView.m in Sources */,
 				A7CEAEA0247252E00041124B /* AGELock.swift in Sources */,
