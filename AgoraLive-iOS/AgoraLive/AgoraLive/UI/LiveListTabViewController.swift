@@ -96,13 +96,28 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
             vc?.pkVM = PKVM(statistics: statistics)
         case "VirtualBroadcastersViewController":
             guard let sender = sender,
-                let info = sender as? LiveSession.JoinedInfo else {
+                let info = sender as? LiveSession.JoinedInfo,
+                let seatInfo = info.seatInfo,
+                let session = ALCenter.shared().liveSession else {
                     fatalError()
             }
             
             let vc = segue.destination as? VirtualBroadcastersViewController
             vc?.hidesBottomBarWhenPushed = true
             vc?.audienceListVM.updateGiftListWithJson(list: info.giftAudience)
+            let seatVM = try! LiveSeatVM(list: seatInfo)
+            vc?.seatVM = seatVM
+            
+            var broadcasting: VirtualVM.Broadcasting
+            
+            if seatVM.list.value.count == 1,
+                let remote = seatVM.list.value[0].user {
+                broadcasting = .multi([session.owner.user, remote])
+            } else {
+                broadcasting = .single(session.owner.user)
+            }
+            
+            vc?.virtualVM = VirtualVM(broadcasting: BehaviorRelay(value: broadcasting))
         default:
             break
         }

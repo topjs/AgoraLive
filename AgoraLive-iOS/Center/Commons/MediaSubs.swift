@@ -376,11 +376,11 @@ class VideoEnhancement: NSObject {
                 FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
                 FUManager.share()?.destoryItems()
             case .dog:
+                FUManager.share()?.loadBackground()
                 FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-//                FUManager.share()?.loadItem("bj_lan", completion: nil);
             case .girl:
+                FUManager.share()?.loadBackground()
                 FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-//                FUManager.share()?.loadItem("bj_lan", completion: nil);
             }
         }
     }

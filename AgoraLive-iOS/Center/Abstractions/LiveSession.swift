@@ -34,7 +34,7 @@ enum LiveType: Int {
 
 class LiveSession: NSObject {
     enum Owner {
-        case localUser, otherUser(RemoteOwner)
+        case localUser(LiveRole), otherUser(LiveRole)
         
         var isLocal: Bool {
             switch self {
@@ -43,10 +43,10 @@ class LiveSession: NSObject {
             }
         }
         
-        var remoteUser: RemoteOwner? {
+        var user: LiveRole {
             switch self {
             case .otherUser(let user): return user
-            default:                   return nil
+            case .localUser(let user): return user
             }
         }
     }
@@ -56,7 +56,7 @@ class LiveSession: NSObject {
     var settings: LocalLiveSettings
     var type: LiveType
     var role: LiveRole?
-    var owner: Owner = .localUser
+    var owner: Owner!
     
     var rtcChannelReport: BehaviorRelay<ChannelReport>?
     var end = PublishRelay<Bool>()
@@ -115,7 +115,7 @@ class LiveSession: NSObject {
             
             // only multiBroadcasters has seatInfo
             var seatInfo: [StringAnyDic]?
-            if self.type == .multiBroadcasters {
+            if self.type == .multiBroadcasters || self.type == .virtualBroadcasters {
                 seatInfo = try liveRoom.getListValue(of: "coVideoSeats")
             }
             
@@ -257,7 +257,7 @@ private extension LiveSession {
         }
         
         if ownerObj.info.userId == current.publicInfo.value.userId {
-            self.owner = .localUser
+            self.owner = .localUser(ownerObj)
         } else {
             self.owner = .otherUser(ownerObj)
         }

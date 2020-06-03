@@ -42,6 +42,12 @@ struct LiveSeat {
     var index: Int // 1 ... 6
     var state: SeatState
     
+    init(user: RemoteBroadcaster? = nil, index: Int, state: SeatState) {
+        self.user = user
+        self.index = index
+        self.state = state
+    }
+    
     init(dic: StringAnyDic) throws {
         let seatJson = try dic.getDictionaryValue(of: "seat")
         self.index = try seatJson.getIntValue(of: "no")
@@ -153,7 +159,7 @@ private extension LiveSeatVM {
 
 // MARK: - Owner
 extension LiveSeatVM {
-    func localOwner(_ local: LiveOwner, command: SeatCommand, on seat:LiveSeat, with audience: RemoteAudience? = nil,
+    func localOwner(_ local: LiveRole, command: SeatCommand, on seat: LiveSeat, with audience: RemoteAudience? = nil,
                   of roomId: String, success: Completion = nil, fail: ErrorCompletion = nil) {
         // 禁麦， 封麦，下麦， 解封， 邀请，
         // case ban, close, forceToAudience, release, invite, none

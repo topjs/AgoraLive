@@ -196,7 +196,8 @@ private extension PKVM {
                 return
             }
             
-            guard let session = ALCenter.shared().liveSession else {
+            guard let session = ALCenter.shared().liveSession,
+                let owner = session.owner else {
                 return
             }
             
@@ -208,13 +209,9 @@ private extension PKVM {
                 return
             }
             
-            switch session.owner {
-            case .localUser:
-                guard let role = session.role else {
-                    return
-                }
-                
-                guard role.info.userId != statistics.opponentOwner!.info.userId else {
+            switch owner {
+            case .localUser(let user):
+                guard user.info.userId != statistics.opponentOwner!.info.userId else {
                     return
                 }
             case .otherUser(let user):

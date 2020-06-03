@@ -113,8 +113,8 @@ class SingleBroadcasterViewController: MaskViewController, LiveViewController {
 extension SingleBroadcasterViewController {
     // MARK: - Live Room
     func liveRoom(session: LiveSession) {
-        guard let localRole = session.role else {
-            fatalError()
+        guard let owner = session.owner else {
+            return
         }
         
         let images = ALCenter.shared().centerProvideImagesHelper()
@@ -124,14 +124,11 @@ extension SingleBroadcasterViewController {
         ownerView.label.textColor = .white
         ownerView.label.font = UIFont.systemFont(ofSize: 11)
         
-        let owner = session.owner
-        
         switch owner {
-        case .localUser:
-            ownerView.label.text = localRole.info.name
-            ownerView.imageView.image = images.getHead(index: localRole.info.imageIndex)
-            let owner = localRole as! LiveOwner
-            playerVM.renderLocalVideoStream(id: owner.agoraUserId,
+        case .localUser(let user):
+            ownerView.label.text = user.info.name
+            ownerView.imageView.image = images.getHead(index: user.info.imageIndex)
+            playerVM.renderLocalVideoStream(id: user.agoraUserId,
                                             view: self.renderView)
             deviceVM.camera = .on
             deviceVM.mic = .on

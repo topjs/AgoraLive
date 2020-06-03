@@ -611,7 +611,8 @@ extension LiveViewController {
                           presentedFrame: presentedFrame)
         
         giftVC.selectGift.subscribe(onNext: { [unowned self] (gift) in
-            guard let session = ALCenter.shared().liveSession else {
+            guard let session = ALCenter.shared().liveSession,
+                let owner = session.owner else {
                 return
             }
             
@@ -621,7 +622,7 @@ extension LiveViewController {
                 self.mediaSettingsNavi = nil
             }
             
-            switch session.owner {
+            switch owner {
             case .otherUser(let remote):
                 self.giftVM.present(gift: gift,
                                     to: remote.info,

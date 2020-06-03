@@ -243,7 +243,7 @@ class PKBroadcastersViewController: MaskViewController, LiveViewController {
 extension PKBroadcastersViewController {
     // MARK: - Live Room
     func liveRoom(session: LiveSession) {
-        guard let localRole = session.role else {
+        guard let owner = session.owner else {
             fatalError()
         }
         
@@ -255,12 +255,10 @@ extension PKBroadcastersViewController {
         ownerView.label.font = UIFont.systemFont(ofSize: 11)
         ownerView.backgroundColor = tintColor
         
-        let owner = session.owner
-        
         switch owner {
-        case .localUser:
-            ownerView.label.text = localRole.info.name
-            ownerView.imageView.image = images.getHead(index: localRole.info.imageIndex)
+        case .localUser(let user):
+            ownerView.label.text = user.info.name
+            ownerView.imageView.image = images.getHead(index: user.info.imageIndex)
             deviceVM.camera = .on
             deviceVM.mic = .on
             pkView?.intoOtherButton.isHidden = true
@@ -404,21 +402,17 @@ private extension PKBroadcastersViewController {
     }
     
     func updateViewsWith(statistics: PKStatistics) {
-        guard let session = ALCenter.shared().liveSession else {
+        guard let session = ALCenter.shared().liveSession,
+            let owner = session.owner else {
             fatalError()
         }
-        
-        let owner = session.owner
         
         renderView.isHidden = statistics.state.isDuring
         pkContainerView.isHidden = !statistics.state.isDuring
         
         switch (owner, statistics.state.isDuring) {
-        case (.localUser, false):
-            guard let localRole = session.role else {
-                fatalError()
-            }
-            playerVM.renderLocalVideoStream(id: localRole.agoraUserId,
+        case (.localUser(let user), false):
+            playerVM.renderLocalVideoStream(id: user.agoraUserId,
                                                 view: renderView)
             pkButton.isHidden = false
         case (.otherUser(let user), false):
@@ -426,16 +420,15 @@ private extension PKBroadcastersViewController {
                                              view: renderView)
             
             pkButton.isHidden = true
-        case (.localUser, true):
-            guard let localRole = session.role,
-                let pkView = self.pkView else {
+        case (.localUser(let user), true):
+            guard let pkView = self.pkView else {
                     fatalError()
             }
             
             let leftRenderView = pkView.leftRenderView
             let rightRenderView = pkView.rightRenderView
             
-            playerVM.renderLocalVideoStream(id: localRole.agoraUserId,
+            playerVM.renderLocalVideoStream(id: user.agoraUserId,
                                             view: leftRenderView!)
             
             let opponentUser = statistics.opponentOwner!.agoraUserId

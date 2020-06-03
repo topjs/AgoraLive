@@ -64,7 +64,9 @@ class BottomToolsViewController: UIViewController {
             
             giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
             self.view.addSubview(giftButton)
-        case (.pkBroadcasters, .audience):   fallthrough
+        case (.virtualBroadcasters, .broadcaster):  fallthrough
+        case (.virtualBroadcasters, .audience):     fallthrough
+        case (.pkBroadcasters, .audience):          fallthrough
         case (.multiBroadcasters, .audience):
             giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
             self.view.addSubview(giftButton)
