@@ -71,7 +71,6 @@
 		A71A96B0247E44F6002749E4 /* hair_gradient.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95C2247E44F5002749E4 /* hair_gradient.bundle */; };
 		A71A96B1247E44F6002749E4 /* face_beautification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95C3247E44F5002749E4 /* face_beautification.bundle */; };
 		A71A96B2247E44F6002749E4 /* hair_normal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95C4247E44F5002749E4 /* hair_normal.bundle */; };
-		A71A96B3247E44F6002749E4 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = A71A95C5247E44F5002749E4 /* readme.md */; };
 		A71A96B4247E44F6002749E4 /* libfuai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71A95C9247E44F5002749E4 /* libfuai.a */; };
 		A71A96B5247E4557002749E4 /* libnama.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71A95B1247E44F5002749E4 /* libnama.a */; };
 		A71AAF1624331B9C00820096 /* ChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AAF1524331B9C00820096 /* ChatInputView.swift */; };
@@ -81,22 +80,10 @@
 		A71AAF282435D7A900820096 /* StatisticsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AAF272435D7A900820096 /* StatisticsInfo.swift */; };
 		A71AAF2A2435D8BE00820096 /* RealDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AAF292435D8BE00820096 /* RealDataViewController.swift */; };
 		A71AAF88243D740F00820096 /* UIImage+CSClipToCycle.m in Sources */ = {isa = PBXBuildFile; fileRef = A71AAF87243D740F00820096 /* UIImage+CSClipToCycle.m */; };
-		A71ED5B1247FBF7F00BA9A32 /* douniuquan_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4CD247FBF7F00BA9A32 /* douniuquan_Animoji.bundle */; };
 		A71ED5B2247FBF7F00BA9A32 /* qgirl_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */; };
-		A71ED5B3247FBF7F00BA9A32 /* douniuquan_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4CF247FBF7F00BA9A32 /* douniuquan_Animoji.png */; };
 		A71ED5B4247FBF7F00BA9A32 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */; };
-		A71ED5B5247FBF7F00BA9A32 /* kuloutou_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D1247FBF7F00BA9A32 /* kuloutou_Animoji.bundle */; };
-		A71ED5B6247FBF7F00BA9A32 /* huangya_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D2247FBF7F00BA9A32 /* huangya_Animoji.bundle */; };
-		A71ED5B7247FBF7F00BA9A32 /* kuloutou_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D3247FBF7F00BA9A32 /* kuloutou_Animoji.png */; };
-		A71ED5B8247FBF7F00BA9A32 /* baimao_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D4247FBF7F00BA9A32 /* baimao_Animoji.bundle */; };
-		A71ED5B9247FBF7F00BA9A32 /* huangya_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D5247FBF7F00BA9A32 /* huangya_Animoji.png */; };
 		A71ED5BA247FBF7F00BA9A32 /* hashiqi_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D6247FBF7F00BA9A32 /* hashiqi_Animoji.png */; };
-		A71ED5BB247FBF7F00BA9A32 /* baimao_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D7247FBF7F00BA9A32 /* baimao_Animoji.png */; };
 		A71ED5BC247FBF7F00BA9A32 /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D8247FBF7F00BA9A32 /* hashiqi_Animoji.bundle */; };
-		A71ED5BD247FBF7F00BA9A32 /* frog_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D9247FBF7F00BA9A32 /* frog_Animoji.png */; };
-		A71ED5BE247FBF7F00BA9A32 /* hetun_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4DA247FBF7F00BA9A32 /* hetun_Animoji.bundle */; };
-		A71ED5BF247FBF7F00BA9A32 /* hetun_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4DB247FBF7F00BA9A32 /* hetun_Animoji.png */; };
-		A71ED5C0247FBF7F00BA9A32 /* frog_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4DC247FBF7F00BA9A32 /* frog_Animoji.bundle */; };
 		A71ED626247FBFCC00BA9A32 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */; };
 		A722F07E2476924400132129 /* srmetal.metallib in Resources */ = {isa = PBXBuildFile; fileRef = A722F07C2476924400132129 /* srmetal.metallib */; };
 		A722F07F2476924400132129 /* model.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A722F07D2476924400132129 /* model.bundle */; };
@@ -123,6 +110,15 @@
 		A7584B4F2484F3B80088FACB /* bj_lan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7584B4E2484F3B80088FACB /* bj_lan.bundle */; };
 		A7584B502484F3B80088FACB /* bj_lan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7584B4E2484F3B80088FACB /* bj_lan.bundle */; };
 		A7584B512484F3B90088FACB /* bj_lan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7584B4E2484F3B80088FACB /* bj_lan.bundle */; };
+		A7584B842488DAD40088FACB /* qgirl_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */; };
+		A7584B852488DAD50088FACB /* qgirl_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */; };
+		A7584B862488DAD80088FACB /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */; };
+		A7584B872488DADB0088FACB /* hashiqi_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D6247FBF7F00BA9A32 /* hashiqi_Animoji.png */; };
+		A7584B882488DADB0088FACB /* hashiqi_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D6247FBF7F00BA9A32 /* hashiqi_Animoji.png */; };
+		A7584B892488DADF0088FACB /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D8247FBF7F00BA9A32 /* hashiqi_Animoji.bundle */; };
+		A7584B8A2488DAE00088FACB /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D8247FBF7F00BA9A32 /* hashiqi_Animoji.bundle */; };
+		A7584B8B2488DAE30088FACB /* libfuai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71A95C9247E44F5002749E4 /* libfuai.a */; };
+		A7584B8C2488DAEF0088FACB /* libnama.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A71A95B1247E44F5002749E4 /* libnama.a */; };
 		A758851E242DF20E0011FCCF /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758851D242DF20E0011FCCF /* UserListViewController.swift */; };
 		A7588528242E01C10011FCCF /* BottomToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7588527242E01C10011FCCF /* BottomToolsViewController.swift */; };
 		A75D5B2A244FE77D00CE7528 /* CSNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */; };
@@ -612,7 +608,6 @@
 		A71A95C2247E44F5002749E4 /* hair_gradient.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hair_gradient.bundle; sourceTree = "<group>"; };
 		A71A95C3247E44F5002749E4 /* face_beautification.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = face_beautification.bundle; sourceTree = "<group>"; };
 		A71A95C4247E44F5002749E4 /* hair_normal.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hair_normal.bundle; sourceTree = "<group>"; };
-		A71A95C5247E44F5002749E4 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		A71A95C7247E44F5002749E4 /* funama.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = funama.h; sourceTree = "<group>"; };
 		A71A95C8247E44F5002749E4 /* FURenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FURenderer.h; sourceTree = "<group>"; };
 		A71A95C9247E44F5002749E4 /* libfuai.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfuai.a; sourceTree = "<group>"; };
@@ -624,22 +619,10 @@
 		A71AAF292435D8BE00820096 /* RealDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealDataViewController.swift; sourceTree = "<group>"; };
 		A71AAF86243D740F00820096 /* UIImage+CSClipToCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CSClipToCycle.h"; sourceTree = "<group>"; };
 		A71AAF87243D740F00820096 /* UIImage+CSClipToCycle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CSClipToCycle.m"; sourceTree = "<group>"; };
-		A71ED4CD247FBF7F00BA9A32 /* douniuquan_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = douniuquan_Animoji.bundle; sourceTree = "<group>"; };
 		A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qgirl_Animoji.png; sourceTree = "<group>"; };
-		A71ED4CF247FBF7F00BA9A32 /* douniuquan_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = douniuquan_Animoji.png; sourceTree = "<group>"; };
 		A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = qgirl_Animoji.bundle; sourceTree = "<group>"; };
-		A71ED4D1247FBF7F00BA9A32 /* kuloutou_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = kuloutou_Animoji.bundle; sourceTree = "<group>"; };
-		A71ED4D2247FBF7F00BA9A32 /* huangya_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = huangya_Animoji.bundle; sourceTree = "<group>"; };
-		A71ED4D3247FBF7F00BA9A32 /* kuloutou_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kuloutou_Animoji.png; sourceTree = "<group>"; };
-		A71ED4D4247FBF7F00BA9A32 /* baimao_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = baimao_Animoji.bundle; sourceTree = "<group>"; };
-		A71ED4D5247FBF7F00BA9A32 /* huangya_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = huangya_Animoji.png; sourceTree = "<group>"; };
 		A71ED4D6247FBF7F00BA9A32 /* hashiqi_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hashiqi_Animoji.png; sourceTree = "<group>"; };
-		A71ED4D7247FBF7F00BA9A32 /* baimao_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baimao_Animoji.png; sourceTree = "<group>"; };
 		A71ED4D8247FBF7F00BA9A32 /* hashiqi_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hashiqi_Animoji.bundle; sourceTree = "<group>"; };
-		A71ED4D9247FBF7F00BA9A32 /* frog_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frog_Animoji.png; sourceTree = "<group>"; };
-		A71ED4DA247FBF7F00BA9A32 /* hetun_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hetun_Animoji.bundle; sourceTree = "<group>"; };
-		A71ED4DB247FBF7F00BA9A32 /* hetun_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hetun_Animoji.png; sourceTree = "<group>"; };
-		A71ED4DC247FBF7F00BA9A32 /* frog_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = frog_Animoji.bundle; sourceTree = "<group>"; };
 		A722F07C2476924400132129 /* srmetal.metallib */ = {isa = PBXFileReference; lastKnownFileType = "archive.metal-library"; name = srmetal.metallib; path = ../../SDK/AgoraRtcKit.framework/AgoraResources/srmetal.metallib; sourceTree = "<group>"; };
 		A722F07D2476924400132129 /* model.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = model.bundle; path = ../../SDK/AgoraRtcKit.framework/AgoraResources/model.bundle; sourceTree = "<group>"; };
 		A72B7BE32444161400E965FB /* SingleBroadcasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleBroadcasterViewController.swift; sourceTree = "<group>"; };
@@ -822,8 +805,10 @@
 			files = (
 				A7A978C9245140DB00A82265 /* libc++.tbd in Frameworks */,
 				A7A978CB245140DB00A82265 /* Accelerate.framework in Frameworks */,
+				A7584B8C2488DAEF0088FACB /* libnama.a in Frameworks */,
 				A7A978CC245140DB00A82265 /* AgoraRtcKit.framework in Frameworks */,
 				A7A978CD245140DB00A82265 /* AgoraRtmKit.framework in Frameworks */,
+				A7584B8B2488DAE30088FACB /* libfuai.a in Frameworks */,
 				A7A978CE245140DB00A82265 /* CoreTelephony.framework in Frameworks */,
 				A7A978CF245140DB00A82265 /* libresolv.tbd in Frameworks */,
 				0975BB0997D7E5C3669CB3AF /* Pods_AgoraLive_QA.framework in Frameworks */,
@@ -922,11 +907,10 @@
 		A71A95B0247E44F5002749E4 /* FaceUnity-SDK-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				A71A95B1247E44F5002749E4 /* libnama.a */,
 				A71A95B2247E44F5002749E4 /* Resources */,
-				A71A95C5247E44F5002749E4 /* readme.md */,
 				A71A95C6247E44F5002749E4 /* Headers */,
 				A71A95C9247E44F5002749E4 /* libfuai.a */,
+				A71A95B1247E44F5002749E4 /* libnama.a */,
 			);
 			path = "FaceUnity-SDK-iOS";
 			sourceTree = "<group>";
@@ -984,22 +968,10 @@
 			isa = PBXGroup;
 			children = (
 				A7584B4E2484F3B80088FACB /* bj_lan.bundle */,
-				A71ED4CD247FBF7F00BA9A32 /* douniuquan_Animoji.bundle */,
 				A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */,
-				A71ED4CF247FBF7F00BA9A32 /* douniuquan_Animoji.png */,
 				A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */,
-				A71ED4D1247FBF7F00BA9A32 /* kuloutou_Animoji.bundle */,
-				A71ED4D2247FBF7F00BA9A32 /* huangya_Animoji.bundle */,
-				A71ED4D3247FBF7F00BA9A32 /* kuloutou_Animoji.png */,
-				A71ED4D4247FBF7F00BA9A32 /* baimao_Animoji.bundle */,
-				A71ED4D5247FBF7F00BA9A32 /* huangya_Animoji.png */,
 				A71ED4D6247FBF7F00BA9A32 /* hashiqi_Animoji.png */,
-				A71ED4D7247FBF7F00BA9A32 /* baimao_Animoji.png */,
 				A71ED4D8247FBF7F00BA9A32 /* hashiqi_Animoji.bundle */,
-				A71ED4D9247FBF7F00BA9A32 /* frog_Animoji.png */,
-				A71ED4DA247FBF7F00BA9A32 /* hetun_Animoji.bundle */,
-				A71ED4DB247FBF7F00BA9A32 /* hetun_Animoji.png */,
-				A71ED4DC247FBF7F00BA9A32 /* frog_Animoji.bundle */,
 			);
 			path = Animoji;
 			sourceTree = "<group>";
@@ -1556,13 +1528,10 @@
 				A722F08324769E5F00132129 /* srmetal.metallib in Resources */,
 				A722F08224769E5900132129 /* model.bundle in Resources */,
 				A7847F9624581A5800469187 /* sound.gif in Resources */,
-				A71ED5B6247FBF7F00BA9A32 /* huangya_Animoji.bundle in Resources */,
 				A71A96AA247E44F6002749E4 /* ai_face_processor.bundle in Resources */,
 				A71A96AB247E44F6002749E4 /* ai_bgseg_green.bundle in Resources */,
-				A71ED5BB247FBF7F00BA9A32 /* baimao_Animoji.png in Resources */,
 				A71A96A9247E44F6002749E4 /* ai_facelandmarks75.bundle in Resources */,
 				A71A96B2247E44F6002749E4 /* hair_normal.bundle in Resources */,
-				A71ED5BF247FBF7F00BA9A32 /* hetun_Animoji.png in Resources */,
 				A71A96B0247E44F6002749E4 /* hair_gradient.bundle in Resources */,
 				A711AB7B243EF78A00C2A3FD /* SuperRocket.gif in Resources */,
 				A711AB8F244015E000C2A3FD /* SuperBell.gif in Resources */,
@@ -1570,20 +1539,14 @@
 				A711AB7D243EF78A00C2A3FD /* SuperRing.gif in Resources */,
 				A72B7BEC24445DEF00E965FB /* Assets.xcassets in Resources */,
 				A71A96A8247E44F6002749E4 /* ai_gesture.bundle in Resources */,
-				A71ED5C0247FBF7F00BA9A32 /* frog_Animoji.bundle in Resources */,
-				A71ED5B8247FBF7F00BA9A32 /* baimao_Animoji.bundle in Resources */,
 				A711AB90244015E000C2A3FD /* SuperCake.gif in Resources */,
-				A71ED5B3247FBF7F00BA9A32 /* douniuquan_Animoji.png in Resources */,
 				A711AB7E243EF78A00C2A3FD /* SuperDiamond.gif in Resources */,
 				A71ED5B4247FBF7F00BA9A32 /* qgirl_Animoji.bundle in Resources */,
 				A76BD12D23F1035600B2732B /* LaunchScreen.storyboard in Resources */,
-				A71ED5BD247FBF7F00BA9A32 /* frog_Animoji.png in Resources */,
 				A71A96AF247E44F6002749E4 /* fuzzytoonfilter.bundle in Resources */,
 				A71A96A2247E44F6002749E4 /* fxaa.bundle in Resources */,
 				A71A96AC247E44F6002749E4 /* ai_hairseg.bundle in Resources */,
 				A71A96AE247E44F6002749E4 /* body_slim.bundle in Resources */,
-				A71ED5B1247FBF7F00BA9A32 /* douniuquan_Animoji.bundle in Resources */,
-				A71ED5B5247FBF7F00BA9A32 /* kuloutou_Animoji.bundle in Resources */,
 				A71A96A3247E44F6002749E4 /* face_makeup.bundle in Resources */,
 				A71A96A4247E44F6002749E4 /* ai_facelandmarks239.bundle in Resources */,
 				A71A96A6247E44F6002749E4 /* ai_bgseg.bundle in Resources */,
@@ -1593,12 +1556,8 @@
 				A711AB7C243EF78A00C2A3FD /* SuperWatch.gif in Resources */,
 				A7584B4F2484F3B80088FACB /* bj_lan.bundle in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
-				A71ED5B9247FBF7F00BA9A32 /* huangya_Animoji.png in Resources */,
 				A711AB8E244015E000C2A3FD /* SuperIcecream.gif in Resources */,
 				A76BD12823F1035500B2732B /* Main.storyboard in Resources */,
-				A71ED5BE247FBF7F00BA9A32 /* hetun_Animoji.bundle in Resources */,
-				A71ED5B7247FBF7F00BA9A32 /* kuloutou_Animoji.png in Resources */,
-				A71A96B3247E44F6002749E4 /* readme.md in Resources */,
 				A711AB91244015E000C2A3FD /* SuperWine.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1611,8 +1570,10 @@
 				A722F08024769E3F00132129 /* model.bundle in Resources */,
 				A7847F9724581A5800469187 /* sound.gif in Resources */,
 				A7A978DE245140DB00A82265 /* SuperRocket.gif in Resources */,
+				A7584B872488DADB0088FACB /* hashiqi_Animoji.png in Resources */,
 				A7A978E4245140DB00A82265 /* SuperBell.gif in Resources */,
 				A7A978FB245140DB00A82265 /* SuperRing.gif in Resources */,
+				A7584B842488DAD40088FACB /* qgirl_Animoji.png in Resources */,
 				A7A978FF245140DB00A82265 /* Assets.xcassets in Resources */,
 				A7A9790F245140DB00A82265 /* SuperCake.gif in Resources */,
 				A7A97913245140DB00A82265 /* SuperDiamond.gif in Resources */,
@@ -1623,6 +1584,8 @@
 				A7A9794B245140DB00A82265 /* SuperIcecream.gif in Resources */,
 				A7A97953245140DB00A82265 /* Main.storyboard in Resources */,
 				A7A97954245140DB00A82265 /* SuperWine.gif in Resources */,
+				A7584B862488DAD80088FACB /* qgirl_Animoji.bundle in Resources */,
+				A7584B892488DADF0088FACB /* hashiqi_Animoji.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1633,6 +1596,7 @@
 				A71ED626247FBFCC00BA9A32 /* qgirl_Animoji.bundle in Resources */,
 				A7D89D3B247E67A70048B7EC /* fxaa.bundle in Resources */,
 				A7D89D3C247E67A70048B7EC /* face_makeup.bundle in Resources */,
+				A7584B882488DADB0088FACB /* hashiqi_Animoji.png in Resources */,
 				A7D89D3D247E67A70048B7EC /* ai_facelandmarks239.bundle in Resources */,
 				A7D89D3E247E67A70048B7EC /* ai_bgseg.bundle in Resources */,
 				A7D89D3F247E67A70048B7EC /* ai_facelandmarks209.bundle in Resources */,
@@ -1659,7 +1623,9 @@
 				A7CEAEE4247252E00041124B /* SuperCake.gif in Resources */,
 				A7CEAEE5247252E00041124B /* SuperDiamond.gif in Resources */,
 				A7CEAEE6247252E00041124B /* LaunchScreen.storyboard in Resources */,
+				A7584B8A2488DAE00088FACB /* hashiqi_Animoji.bundle in Resources */,
 				A7CEAEE7247252E00041124B /* SuperWatch.gif in Resources */,
+				A7584B852488DAD50088FACB /* qgirl_Animoji.png in Resources */,
 				A7CEAEE8247252E00041124B /* Localizable.strings in Resources */,
 				A7CEAEEA247252E00041124B /* SuperIcecream.gif in Resources */,
 				A7CEAEEB247252E00041124B /* Main.storyboard in Resources */,
