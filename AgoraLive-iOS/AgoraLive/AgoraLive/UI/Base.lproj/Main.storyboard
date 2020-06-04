@@ -137,18 +137,42 @@
                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBg-8q-G77">
+                                        <rect key="frame" x="186" y="408" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="hexTextColor" value="#333333"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lo-hr-6aP">
+                                        <rect key="frame" x="189.33333333333334" y="439" width="35.333333333333343" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="hexTextColor" value="#666666"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="KIC-7o-5Rc" firstAttribute="centerY" secondItem="cGV-4q-eE0" secondAttribute="centerY" constant="-52" id="EkV-hL-bxf"/>
+                                    <constraint firstItem="vBg-8q-G77" firstAttribute="centerX" secondItem="cGV-4q-eE0" secondAttribute="centerX" id="JMQ-uN-Ecr"/>
                                     <constraint firstItem="NlI-uT-chl" firstAttribute="top" secondItem="KIC-7o-5Rc" secondAttribute="bottom" constant="15" id="QPa-0M-dil"/>
+                                    <constraint firstItem="4lo-hr-6aP" firstAttribute="top" secondItem="vBg-8q-G77" secondAttribute="bottom" constant="10" id="clp-tJ-xcX"/>
+                                    <constraint firstItem="vBg-8q-G77" firstAttribute="top" secondItem="KIC-7o-5Rc" secondAttribute="bottom" constant="27" id="dUG-Y1-D2g"/>
                                     <constraint firstItem="KIC-7o-5Rc" firstAttribute="centerX" secondItem="cGV-4q-eE0" secondAttribute="centerX" id="gLz-ZC-Kta"/>
+                                    <constraint firstItem="4lo-hr-6aP" firstAttribute="centerX" secondItem="cGV-4q-eE0" secondAttribute="centerX" id="nym-37-Zfo"/>
                                     <constraint firstItem="NlI-uT-chl" firstAttribute="centerX" secondItem="KIC-7o-5Rc" secondAttribute="centerX" id="qld-mG-sBX"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="createRoomLabel" destination="NlI-uT-chl" id="l6y-5Y-Utn"/>
                                     <outlet property="imageView" destination="KIC-7o-5Rc" id="XN2-Da-xc0"/>
-                                    <outlet property="label" destination="NlI-uT-chl" id="FTo-Wd-O3j"/>
+                                    <outlet property="lostConnectionDescLabel" destination="4lo-hr-6aP" id="Wzf-JX-0Jb"/>
+                                    <outlet property="lostConnectionLabel" destination="vBg-8q-G77" id="OLx-BB-UmY"/>
                                     <outletCollection property="gestureRecognizers" destination="iJt-SU-2X1" appends="YES" id="MMq-GJ-Djk"/>
                                 </connections>
                             </view>
@@ -2210,7 +2234,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9t-2b-Qje">
                                 <rect key="frame" x="69" y="56" width="276" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
@@ -2450,12 +2474,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="VtV-Zm-jwg"/>
-        <segue reference="fh7-g9-fFy"/>
+        <segue reference="BRB-IH-iNU"/>
+        <segue reference="8tO-8n-VDS"/>
         <segue reference="Rzl-6U-2pE"/>
-        <segue reference="Q62-nz-nPv"/>
+        <segue reference="Uvw-Ck-KIo"/>
         <segue reference="zjX-Y6-wKj"/>
-        <segue reference="q3I-2V-0Kx"/>
+        <segue reference="uL9-kD-5nP"/>
         <segue reference="reS-Gs-QCe"/>
     </inferredMetricsTieBreakers>
     <resources>

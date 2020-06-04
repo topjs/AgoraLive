@@ -13,6 +13,9 @@ Confirm="确定";
 Reject="拒绝";
 End="结束";
 
+LostConnection="网络异常";
+LostConnectionDescription="当前网络连接错误，请稍后再试";
+
 // Main Page
 Multi_Broadcasters="多人连麦直播";
 Multi_Broadcasters_Description="观众与主播连麦互动直播";

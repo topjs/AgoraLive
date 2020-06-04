@@ -397,12 +397,10 @@ extension LiveViewController {
     
     // MARK: - ExtensionFunctions
     func presentExtensionFunctions() {
-        guard let session = ALCenter.shared().liveSession else {
-            return
-        }
-        
-        guard let perspective = session.role?.type else {
-            fatalError()
+        guard let session = ALCenter.shared().liveSession,
+            let perspective = session.role?.type else {
+                assert(false)
+                return
         }
         
         let extensionVC = UIStoryboard.initViewController(of: "ExtensionViewController",
@@ -469,13 +467,12 @@ extension LiveViewController {
             extensionVC.cameraButton.isSelected.toggle()
             self.deviceVM.camera = extensionVC.cameraButton.isSelected ? .off : .on
             
-            guard let session = ALCenter.shared().liveSession else {
+            guard let session = ALCenter.shared().liveSession,
+                var role = session.role else {
+                assert(false)
                 return
             }
             
-            guard var role = session.role else {
-                fatalError()
-            }
             var status = role.status
             switch self.deviceVM.camera {
             case .on:
@@ -492,12 +489,10 @@ extension LiveViewController {
             extensionVC.micButton.isSelected.toggle()
             self.deviceVM.mic = extensionVC.micButton.isSelected ? .off : .on
             
-            guard let session = ALCenter.shared().liveSession else {
+            guard let session = ALCenter.shared().liveSession,
+                var role = session.role else {
+                assert(false)
                 return
-            }
-            
-            guard var role = session.role else {
-                fatalError()
             }
             
             var status = role.status
@@ -524,6 +519,7 @@ extension LiveViewController {
     //MARK: - Media Settings
     func presentMediaSettings() {
         guard let session = ALCenter.shared().liveSession else {
+            assert(false)
             return
         }
         
@@ -536,6 +532,7 @@ extension LiveViewController {
         mediaSettingsVC.settings = BehaviorRelay(value: session.settings.media)
         mediaSettingsVC.settings?.subscribe(onNext: { (newMedia) in
             guard let session = ALCenter.shared().liveSession else {
+                assert(false)
                 return
             }
             
@@ -562,6 +559,7 @@ extension LiveViewController {
     // MARK: - Real Data
     func presentRealData() {
         guard let session = ALCenter.shared().liveSession else {
+            assert(false)
             return
         }
         
@@ -614,6 +612,7 @@ extension LiveViewController {
         giftVC.selectGift.subscribe(onNext: { [unowned self] (gift) in
             guard let session = ALCenter.shared().liveSession,
                 let owner = session.owner else {
+                assert(false)
                 return
             }
             
@@ -632,7 +631,8 @@ extension LiveViewController {
                                         self.showAlert(message: NSLocalizedString("Present_Gift_Fail"))
                 }
             case .localUser:
-                fatalError()
+                assert(false)
+                break
             }
         }).disposed(by: bag)
     }

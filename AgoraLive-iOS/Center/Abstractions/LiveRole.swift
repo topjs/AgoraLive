@@ -154,6 +154,12 @@ class RemoteOwner: NSObject, LiveRole {
         self.info = try BasicUserInfo(dic: dic)
         self.agoraUserId = try dic.getIntValue(of: "uid")
     }
+    
+    init(info: BasicUserInfo, status: UserStatus, agoraUserId: Int) {
+        self.info = info
+        self.status = status
+        self.agoraUserId = agoraUserId
+    }
 }
 
 class RemoteBroadcaster: NSObject, LiveRole {
@@ -167,14 +173,20 @@ class RemoteBroadcaster: NSObject, LiveRole {
         self.info = try BasicUserInfo(dic: dic)
         self.agoraUserId = try dic.getIntValue(of: "uid")
     }
+    
+    init(info: BasicUserInfo, status: UserStatus, agoraUserId: Int) {
+        self.info = info
+        self.status = status
+        self.agoraUserId = agoraUserId
+    }
 }
 
 class RemoteAudience: NSObject, LiveRole {
     var type: LiveRoleType = .audience
     var status: UserStatus
     var info: BasicUserInfo
-    var giftRank: Int
     var agoraUserId: Int
+    var giftRank: Int
     
     init(dic: StringAnyDic) throws {
         self.status = UserStatus(rawValue: 0)
@@ -186,5 +198,12 @@ class RemoteAudience: NSObject, LiveRole {
         } else {
             self.agoraUserId = -1
         }
+    }
+    
+    init(info: BasicUserInfo, agoraUserId: Int) {
+        self.info = info
+        self.status = UserStatus(rawValue: 0)
+        self.agoraUserId = agoraUserId
+        self.giftRank = 0
     }
 }

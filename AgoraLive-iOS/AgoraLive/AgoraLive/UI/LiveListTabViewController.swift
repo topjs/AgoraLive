@@ -19,6 +19,7 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
     
     private let listVM = LiveListVM()
     private let bag = DisposeBag()
+    private let monitor = NetworkMonitor(host: "www.apple.com")
     private var listVC: LiveListViewController?
     private var timer: Timer?
     private var firstAppear = true
@@ -46,6 +47,8 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
         updateLiveListVC()
 
         updateViewsWithListVM()
+        
+        netMonitor()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -115,6 +118,10 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
                 broadcasting = .multi([session.owner.user, remote])
             } else {
                 broadcasting = .single(session.owner.user)
+            }
+            
+            if let virtualAppearance = info.virtualAppearance {
+                vc?.enhancementVM.virtualAppearance = VirtualAppearance.item(virtualAppearance)
             }
             
             vc?.virtualVM = VirtualVM(broadcasting: BehaviorRelay(value: broadcasting))
@@ -251,6 +258,16 @@ private extension LiveListTabViewController {
     
     func updateViewsWithListVM() {
         listVM.refetch()
+    }
+    
+    func netMonitor() {
+        monitor.action(.on)
+        monitor.connect.subscribe(onNext: { [unowned self] (status) in
+            switch status {
+            case .notReachable, .unknown: self.listVC?.placeHolderView.viewType = .lostConnection
+            case .reachable:              self.listVC?.placeHolderView.viewType = .noRoom
+            }
+        }).disposed(by: bag)
     }
     
     func perMinuterRefresh() {

@@ -200,12 +200,30 @@ private extension BottomToolsViewController {
         case (.virtualBroadcasters, .owner):
             musicButton.isHidden = false
             
-            musicButton.setImage(UIImage(named:"icon-music"), for: .normal)
+            musicButton.setImage(UIImage(named:"icon-music-black"), for: .normal)
             musicButton.setImage(UIImage(named:"icon-music-active"), for: .selected)
             
+            extensionButton.setImage(UIImage(named: "icon-more-black"), for: .normal)
+            closeButton.setImage(UIImage(named: "icon-close-black"), for: .normal)
+            
+            textInput.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("Live_Text_Input_Placeholder"),
+                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#999999"),
+                                                                              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
+            
             self.view.addSubview(musicButton)
-        case (.virtualBroadcasters, .broadcaster):  fallthrough
-        case (.virtualBroadcasters, .audience):     fallthrough
+        case (.virtualBroadcasters, .broadcaster): fallthrough
+        case (.virtualBroadcasters, .audience):
+            giftButton.isHidden = false
+            
+            extensionButton.setImage(UIImage(named: "icon-more-black"), for: .normal)
+            closeButton.setImage(UIImage(named: "icon-close-black"), for: .normal)
+            giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
+            
+            textInput.attributedPlaceholder = NSAttributedString(string: NSLocalizedString("Live_Text_Input_Placeholder"),
+                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#999999"),
+                                                                              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
+            
+            self.view.addSubview(giftButton)
         case (.pkBroadcasters, .audience):          fallthrough
         case (.multiBroadcasters, .audience):
             giftButton.isHidden = false

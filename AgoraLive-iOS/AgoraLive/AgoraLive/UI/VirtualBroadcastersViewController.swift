@@ -23,7 +23,7 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
     var tintColor = UIColor(red: 0,
                             green: 0,
                             blue: 0,
-                            alpha: 0.4)
+                            alpha: 0.2)
     
     var bag: DisposeBag = DisposeBag()
     
@@ -67,11 +67,6 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        videoContainer.backgroundColor = UIColor(hexString: "#DBEFFF")
-        videoContainer.backgroundColor = .white
-        ownerRenderView.backgroundColor = UIColor(hexString: "#DBEFFF")
-        broadcasterRenderView.backgroundColor = UIColor(hexString: "#DBEFFF")
-        
         guard let session = ALCenter.shared().liveSession else {
             fatalError()
         }
@@ -86,6 +81,8 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
         musicList()
         broadcastingStatus()
         liveSeat()
+        
+        updateViews()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -118,6 +115,21 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
 }
 
 extension VirtualBroadcastersViewController {
+    func updateViews() {
+        videoContainer.backgroundColor = .white
+        ownerRenderView.backgroundColor = UIColor(hexString: "#DBEFFF")
+        broadcasterRenderView.backgroundColor = UIColor(hexString: "#DBEFFF")
+        
+        ownerView.backgroundColor = tintColor
+        ownerView.offsetLeftX = -13
+        ownerView.offsetRightX = 5
+        ownerView.label.textColor = UIColor(hexString: "#333333")
+        ownerView.label.font = UIFont.systemFont(ofSize: 11)
+        
+        personCountView.imageView.image = UIImage(named: "icon-mine-black")
+        personCountView.label.textColor = UIColor(hexString: "#333333")
+    }
+    
     // MARK: - Live Room
     func liveRoom(session: LiveSession) {
         guard let owner = session.owner else {
@@ -125,11 +137,6 @@ extension VirtualBroadcastersViewController {
         }
         
         let images = ALCenter.shared().centerProvideImagesHelper()
-        
-        ownerView.offsetLeftX = -13
-        ownerView.offsetRightX = 5
-        ownerView.label.textColor = .white
-        ownerView.label.font = UIFont.systemFont(ofSize: 11)
         
         switch owner {
         case .localUser(let user):
@@ -159,11 +166,7 @@ extension VirtualBroadcastersViewController {
             guard let session = ALCenter.shared().liveSession,
                 let owner = session.owner,
                 let local = session.role else {
-                #if DEBUG
-                fatalError()
-                #else
-                return
-                #endif
+                    fatalError()
             }
             
             switch (self.virtualVM.broadcasting.value, owner) {
@@ -197,7 +200,8 @@ extension VirtualBroadcastersViewController {
         
         // Owner
         seatVM.receivedBroadcasting.subscribe(onNext: { [unowned self] (peerInfo) in
-            self.presentRecievedApplyForBroadcasting(audienceUid: peerInfo.userId,
+            self.presentRecievedApplyForBroadcasting(audienceName: peerInfo.userName,
+                                                     audienceUid: peerInfo.userId,
                                                      audienceAgoraUid: peerInfo.agoraUserId)
         }).disposed(by: bag)
         
@@ -407,11 +411,11 @@ extension VirtualBroadcastersViewController {
         }
     }
     
-    func presentRecievedApplyForBroadcasting(audienceUid: String, audienceAgoraUid: Int) {
+    func presentRecievedApplyForBroadcasting(audienceName: String, audienceUid: String, audienceAgoraUid: Int) {
         self.showMaskView()
         
         self.showAlert(NSLocalizedString("Apply_For_Broadcasting"),
-                       message: NSLocalizedString("Confirm_Apply_For_Broadcasting"),
+                       message: audienceName + NSLocalizedString("Confirm_Accept_Broadcasting"),
                        action1: NSLocalizedString("Reject"),
                        action2: NSLocalizedString("Confirm"),
                        handler1: { [unowned self] (_) in
@@ -467,7 +471,7 @@ extension VirtualBroadcastersViewController {
     func presentRecievedBroadcastingInvitation(ownerAgoraUid: Int) {
         self.showMaskView()
         
-        self.showAlert(NSLocalizedString("Apply_For_Broadcasting"),
+        self.showAlert(NSLocalizedString("Broadcasting_Invitation"),
                        message: NSLocalizedString("Confirm_Accept_Broadcasting_Invitation"),
                        action1: NSLocalizedString("Reject"),
                        action2: NSLocalizedString("Confirm"),
@@ -481,7 +485,7 @@ extension VirtualBroadcastersViewController {
                         }
                         
                         self.seatVM.localAudience(role, rejectInvitingFrom: ownerAgoraUid)
-        }) { (_) in
+        }) { [unowned self] (_) in
             self.hiddenMaskView()
             
             guard let session = ALCenter.shared().liveSession,

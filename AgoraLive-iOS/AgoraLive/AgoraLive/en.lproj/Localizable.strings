@@ -12,6 +12,9 @@ Confirm="Confirm";
 Reject="Reject";
 End="End";
 
+LostConnection="网络异常";
+LostConnectionDescription="当前网络连接错误，请稍后再试";
+
 // Main Page
 Multi_Broadcasters="Multi-Hosted Live Streaming";
 Multi_Broadcasters_Description="Live streaming featuring audience participation";

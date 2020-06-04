@@ -241,6 +241,14 @@ enum VirtualAppearance {
             }
         }
     }
+    
+    static func item(_ item: String) -> VirtualAppearance {
+        switch item {
+        case "qgirl_Animoji":   return VirtualAppearance.girl
+        case "hashiqi_Animoji": return VirtualAppearance.dog
+        default:                return VirtualAppearance.none
+        }
+    }
 }
 
 class VideoEnhancement: NSObject {

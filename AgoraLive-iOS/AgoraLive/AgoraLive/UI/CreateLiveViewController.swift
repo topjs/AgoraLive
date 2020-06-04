@@ -98,6 +98,7 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
             media.bitRate = 1000
             localSettings.media = media
             
+            startButton.backgroundColor = UIColor(hexString: "#0088EB")
             settingsButton.isHidden = true
             beautyButton.isHidden = true
             switchCameraButton.isHidden = true
