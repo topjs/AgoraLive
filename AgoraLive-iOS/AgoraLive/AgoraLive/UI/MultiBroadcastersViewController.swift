@@ -237,7 +237,7 @@ extension MultiBroadcastersViewController {
                                handler2: handler)
             // Broadcaster
             case .endBroadcasting:
-                guard let role = session.role as? MultiBroadBroadcaster else {
+                guard let role = session.role as? LiveBroadcaster else {
                     fatalError()
                 }
                 

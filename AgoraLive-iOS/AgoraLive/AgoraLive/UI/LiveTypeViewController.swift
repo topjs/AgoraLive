@@ -109,10 +109,6 @@ class LiveTypeViewController: MaskViewController {
         _ = liveListTabVC.view
         
         tableView.rx.itemSelected.subscribe(onNext: { [weak tabbarVC, weak liveListTabVC] (index) in
-            let commingSoonIndex = 3
-            guard index.row < commingSoonIndex else {
-                return
-            }
             let liveListTabVCIndex = 1
             tabbarVC?.selectedIndex = liveListTabVCIndex
             liveListTabVC?.tabView.selectedIndex.accept(index.row)

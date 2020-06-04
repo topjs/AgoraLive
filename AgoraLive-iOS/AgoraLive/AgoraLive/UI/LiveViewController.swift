@@ -132,7 +132,8 @@ extension LiveViewController {
         guard let perspective = session.role?.type else {
             fatalError()
         }
-        
+        bottomToolsVC?.liveType = session.type
+        bottomToolsVC?.perspective = perspective
         bottomToolsVC?.tintColor = tintColor
         
         switch perspective {

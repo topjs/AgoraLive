@@ -290,7 +290,7 @@ extension LiveSeatVM {
         client.request(task: task, success: response, failRetry: fail)
     }
     
-    func localOwner(_ local: LiveOwner, rejectBroadcastingAudience agoraUid: Int, fail: ErrorCompletion = nil) {
+    func localOwner(_ local: LiveRole, rejectBroadcastingAudience agoraUid: Int, fail: ErrorCompletion = nil) {
         let rtm = ALCenter.shared().centerProvideRTMHelper()
         let message = ALPeerMessage(type: .broadcasting,
                                     command: .rejectBroadcasting,
@@ -318,7 +318,7 @@ extension LiveSeatVM {
 
 // MARK: - LiveBroadcaster
 extension LiveSeatVM {
-    func localBroadcaster(_ local: MultiBroadBroadcaster, endBroadcastingOn seat:LiveSeat, of roomId: String, success: Completion = nil, fail: Completion = nil) {
+    func localBroadcaster(_ local: LiveRole, endBroadcastingOn seat:LiveSeat, of roomId: String, success: Completion = nil, fail: Completion = nil) {
         let url = URLGroup.liveSeatCommand(roomId: roomId)
         let parameters: StringAnyDic = ["no": seat.index,
                                         "userId": local.info.userId,
@@ -355,7 +355,7 @@ extension LiveSeatVM {
 
 // MARK: - Audience
 extension LiveSeatVM {
-    func localAudience(_ local: LiveAudience, applyForBroadcastingToOwner agoraUid: Int, seat: LiveSeat, fail: ErrorCompletion) {
+    func localAudience(_ local: LiveRole, applyForBroadcastingToOwner agoraUid: Int, seat: LiveSeat, fail: ErrorCompletion = nil) {
         let rtm = ALCenter.shared().centerProvideRTMHelper()
         let message = ALPeerMessage(type: .broadcasting,
                                     command: .applyForBroadcasting(seatIndex: seat.index),
@@ -380,7 +380,7 @@ extension LiveSeatVM {
         }
     }
     
-    func localAudience(_ local: LiveAudience, acceptInvitingOn seatIndex: Int, roomId: String, success: Completion = nil, fail: ErrorCompletion = nil) {
+    func localAudience(_ local: LiveRole, acceptInvitingOn seatIndex: Int, roomId: String, success: Completion = nil, fail: ErrorCompletion = nil) {
         let url = URLGroup.liveSeatCommand(roomId: roomId)
         let parameters: StringAnyDic = ["no": seatIndex,
                                         "userId": local.info.userId,
@@ -415,7 +415,7 @@ extension LiveSeatVM {
         client.request(task: task, success: response, failRetry: fail)
     }
     
-    func localAudience(_ local: LiveAudience, rejectInvitingFrom ownerId: Int, fail: ErrorCompletion = nil) {
+    func localAudience(_ local: LiveRole, rejectInvitingFrom ownerId: Int, fail: ErrorCompletion = nil) {
         let rtm = ALCenter.shared().centerProvideRTMHelper()
         let message = ALPeerMessage(type: .broadcasting,
                                     command: .rejectInviteBroadcasting,

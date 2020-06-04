@@ -29,8 +29,19 @@ class BottomToolsViewController: UIViewController {
             giftButton.backgroundColor = tintColor
         }
     }
-    var liveType: LiveType = .multiBroadcasters
-    var perspective: LiveRoleType = .owner
+    var liveType: LiveType = .multiBroadcasters {
+        didSet {
+            updateViews()
+            viewDidLayoutSubviews()
+        }
+    }
+    
+    var perspective: LiveRoleType = .owner {
+        didSet {
+            updateViews()
+            viewDidLayoutSubviews()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,37 +59,7 @@ class BottomToolsViewController: UIViewController {
         extensionButton.setImage(UIImage(named: "icon-more-white"), for: .normal)
         self.view.addSubview(extensionButton)
         
-        switch (liveType, perspective) {
-        case (_, .owner):
-            beautyButton.setImage(UIImage(named: "icon-beauty"), for: .normal)
-            beautyButton.setImage(UIImage(named:"icon-beauty-active"), for: .selected)
-            musicButton.setImage(UIImage(named:"icon-music"), for: .normal)
-            musicButton.setImage(UIImage(named:"icon-music-active"), for: .selected)
-            
-            self.view.addSubview(beautyButton)
-            self.view.addSubview(musicButton)
-        case (.multiBroadcasters, .broadcaster):
-            beautyButton.setImage(UIImage(named:"icon-beauty"), for: .normal)
-            beautyButton.setImage(UIImage(named:"icon-beauty-active"), for: .selected)
-            self.view.addSubview(beautyButton)
-            
-            giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
-            self.view.addSubview(giftButton)
-        case (.virtualBroadcasters, .broadcaster):  fallthrough
-        case (.virtualBroadcasters, .audience):     fallthrough
-        case (.pkBroadcasters, .audience):          fallthrough
-        case (.multiBroadcasters, .audience):
-            giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
-            self.view.addSubview(giftButton)
-        case (.singleBroadcaster, .audience):
-            superRenderButton.setImage(UIImage(named: "icon-resolution"), for: .normal)
-            superRenderButton.setImage(UIImage(named:"icon-resolution-active"), for: .selected)
-            self.view.addSubview(superRenderButton)
-            
-            giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
-            self.view.addSubview(giftButton)
-        default: fatalError()
-        }
+        updateViews()
         
         tintColor = .black
     }
@@ -183,5 +164,65 @@ class BottomToolsViewController: UIViewController {
                                  width: lastButton.frame.minX - (space * 2),
                                  height: viewHeight)
         textInput.cornerRadius(viewHeight * 0.5)
+    }
+}
+
+private extension BottomToolsViewController {
+    func updateViews() {
+        beautyButton.isHidden = true
+        musicButton.isHidden = true
+        giftButton.isHidden = true
+        superRenderButton.isHidden = true
+        
+        switch (liveType, perspective) {
+        case (.multiBroadcasters, .owner):
+            beautyButton.isHidden = false
+            musicButton.isHidden = false
+            
+            beautyButton.setImage(UIImage(named: "icon-beauty"), for: .normal)
+            beautyButton.setImage(UIImage(named:"icon-beauty-active"), for: .selected)
+            musicButton.setImage(UIImage(named:"icon-music"), for: .normal)
+            musicButton.setImage(UIImage(named:"icon-music-active"), for: .selected)
+            
+            self.view.addSubview(beautyButton)
+            self.view.addSubview(musicButton)
+        case (.multiBroadcasters, .broadcaster):
+            beautyButton.isHidden = false
+            giftButton.isHidden = false
+            
+            beautyButton.setImage(UIImage(named:"icon-beauty"), for: .normal)
+            beautyButton.setImage(UIImage(named:"icon-beauty-active"), for: .selected)
+            
+            giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
+            
+            self.view.addSubview(beautyButton)
+            self.view.addSubview(giftButton)
+        case (.virtualBroadcasters, .owner):
+            musicButton.isHidden = false
+            
+            musicButton.setImage(UIImage(named:"icon-music"), for: .normal)
+            musicButton.setImage(UIImage(named:"icon-music-active"), for: .selected)
+            
+            self.view.addSubview(musicButton)
+        case (.virtualBroadcasters, .broadcaster):  fallthrough
+        case (.virtualBroadcasters, .audience):     fallthrough
+        case (.pkBroadcasters, .audience):          fallthrough
+        case (.multiBroadcasters, .audience):
+            giftButton.isHidden = false
+            giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
+            self.view.addSubview(giftButton)
+        case (.singleBroadcaster, .audience):
+            superRenderButton.isHidden = false
+            giftButton.isHidden = false
+            
+            superRenderButton.setImage(UIImage(named: "icon-resolution"), for: .normal)
+            superRenderButton.setImage(UIImage(named:"icon-resolution-active"), for: .selected)
+            
+            giftButton.setImage(UIImage(named:"icon-gift"), for: .normal)
+            
+            self.view.addSubview(superRenderButton)
+            self.view.addSubview(giftButton)
+        default: fatalError()
+        }
     }
 }

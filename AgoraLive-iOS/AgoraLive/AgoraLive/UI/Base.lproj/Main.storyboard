@@ -2188,10 +2188,10 @@
             </objects>
             <point key="canvasLocation" x="3857" y="2172"/>
         </scene>
-        <!--Virtual Head View Controller-->
+        <!--Virtual Appearance View Controller-->
         <scene sceneID="XxQ-7k-R02">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="AsM-IE-eTB" customClass="VirtualHeadViewController" customModule="AgoraLive" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VirtualAppearanceViewController" modalPresentationStyle="fullScreen" id="AsM-IE-eTB" customClass="VirtualAppearanceViewController" customModule="AgoraLive" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pVJ-as-vFG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -501,9 +501,9 @@
 		A7D89D47247E67A70048B7EC /* fuzzytoonfilter.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95C1247E44F5002749E4 /* fuzzytoonfilter.bundle */; };
 		A7D89D48247E67A70048B7EC /* hair_gradient.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95C2247E44F5002749E4 /* hair_gradient.bundle */; };
 		A7D89D49247E67A70048B7EC /* hair_normal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95C4247E44F5002749E4 /* hair_normal.bundle */; };
-		A7D89D4C247E79060048B7EC /* VirtualHeadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D89D4B247E79060048B7EC /* VirtualHeadViewController.swift */; };
-		A7D89D4D247E79060048B7EC /* VirtualHeadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D89D4B247E79060048B7EC /* VirtualHeadViewController.swift */; };
-		A7D89D4E247E79060048B7EC /* VirtualHeadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D89D4B247E79060048B7EC /* VirtualHeadViewController.swift */; };
+		A7D89D4C247E79060048B7EC /* VirtualAppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D89D4B247E79060048B7EC /* VirtualAppearanceViewController.swift */; };
+		A7D89D4D247E79060048B7EC /* VirtualAppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D89D4B247E79060048B7EC /* VirtualAppearanceViewController.swift */; };
+		A7D89D4E247E79060048B7EC /* VirtualAppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D89D4B247E79060048B7EC /* VirtualAppearanceViewController.swift */; };
 		A7EA40BC2459825000301AE3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA40BB2459825000301AE3 /* ToastView.swift */; };
 		A7EA40BD2459825000301AE3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EA40BB2459825000301AE3 /* ToastView.swift */; };
 		A7FDB59B23FD07B600487FB9 /* TabSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FDB59A23FD07B600487FB9 /* TabSelectView.swift */; };
@@ -786,7 +786,7 @@
 		A7CEF1EE24249BC0004FB752 /* LiveAudienceListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAudienceListVM.swift; sourceTree = "<group>"; };
 		A7D2D36B2417AA6100D327B5 /* MineVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineVM.swift; sourceTree = "<group>"; };
 		A7D2D36E2418D0B600D327B5 /* CenterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenterHelper.swift; path = ../Center/ALCenter/CenterHelper.swift; sourceTree = "<group>"; };
-		A7D89D4B247E79060048B7EC /* VirtualHeadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualHeadViewController.swift; sourceTree = "<group>"; };
+		A7D89D4B247E79060048B7EC /* VirtualAppearanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualAppearanceViewController.swift; sourceTree = "<group>"; };
 		A7EA40BB2459825000301AE3 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		A7FDB59A23FD07B600487FB9 /* TabSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectView.swift; sourceTree = "<group>"; };
 		A7FDB59C23FD0E3C00487FB9 /* AppleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleExtension.swift; sourceTree = "<group>"; };
@@ -1419,7 +1419,7 @@
 		A7D89D4A247E78B20048B7EC /* VirtualBroadcasting */ = {
 			isa = PBXGroup;
 			children = (
-				A7D89D4B247E79060048B7EC /* VirtualHeadViewController.swift */,
+				A7D89D4B247E79060048B7EC /* VirtualAppearanceViewController.swift */,
 				A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */,
 			);
 			name = VirtualBroadcasting;
@@ -1796,7 +1796,7 @@
 			files = (
 				A71AAF1A24335CD600820096 /* MusicVM.swift in Sources */,
 				A768B6142452F3980073510D /* GIFView.swift in Sources */,
-				A7D89D4C247E79060048B7EC /* VirtualHeadViewController.swift in Sources */,
+				A7D89D4C247E79060048B7EC /* VirtualAppearanceViewController.swift in Sources */,
 				A7952AC724162C1000479811 /* sha1.c in Sources */,
 				A7952AA724162C1000479811 /* RTMClient.swift in Sources */,
 				A7053A41241A2C290061E5E2 /* BeautySettingsViewController.swift in Sources */,
@@ -1929,7 +1929,7 @@
 			files = (
 				A7A97851245140DB00A82265 /* MusicVM.swift in Sources */,
 				A77718142456CA3E00BF1F21 /* GIFView.swift in Sources */,
-				A7D89D4D247E79060048B7EC /* VirtualHeadViewController.swift in Sources */,
+				A7D89D4D247E79060048B7EC /* VirtualAppearanceViewController.swift in Sources */,
 				A7A97852245140DB00A82265 /* sha1.c in Sources */,
 				A7A97854245140DB00A82265 /* RTMClient.swift in Sources */,
 				A7A97855245140DB00A82265 /* BeautySettingsViewController.swift in Sources */,
@@ -2062,7 +2062,7 @@
 			files = (
 				A7CEAE57247252E00041124B /* MusicVM.swift in Sources */,
 				A7CEAE58247252E00041124B /* GIFView.swift in Sources */,
-				A7D89D4E247E79060048B7EC /* VirtualHeadViewController.swift in Sources */,
+				A7D89D4E247E79060048B7EC /* VirtualAppearanceViewController.swift in Sources */,
 				A7CEAE59247252E00041124B /* sha1.c in Sources */,
 				A7CEAE5A247252E00041124B /* RTMClient.swift in Sources */,
 				A7CEAE5B247252E00041124B /* BeautySettingsViewController.swift in Sources */,

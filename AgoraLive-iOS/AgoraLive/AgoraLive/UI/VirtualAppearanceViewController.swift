@@ -1,5 +1,5 @@
 //
-//  VirtualHeadViewController.swift
+//  VirtualAppearanceViewController.swift
 //  AgoraLive
 //
 //  Created by CavanSu on 2020/5/27.
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 
-class VirtualHeadViewController: UIViewController, RxViewController {
+class VirtualAppearanceViewController: UIViewController, RxViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bigImageView: UIImageView!
     @IBOutlet weak var leftButton: UIButton!
@@ -59,10 +59,14 @@ class VirtualHeadViewController: UIViewController, RxViewController {
         }).disposed(by: bag)
         
         confirmButton.rx.tap.subscribe(onNext: { [unowned self] in
-            let vc = UIStoryboard.initViewController(of: "CreateLiveViewController",
-                                                     class: CreateLiveViewController.self)
-            vc.liveType = .virtualBroadcasters
-            self.navigationController?.pushViewController(vc, animated: true)
+            if let navigation = self.navigationController {
+                let vc = UIStoryboard.initViewController(of: "CreateLiveViewController",
+                                                         class: CreateLiveViewController.self)
+                vc.liveType = .virtualBroadcasters
+                navigation.pushViewController(vc, animated: true)
+            } else {
+                self.dismiss(animated: true, completion: nil)
+            }
         }).disposed(by: bag)
         
         closeButton.rx.tap.subscribe(onNext: { [unowned self] in

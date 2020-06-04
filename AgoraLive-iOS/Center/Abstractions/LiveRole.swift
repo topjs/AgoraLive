@@ -97,34 +97,34 @@ extension LiveRole {
 // MARK: - Audience
 class LiveAudience: NSObject, LiveRole {
     var type: LiveRoleType = .audience
-    var status: UserStatus
     var info: BasicUserInfo
-    var giftRank: Int
+    var status: UserStatus
     var agoraUserId: Int
     
-    init(info: BasicUserInfo, giftRank: Int = 0, agoraUserId: Int) {
+    var giftRank: Int
+    
+    init(info: BasicUserInfo, agoraUserId: Int, giftRank: Int = 0) {
         self.info = info
-        self.giftRank = giftRank
         self.status = UserStatus(rawValue: 0)
         self.agoraUserId = agoraUserId
+        self.giftRank = giftRank
     }
 }
 
 // MARK: - Broadcaster
-class MultiBroadBroadcaster: NSObject, LiveRole {
+class LiveBroadcaster: NSObject, LiveRole {
     var type: LiveRoleType = .broadcaster
     var info: BasicUserInfo
-    var giftRank: Int
     var status: UserStatus
     var agoraUserId: Int
     
-    init(info: BasicUserInfo, giftRank: Int = 0, status: UserStatus, agoraUserId: Int) {
+    var giftRank: Int
+    
+    init(info: BasicUserInfo, status: UserStatus, agoraUserId: Int, giftRank: Int = 0) {
         self.info = info
-        self.giftRank = giftRank
         self.status = status
         self.agoraUserId = agoraUserId
-        
-        super.init()
+        self.giftRank = giftRank
     }
 }
 
@@ -139,20 +139,17 @@ class LiveOwner: NSObject, LiveRole {
         self.info = info
         self.status = status
         self.agoraUserId = agoraUserId
-        
-        super.init()
     }
 }
 
 // MARK: - Remote
 class RemoteOwner: NSObject, LiveRole {
-    var type: LiveRoleType
+    var type: LiveRoleType = .owner
     var status: UserStatus
     var info: BasicUserInfo
     var agoraUserId: Int
     
     init(dic: StringAnyDic) throws {
-        self.type = .broadcaster
         self.status = try UserStatus.initWith(dic: dic)
         self.info = try BasicUserInfo(dic: dic)
         self.agoraUserId = try dic.getIntValue(of: "uid")
@@ -160,13 +157,12 @@ class RemoteOwner: NSObject, LiveRole {
 }
 
 class RemoteBroadcaster: NSObject, LiveRole {
-    var type: LiveRoleType
+    var type: LiveRoleType = .broadcaster
     var status: UserStatus
     var info: BasicUserInfo
     var agoraUserId: Int
     
     init(dic: StringAnyDic) throws {
-        self.type = .broadcaster
         self.status = try UserStatus.initWith(dic: dic)
         self.info = try BasicUserInfo(dic: dic)
         self.agoraUserId = try dic.getIntValue(of: "uid")
@@ -174,14 +170,13 @@ class RemoteBroadcaster: NSObject, LiveRole {
 }
 
 class RemoteAudience: NSObject, LiveRole {
-    var type: LiveRoleType
+    var type: LiveRoleType = .audience
     var status: UserStatus
     var info: BasicUserInfo
     var giftRank: Int
     var agoraUserId: Int
     
     init(dic: StringAnyDic) throws {
-        self.type = .audience
         self.status = UserStatus(rawValue: 0)
         self.info = try BasicUserInfo(dic: dic)
         self.giftRank = 0

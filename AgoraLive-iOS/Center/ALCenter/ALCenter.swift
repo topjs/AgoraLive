@@ -55,37 +55,6 @@ extension ALCenter {
         }
     }
     
-    func createLiveSession(roomSettings: LocalLiveSettings, type: LiveType, success: ((LiveSession) -> Void)? = nil, fail: Completion = nil) {
-        let url = URLGroup.liveCreate
-        let event = RequestEvent(name: "live-session-create")
-        let parameter: StringAnyDic = ["roomName": roomSettings.title, "type": type.rawValue]
-        let task = RequestTask(event: event,
-                               type: .http(.post, url: url),
-                               timeout: .medium,
-                               header: ["token": ALKeys.ALUserToken],
-                               parameters: parameter)
-        
-        let successCallback: DicEXCompletion = { (json: ([String: Any])) throws in
-            let roomId = try json.getStringValue(of: "data")
-            
-            let session = LiveSession(roomId: roomId, settings: roomSettings, type: type)
-            
-            if let success = success {
-                success(session)
-            }
-        }
-        let response = AGEResponse.json(successCallback)
-        
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
-            if let fail = fail {
-                fail()
-            }
-            return .resign
-        }
-        
-        alamo.request(task: task, success: response, failRetry: retry)
-    }
-    
     func reinitAgoraServe() {
         mediaKit.reinitRTC()
         rtm = RTMClient(logTube: log)

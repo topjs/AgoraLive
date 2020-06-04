@@ -93,9 +93,9 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
             localSettings.media = media
         case .virtualBroadcasters:
             var media = localSettings.media
-            media.resolution = CGSize.AgoraVideoDimension360x640
+            media.resolution = CGSize.AgoraVideoDimension720x1280
             media.frameRate = .fps15
-            media.bitRate = 800
+            media.bitRate = 1000
             localSettings.media = media
             
             settingsButton.isHidden = true
@@ -304,11 +304,16 @@ private extension CreateLiveViewController {
     func startLivingWithLocalSettings(_ settings: LocalLiveSettings) {
         self.showHUD()
         
-        let center = ALCenter.shared()
-        center.createLiveSession(roomSettings: settings,
-                                 type: liveType,
-                                 success: { [unowned self] (session) in
-                                    self.joinLiving(session: session)
+        var extra: [String: Any]? = nil
+        if liveType == .virtualBroadcasters {
+            extra = ["virtualAvatar": enhancementVM.virtualAppearance.item]
+        }
+        
+        LiveSession.create(roomSettings: settings,
+                           type: liveType,
+                           extra: extra,
+                           success: { [unowned self] (session) in
+                            self.joinLiving(session: session)
         }) { [unowned self] in
             self.hiddenHUD()
             self.showAlert(message:"start live fail")

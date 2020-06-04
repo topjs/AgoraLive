@@ -72,6 +72,45 @@ class LiveSession: NSObject {
     
     typealias JoinedInfo = (seatInfo: [StringAnyDic]?, giftAudience: [StringAnyDic]?, pkInfo: StringAnyDic?)
     
+    static func create(roomSettings: LocalLiveSettings, type: LiveType, extra: [String: Any]? = nil, success: ((LiveSession) -> Void)? = nil, fail: Completion = nil) {
+        let url = URLGroup.liveCreate
+        let event = RequestEvent(name: "live-session-create")
+        var parameter: StringAnyDic = ["roomName": roomSettings.title, "type": type.rawValue]
+        
+        if let extra = extra {
+            for (key, value) in extra {
+                parameter[key] = value
+            }
+        }
+        
+        let task = RequestTask(event: event,
+                               type: .http(.post, url: url),
+                               timeout: .medium,
+                               header: ["token": ALKeys.ALUserToken],
+                               parameters: parameter)
+        
+        let successCallback: DicEXCompletion = { (json: ([String: Any])) throws in
+            let roomId = try json.getStringValue(of: "data")
+            
+            let session = LiveSession(roomId: roomId, settings: roomSettings, type: type)
+            
+            if let success = success {
+                success(session)
+            }
+        }
+        let response = AGEResponse.json(successCallback)
+        
+        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+            if let fail = fail {
+                fail()
+            }
+            return .resign
+        }
+        
+        let alamo = ALCenter.shared().centerProvideRequestHelper()
+        alamo.request(task: task, success: response, failRetry: retry)
+    }
+    
     func join(success: ((JoinedInfo) throws -> Void)? = nil, fail: Completion = nil ) {
         let client = ALCenter.shared().centerProvideRequestHelper()
         let url = URLGroup.joinLive(roomId: self.roomId)
@@ -113,7 +152,7 @@ class LiveSession: NSObject {
             
             let rtm = ALCenter.shared().centerProvideRTMHelper()
             
-            // only multiBroadcasters has seatInfo
+            // multiBroadcasters, virtualBroadcasters have seatInfo
             var seatInfo: [StringAnyDic]?
             if self.type == .multiBroadcasters || self.type == .virtualBroadcasters {
                 seatInfo = try liveRoom.getListValue(of: "coVideoSeats")
@@ -166,17 +205,17 @@ class LiveSession: NSObject {
         var status = audience.status
         status.insert(.camera)
         status.insert(.mic)
-        let role = MultiBroadBroadcaster(info: audience.info,
-                                         giftRank: audience.giftRank,
+        let role = LiveBroadcaster(info: audience.info,
                                          status: status,
-                                         agoraUserId: audience.agoraUserId)
+                                         agoraUserId: audience.agoraUserId,
+                                         giftRank: audience.giftRank)
         self.role = role
         self.setupMediaSettings(settings.media)
         return role
     }
     
     @discardableResult func broadcasterToAudience() -> LiveRole {
-        guard let broadcaster = self.role as? MultiBroadBroadcaster else {
+        guard let broadcaster = self.role as? LiveBroadcaster else {
             fatalError()
         }
         
@@ -184,8 +223,8 @@ class LiveSession: NSObject {
         media.capture.audio = .off
         try! media.capture.video(.off)
         let role = LiveAudience(info: broadcaster.info,
-                                giftRank: broadcaster.giftRank,
-                                agoraUserId: broadcaster.agoraUserId)
+                                agoraUserId: broadcaster.agoraUserId,
+                                giftRank: broadcaster.giftRank)
         
         self.role = role
         return role
@@ -234,15 +273,13 @@ private extension LiveSession {
         let agoraUserId = try info.getIntValue(of: "uid")
         
         // Create Live role
-        switch (self.type, roleType) {
-        case (_, .owner):
+        switch roleType {
+        case .owner:
             self.role = LiveOwner(info: userInfo, status: status, agoraUserId: agoraUserId)
-        case (.multiBroadcasters, .broadcaster):
-            self.role = MultiBroadBroadcaster(info: userInfo, giftRank: giftRank, status: status, agoraUserId: agoraUserId)
-        case (_, .audience):
-            self.role = LiveAudience(info: userInfo, giftRank: giftRank, agoraUserId: agoraUserId)
-        default:
-            fatalError()
+        case .broadcaster:
+            self.role = LiveBroadcaster(info: userInfo, status: status, agoraUserId: agoraUserId, giftRank: giftRank)
+        case .audience:
+            self.role = LiveAudience(info: userInfo, agoraUserId: agoraUserId, giftRank: giftRank)
         }
     }
     

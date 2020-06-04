@@ -209,16 +209,28 @@ private extension LiveListTabViewController {
         vc.collectionView.rx.modelSelected(RoomBrief.self).subscribe(onNext: { [unowned self] (room) in
             let type = self.listVM.presentingType
             var settings = LocalLiveSettings(title: room.name)
+            var media = settings.media
+            
             switch type {
             case .multiBroadcasters:
-                var media = settings.media
                 media.resolution = AgoraVideoDimension240x240
                 media.frameRate = .fps15
                 media.bitRate = 200
-                settings.media = media
-            default:
-                break
+            case .singleBroadcaster:
+                media.resolution = CGSize.AgoraVideoDimension360x640
+                media.frameRate = .fps15
+                media.bitRate = 600
+            case .pkBroadcasters:
+                media.resolution = CGSize.AgoraVideoDimension360x640
+                media.frameRate = .fps15
+                media.bitRate = 800
+            case .virtualBroadcasters:
+                media.resolution = CGSize.AgoraVideoDimension720x1280
+                media.frameRate = .fps15
+                media.bitRate = 1000
             }
+            
+            settings.media = media
             
             let session = LiveSession(roomId: room.roomId,
                                       settings: settings,
