@@ -286,10 +286,10 @@ public class Config {
                         VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
             case LIVE_TYPE_VIRTUAL_HOST:
                 return new VideoEncoderConfiguration(
-                        VideoEncoderConfiguration.VD_360x360,
+                        Global.Constants.RESOLUTIONS_VIRTUAL_IMAGE[0],
                         VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15,
                         VideoEncoderConfiguration.STANDARD_BITRATE,
-                        VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE);
+                        VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT);
             default: return null;
         }
     }

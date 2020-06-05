@@ -2,6 +2,7 @@ package io.agora.vlive.ui.live;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -131,9 +132,9 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             mRandomBtn.setImageResource(R.drawable.random_button_black);
             mEditHint.setTextColor(getResources().getColor(R.color.gray_alpha2));
             mEditText.setTextColor(getResources().getColor(android.R.color.black));
-            mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_white);
+            mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_gray);
             RelativeLayout layout = findViewById(R.id.activity_layout);
-            layout.setBackgroundColor(getResources().getColor(R.color.virtual_image_background));
+            layout.setBackgroundColor(Color.WHITE);
             mBeautyBtn.setVisibility(View.GONE);
             mSettingBtn.setVisibility(View.GONE);
             int virtualImage = getIntent().getIntExtra(Global.Constants.KEY_VIRTUAL_IMAGE, -1);
@@ -144,7 +145,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             mRandomBtn.setImageResource(R.drawable.random_button_white);
             mEditHint.setTextColor(getResources().getColor(R.color.gray_lightest));
             mEditText.setTextColor(getResources().getColor(android.R.color.white));
-            mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_gray);
+            mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_dark_gray);
             mPreprocessor.onAnimojiSelected(-1);
         }
     }

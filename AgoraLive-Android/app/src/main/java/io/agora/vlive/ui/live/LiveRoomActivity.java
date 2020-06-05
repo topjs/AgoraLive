@@ -182,7 +182,27 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         request.token = config().getUserProfile().getToken();
         request.type = getChannelTypeByTabId();
         request.roomName = roomName;
+        int imageId = getIntent().getIntExtra(Global.Constants.KEY_VIRTUAL_IMAGE, -1);
+        request.avatar = virtualImageIdToName(imageId);
         sendRequest(Request.CREATE_ROOM, request);
+    }
+
+    protected String virtualImageIdToName(int id) {
+        switch (id) {
+            case 0: return "dog";
+            case 1: return "girl";
+            default: return null;
+        }
+    }
+
+    protected int virtualImageNameToId(String name) {
+        if ("dog".equals(name)) {
+            return 0;
+        } else if ("girl".equals(name)) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
     private int getChannelTypeByTabId() {
@@ -193,6 +213,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
                 return ClientProxy.ROOM_TYPE_PK;
             case Config.LIVE_TYPE_SINGLE_HOST:
                 return ClientProxy.ROOM_TYPE_SINGLE;
+            case Config.LIVE_TYPE_VIRTUAL_HOST:
+                return ClientProxy.ROOM_TYPE_VIRTUAL_HOST;
         }
         return -1;
     }

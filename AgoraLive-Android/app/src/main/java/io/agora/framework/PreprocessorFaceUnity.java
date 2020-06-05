@@ -23,6 +23,7 @@ public class PreprocessorFaceUnity implements IPreprocessor {
     private Context mContext;
     private boolean mEnabled;
     private Effect mEffectNone;
+    private Effect mEffectBackground;
     private Effect[] mAnimojiEffects;
 
     public PreprocessorFaceUnity(Context context) {
@@ -68,14 +69,18 @@ public class PreprocessorFaceUnity implements IPreprocessor {
                 Effect.EFFECT_TYPE_ANIMOJI, 0);
         mEffectNone = new Effect("none", -1,
                 "none", 1, Effect.EFFECT_TYPE_NONE, 0);
+        mEffectBackground = new Effect("white_bg.bundle",
+                -1, "white_bg.bundle", 1,
+                Effect.EFFECT_TYPE_ANIMOJI, 0);
     }
 
     public void onAnimojiSelected(int index) {
         if (mFURenderer != null) {
             if (0 <= index && index < ANIMOJI_COUNT) {
-                mFURenderer.onEffectSelected(mAnimojiEffects[index]);
+                mFURenderer.onVirtualImageSelected(
+                        mAnimojiEffects[index], mEffectBackground);
             } else {
-                mFURenderer.onEffectSelected(mEffectNone);
+                mFURenderer.onVirtualImageUnselected();
             }
         }
     }

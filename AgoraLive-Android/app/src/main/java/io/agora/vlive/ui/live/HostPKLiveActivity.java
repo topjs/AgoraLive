@@ -108,6 +108,8 @@ public class HostPKLiveActivity extends LiveRoomActivity
         participants.setUserLayoutListener(this);
 
         messageList = findViewById(R.id.message_list);
+        messageList.init();
+
         bottomButtons = findViewById(R.id.pk_host_in_bottom_layout);
         bottomButtons.init();
         bottomButtons.setLiveBottomButtonListener(this);

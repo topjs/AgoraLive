@@ -1,13 +1,9 @@
 package io.agora.framework.modules.consumers;
 
-import android.content.Context;
 import android.opengl.EGL14;
 import android.opengl.EGLSurface;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
-import android.opengl.Matrix;
-import android.view.Surface;
-import android.view.WindowManager;
 
 import io.agora.capture.video.camera.VideoCaptureFrame;
 import io.agora.capture.video.camera.VideoModule;
@@ -27,7 +23,7 @@ public abstract class BaseWindowConsumer implements IVideoConsumer {
     volatile boolean needResetSurface = true;
     volatile boolean surfaceDestroyed;
     private float[] mMVPMatrix = new float[16];
-    private boolean mMVPInit;
+    protected boolean mvpInit;
 
     BaseWindowConsumer(VideoModule videoModule) {
         this.videoModule = videoModule;
@@ -76,13 +72,13 @@ public abstract class BaseWindowConsumer implements IVideoConsumer {
         int surfaceHeight = onMeasuredHeight();
         GLES20.glViewport(0, 0, surfaceWidth, surfaceHeight);
 
-        if (!mMVPInit) {
+        if (!mvpInit) {
             mMVPMatrix = GlUtil.changeMVPMatrix(
                     GlUtil.IDENTITY_MATRIX,
                     surfaceWidth, surfaceHeight,
                     frame.format.getWidth(),
                     frame.format.getHeight());
-            mMVPInit = true;
+            mvpInit = true;
         }
 
         if (frame.format.getTexFormat() == GLES20.GL_TEXTURE_2D) {

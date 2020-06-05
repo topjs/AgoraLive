@@ -31,6 +31,9 @@ public class Global {
         public static final String KEY_ROOM_OWNER_ID = "room-owner-id";
         public static final String KEY_CREATE_ROOM = "create-room";
         public static final String KEY_VIRTUAL_IMAGE = "virtual-image";
+        public static final String KEY_PEER_ID = "peer-id";
+        public static final String KEY_NICKNAME = "nick-name";
+        public static final String KEY_AUDIENCE_VIRTUAL_IMAGE = "audience-select-image";
 
         public static final String KEY_PROFILE_UID = "key-profile-uid";
         public static final String KEY_USER_NAME = "key-user-name";
@@ -86,6 +89,14 @@ public class Global {
 
         public static final VideoEncoderConfiguration.VideoDimensions[] RESOLUTIONS_PK_HOST = {
                 VideoEncoderConfiguration.VD_640x360
+        };
+
+        public static final VideoEncoderConfiguration.VideoDimensions[] RESOLUTIONS_VIRTUAL_IMAGE = {
+                new VideoEncoderConfiguration.VideoDimensions(720, 1280)
+        };
+
+        public static final String[] RESOLUTIONS_VIRTUAL_IMAGE_TEXT = {
+                "720x1280"
         };
 
         public static final String[] FRAME_RATES_TEXT = {

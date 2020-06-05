@@ -354,9 +354,9 @@ class Client {
         });
     }
 
-    void createRoom(long reqId, String token, String roomName, int type) {
+    void createRoom(long reqId, String token, String roomName, int type, String avatar) {
         mLiveRoomService.requestCreateLiveRoom(token, reqId, Request.CREATE_ROOM,
-                new CreateRoomRequestBody(roomName, type)).enqueue(new Callback<CreateRoomResponse>() {
+                new CreateRoomRequestBody(roomName, type, avatar)).enqueue(new Callback<CreateRoomResponse>() {
             @Override
             @EverythingIsNonNull
             public void onResponse(Call<CreateRoomResponse> call, Response<CreateRoomResponse> response) {
@@ -546,8 +546,8 @@ class Client {
         });
     }
 
-    void modifySeatState(long reqId, String token, String roomId, int no, String userId, int state) {
-        ModifySeatStateRequestBody body = new ModifySeatStateRequestBody(no, userId, state);
+    void modifySeatState(long reqId, String token, String roomId, int no, String userId, int state, String avatar) {
+        ModifySeatStateRequestBody body = new ModifySeatStateRequestBody(no, userId, state, avatar);
         mLiveRoomService.requestModifySeatState(token, reqId,
                 Request.MODIFY_SEAT_STATE, roomId, body).enqueue(new Callback<ModifySeatStateResponse>() {
             @Override

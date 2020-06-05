@@ -230,6 +230,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
             switch (serverType) {
                 case ClientProxy.ROOM_TYPE_SINGLE: return Config.LIVE_TYPE_SINGLE_HOST;
                 case ClientProxy.ROOM_TYPE_PK: return Config.LIVE_TYPE_PK_HOST;
+                case ClientProxy.ROOM_TYPE_VIRTUAL_HOST: return Config.LIVE_TYPE_VIRTUAL_HOST;
                 case ClientProxy.ROOM_TYPE_HOST_IN:
                 default: return Config.LIVE_TYPE_MULTI_HOST;
             }

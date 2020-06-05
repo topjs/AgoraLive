@@ -13,17 +13,22 @@ import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
 
 public class VirtualImageSelectActivity extends BaseActivity implements View.OnClickListener {
+    private static final int AUDIENCE_RESULT_CODE = 2;
+
     private AppCompatImageView mSelectedImage;
     private RelativeLayout mDogLayout;
     private RelativeLayout mGirlLayout;
 
     private int mSelected;
+    private boolean mFromAudience;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideStatusBar(true);
         setContentView(R.layout.virtual_image_activity);
+        mFromAudience = getIntent().getBooleanExtra(
+                Global.Constants.KEY_AUDIENCE_VIRTUAL_IMAGE, false);
         mSelectedImage = findViewById(R.id.selected_virtual_image_view);
         mDogLayout = findViewById(R.id.virtual_image_dog_layout);
         mGirlLayout = findViewById(R.id.virtual_image_girl_layout);
@@ -94,11 +99,11 @@ public class VirtualImageSelectActivity extends BaseActivity implements View.OnC
         intent.putExtra(Global.Constants.KEY_VIRTUAL_IMAGE, mSelected);
         if (intent.getBooleanExtra(Global.Constants.KEY_CREATE_ROOM, false)) {
             intent.setClass(getApplicationContext(), LivePrepareActivity.class);
-        } else {
-            intent.setClass(getApplicationContext(), VirtualHostLiveActivity.class);
+            startActivity(intent);
+        } else if (mFromAudience) {
+            setResult(AUDIENCE_RESULT_CODE, intent);
             finish();
         }
-        startActivity(intent);
     }
 
     public void onCloseClicked(View view) {

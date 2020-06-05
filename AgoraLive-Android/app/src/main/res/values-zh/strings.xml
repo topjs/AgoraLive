@@ -58,6 +58,8 @@
     <!-- Virtual Host -->
     <string name="live_virtual_image_select_title">请选择一个形象</string>
     <string name="live_virtual_image_select_confirm">确定</string>
+    <string name="live_virtual_image_invite">邀请</string>
+    <string name="live_virtual_image_stop_invite">中止连麦</string>
 
     <string name="live_pk_host_remaining_time_hint">PK剩余:</string>
 
@@ -108,10 +110,10 @@
     <string-array name="live_room_action_sheet_tool_names">
         <item>实时数据</item>
         <item>设置</item>
-        <item>翻转</item>
-        <item>摄像头</item>
         <item>麦克风</item>
         <item>耳返</item>
+        <item>翻转</item>
+        <item>摄像头</item>
     </string-array>
 
     <string name="live_room_voice_action_sheet_title">声音</string>
@@ -129,6 +131,8 @@
     <string name="live_room_host_in_invite_rejected_message">您的邀请已被 "%s" 拒绝</string>
     <string name="live_room_host_in_apply_rejected">申请被拒绝</string>
     <string name="live_room_host_in_apply_rejected_message">您的申请已被 "%s" 拒绝</string>
+
+    <string name="live_room_virtual_image_invited_message">"%s" 邀请你上麦，是否接受？</string>
 
     <!-- dialog -->
     <string name="dialog_negative_button">取消</string>

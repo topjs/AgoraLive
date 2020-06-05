@@ -29,6 +29,7 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
     private AppCompatTextView mInputText;
     private int mRole;
     private boolean mVirtualImage;
+    private boolean mLight;
 
     private LiveBottomButtonListener mListener;
 
@@ -45,7 +46,8 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
     }
 
     public void init(boolean lightMode, boolean isVirtualImage) {
-        int layout = lightMode ?
+        mLight = lightMode;
+        int layout = mLight ?
                 R.layout.live_bottom_button_layout_light :
                 R.layout.live_bottom_button_layout;
         LayoutInflater.from(getContext()).inflate(layout, this, true);
@@ -67,7 +69,10 @@ public class LiveBottomButtonLayout extends RelativeLayout implements View.OnCli
         mRole = role;
 
         if (mRole == ROLE_OWNER) {
-            mFun1.setImageResource(R.drawable.live_bottom_button_music);
+            int musicRes = mLight
+                    ? R.drawable.live_bottom_button_music_light
+                    : R.drawable.live_bottom_button_music;
+            mFun1.setImageResource(musicRes);
             mFun2.setVisibility(mVirtualImage ? View.GONE : View.VISIBLE);
             mFun2.setImageResource(R.drawable.live_bottom_button_beauty);
         } else if (mRole == ROLE_HOST) {

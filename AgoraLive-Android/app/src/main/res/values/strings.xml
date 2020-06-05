@@ -56,6 +56,8 @@
     <!-- Virtual Host -->
     <string name="live_virtual_image_select_title">Select Image</string>
     <string name="live_virtual_image_select_confirm">Confirm</string>
+    <string name="live_virtual_image_invite">Invite</string>
+    <string name="live_virtual_image_stop_invite">Leave</string>
 
     <string name="live_pk_host_remaining_time_hint">PK left:</string>
 
@@ -107,10 +109,10 @@
     <string-array name="live_room_action_sheet_tool_names">
         <item>Data</item>
         <item>Setting</item>
-        <item>Rotate</item>
-        <item>Camera</item>
         <item>Speaker</item>
         <item>EarMonitor</item>
+        <item>Rotate</item>
+        <item>Camera</item>
     </string-array>
 
     <string name="live_room_voice_action_sheet_title">Voice</string>
@@ -133,6 +135,8 @@
 
     <string name="live_room_pk_room_receive_pk_request_title">PK Received</string>
     <string name="live_room_pk_room_receive_pk_request_message">%s invited you to his PK room,\n do you accept?</string>
+
+    <string name="live_room_virtual_image_invited_message">"%s" invites to chat，do you accept？</string>
 
     <!-- dialog -->
     <string name="dialog_negative_button">Cancel</string>

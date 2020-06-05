@@ -25,27 +25,29 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
     }
 
     private static final int GRID_SPAN = 4;
-    private static final int FUNC_COUNT_GUEST = 1;
+    private static final int FUNC_COUNT_AUDIENCE = 1;
+    private static final int FUNC_COUNT_VIRTUAL_IMAGE = 4;
 
     private static final int DATA_INDEX = 0;
     private static final int SETTING_INDEX = 1;
-    private static final int ROTATE_INDEX = 2;
-    private static final int VIDEO_INDEX = 3;
-    private static final int SPEAKER_INDEX = 4;
-    private static final int EAR_MONITOR = 5;
+    private static final int SPEAKER_INDEX = 2;
+    private static final int EAR_MONITOR = 3;
+    private static final int ROTATE_INDEX = 4;
+    private static final int VIDEO_INDEX = 5;
 
     private static final int[] ICON_RES = {
             R.drawable.icon_data,
             R.drawable.icon_setting,
-            R.drawable.icon_rotate,
-            R.drawable.action_sheet_tool_video,
             R.drawable.action_sheet_tool_speaker,
-            R.drawable.action_sheet_tool_ear_monitor
+            R.drawable.action_sheet_tool_ear_monitor,
+            R.drawable.icon_rotate,
+            R.drawable.action_sheet_tool_video
     };
 
     private RecyclerView mRecycler;
     private String[] mToolNames;
     private boolean mIsHost;
+    private boolean mIsVirtualImage;
     private int mItemPadding;
     private boolean mMuteVideo;
     private boolean mMuteVoice;
@@ -72,6 +74,13 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
 
     public void setHost(boolean isHost) {
         mIsHost = isHost;
+        if (mRecycler != null) {
+            mRecycler.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    public void setVirtualImage(boolean virtualImage) {
+        mIsVirtualImage = virtualImage;
         if (mRecycler != null) {
             mRecycler.getAdapter().notifyDataSetChanged();
         }
@@ -108,7 +117,13 @@ public class LiveRoomToolActionSheet extends AbstractActionSheet {
 
         @Override
         public int getItemCount() {
-            return mIsHost ? ICON_RES.length : FUNC_COUNT_GUEST;
+            if (!mIsHost) {
+                return FUNC_COUNT_AUDIENCE;
+            } else if (mIsVirtualImage) {
+                return FUNC_COUNT_VIRTUAL_IMAGE;
+            } else {
+                return ICON_RES.length;
+            }
         }
     }
 

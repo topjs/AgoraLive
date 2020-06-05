@@ -69,6 +69,7 @@ public class SingleHostLiveActivity extends LiveRoomActivity implements View.OnC
         findViewById(R.id.live_bottom_btn_fun2).setOnClickListener(this);
 
         messageList = findViewById(R.id.message_list);
+        messageList.init();
         messageEditLayout = findViewById(R.id.message_edit_layout);
         messageEditText = messageEditLayout.findViewById(LiveMessageEditLayout.EDIT_TEXT_ID);
 

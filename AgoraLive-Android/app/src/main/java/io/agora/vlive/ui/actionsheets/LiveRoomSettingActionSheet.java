@@ -208,6 +208,8 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
                 return Global.Constants.RESOLUTIONS_SINGLE_HOST_TEXT[application().config().resolutionIndex()];
             case Config.LIVE_TYPE_PK_HOST:
                 return Global.Constants.RESOLUTIONS_PK_HOST_TEXT[application().config().resolutionIndex()];
+            case Config.LIVE_TYPE_VIRTUAL_HOST:
+                return Global.Constants.RESOLUTIONS_VIRTUAL_IMAGE_TEXT[application().config().resolutionIndex()];
             default: return null;
         }
     }
@@ -273,6 +275,8 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
                 case Config.LIVE_TYPE_PK_HOST:
                     resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS_PK_HOST_TEXT[position]);
                     break;
+                case Config.LIVE_TYPE_VIRTUAL_HOST:
+                    resolutionHolder.textView.setText(Global.Constants.RESOLUTIONS_VIRTUAL_IMAGE_TEXT[position]);
                 default: break;
             }
 
@@ -289,6 +293,8 @@ public class LiveRoomSettingActionSheet extends AbstractActionSheet implements V
                     return Global.Constants.RESOLUTIONS_SINGLE_HOST.length;
                 case Config.LIVE_TYPE_PK_HOST:
                     return Global.Constants.RESOLUTIONS_PK_HOST.length;
+                case Config.LIVE_TYPE_VIRTUAL_HOST:
+                    return Global.Constants.RESOLUTIONS_VIRTUAL_IMAGE.length;
                 default: return 0;
             }
         }

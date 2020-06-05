@@ -61,7 +61,7 @@
     <dimen name="live_name_pad_max_width">128dp</dimen>
     <dimen name="live_name_pad_corner">20dp</dimen>
     <dimen name="live_name_pad_icon_padding">2dp</dimen>
-    <dimen name="live_message_list_height">320dp</dimen>
+    <dimen name="live_message_list_height">260dp</dimen>
     <dimen name="live_message_text_padding_horizontal">16dp</dimen>
     <dimen name="live_message_text_padding_vertical">12dp</dimen>
     <dimen name="live_message_text_margin">8dp</dimen>
@@ -127,6 +127,7 @@
     <dimen name="virtual_image_close_btn_size">40dp</dimen>
     <dimen name="virtual_image_margin">32dp</dimen>
     <dimen name="virtual_image_option_radius">8dp</dimen>
+    <dimen name="virtual_image_invite_btn_width">92dp</dimen>
 
     <!-- Action Sheets -->
     <dimen name="live_room_action_sheet_margin">24dp</dimen>

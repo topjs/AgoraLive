@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,33 +38,37 @@ public class LiveRoomMessageList extends RecyclerView {
     public static final int MSG_SYSTEM_ROLE_HOST = 2;
     public static final int MSG_SYSTEM_ROLE_AUDIENCE = 3;
 
-    private static final int DEFAULT_MESSAGE_TEXT_COLOR = Color.rgb(196, 196, 196);
+    private static final int MESSAGE_TEXT_COLOR = Color.rgb(196, 196, 196);
+    private static final int MESSAGE_TEXT_COLOR_LIGHT = Color.argb(101, 35, 35, 35);
     private static final int MAX_SAVED_MESSAGE = 50;
     private static final int MESSAGE_ITEM_MARGIN = 16;
 
     private LiveRoomMessageAdapter mAdapter;
     private LayoutInflater mInflater;
     private LinearLayoutManager mLayoutManager;
+    private boolean mLightMode;
 
     private String mJoinNotificationText;
     private String mLeaveNotificationText;
 
     public LiveRoomMessageList(@NonNull Context context) {
         super(context);
-        init();
     }
 
     public LiveRoomMessageList(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public LiveRoomMessageList(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
+    public void init() {
+        init(false);
+    }
+
+    public void init(boolean lightMode) {
+        mLightMode = lightMode;
         mInflater = LayoutInflater.from(getContext());
         mAdapter = new LiveRoomMessageAdapter();
         mLayoutManager = new LinearLayoutManager(getContext(),
@@ -138,24 +143,38 @@ public class LiveRoomMessageList extends RecyclerView {
         }
     }
 
-    private static class MessageListViewHolder extends ViewHolder {
+    private class MessageListViewHolder extends ViewHolder {
         private AppCompatTextView messageText;
         private AppCompatImageView giftIcon;
+        private RelativeLayout layout;
 
         MessageListViewHolder(@NonNull View itemView) {
             super(itemView);
             messageText = itemView.findViewById(R.id.live_message_item_text);
             giftIcon = itemView.findViewById(R.id.live_message_gift_icon);
+            layout = itemView.findViewById(R.id.live_message_item_layout);
         }
 
         void setMessage(String user, String message) {
+            int background = mLightMode
+                    ? R.drawable.round_scalable_light_gray_bg
+                    : R.drawable.round_scalable_gray_bg;
+            int nameColor = mLightMode
+                    ? Color.BLACK
+                    : Color.WHITE;
+            int messageColor = mLightMode
+                    ? MESSAGE_TEXT_COLOR_LIGHT
+                    : MESSAGE_TEXT_COLOR;
+
+            layout.setBackgroundResource(background);
+
             SpannableString messageSpan = new SpannableString(user + ":  " + message);
             messageSpan.setSpan(new StyleSpan(Typeface.BOLD),
                     0, user.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-            messageSpan.setSpan(new ForegroundColorSpan(Color.WHITE),
+            messageSpan.setSpan(new ForegroundColorSpan(nameColor),
                     0, user.length() + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-            messageSpan.setSpan(new ForegroundColorSpan(DEFAULT_MESSAGE_TEXT_COLOR),
+            messageSpan.setSpan(new ForegroundColorSpan(messageColor),
                     user.length() + 2, messageSpan.length(),
                     Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 

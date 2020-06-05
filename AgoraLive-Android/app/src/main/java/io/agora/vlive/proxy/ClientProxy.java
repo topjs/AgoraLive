@@ -87,7 +87,8 @@ public class ClientProxy {
             case Request.CREATE_ROOM:
                 CreateRoomRequest createRoomRequest = (CreateRoomRequest) params;
                 mClient.createRoom(mReqId, createRoomRequest.token,
-                        createRoomRequest.roomName, createRoomRequest.type);
+                        createRoomRequest.roomName, createRoomRequest.type,
+                        createRoomRequest.avatar);
                 break;
             case Request.ENTER_ROOM:
                 RoomRequest roomRequest = (RoomRequest) params;
@@ -123,8 +124,10 @@ public class ClientProxy {
                 break;
             case Request.MODIFY_SEAT_STATE:
                 ModifySeatStateRequest modifySeatRequest = (ModifySeatStateRequest) params;
-                mClient.modifySeatState(mReqId, modifySeatRequest.token, modifySeatRequest.roomId,
-                        modifySeatRequest.no, modifySeatRequest.userId, modifySeatRequest.state);
+                mClient.modifySeatState(mReqId, modifySeatRequest.token,
+                        modifySeatRequest.roomId, modifySeatRequest.no,
+                        modifySeatRequest.userId, modifySeatRequest.state,
+                        modifySeatRequest.virtualAvatar);
                 break;
             case Request.REFRESH_TOKEN:
                 RefreshTokenRequest refreshTokenRequest = (RefreshTokenRequest) params;

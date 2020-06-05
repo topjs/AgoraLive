@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.faceunity.wrapper.faceunity.FU_ADM_FLAG_FLIP_X;
+import static com.faceunity.wrapper.faceunity.fuItemSetParam;
 
 /**
  * 一个基于 Faceunity Nama SDK 的简单封装，方便简单集成，理论上简单需求的步骤：
@@ -878,6 +879,41 @@ public class FURenderer implements OnFUControlListener {
         });
     }
 
+    /**
+     * AgoraLive implementation
+     * @param image virtual image effect
+     * @param background effect used to draw background images
+     */
+    public void onVirtualImageSelected(Effect image, final Effect background) {
+        onEffectSelected(image);
+        mFuItemHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final int backgroundItem = loadItem(background.path());
+                if (backgroundItem <= 0) {
+                    Log.w(TAG, "load background item failed: " + backgroundItem);
+                }
+
+                queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+                        mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX] = backgroundItem;
+                        mIsNeedUpdateFaceBeauty = true;
+                    }
+                });
+            }
+        });
+    }
+
+    public void onVirtualImageUnselected() {
+        onEffectSelected(new Effect("none", -1,
+                "none", 1, Effect.EFFECT_TYPE_NONE, 0));
+
+        if (isNeedFaceBeauty) {
+            mFuItemHandler.sendEmptyMessage(ITEM_ARRAYS_FACE_BEAUTY_INDEX);
+        }
+    }
+
     @Override
     public void onEffectSelected(Effect effect) {
         if (effect == null || effect == mDefaultEffect) return;
@@ -1123,8 +1159,7 @@ public class FURenderer implements OnFUControlListener {
             // 镜像顶点
             faceunity.fuItemSetParam(itemHandle, "is3DFlipH", back);
             // 镜像表情
-            faceunity.fuItemSetParam(itemHandle, "isFlipExpr", back);
-            // 这两句代码用于识别人脸默认方向的修改，主要针对 animoji 道具的切换摄像头倒置问题
+            faceunity.fuItemSetParam(itemHandle, "isFlipExpr", back);            // 这两句代码用于识别人脸默认方向的修改，主要针对 animoji 道具的切换摄像头倒置问题
             faceunity.fuItemSetParam(itemHandle, "camera_change", 1.0);
         }
 
@@ -1459,6 +1494,8 @@ public class FURenderer implements OnFUControlListener {
                             if (itemEffect > 0) {
                                 updateEffectItemParams(effect, itemEffect);
                             }
+
+                            fuItemSetParam(itemEffect, "{\"thing\":\"<global>\",\"param\":\"follow\"}", 0);
                             mItemsArray[ITEM_ARRAYS_EFFECT_INDEX] = itemEffect;
                         }
                     });

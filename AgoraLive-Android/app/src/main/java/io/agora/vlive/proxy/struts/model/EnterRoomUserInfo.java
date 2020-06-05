@@ -13,4 +13,5 @@ public class EnterRoomUserInfo {
     public int enableVideo;
     public int enableAudio;
     public int rank;
+    public String virtualAvatar;
 }
