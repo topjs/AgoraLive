@@ -141,6 +141,98 @@ extension UIViewController {
     }
 }
 
+class MaskTabBarController: UITabBarController {
+    private var hud: MBProgressHUD?
+    private var maskTapBlock: (() -> Void)?
+    private var toastView: UIView?
+    private var toastWork: AfterWorker?
+    
+    private(set) var maskView: UIControl = {
+        let view = UIControl()
+        view.isSelected = false
+        view.backgroundColor = UIColor(red: 0.0,
+                                       green: 0.0,
+                                       blue: 0.0,
+                                       alpha: 0.7)
+        let w = UIScreen.main.bounds.width
+        let h = UIScreen.main.bounds.height
+        view.frame = CGRect(x: 0,
+                            y: 0,
+                            width: w,
+                            height: h)
+        view.addTarget(self, action: #selector(tapMaskView(_:)), for: .touchUpInside)
+        view.isHidden = true
+        return view
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.endEditing(true)
+    }
+    
+    func showMaskView(color: UIColor = UIColor(red: 0.0,
+                                               green: 0.0,
+                                               blue: 0.0,
+                                               alpha: 0.7), tap: (() -> Void)? = nil) {
+        self.maskTapBlock = tap
+        maskView.isHidden = false
+        maskView.backgroundColor = color
+        self.view.addSubview(maskView)
+    }
+    
+    func hiddenMaskView() {
+        self.maskTapBlock = nil
+        maskView.isHidden = true
+        maskView.removeFromSuperview()
+    }
+    
+    @objc private func tapMaskView(_ mask: UIControl) {
+        if let maskTapBlock = maskTapBlock {
+            maskTapBlock()
+        }
+    }
+    
+    func showHUD() {
+        guard self.hud == nil else {
+            return
+        }
+        
+        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.hud?.show(animated: true)
+    }
+    
+    func hiddenHUD() {
+        self.hud?.hide(animated: true)
+        self.hud = nil
+    }
+    
+    func showToastView(_ view: UIView? = nil, position: CGPoint, duration: TimeInterval = TimeInterval.animation) {
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+        
+        if let worker = toastWork {
+            self.toastView?.removeFromSuperview()
+            worker.cancel()
+        }
+        
+        toastWork = AfterWorker()
+        
+        if view == nil {
+            self.toastView = ToastView(frame: CGRect.zero)
+        } else {
+            self.toastView = view
+        }
+        
+        self.toastView?.center = position
+        window.addSubview(self.toastView!)
+        
+        toastWork?.perform(after: duration, on: DispatchQueue.main, { [unowned self] in
+            self.toastView?.removeFromSuperview()
+        })
+    }
+}
+
 class MaskViewController: UIViewController {
     private var hud: MBProgressHUD?
     private var maskTapBlock: (() -> Void)?

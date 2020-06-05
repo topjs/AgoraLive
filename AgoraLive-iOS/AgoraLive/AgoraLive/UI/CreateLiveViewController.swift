@@ -339,7 +339,7 @@ private extension CreateLiveViewController {
             case .virtualBroadcasters:
                 self.performSegue(withIdentifier: "VirtualBroadcastersViewController", sender: info)
             }
-        }) {
+        }) { [unowned self] in
             self.hiddenHUD()
             self.showAlert(message:"join live fail")
         }

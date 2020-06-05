@@ -27,7 +27,7 @@ struct BasicUserInfo {
         self.imageIndex = Int(Int64(self.userId)! % 12)
     }
     
-    init(userId: String, name: String, headURL: String, imageIndex: Int = 0) {
+    init(userId: String, name: String, headURL: String = "", imageIndex: Int = 0) {
         self.userId = userId
         self.name = name
         self.headURL = headURL

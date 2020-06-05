@@ -64,7 +64,8 @@ class SingleBroadcasterViewController: MaskViewController, LiveViewController {
         self.view.layer.contents = image?.cgImage
         
         guard let session = ALCenter.shared().liveSession else {
-            fatalError()
+            assert(false)
+            return
         }
         
         liveRoom(session: session)
@@ -88,12 +89,10 @@ class SingleBroadcasterViewController: MaskViewController, LiveViewController {
             let vc = segue.destination as! GiftAudienceViewController
             self.giftAudienceVC = vc
         case "BottomToolsViewController":
-            guard let session = ALCenter.shared().liveSession else {
-                fatalError()
-            }
-            
-            guard let role = session.role else {
-                fatalError()
+            guard let session = ALCenter.shared().liveSession,
+                let role = session.role else {
+                    assert(false)
+                    return
             }
             
             let vc = segue.destination as! BottomToolsViewController
@@ -114,6 +113,7 @@ extension SingleBroadcasterViewController {
     // MARK: - Live Room
     func liveRoom(session: LiveSession) {
         guard let owner = session.owner else {
+            assert(false)
             return
         }
         
@@ -155,7 +155,8 @@ extension SingleBroadcasterViewController {
     func superResolution(session: LiveSession) {
         bottomToolsVC?.superRenderButton.rx.tap.subscribe(onNext: { [unowned self, unowned session] () in
             guard let vc = self.bottomToolsVC else {
-                fatalError()
+                assert(false)
+                return
             }
             
             vc.superRenderButton.isSelected.toggle()
@@ -172,7 +173,8 @@ extension SingleBroadcasterViewController {
                 media.player.renderRemoteVideoStream(id: remote.agoraUserId,
                                                      superResolution: vc.superRenderButton.isSelected ? .on : .off)
             default:
-                fatalError()
+                assert(false)
+                break
             }
         }).disposed(by: bag)
     }

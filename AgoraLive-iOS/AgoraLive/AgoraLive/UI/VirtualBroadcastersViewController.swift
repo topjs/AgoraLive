@@ -68,7 +68,8 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let session = ALCenter.shared().liveSession else {
-            fatalError()
+            assert(false)
+            return
         }
         
         liveRoom(session: session)
@@ -97,7 +98,8 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
         case "BottomToolsViewController":
             guard let session = ALCenter.shared().liveSession,
                 let role = session.role else {
-                fatalError()
+                assert(false)
+                return
             }
             
             let vc = segue.destination as! BottomToolsViewController
@@ -132,8 +134,10 @@ extension VirtualBroadcastersViewController {
     
     // MARK: - Live Room
     func liveRoom(session: LiveSession) {
-        guard let owner = session.owner else {
-            fatalError()
+        guard let owner = session.owner,
+            let role = session.role else {
+            assert(false)
+            return
         }
         
         let images = ALCenter.shared().centerProvideImagesHelper()
@@ -142,12 +146,16 @@ extension VirtualBroadcastersViewController {
         case .localUser(let user):
             ownerView.label.text = user.info.name
             ownerView.imageView.image = images.getHead(index: user.info.imageIndex)
-            
-            deviceVM.camera = .on
-            deviceVM.mic = .on
         case .otherUser(let remote):
             ownerView.label.text = remote.info.name
             ownerView.imageView.image = images.getHead(index: remote.info.imageIndex)
+           
+        }
+        
+        if role.type != .audience {
+            deviceVM.camera = .on
+            deviceVM.mic = .on
+        } else {
             deviceVM.camera = .off
             deviceVM.mic = .off
         }
@@ -166,21 +174,23 @@ extension VirtualBroadcastersViewController {
             guard let session = ALCenter.shared().liveSession,
                 let owner = session.owner,
                 let local = session.role else {
-                    fatalError()
+                    assert(false)
+                    return
             }
             
             switch (self.virtualVM.broadcasting.value, owner) {
             case (.single, .localUser):
                 self.presentInviteList()
-            case (.single, .otherUser(let user)):
-                self.presentApplyForBroadcasting(ownerAgoraUid: user.agoraUserId)
+//            case (.single, .otherUser(let user)):
+//                self.presentApplyForBroadcasting(ownerAgoraUid: user.agoraUserId)
             case (.multi, .localUser):
-                self.presentForceEndingBroadcasting()
+                self.ownerForceEndingBroadcasting()
             case (.multi, .otherUser):
                 guard local.type == .broadcaster else {
                     return
                 }
                 self.presentEndingBroadcasting()
+            default: break
             }
         }).disposed(by: bag)
     }
@@ -188,7 +198,8 @@ extension VirtualBroadcastersViewController {
     func liveSeat() {
         seatVM.list.subscribe(onNext: { [unowned self] (list) in
             guard let session = ALCenter.shared().liveSession else {
-                fatalError()
+                assert(false)
+                return
             }
             
             if list.count == 1, let remote = list[0].user {
@@ -199,32 +210,22 @@ extension VirtualBroadcastersViewController {
         }).disposed(by: bag)
         
         // Owner
-        seatVM.receivedBroadcasting.subscribe(onNext: { [unowned self] (peerInfo) in
-            self.presentRecievedApplyForBroadcasting(audienceName: peerInfo.userName,
-                                                     audienceUid: peerInfo.userId,
-                                                     audienceAgoraUid: peerInfo.agoraUserId)
-        }).disposed(by: bag)
+//        seatVM.receivedAudienceApplication.subscribe(onNext: { [unowned self] (userSeat) in
+//            self.presentRecievedApplyForBroadcasting(from: userSeat.user)
+//        }).disposed(by: bag)
         
-        seatVM.receivedRejectInviteBroadcasting.subscribe(onNext: { [unowned self] (userName) in
-            self.showAlert(message: userName + NSLocalizedString("Reject"))
+        seatVM.receivedAudienceRejectInvitation.subscribe(onNext: { [unowned self] (user) in
+            self.showAlert(message: user.info.name + NSLocalizedString("Reject"))
         }).disposed(by: bag)
         
         // Audience
-        seatVM.receivedInvite.subscribe(onNext: { [unowned self] (peerInfo) in
-            guard let session = ALCenter.shared().liveSession else {
-                fatalError()
-            }
-            
-            self.presentRecievedBroadcastingInvitation(ownerAgoraUid: session.owner.user.agoraUserId)
+        seatVM.receivedOwnerInvitation.subscribe(onNext: { [unowned self] (userSeat) in
+            self.audienceRecievedBroadcastingInvitation(owner: userSeat.user)
         }).disposed(by: bag)
         
-        seatVM.receivedRejectBroadcasting.subscribe(onNext: { [unowned self] (userName) in
-            self.showAlert(message: NSLocalizedString("Owner_Reject_Broadcasting_Application"))
-        }).disposed(by: bag)
-        
-        seatVM.receivedForceEndBroadcasting.subscribe(onNext: { [unowned self] (peerInfo) in
-            self.showAlert(message: NSLocalizedString("Owner_Forces_You_End_Broadcasting"))
-        }).disposed(by: bag)
+//        seatVM.receivedOwnerRejectApplication.subscribe(onNext: { [unowned self] (userName) in
+//            self.showAlert(message: NSLocalizedString("Owner_Reject_Broadcasting_Application"))
+//        }).disposed(by: bag)
     }
     
     func broadcastingStatus() {
@@ -232,7 +233,8 @@ extension VirtualBroadcastersViewController {
             guard let session = ALCenter.shared().liveSession,
                 let owner = session.owner,
                 var local = session.role else {
-                    fatalError()
+                    assert(false)
+                    return
             }
             
             // Role update
@@ -242,6 +244,7 @@ extension VirtualBroadcastersViewController {
                 case .broadcaster:
                     session.broadcasterToAudience()
                     local = session.role!
+//                    self.showAlert(message: NSLocalizedString("Owner_Forces_You_End_Broadcasting"))
                 default:
                     break
                 }
@@ -334,7 +337,7 @@ extension VirtualBroadcastersViewController {
                 switch index.item {
                 case 0: return self.ownerRenderView
                 case 1: return self.broadcasterRenderView
-                default: fatalError()
+                default: assert(false)
                 }
             }
         }
@@ -348,7 +351,6 @@ extension VirtualBroadcastersViewController {
 }
 
 extension VirtualBroadcastersViewController {
-    // Owner
     func presentInviteList() {
         guard let session = ALCenter.shared().liveSession else {
             return
@@ -388,7 +390,14 @@ extension VirtualBroadcastersViewController {
         }).disposed(by: bag)
     }
     
-    func presentForceEndingBroadcasting() {
+    func presentVirtualAppearance() {
+        let vc = UIStoryboard.initViewController(of: "VirtualAppearanceViewController",
+                                                 class: VirtualAppearanceViewController.self)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    // Owner
+    func ownerForceEndingBroadcasting() {
         self.showAlert(NSLocalizedString("Ending_Broadcasting"),
                        message: NSLocalizedString("Confirm_Ending_Broadcasting"),
                        action1: NSLocalizedString("Cancel"),
@@ -411,37 +420,37 @@ extension VirtualBroadcastersViewController {
         }
     }
     
-    func presentRecievedApplyForBroadcasting(audienceName: String, audienceUid: String, audienceAgoraUid: Int) {
-        self.showMaskView()
-        
-        self.showAlert(NSLocalizedString("Apply_For_Broadcasting"),
-                       message: audienceName + NSLocalizedString("Confirm_Accept_Broadcasting"),
-                       action1: NSLocalizedString("Reject"),
-                       action2: NSLocalizedString("Confirm"),
-                       handler1: { [unowned self] (_) in
-                        self.hiddenMaskView()
-                        
-                        guard let session = ALCenter.shared().liveSession,
-                            let owner = session.owner,
-                            owner.isLocal else {
-                            return
-                        }
-                        
-                        self.seatVM.localOwner(owner.user,
-                                               rejectBroadcastingAudience: audienceAgoraUid)
-        }) { [unowned self] (_) in
-            self.hiddenMaskView()
-            
-            guard let session = ALCenter.shared().liveSession else {
-                return
-            }
-            
-            let roomId = session.roomId
-            self.seatVM.localOwnerAcceptBroadcasting(audience: audienceUid,
-                                                     seatIndex: 1,
-                                                     roomId: roomId)
-        }
-    }
+//    func presentRecievedApplyForBroadcasting(from audience: LiveRole) {
+//        self.showMaskView()
+//
+//        self.showAlert(NSLocalizedString("Apply_For_Broadcasting"),
+//                       message: audience.info.name + NSLocalizedString("Confirm_Accept_Broadcasting"),
+//                       action1: NSLocalizedString("Reject"),
+//                       action2: NSLocalizedString("Confirm"),
+//                       handler1: { [unowned self] (_) in
+//                        self.hiddenMaskView()
+//
+//                        guard let session = ALCenter.shared().liveSession,
+//                            let owner = session.owner,
+//                            owner.isLocal else {
+//                            return
+//                        }
+//
+//                        self.seatVM.localOwner(owner.user,
+//                                               rejectBroadcastingAudience: audience.agoraUserId)
+//        }) { [unowned self] (_) in
+//            self.hiddenMaskView()
+//
+//            guard let session = ALCenter.shared().liveSession else {
+//                return
+//            }
+//
+//            let roomId = session.roomId
+//            self.seatVM.localOwnerAcceptBroadcasting(audience: audience,
+//                                                     seatIndex: 1,
+//                                                     roomId: roomId)
+//        }
+//    }
     
     // Broadcaster
     func presentEndingBroadcasting() {
@@ -468,7 +477,7 @@ extension VirtualBroadcastersViewController {
     }
     
     // Audience
-    func presentRecievedBroadcastingInvitation(ownerAgoraUid: Int) {
+    func audienceRecievedBroadcastingInvitation(owner: LiveRole) {
         self.showMaskView()
         
         self.showAlert(NSLocalizedString("Broadcasting_Invitation"),
@@ -484,7 +493,7 @@ extension VirtualBroadcastersViewController {
                             return
                         }
                         
-                        self.seatVM.localAudience(role, rejectInvitingFrom: ownerAgoraUid)
+                        self.seatVM.localAudience(role, rejectInvitingFrom: owner)
         }) { [unowned self] (_) in
             self.hiddenMaskView()
             
@@ -502,31 +511,27 @@ extension VirtualBroadcastersViewController {
         }
     }
     
-    func presentApplyForBroadcasting(ownerAgoraUid: Int) {
-        self.showAlert(NSLocalizedString("Apply_For_Broadcasting"),
-                       message: NSLocalizedString("Confirm_Apply_For_Broadcasting"),
-                       action1: NSLocalizedString("Cancel"),
-                       action2: NSLocalizedString("Confirm"),
-                       handler1: { [unowned self] (_) in
-                        self.hiddenMaskView()
-        }) { [unowned self] (_) in
-            self.hiddenMaskView()
-            
-            guard let session = ALCenter.shared().liveSession,
-                let role = session.role,
-                role.type == .audience else {
-                return
-            }
-            
-            self.seatVM.localAudience(role,
-                                      applyForBroadcastingToOwner: ownerAgoraUid,
-                                      seat: LiveSeat(index: 1, state: .empty))
-        }
-    }
+//    func presentApplyForBroadcasting(ownerAgoraUid: Int) {
+//        self.showAlert(NSLocalizedString("Apply_For_Broadcasting"),
+//                       message: NSLocalizedString("Confirm_Apply_For_Broadcasting"),
+//                       action1: NSLocalizedString("Cancel"),
+//                       action2: NSLocalizedString("Confirm"),
+//                       handler1: { [unowned self] (_) in
+//                        self.hiddenMaskView()
+//        }) { [unowned self] (_) in
+//            self.hiddenMaskView()
+//
+//            guard let session = ALCenter.shared().liveSession,
+//                let role = session.role,
+//                role.type == .audience else {
+//                return
+//            }
+//
+//            self.seatVM.localAudience(role,
+//                                      applyForBroadcastingToOwner: ownerAgoraUid,
+//                                      seat: LiveSeat(index: 1, state: .empty))
+//        }
+//    }
     
-    func presentVirtualAppearance() {
-        let vc = UIStoryboard.initViewController(of: "VirtualAppearanceViewController",
-                                                 class: VirtualAppearanceViewController.self)
-        self.present(vc, animated: true, completion: nil)
-    }
+    
 }

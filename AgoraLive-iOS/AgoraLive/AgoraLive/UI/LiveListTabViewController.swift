@@ -174,7 +174,8 @@ private extension LiveListTabViewController {
     
     func updateLiveListVC() {
         guard let vc = listVC else {
-            fatalError()
+            assert(false)
+            return
         }
         
         // placeHolderView tap
@@ -200,7 +201,7 @@ private extension LiveListTabViewController {
         vc.collectionView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [unowned self, unowned vc] in
             self.listVM.refetch(success: {
                 vc.collectionView.mj_header?.endRefreshing()
-            }) { // fail
+            }) { [unowned vc] in // fail
                 vc.collectionView.mj_header?.endRefreshing()
             }
         })
@@ -208,7 +209,7 @@ private extension LiveListTabViewController {
         vc.collectionView.mj_footer = MJRefreshBackFooter(refreshingBlock: { [unowned self, unowned vc] in
             self.listVM.fetch(success: {
                 vc.collectionView.mj_footer?.endRefreshing()
-            }) { // fail
+            }) { [unowned vc] in // fail
                 vc.collectionView.mj_footer?.endRefreshing()
             }
         })
@@ -315,7 +316,7 @@ extension LiveListTabViewController {
             case .virtualBroadcasters:
                 self.performSegue(withIdentifier: "VirtualBroadcastersViewController", sender: info)
             }
-        }) {
+        }) { [unowned self] in
             self.hiddenHUD()
             self.showAlert(message:"join live fail")
         }

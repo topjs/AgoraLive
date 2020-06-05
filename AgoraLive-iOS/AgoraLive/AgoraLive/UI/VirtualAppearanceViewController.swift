@@ -22,7 +22,6 @@ class VirtualAppearanceViewController: UIViewController, RxViewController {
     
     var appearance: VirtualAppearance = .girl {
         didSet {
-            
             guard appearance != .none else {
                 enhancementVM.virtualAppearance = appearance
                 return
@@ -86,7 +85,8 @@ fileprivate extension UIButton {
             layer.shadowOffset = CGSize(width: 0, height: 0.5)
         }
         get {
-            fatalError("no need")
+            assert(false)
+            return true
         }
     }
 }

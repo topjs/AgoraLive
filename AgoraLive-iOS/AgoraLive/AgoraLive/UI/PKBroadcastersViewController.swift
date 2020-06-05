@@ -191,7 +191,8 @@ class PKBroadcastersViewController: MaskViewController, LiveViewController {
         self.view.layer.contents = image?.cgImage
         
         guard let session = ALCenter.shared().liveSession else {
-            fatalError()
+            assert(false)
+            return
         }
         
         liveRoom(session: session)
@@ -215,12 +216,10 @@ class PKBroadcastersViewController: MaskViewController, LiveViewController {
             let vc = segue.destination as! GiftAudienceViewController
             self.giftAudienceVC = vc
         case "BottomToolsViewController":
-            guard let session = ALCenter.shared().liveSession else {
-                fatalError()
-            }
-            
-            guard let role = session.role else {
-                fatalError()
+            guard let session = ALCenter.shared().liveSession,
+                let role = session.role else {
+                assert(false)
+                return
             }
             
             let vc = segue.destination as! BottomToolsViewController
@@ -244,7 +243,8 @@ extension PKBroadcastersViewController {
     // MARK: - Live Room
     func liveRoom(session: LiveSession) {
         guard let owner = session.owner else {
-            fatalError()
+            assert(false)
+            return
         }
         
         let images = ALCenter.shared().centerProvideImagesHelper()
@@ -348,7 +348,8 @@ extension PKBroadcastersViewController {
     
     func intoOtherRoom() {
         guard let session = ALCenter.shared().liveSession else {
-            fatalError()
+            assert(false)
+            return
         }
         
         session.leave()
@@ -404,7 +405,8 @@ private extension PKBroadcastersViewController {
     func updateViewsWith(statistics: PKStatistics) {
         guard let session = ALCenter.shared().liveSession,
             let owner = session.owner else {
-            fatalError()
+                assert(false)
+                return
         }
         
         renderView.isHidden = statistics.state.isDuring
@@ -422,7 +424,8 @@ private extension PKBroadcastersViewController {
             pkButton.isHidden = true
         case (.localUser(let user), true):
             guard let pkView = self.pkView else {
-                    fatalError()
+                assert(false)
+                return
             }
             
             let leftRenderView = pkView.leftRenderView
@@ -437,7 +440,8 @@ private extension PKBroadcastersViewController {
             pkButton.isHidden = true
         case (.otherUser(let user), true):
             guard let pkView = self.pkView else {
-                    fatalError()
+                assert(false)
+                return
             }
             
             let leftRenderView = pkView.leftRenderView
@@ -468,12 +472,10 @@ private extension PKBroadcastersViewController {
     }
     
     func presentInviteList() {
-        guard let session = ALCenter.shared().liveSession else {
-            return
-        }
-        
-        guard let role = session.role else {
-            fatalError()
+        guard let session = ALCenter.shared().liveSession,
+            let role = session.role else {
+                assert(false)
+                return
         }
         
         let roomId = session.roomId
@@ -504,7 +506,7 @@ private extension PKBroadcastersViewController {
         inviteVC.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [unowned self, unowned inviteVC] in
             self.roomListVM.refetch(success: {
                 inviteVC.tableView.mj_header?.endRefreshing()
-            }) { // fail
+            }) { [unowned inviteVC] in // fail
                 inviteVC.tableView.mj_header?.endRefreshing()
             }
         })
@@ -512,7 +514,7 @@ private extension PKBroadcastersViewController {
         inviteVC.tableView.mj_footer = MJRefreshBackFooter(refreshingBlock: { [unowned self, unowned inviteVC] in
             self.roomListVM.fetch(success: {
                 inviteVC.tableView.mj_footer?.endRefreshing()
-            }) { // fail
+            }) { [unowned inviteVC] in // fail
                 inviteVC.tableView.mj_footer?.endRefreshing()
             }
         })

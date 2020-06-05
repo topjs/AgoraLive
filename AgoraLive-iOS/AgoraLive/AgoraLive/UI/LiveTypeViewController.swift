@@ -63,14 +63,6 @@ class LiveTypeViewController: MaskViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isUserInteractionEnabled = false
-        showHUD()
-        ALCenter.shared().isWorkNormally.subscribe(onNext: { [unowned self] (normal) in
-            if normal {
-                self.tabBarController?.tabBar.isUserInteractionEnabled = true
-                self.hiddenHUD()
-            }
-        }).disposed(by: disposeBag)
         
         // Frame
         let imageWith = UIScreen.main.bounds.width - 30.0
@@ -86,28 +78,14 @@ class LiveTypeViewController: MaskViewController {
         
         // Selected Event
         guard let parentVC = self.parent,
-            let tabbarVC = parentVC as? UITabBarController,
-            let children = tabbarVC.viewControllers else {
-            fatalError()
+            let tabbarVC = parentVC as? MainTabBarViewController else {
+                assert(false)
+                return
         }
         
-        var tLiveListTabVC: LiveListTabViewController?
-        
-        for child in children where child is UINavigationController {
-            let navi = child as! UINavigationController
-            
-            if let tabVC = navi.viewControllers.first as? LiveListTabViewController {
-                tLiveListTabVC = tabVC
-                break
-            }
-        }
-        
-        guard let liveListTabVC = tLiveListTabVC else {
-            fatalError()
-        }
-        
-        _ = liveListTabVC.view
-        
+        let liveListTabVC = tabbarVC.findFirstChild(of: LiveListTabViewController.self)
+        _ = liveListTabVC?.view
+                
         tableView.rx.itemSelected.subscribe(onNext: { [weak tabbarVC, weak liveListTabVC] (index) in
             let liveListTabVCIndex = 1
             tabbarVC?.selectedIndex = liveListTabVCIndex
