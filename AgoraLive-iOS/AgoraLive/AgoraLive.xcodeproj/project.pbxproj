@@ -98,6 +98,9 @@
 		A72B7BEE24445EBB00E965FB /* PKBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B7BED24445EBB00E965FB /* PKBar.swift */; };
 		A7355F85240650010010CCD1 /* CreateLiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7355F84240650010010CCD1 /* CreateLiveViewController.swift */; };
 		A7355F88240658F40010CCD1 /* UIView+ExProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A7355F86240658F40010CCD1 /* UIView+ExProperty.m */; };
+		A73F27C92489FE60000C85E0 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A73F27C82489FE60000C85E0 /* bai_bj.bundle */; };
+		A73F27CA248A1508000C85E0 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A73F27C82489FE60000C85E0 /* bai_bj.bundle */; };
+		A73F27CB248A1509000C85E0 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A73F27C82489FE60000C85E0 /* bai_bj.bundle */; };
 		A754FAEF242B717D0062B2F5 /* FilletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754FAEE242B717D0062B2F5 /* FilletView.swift */; };
 		A754FAF4242C5A920062B2F5 /* ChatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754FAF3242C5A920062B2F5 /* ChatVM.swift */; };
 		A754FAF6242C9B700062B2F5 /* LiveSeatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754FAF5242C9B700062B2F5 /* LiveSeatVM.swift */; };
@@ -633,6 +636,7 @@
 		A7355F84240650010010CCD1 /* CreateLiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLiveViewController.swift; sourceTree = "<group>"; };
 		A7355F86240658F40010CCD1 /* UIView+ExProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ExProperty.m"; sourceTree = "<group>"; };
 		A7355F87240658F40010CCD1 /* UIView+ExProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ExProperty.h"; sourceTree = "<group>"; };
+		A73F27C82489FE60000C85E0 /* bai_bj.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bai_bj.bundle; sourceTree = "<group>"; };
 		A754FAEE242B717D0062B2F5 /* FilletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilletView.swift; sourceTree = "<group>"; };
 		A754FAF3242C5A920062B2F5 /* ChatVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVM.swift; sourceTree = "<group>"; };
 		A754FAF5242C9B700062B2F5 /* LiveSeatVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSeatVM.swift; sourceTree = "<group>"; };
@@ -967,6 +971,7 @@
 		A71ED4CC247FBF7F00BA9A32 /* Animoji */ = {
 			isa = PBXGroup;
 			children = (
+				A73F27C82489FE60000C85E0 /* bai_bj.bundle */,
 				A7584B4E2484F3B80088FACB /* bj_lan.bundle */,
 				A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */,
 				A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */,
@@ -1554,6 +1559,7 @@
 				A71ED5BA247FBF7F00BA9A32 /* hashiqi_Animoji.png in Resources */,
 				A71A96AD247E44F6002749E4 /* ai_humanpose.bundle in Resources */,
 				A711AB7C243EF78A00C2A3FD /* SuperWatch.gif in Resources */,
+				A73F27C92489FE60000C85E0 /* bai_bj.bundle in Resources */,
 				A7584B4F2484F3B80088FACB /* bj_lan.bundle in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
 				A711AB8E244015E000C2A3FD /* SuperIcecream.gif in Resources */,
@@ -1582,6 +1588,7 @@
 				A7584B502484F3B80088FACB /* bj_lan.bundle in Resources */,
 				A7A97930245140DB00A82265 /* Localizable.strings in Resources */,
 				A7A9794B245140DB00A82265 /* SuperIcecream.gif in Resources */,
+				A73F27CA248A1508000C85E0 /* bai_bj.bundle in Resources */,
 				A7A97953245140DB00A82265 /* Main.storyboard in Resources */,
 				A7A97954245140DB00A82265 /* SuperWine.gif in Resources */,
 				A7584B862488DAD80088FACB /* qgirl_Animoji.bundle in Resources */,
@@ -1625,6 +1632,7 @@
 				A7CEAEE6247252E00041124B /* LaunchScreen.storyboard in Resources */,
 				A7584B8A2488DAE00088FACB /* hashiqi_Animoji.bundle in Resources */,
 				A7CEAEE7247252E00041124B /* SuperWatch.gif in Resources */,
+				A73F27CB248A1509000C85E0 /* bai_bj.bundle in Resources */,
 				A7584B852488DAD50088FACB /* qgirl_Animoji.png in Resources */,
 				A7CEAEE8247252E00041124B /* Localizable.strings in Resources */,
 				A7CEAEEA247252E00041124B /* SuperIcecream.gif in Resources */,

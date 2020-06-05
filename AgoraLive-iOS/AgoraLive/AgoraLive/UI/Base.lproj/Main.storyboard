@@ -2220,10 +2220,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQr-fS-4dP">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
-                                <color key="backgroundColor" red="0.85882352941176465" green="0.93725490196078431" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kHt-fZ-W48">
                                 <rect key="frame" x="15" y="44" width="44" height="44"/>
                                 <constraints>
@@ -2291,22 +2287,18 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dTZ-lZ-d5J" firstAttribute="top" secondItem="w9t-2b-Qje" secondAttribute="bottom" constant="52" id="484-QN-Nhb"/>
                             <constraint firstItem="llJ-ZD-4hi" firstAttribute="centerX" secondItem="pVJ-as-vFG" secondAttribute="centerX" constant="-75" id="8mr-yj-WrN"/>
                             <constraint firstItem="w9t-2b-Qje" firstAttribute="leading" secondItem="kHt-fZ-W48" secondAttribute="trailing" constant="10" id="E4T-cJ-0CC"/>
                             <constraint firstItem="5Pf-ZQ-anu" firstAttribute="bottom" secondItem="5h5-Fv-b1j" secondAttribute="bottom" constant="25" id="Fwv-qI-h46"/>
-                            <constraint firstAttribute="bottom" secondItem="zQr-fS-4dP" secondAttribute="bottom" id="GbZ-VB-ddJ"/>
                             <constraint firstItem="dTZ-lZ-d5J" firstAttribute="leading" secondItem="5Pf-ZQ-anu" secondAttribute="leading" constant="72" id="L5M-Xy-gKd"/>
                             <constraint firstItem="w9t-2b-Qje" firstAttribute="centerX" secondItem="pVJ-as-vFG" secondAttribute="centerX" id="Qdv-fg-Rkx"/>
-                            <constraint firstItem="5Pf-ZQ-anu" firstAttribute="trailing" secondItem="zQr-fS-4dP" secondAttribute="trailing" id="Qq7-WG-slc"/>
                             <constraint firstItem="5h5-Fv-b1j" firstAttribute="top" secondItem="oI9-BM-QHg" secondAttribute="bottom" constant="27" id="Uhg-TF-YoH"/>
                             <constraint firstItem="kHt-fZ-W48" firstAttribute="top" secondItem="5Pf-ZQ-anu" secondAttribute="top" id="VJ2-GV-fOg"/>
-                            <constraint firstItem="zQr-fS-4dP" firstAttribute="leading" secondItem="5Pf-ZQ-anu" secondAttribute="leading" id="WUv-uG-3oy"/>
                             <constraint firstItem="5h5-Fv-b1j" firstAttribute="centerX" secondItem="pVJ-as-vFG" secondAttribute="centerX" id="iSb-GZ-1qK"/>
                             <constraint firstItem="kHt-fZ-W48" firstAttribute="leading" secondItem="5Pf-ZQ-anu" secondAttribute="leading" constant="15" id="o3f-9E-uzC"/>
-                            <constraint firstItem="zQr-fS-4dP" firstAttribute="top" secondItem="pVJ-as-vFG" secondAttribute="top" id="oX3-xD-x0w"/>
                             <constraint firstItem="oI9-BM-QHg" firstAttribute="centerX" secondItem="pVJ-as-vFG" secondAttribute="centerX" constant="75" id="pfF-A4-dUa"/>
                             <constraint firstItem="llJ-ZD-4hi" firstAttribute="centerY" secondItem="oI9-BM-QHg" secondAttribute="centerY" id="qJE-OJ-OZJ"/>
                             <constraint firstItem="dTZ-lZ-d5J" firstAttribute="centerX" secondItem="pVJ-as-vFG" secondAttribute="centerX" id="vLj-Bu-TAR"/>
@@ -2326,7 +2318,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GTk-I0-CV6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5646" y="1647"/>
+            <point key="canvasLocation" x="5645" y="1643"/>
         </scene>
         <!--Virtual Broadcasters View Controller-->
         <scene sceneID="8eZ-sj-T8E">

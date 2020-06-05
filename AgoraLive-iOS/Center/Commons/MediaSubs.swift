@@ -260,10 +260,6 @@ class VideoEnhancement: NSObject {
             }
         }
     }
-        
-    override init() {
-        super.init()
-    }
     
     static func getFUSkinParam(with tag: String) -> FUBeautyParam? {
         var param: FUBeautyParam?

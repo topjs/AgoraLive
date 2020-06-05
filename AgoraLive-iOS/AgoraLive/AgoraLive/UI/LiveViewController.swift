@@ -678,9 +678,9 @@ extension LiveViewController {
 
 extension LiveViewController {
     func leave() {
-        enhancementVM.reset()
         ALCenter.shared().liveSession?.leave()
         ALCenter.shared().liveSession = nil
+        enhancementVM.reset()
         if let _ = self.navigationController?.viewControllers.first as? LiveListTabViewController {
             self.navigationController?.popViewController(animated: true)
         } else {

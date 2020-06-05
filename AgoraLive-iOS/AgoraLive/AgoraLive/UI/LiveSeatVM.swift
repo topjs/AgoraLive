@@ -380,11 +380,17 @@ extension LiveSeatVM {
         }
     }
     
-    func localAudience(_ local: LiveRole, acceptInvitingOn seatIndex: Int, roomId: String, success: Completion = nil, fail: ErrorCompletion = nil) {
+    func localAudience(_ local: LiveRole, acceptInvitingOn seatIndex: Int, roomId: String, extra: [String: Any]? = nil, success: Completion = nil, fail: ErrorCompletion = nil) {
         let url = URLGroup.liveSeatCommand(roomId: roomId)
-        let parameters: StringAnyDic = ["no": seatIndex,
+        var parameters: StringAnyDic = ["no": seatIndex,
                                         "userId": local.info.userId,
                                         "state": 1]
+        
+        if let extra = extra {
+            for (key, value) in extra {
+                parameters[key] = value
+            }
+        }
         
         let client = ALCenter.shared().centerProvideRequestHelper()
         let event = RequestEvent(name: "live-seat-command: accpe")

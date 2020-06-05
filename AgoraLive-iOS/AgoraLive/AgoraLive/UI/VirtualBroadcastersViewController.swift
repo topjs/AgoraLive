@@ -117,8 +117,8 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
 extension VirtualBroadcastersViewController {
     func updateViews() {
         videoContainer.backgroundColor = .white
-        ownerRenderView.backgroundColor = UIColor(hexString: "#DBEFFF")
-        broadcasterRenderView.backgroundColor = UIColor(hexString: "#DBEFFF")
+        ownerRenderView.backgroundColor = .white
+        broadcasterRenderView.backgroundColor = .white
         
         ownerView.backgroundColor = tintColor
         ownerView.offsetLeftX = -13
@@ -262,8 +262,8 @@ extension VirtualBroadcastersViewController {
                 self.inviteButton.isHidden = false
                 self.inviteButton.setTitle(NSLocalizedString("Invite_Broadcasting"), for: .normal)
             case (.single, .otherUser):
-                self.inviteButton.isHidden = false
-                self.inviteButton.setTitle(NSLocalizedString("Apply_For_Broadcasting"), for: .normal)
+                self.inviteButton.isHidden = true
+//                self.inviteButton.setTitle(NSLocalizedString("Apply_For_Broadcasting"), for: .normal)
             case (.multi, .localUser):
                 self.inviteButton.isHidden = false
                 self.inviteButton.setTitle(NSLocalizedString("Ending_Broadcasting"), for: .normal)
@@ -497,7 +497,8 @@ extension VirtualBroadcastersViewController {
             let roomId = session.roomId
             self.seatVM.localAudience(role,
                                       acceptInvitingOn: 1,
-                                      roomId: roomId)
+                                      roomId: roomId,
+                                      extra: ["virtualAvatar": self.enhancementVM.virtualAppearance.item])
         }
     }
     
