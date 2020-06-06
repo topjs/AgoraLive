@@ -3,6 +3,7 @@ package io.agora.vlive.ui.main;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -220,6 +221,8 @@ public class MainActivity extends BaseActivity {
                     mAppIdTryCount++;
                 }
                 break;
+            default: runOnUiThread(() -> showLongToast("Request type: "+
+                    Request.getRequestString(requestType) + " " + message));
         }
     }
 }

@@ -1,9 +1,13 @@
 package io.agora.vlive.ui.live;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.nio.channels.InterruptedByTimeoutException;
 import java.util.List;
 import java.util.Map;
 
@@ -72,10 +77,10 @@ public abstract class LiveBaseActivity extends BaseActivity
     protected String rtcChannelName;
 
     private RtmMessageManager mMessageManager;
-
     private CameraManager mCameraManager;
-
     private PreprocessorFaceUnity mFUPreprocessor;
+
+    private NetworkReceiver mNetworkReceiver = new NetworkReceiver();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -191,6 +196,21 @@ public abstract class LiveBaseActivity extends BaseActivity
         } else return 0;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter(
+                ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(mNetworkReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(mNetworkReceiver);
+    }
+
     protected void startCameraCapture() {
         if (mCameraManager != null) {
             enablePreProcess(config().isBeautyEnabled());
@@ -257,6 +277,27 @@ public abstract class LiveBaseActivity extends BaseActivity
 
     protected void leaveRtmChannel(ResultCallback<Void> callback) {
         mMessageManager.leaveChannel(callback);
+    }
+
+    private static class NetworkReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager cm = (ConnectivityManager) context.
+                    getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm == null) return;
+
+            NetworkInfo info = cm.getActiveNetworkInfo();
+            if (info == null || !info.isAvailable() || !info.isConnected()) {
+                Toast.makeText(context, R.string.network_unavailable, Toast.LENGTH_LONG).show();
+            } else {
+                int type = info.getType();
+                if (ConnectivityManager.TYPE_WIFI == type) {
+                    Toast.makeText(context, R.string.network_switch_to_wifi, Toast.LENGTH_LONG).show();
+                } else if (ConnectivityManager.TYPE_MOBILE == type) {
+                    Toast.makeText(context, R.string.network_switch_to_mobile , Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     @Override

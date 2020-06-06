@@ -21,6 +21,8 @@
 
     <string name="room_list_no_data_hint">Please Create a Room</string>
     <string name="room_list_fail_to_obtain_data_hint">Loading Data failed, please try later</string>
+    <string name="room_list_network_error_title">Network failure</string>
+    <string name="room_list_network_error_message">The network connection is not available, please try later.</string>
 
     <!-- My Profile Fragment -->
     <string name="profile_item_title_avatar">Avatar Setting</string>
@@ -58,6 +60,7 @@
     <string name="live_virtual_image_select_confirm">Confirm</string>
     <string name="live_virtual_image_invite">Invite</string>
     <string name="live_virtual_image_stop_invite">Leave</string>
+    <string name="live_virtual_image_stop_invite_message">Do you want to leave the chat?</string>
 
     <string name="live_pk_host_remaining_time_hint">PK left:</string>
 
@@ -228,4 +231,9 @@
     <string name="button_text_done">Done</string>
 
     <string name="rtc_stats_format">Receiving Bitrate: %.2f kbps%nReceiving Loss Rate: %.2f%% %nSending Bitrate: %.2f kbps%nSending Loss Rate: %.2f%%</string>
+
+    <!-- Network status detection -->
+    <string name="network_unavailable">Network is unavailable, please try later</string>
+    <string name="network_switch_to_wifi">You are in WIFI network</string>
+    <string name="network_switch_to_mobile">You are in the mobile network, you may pay for the mobile data usage if you continue.</string>
 </resources>

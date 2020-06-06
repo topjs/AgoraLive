@@ -76,7 +76,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
 
         @Override
         public void onFailure(ErrorInfo errorInfo) {
-
+            showLongToast("Message error:" + errorInfo.getErrorDescription());
         }
     };
 

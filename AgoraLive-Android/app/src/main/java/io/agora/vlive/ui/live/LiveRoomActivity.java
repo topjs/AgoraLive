@@ -17,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
@@ -649,5 +650,14 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mHeadPhoneReceiver);
+    }
+
+    @Override
+    public void onResponseError(int requestType, int error, String message) {
+        Log.e(TAG, "request:" + requestType + " error:" + error + " msg:" + message);
+        runOnUiThread(() -> showLongToast("request type: "+
+                Request.getRequestString(requestType) + " " + message));
+
+
     }
 }

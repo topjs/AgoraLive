@@ -30,7 +30,7 @@
     <dimen name="room_tab_item_width">120dp</dimen>
     <dimen name="room_tab_height">48dp</dimen>
     <dimen name="room_tab_item_selected_indicator_height">2dp</dimen>
-    <dimen name="room_list_no_data_icon_size">164dp</dimen>
+    <dimen name="room_list_exception_icon_size">164dp</dimen>
     <dimen name="room_list_rect_corner">8dp</dimen>
 
     <!-- My profile Fragment -->

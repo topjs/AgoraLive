@@ -223,7 +223,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
         @Override
         public void onFailure(ErrorInfo errorInfo) {
-            Log.e(TAG, errorInfo.getErrorDescription());
+            showLongToast("Message error:" + errorInfo.getErrorDescription());
         }
     };
 

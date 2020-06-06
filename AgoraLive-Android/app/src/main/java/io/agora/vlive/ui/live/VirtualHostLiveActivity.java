@@ -68,7 +68,7 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
 
         @Override
         public void onFailure(ErrorInfo errorInfo) {
-            Log.e(TAG, errorInfo.getErrorDescription());
+            showLongToast("Message error:" + errorInfo.getErrorDescription());
         }
     };
 
@@ -315,17 +315,24 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
 
     public void onInvite(View view) {
         if (mConnected) {
-            Config.UserProfile profile = config().getUserProfile();
-            if (isOwner || isHost) {
-                ModifySeatStateRequest request = new ModifySeatStateRequest(
-                        profile.getToken(), roomId,
-                        profile.getUserId(),
-                        1,   // Only one seat here in virtual image live room
-                        SeatInfo.OPEN);
-                request.setVirtualAvatar(
-                        virtualImageIdToName(mVirtualImageSelected));
-                sendRequest(Request.MODIFY_SEAT_STATE, request);
-            }
+            curDialog = showDialog(R.string.live_virtual_image_stop_invite,
+                    R.string.live_virtual_image_stop_invite_message,
+                    R.string.dialog_positive_button,
+                    R.string.dialog_negative_button,
+                    v -> {
+                        Config.UserProfile profile = config().getUserProfile();
+                        if (isOwner || isHost) {
+                            ModifySeatStateRequest request = new ModifySeatStateRequest(
+                                    profile.getToken(), roomId,
+                                    profile.getUserId(),
+                                    1,   // Only one seat here in virtual image live room
+                                    SeatInfo.OPEN);
+                            request.setVirtualAvatar(
+                                    virtualImageIdToName(mVirtualImageSelected));
+                            sendRequest(Request.MODIFY_SEAT_STATE, request);
+                        }
+                    },
+                    v -> curDialog.dismiss());
         } else {
             mInviteUserListActionSheet = (InviteUserActionSheet)
                     showActionSheetDialog(ACTION_SHEET_INVITE_AUDIENCE,

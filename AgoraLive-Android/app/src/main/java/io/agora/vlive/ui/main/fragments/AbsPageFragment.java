@@ -49,6 +49,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
     private RecyclerView mRecyclerView;
     private RoomListAdapter mAdapter;
     private View mNoDataBg;
+    private View mNetworkErrorBg;
 
     private int mItemSpacing;
 
@@ -106,6 +107,9 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
         });
 
         mNoDataBg = layout.findViewById(R.id.no_data_bg);
+        mNetworkErrorBg = layout.findViewById(R.id.network_error_bg);
+        mNetworkErrorBg.setVisibility(View.GONE);
+
         checkRoomListEmpty();
 
         return layout;
@@ -179,6 +183,7 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
     public void onRoomListResponse(RoomListResponse response) {
         final List<RoomInfo> list = response.data.list;
         getContainer().runOnUiThread(() -> {
+            mNetworkErrorBg.setVisibility(View.GONE);
             // Next id being empty indicates this is the
             // start of room list and we need to refresh
             // the whole page.
@@ -315,4 +320,21 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
     protected abstract int onGetRoomListType();
 
     protected abstract Class<?> getLiveActivityClass();
+
+    @Override
+    public void onResponseError(int requestType, int error, String message) {
+        getContainer().runOnUiThread(() -> {
+            Toast.makeText(getContext(),
+                    "request type: "+ Request.getRequestString(requestType) +
+                            ", error message:" + message, Toast.LENGTH_LONG).show();
+
+            if (requestType == Request.ROOM_LIST) {
+                if (mAdapter != null) {
+                    mAdapter.clear(true);
+                }
+                mNoDataBg.setVisibility(View.GONE);
+                mNetworkErrorBg.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 }

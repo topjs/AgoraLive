@@ -19,8 +19,8 @@
             android:layout_centerInParent="true">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/no_data_icon"
-                android:layout_width="@dimen/room_list_no_data_icon_size"
-                android:layout_height="@dimen/room_list_no_data_icon_size"
+                android:layout_width="@dimen/room_list_exception_icon_size"
+                android:layout_height="@dimen/room_list_exception_icon_size"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/list_no_data"/>
@@ -34,6 +34,38 @@
                 android:text="@string/room_list_no_data_hint"
                 android:textSize="@dimen/text_size_normal"
                 android:textColor="@color/gray"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/network_error_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/network_error_icon"
+                android:layout_width="@dimen/room_list_exception_icon_size"
+                android:layout_height="@dimen/room_list_exception_icon_size"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/room_list_error_icon"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/network_error_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/network_error_icon"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/room_list_network_error_title"
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/gray"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/network_error_message"
+                android:layout_width="@dimen/room_list_exception_icon_size"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/network_error_text"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/room_list_network_error_message"
+                android:textColor="@color/gray_lighter"/>
         </RelativeLayout>
     </RelativeLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

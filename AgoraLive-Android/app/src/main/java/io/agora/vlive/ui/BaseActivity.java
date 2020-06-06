@@ -359,10 +359,18 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
     }
 
     protected void showShortToast(String message) {
+        showToast(message, Toast.LENGTH_SHORT);
+    }
+
+    protected void showLongToast(String message) {
+        showToast(message, Toast.LENGTH_LONG);
+    }
+
+    protected void showToast(String message, int length) {
         long current = System.currentTimeMillis();
         if (current - mLastToastTime > TOAST_SHORT_INTERVAL) {
             // avoid showing the toast too frequently
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, message, length).show();
             mLastToastTime = current;
         }
     }

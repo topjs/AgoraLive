@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import io.agora.vlive.proxy.interfaces.GeneralService;
 import io.agora.vlive.proxy.interfaces.LiveRoomService;
@@ -53,6 +54,7 @@ class Client {
     private static final String PRODUCT_URL = "https://api-solutions.sh.agoralab.co";
     private static final String MSG_NULL_RESPONSE = "Response content is null";
     private static final int MAX_RESPONSE_THREAD = 10;
+    private static final int DEFAULT_TIMEOUT_IN_SECONDS = 30;
 
     private static final int ERROR_OK = 0;
     private static final int ERROR_CONNECTION = -1;
@@ -66,8 +68,15 @@ class Client {
     private List<ClientProxyListener> mProxyListeners = new ArrayList<>();
 
     Client() {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(DEFAULT_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+                .writeTimeout(DEFAULT_TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
+                .build();
+
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(PRODUCT_URL)
+                .client(okHttpClient)
                 .callbackExecutor(Executors.newFixedThreadPool(MAX_RESPONSE_THREAD))
                 .addConverterFactory(GsonConverterFactory.create());
 
