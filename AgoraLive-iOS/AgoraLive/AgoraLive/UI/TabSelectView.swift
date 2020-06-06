@@ -16,7 +16,7 @@ class TabSelectView: UIScrollView {
         var font: UIFont
     }
     
-    private lazy var  underline: CALayer = {
+    private lazy var underline: CALayer = {
         let line = CALayer()
         line.backgroundColor = underlineColor.cgColor
         return line
@@ -47,7 +47,9 @@ class TabSelectView: UIScrollView {
     var selectedTitle = TitleProperty(color: UIColor.black,
                                       font: UIFont.systemFont(ofSize: 16, weight: .medium))
     
-    var titleSpace: CGFloat = 24.0
+    var titleSpace: CGFloat = 38.0
+    var underlineWidth: CGFloat? = nil
+    var underlineHeight: CGFloat = 5
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -91,9 +93,9 @@ private extension TabSelectView {
                                       drawRange: CGSize(width: 0, height: self.height))
             
             let button = UIButton(frame: CGRect(x: lastButtonMaxX ?? 0,
-                                              y: 0,
-                                              width: textSize.width,
-                                              height: self.height))
+                                                y: 0,
+                                                width: textSize.width,
+                                                height: textSize.height))
             button.setTitle(title, for: .normal)
             button.titleLabel?.font = unselectedTitle.font
             button.tag = index
@@ -123,30 +125,43 @@ private extension TabSelectView {
     
     func updateSelectedButton(_ index: Int) {
         guard let buttons = self.titleButtons else {
-            fatalError("buttons nil")
+            assert(false, "buttons nil")
+            return
         }
         
         for (i, item) in buttons.enumerated() {
             if i == index {
                 item.titleLabel?.font = selectedTitle.font
-                item.tintColor = selectedTitle.color
+                item.setTitleColor(selectedTitle.color, for: .normal)
+                
             } else {
                 item.titleLabel?.font = unselectedTitle.font
-                item.tintColor = unselectedTitle.color
+                item.setTitleColor(unselectedTitle.color, for: .normal)
             }
         }
     }
     
     func updateUnderlinePosition() {
         guard let buttons = self.titleButtons else {
-            fatalError("buttons nil")
+            assert(false, "buttons nil")
+            return
         }
         self.layer.insertSublayer(underline, at: 0)
         let index = selectedIndex.value
         
-        let h: CGFloat = 3.0
-        let x = buttons[index].frame.minX
-        let w = buttons[index].frame.width
+        let h: CGFloat = underlineHeight
+    
+        var x: CGFloat
+        var w: CGFloat
+        
+        if let tW = underlineWidth {
+            x = (buttons[index].frame.width - tW) * 0.5 + buttons[index].frame.minX
+            w = tW
+        } else {
+            x = buttons[index].frame.minX
+            w = buttons[index].frame.width
+        }
+        
         let y = height - h
         
         UIView.animate(withDuration: 0.3) { [unowned self] in

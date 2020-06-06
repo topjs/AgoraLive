@@ -19,6 +19,7 @@ target 'AgoraLive-Dev' do
   pod 'FLAnimatedImage'
   pod 'MBProgressHUD'
   pod 'SVProgressHUD'
+  pod 'AlamoClient', '~> 1.0.1'
   
   source 'https://github.com/CocoaPods/Specs.git'
 end
