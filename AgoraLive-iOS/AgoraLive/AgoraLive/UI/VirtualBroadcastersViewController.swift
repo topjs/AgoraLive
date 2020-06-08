@@ -320,7 +320,7 @@ extension VirtualBroadcastersViewController {
                 switch index.item {
                 case 0: return self.ownerRenderView
                 case 1: return self.broadcasterRenderView
-                default: assert(false)
+                default: assert(false); return UIView()
                 }
             }
         }
