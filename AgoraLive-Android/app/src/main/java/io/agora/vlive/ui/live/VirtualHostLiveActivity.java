@@ -330,6 +330,7 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
                             request.setVirtualAvatar(
                                     virtualImageIdToName(mVirtualImageSelected));
                             sendRequest(Request.MODIFY_SEAT_STATE, request);
+                            curDialog.dismiss();
                         }
                     },
                     v -> curDialog.dismiss());
