@@ -61,6 +61,7 @@ class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameTextField.delegate = self
         nameLabel.text = NSLocalizedString("Create_NameLabel")
         startButton.setTitle(NSLocalizedString("Create_Start"),
                              for: .normal)
@@ -342,6 +343,18 @@ private extension CreateLiveViewController {
         }) { [unowned self] in
             self.hiddenHUD()
             self.showAlert(message:"join live fail")
+        }
+    }
+}
+
+extension CreateLiveViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if range.length == 1 && string.count == 0 {
+            return true
+        } else if let text = textField.text, text.count >= 25 {
+            return false
+        } else {
+            return true
         }
     }
 }

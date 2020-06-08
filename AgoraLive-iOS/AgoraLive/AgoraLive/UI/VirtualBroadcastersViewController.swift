@@ -305,7 +305,7 @@ extension VirtualBroadcastersViewController {
             layout = AGEVideoLayout(level: 0)
         } else {
             let width = UIScreen.main.bounds.width
-            let height = width * 9 / 16
+            let height = width * 10 / 16
             
             layout = AGEVideoLayout(level: 0)
                 .size(.constant(CGSize(width: width, height: height)))
