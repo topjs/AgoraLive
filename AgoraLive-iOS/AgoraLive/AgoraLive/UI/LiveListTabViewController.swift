@@ -147,6 +147,9 @@ private extension LiveListTabViewController {
     }
     
     func updateTabSelectView() {
+        tabView.underlineHeight = 3
+        tabView.titleSpace = 28
+        
         let titles = LiveType.list.map { (item) -> String in
             return item.description
         }

@@ -25,7 +25,6 @@ class TabSelectView: UIScrollView {
     private var titles: [String]?
     private var titleButtons: [UIButton]?
     
-    private let height: CGFloat = 44.0
     private let bag = DisposeBag()
     
     var selectedIndex = BehaviorRelay(value: 0) {
@@ -47,7 +46,7 @@ class TabSelectView: UIScrollView {
     var selectedTitle = TitleProperty(color: UIColor.black,
                                       font: UIFont.systemFont(ofSize: 16, weight: .medium))
     
-    var titleSpace: CGFloat = 38.0
+    var titleSpace: CGFloat = 28.0
     var underlineWidth: CGFloat? = nil
     var underlineHeight: CGFloat = 5
     
@@ -90,7 +89,7 @@ private extension TabSelectView {
         var buttons = [UIButton]()
         for (index, title) in titles.enumerated() {
             let textSize = title.size(font: selectedTitle.font,
-                                      drawRange: CGSize(width: 0, height: self.height))
+                                      drawRange: CGSize(width: 0, height: bounds.height))
             
             let button = UIButton(frame: CGRect(x: lastButtonMaxX ?? 0,
                                                 y: 0,
@@ -162,7 +161,7 @@ private extension TabSelectView {
             w = buttons[index].frame.width
         }
         
-        let y = height - h
+        let y = bounds.height - h
         
         UIView.animate(withDuration: 0.3) { [unowned self] in
             self.underline.frame = CGRect(x: x,

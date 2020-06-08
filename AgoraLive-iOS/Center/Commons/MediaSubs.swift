@@ -176,7 +176,7 @@ class Player: NSObject, AGELogBase {
     
     func startMixingFileAudio(url: String, finish: (() -> Void)? = nil) {
         self.mixFileAudioFinish = finish
-        agoraKit.startAudioMixing(url, loopback: true, replace: false, cycle: 1)
+        agoraKit.startAudioMixing(url, loopback: false, replace: false, cycle: 1)
     }
     
     func pauseMixFileAudio() {

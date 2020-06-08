@@ -273,10 +273,6 @@ extension PKBroadcastersViewController {
         }
         
         session.end.subscribe(onNext: { [unowned self] (_) in
-            guard !owner.isLocal else {
-                return
-            }
-            
             self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
                 self.leave()
             }
