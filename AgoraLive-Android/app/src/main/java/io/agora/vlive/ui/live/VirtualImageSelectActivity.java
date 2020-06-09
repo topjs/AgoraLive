@@ -2,10 +2,12 @@ package io.agora.vlive.ui.live;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import io.agora.vlive.R;
@@ -13,6 +15,8 @@ import io.agora.vlive.ui.BaseActivity;
 import io.agora.vlive.utils.Global;
 
 public class VirtualImageSelectActivity extends BaseActivity implements View.OnClickListener {
+    public static final int PREPARE_REQUEST_CODE = 1;
+
     private static final int AUDIENCE_RESULT_CODE = 2;
 
     private AppCompatImageView mSelectedImage;
@@ -99,7 +103,7 @@ public class VirtualImageSelectActivity extends BaseActivity implements View.OnC
         intent.putExtra(Global.Constants.KEY_VIRTUAL_IMAGE, mSelected);
         if (intent.getBooleanExtra(Global.Constants.KEY_CREATE_ROOM, false)) {
             intent.setClass(getApplicationContext(), LivePrepareActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, PREPARE_REQUEST_CODE);
         } else if (mFromAudience) {
             setResult(AUDIENCE_RESULT_CODE, intent);
             finish();
@@ -131,6 +135,15 @@ public class VirtualImageSelectActivity extends BaseActivity implements View.OnC
             mSelectedImage.setImageResource(R.drawable.virtual_image_girl);
             mDogLayout.setBackgroundResource(R.drawable.virtual_image_option_bg_normal);
             mGirlLayout.setBackgroundResource(R.drawable.virtual_image_option_bg_selected);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PREPARE_REQUEST_CODE &&
+            resultCode == LivePrepareActivity.RESULT_GO_LIVE) {
+            finish();
         }
     }
 }

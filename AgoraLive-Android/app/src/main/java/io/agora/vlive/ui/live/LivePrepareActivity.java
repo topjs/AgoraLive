@@ -35,6 +35,8 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         BeautySettingActionSheet.BeautyActionSheetListener,
         LiveRoomSettingActionSheet.LiveRoomSettingActionSheetListener {
 
+    public static final int RESULT_GO_LIVE = 2;
+
     private static final String TAG = LivePrepareActivity.class.getSimpleName();
     private static final int MAX_NAME_LENGTH = 25;
 
@@ -245,6 +247,9 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
         intent.putExtra(Global.Constants.KEY_ROOM_NAME, mEditText.getText().toString());
         startActivity(intent);
+        // If we go live, we send a message to image select
+        // activity that it does need to keep track in stack
+        setResult(RESULT_GO_LIVE);
         mCameraPersist = true;
         finish();
     }
