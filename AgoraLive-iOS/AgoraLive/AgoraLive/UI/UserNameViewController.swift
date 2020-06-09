@@ -44,6 +44,7 @@ private extension UserNameViewController {
         doneButton.addTarget(self, action: #selector(didDonePressed), for: .touchUpInside)
         doneButton.setTitle(NSLocalizedString("Done"), for: .normal)
         doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        doneButton.titleLabel?.adjustsFontSizeToFitWidth = true
         doneButton.setTitleColor(UIColor.white, for: .normal)
         doneButton.backgroundColor = UIColor(hexString: "#008AF3")
         doneButton.cornerRadius(4)

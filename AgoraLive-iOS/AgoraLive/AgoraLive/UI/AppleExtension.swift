@@ -95,8 +95,18 @@ extension TimeInterval {
     static let animation: TimeInterval = 0.3
 }
 
-extension UIViewController {
+protocol PresentChildProtocol where Self: UIViewController {
+    var presentingChild: UIViewController? {get set}
+    func presentChild(_ viewController: UIViewController, animated flag: Bool, presentedFrame: CGRect)
+    func dismissChild(_ viewController: UIViewController, animated flag: Bool)
+}
+
+extension PresentChildProtocol {
     func presentChild(_ viewController: UIViewController, animated flag: Bool, presentedFrame: CGRect) {
+        if let child = presentingChild {
+            dismissChild(child, animated: false)
+        }
+        
         self.view.addSubview(viewController.view)
         
         let originRect = CGRect(x: presentedFrame.origin.x,
@@ -141,191 +151,9 @@ extension UIViewController {
     }
 }
 
-class MaskTabBarController: UITabBarController {
-    private var hud: MBProgressHUD?
-    private var maskTapBlock: (() -> Void)?
-    private var toastView: UIView?
-    private var toastWork: AfterWorker?
-    
-    private(set) var maskView: UIControl = {
-        let view = UIControl()
-        view.isSelected = false
-        view.backgroundColor = UIColor(red: 0.0,
-                                       green: 0.0,
-                                       blue: 0.0,
-                                       alpha: 0.7)
-        let w = UIScreen.main.bounds.width
-        let h = UIScreen.main.bounds.height
-        view.frame = CGRect(x: 0,
-                            y: 0,
-                            width: w,
-                            height: h)
-        view.addTarget(self, action: #selector(tapMaskView(_:)), for: .touchUpInside)
-        view.isHidden = true
-        return view
-    }()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        view.endEditing(true)
-    }
-    
-    func showMaskView(color: UIColor = UIColor(red: 0.0,
-                                               green: 0.0,
-                                               blue: 0.0,
-                                               alpha: 0.7), tap: (() -> Void)? = nil) {
-        self.maskTapBlock = tap
-        maskView.isHidden = false
-        maskView.backgroundColor = color
-        self.view.addSubview(maskView)
-    }
-    
-    func hiddenMaskView() {
-        self.maskTapBlock = nil
-        maskView.isHidden = true
-        maskView.removeFromSuperview()
-    }
-    
-    @objc private func tapMaskView(_ mask: UIControl) {
-        if let maskTapBlock = maskTapBlock {
-            maskTapBlock()
-        }
-    }
-    
-    func showHUD() {
-        guard self.hud == nil else {
-            return
-        }
-        
-        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        self.hud?.show(animated: true)
-    }
-    
-    func hiddenHUD() {
-        self.hud?.hide(animated: true)
-        self.hud = nil
-    }
-    
-    func showToastView(_ view: UIView? = nil, position: CGPoint, duration: TimeInterval = TimeInterval.animation) {
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
-        
-        if let worker = toastWork {
-            self.toastView?.removeFromSuperview()
-            worker.cancel()
-        }
-        
-        toastWork = AfterWorker()
-        
-        if view == nil {
-            self.toastView = ToastView(frame: CGRect.zero)
-        } else {
-            self.toastView = view
-        }
-        
-        self.toastView?.center = position
-        window.addSubview(self.toastView!)
-        
-        toastWork?.perform(after: duration, on: DispatchQueue.main, { [unowned self] in
-            self.toastView?.removeFromSuperview()
-        })
-    }
-}
-
-class MaskViewController: UIViewController {
-    private var hud: MBProgressHUD?
-    private var maskTapBlock: (() -> Void)?
-    private var toastView: UIView?
-    private var toastWork: AfterWorker?
-    
-    private(set) var maskView: UIControl = {
-        let view = UIControl()
-        view.isSelected = false
-        view.backgroundColor = UIColor(red: 0.0,
-                                       green: 0.0,
-                                       blue: 0.0,
-                                       alpha: 0.7)
-        let w = UIScreen.main.bounds.width
-        let h = UIScreen.main.bounds.height
-        view.frame = CGRect(x: 0,
-                            y: 0,
-                            width: w,
-                            height: h)
-        view.addTarget(self, action: #selector(tapMaskView(_:)), for: .touchUpInside)
-        view.isHidden = true
-        return view
-    }()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        view.endEditing(true)
-    }
-    
-    func showMaskView(color: UIColor = UIColor(red: 0.0,
-                                               green: 0.0,
-                                               blue: 0.0,
-                                               alpha: 0.7), tap: (() -> Void)? = nil) {
-        self.maskTapBlock = tap
-        maskView.isHidden = false
-        maskView.backgroundColor = color
-        self.view.addSubview(maskView)
-    }
-    
-    func hiddenMaskView() {
-        self.maskTapBlock = nil
-        maskView.isHidden = true
-        maskView.removeFromSuperview()
-    }
-    
-    @objc private func tapMaskView(_ mask: UIControl) {
-        if let maskTapBlock = maskTapBlock {
-            maskTapBlock()
-        }
-    }
-    
-    func showHUD() {
-        guard self.hud == nil else {
-            return
-        }
-        
-        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        self.hud?.show(animated: true)
-    }
-    
-    func hiddenHUD() {
-        self.hud?.hide(animated: true)
-        self.hud = nil
-    }
-    
-    func showToastView(_ view: UIView? = nil, position: CGPoint, duration: TimeInterval = TimeInterval.animation) {
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
-        
-        if let worker = toastWork {
-            self.toastView?.removeFromSuperview()
-            worker.cancel()
-        }
-        
-        toastWork = AfterWorker()
-        
-        if view == nil {
-            self.toastView = ToastView(frame: CGRect.zero)
-        } else {
-            self.toastView = view
-        }
-        
-        self.toastView?.center = position
-        window.addSubview(self.toastView!)
-        
-        toastWork?.perform(after: duration, on: DispatchQueue.main, { [unowned self] in
-            self.toastView?.removeFromSuperview()
-        })
-    }
-}
-
 protocol ShowAlertProtocol: UIViewController {
+    var presentingAlert: UIAlertController? {get set}
+    
     func showAlert(_ title: String?, message: String?, handler: ((UIAlertAction) -> Void)?)
     func showAlert(_ title: String?, message: String?, preferredStyle: UIAlertController.Style, action1: String, action2: String, handler1: ((UIAlertAction) -> Void)?, handler2: ((UIAlertAction) -> Void)?)
     func showAlert(_ title: String?, message: String?, preferredStyle: UIAlertController.Style, actions: [UIAlertAction]?, completion: Completion)
@@ -345,6 +173,10 @@ extension ShowAlertProtocol {
     
     func showAlert(_ title: String? = nil, message: String? = nil, preferredStyle: UIAlertController.Style = .alert, actions: [UIAlertAction]? = nil, completion: Completion) {
         view.endEditing(true)
+        
+        if let alert = presentingAlert {
+            alert.dismiss(animated: false, completion: nil)
+        }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         var tActions: [UIAlertAction]
@@ -389,5 +221,195 @@ extension NotificationCenter {
                 listening(callbackParameter)
             }
         }
+    }
+}
+
+class MaskViewController: UIViewController, ShowAlertProtocol, PresentChildProtocol {
+    var presentingChild: UIViewController? = nil
+    var presentingAlert: UIAlertController? = nil
+    
+    private var hud: MBProgressHUD?
+    private var maskTapBlock: (() -> Void)?
+    private var toastView: UIView?
+    private var toastWork: AfterWorker?
+    
+    private(set) var maskView: UIControl = {
+        let view = UIControl()
+        view.isSelected = false
+        view.backgroundColor = UIColor(red: 0.0,
+                                       green: 0.0,
+                                       blue: 0.0,
+                                       alpha: 0.7)
+        let w = UIScreen.main.bounds.width
+        let h = UIScreen.main.bounds.height
+        view.frame = CGRect(x: 0,
+                            y: 0,
+                            width: w,
+                            height: h)
+        view.addTarget(self, action: #selector(tapMaskView(_:)), for: .touchUpInside)
+        view.isHidden = true
+        return view
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.endEditing(true)
+    }
+    
+    func showMaskView(color: UIColor = UIColor(red: 0.0,
+                                               green: 0.0,
+                                               blue: 0.0,
+                                               alpha: 0.7), tap: (() -> Void)? = nil) {
+        self.maskTapBlock = tap
+        maskView.isHidden = false
+        maskView.backgroundColor = color
+        self.view.addSubview(maskView)
+    }
+    
+    func hiddenMaskView() {
+        self.maskTapBlock = nil
+        maskView.isHidden = true
+        maskView.removeFromSuperview()
+    }
+    
+    @objc private func tapMaskView(_ mask: UIControl) {
+        if let maskTapBlock = maskTapBlock {
+            maskTapBlock()
+        }
+    }
+    
+    func showHUD() {
+        guard self.hud == nil else {
+            return
+        }
+        
+        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.hud?.show(animated: true)
+    }
+    
+    func hiddenHUD() {
+        self.hud?.hide(animated: true)
+        self.hud = nil
+    }
+    
+    func showToastView(_ view: UIView? = nil, position: CGPoint, duration: TimeInterval = TimeInterval.animation) {
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+        
+        if let worker = toastWork {
+            self.toastView?.removeFromSuperview()
+            worker.cancel()
+        }
+        
+        toastWork = AfterWorker()
+        
+        if view == nil {
+            self.toastView = ToastView(frame: CGRect.zero)
+        } else {
+            self.toastView = view
+        }
+        
+        self.toastView?.center = position
+        window.addSubview(self.toastView!)
+        
+        toastWork?.perform(after: duration, on: DispatchQueue.main, { [unowned self] in
+            self.toastView?.removeFromSuperview()
+        })
+    }
+}
+
+class MaskTabBarController: UITabBarController, ShowAlertProtocol, PresentChildProtocol {
+    var presentingChild: UIViewController? = nil
+    var presentingAlert: UIAlertController? = nil
+    
+    private var hud: MBProgressHUD?
+    private var maskTapBlock: (() -> Void)?
+    private var toastView: UIView?
+    private var toastWork: AfterWorker?
+    
+    private(set) var maskView: UIControl = {
+        let view = UIControl()
+        view.isSelected = false
+        view.backgroundColor = UIColor(red: 0.0,
+                                       green: 0.0,
+                                       blue: 0.0,
+                                       alpha: 0.7)
+        let w = UIScreen.main.bounds.width
+        let h = UIScreen.main.bounds.height
+        view.frame = CGRect(x: 0,
+                            y: 0,
+                            width: w,
+                            height: h)
+        view.addTarget(self, action: #selector(tapMaskView(_:)), for: .touchUpInside)
+        view.isHidden = true
+        return view
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.endEditing(true)
+    }
+    
+    func showMaskView(color: UIColor = UIColor(red: 0.0,
+                                               green: 0.0,
+                                               blue: 0.0,
+                                               alpha: 0.7), tap: (() -> Void)? = nil) {
+        self.maskTapBlock = tap
+        maskView.isHidden = false
+        maskView.backgroundColor = color
+        self.view.addSubview(maskView)
+    }
+    
+    func hiddenMaskView() {
+        self.maskTapBlock = nil
+        maskView.isHidden = true
+        maskView.removeFromSuperview()
+    }
+    
+    @objc private func tapMaskView(_ mask: UIControl) {
+        if let maskTapBlock = maskTapBlock {
+            maskTapBlock()
+        }
+    }
+    
+    func showHUD() {
+        guard self.hud == nil else {
+            return
+        }
+        
+        self.hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.hud?.show(animated: true)
+    }
+    
+    func hiddenHUD() {
+        self.hud?.hide(animated: true)
+        self.hud = nil
+    }
+    
+    func showToastView(_ view: UIView? = nil, position: CGPoint, duration: TimeInterval = TimeInterval.animation) {
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+        
+        if let worker = toastWork {
+            self.toastView?.removeFromSuperview()
+            worker.cancel()
+        }
+        
+        toastWork = AfterWorker()
+        
+        if view == nil {
+            self.toastView = ToastView(frame: CGRect.zero)
+        } else {
+            self.toastView = view
+        }
+        
+        self.toastView?.center = position
+        window.addSubview(self.toastView!)
+        
+        toastWork?.perform(after: duration, on: DispatchQueue.main, { [unowned self] in
+            self.toastView?.removeFromSuperview()
+        })
     }
 }

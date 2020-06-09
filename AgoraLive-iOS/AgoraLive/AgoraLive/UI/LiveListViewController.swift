@@ -33,8 +33,8 @@ class PlaceHolderView: UIView {
                 lostConnectionDescLabel.isHidden = true
             case .lostConnection:
                 imageView.image = UIImage(named: "pic-Nosignal")
-                lostConnectionLabel.text = NSLocalizedString("LostConnection")
-                lostConnectionDescLabel.text = NSLocalizedString("LostConnectionDescription")
+                lostConnectionLabel.text = NSLocalizedString("Lost_Connection")
+                lostConnectionDescLabel.text = NSLocalizedString("Lost_Connection_Description")
                 createRoomLabel.isHidden = true
                 lostConnectionLabel.isHidden = false
                 lostConnectionDescLabel.isHidden = false

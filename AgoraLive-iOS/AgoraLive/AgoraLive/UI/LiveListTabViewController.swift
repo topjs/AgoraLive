@@ -13,7 +13,7 @@ import MJRefresh
 import MBProgressHUD
 import AgoraRtcKit
 
-class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
+class LiveListTabViewController: MaskViewController {
     @IBOutlet weak var tabView: TabSelectView!
     @IBOutlet weak var createButton: UIButton!
     
@@ -59,11 +59,21 @@ class LiveListTabViewController: MaskViewController, ShowAlertProtocol {
         switch segueId {
         case "LiveListViewController":
             listVC = segue.destination as? LiveListViewController
+        case "CreateLiveNavigation":
+            guard let sender = sender,
+                let type = sender as? LiveType else {
+                    assert(false)
+                    return
+            }
+            
+            let vc = segue.destination as? CreateLiveViewController
+            vc?.liveType = type
         case "MultiBroadcastersViewController":
             guard let sender = sender,
                 let info = sender as? LiveSession.JoinedInfo,
                 let seatInfo = info.seatInfo else {
-                fatalError()
+                    assert(false)
+                    return
             }
             
             let vc = segue.destination as? MultiBroadcastersViewController
@@ -139,7 +149,7 @@ private extension LiveListTabViewController {
         
         createButton.rx.tap.subscribe(onNext: { [unowned self] in
             if self.listVM.presentingType != .virtualBroadcasters {
-                self.performSegue(withIdentifier: "CreateLiveNavigation", sender: nil)
+                self.performSegue(withIdentifier: "CreateLiveNavigation", sender: self.listVM.presentingType)
             } else {
                 self.performSegue(withIdentifier: "VirtualCreatNavigation", sender: nil)
             }

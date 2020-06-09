@@ -161,9 +161,10 @@ private extension MineViewController {
             fatalError()
         }
         
-        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 44))
+        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 69, height: 44))
         backButton.setTitle(NSLocalizedString("Cancel"), for: .normal)
         backButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        backButton.titleLabel?.adjustsFontSizeToFitWidth = true
         backButton.setTitleColor(UIColor(hexString: "#333333"), for: .normal)
         navigation.setupBarOthersColor(color: UIColor.white)
         navigation.backButton = backButton

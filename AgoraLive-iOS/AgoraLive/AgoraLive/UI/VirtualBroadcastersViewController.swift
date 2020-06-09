@@ -64,6 +64,7 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
     var enhancementVM = VideoEnhancementVM()
     var seatVM: LiveSeatVM!
     var virtualVM: VirtualVM!
+    var monitor = NetworkMonitor(host: "www.apple.com")
     
     override func viewDidLoad() {
         super.viewDidLoad()

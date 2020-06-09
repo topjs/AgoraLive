@@ -34,7 +34,7 @@ struct RandomName {
     }
 }
 
-class CreateLiveViewController: MaskViewController, ShowAlertProtocol {
+class CreateLiveViewController: MaskViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameBgView: UIView!

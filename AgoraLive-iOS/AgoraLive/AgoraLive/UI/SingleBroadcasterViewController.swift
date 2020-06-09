@@ -57,6 +57,7 @@ class SingleBroadcasterViewController: MaskViewController, LiveViewController {
     var deviceVM = MediaDeviceVM()
     var playerVM = PlayerVM()
     var enhancementVM = VideoEnhancementVM()
+    var monitor = NetworkMonitor(host: "www.apple.com")
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,7 +15,7 @@ protocol RxViewController where Self: UIViewController {
     var bag: DisposeBag {get set}
 }
 
-protocol LiveViewController: RxViewController, ShowAlertProtocol where Self: MaskViewController {
+protocol LiveViewController: RxViewController where Self: MaskViewController {
     var tintColor: UIColor {get set}
     
     var chatInputView: ChatInputView {get set}
@@ -43,6 +43,7 @@ protocol LiveViewController: RxViewController, ShowAlertProtocol where Self: Mas
     var deviceVM: MediaDeviceVM {get set}
     var playerVM: PlayerVM {get set}
     var enhancementVM: VideoEnhancementVM {get set}
+    var monitor: NetworkMonitor {get set}
 }
 
 // MARK: VM
@@ -121,6 +122,17 @@ extension LiveViewController {
         musicVM.refetch()
         musicVM.isPlaying.subscribe(onNext: { [unowned self] (isPlaying) in
             self.bottomToolsVC?.musicButton.isSelected = isPlaying
+        }).disposed(by: bag)
+    }
+    
+    // MARK: - Net Monitor
+    func netMonitor() {
+        monitor.action(.on)
+        monitor.connect.subscribe(onNext: { [unowned self] (status) in
+            switch status {
+            case .notReachable, .unknown: break
+            case .reachable:              break
+            }
         }).disposed(by: bag)
     }
 }
@@ -323,17 +335,17 @@ extension LiveViewController {
         
         // Invite VC
         listVC.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [unowned self, unowned listVC] in
-            self.audienceListVM.refetch(roomId: roomId, onlyAudience: isOnlyAudience, success: {
+            self.audienceListVM.refetch(roomId: roomId, onlyAudience: isOnlyAudience, success: { [unowned listVC] in
                 listVC.tableView.mj_header?.endRefreshing()
-            }) { // fail
+            }) { [unowned listVC] in // fail
                 listVC.tableView.mj_header?.endRefreshing()
             }
         })
         
         listVC.tableView.mj_footer = MJRefreshBackFooter(refreshingBlock: { [unowned self, unowned listVC] in
-            self.audienceListVM.fetch(roomId: roomId, onlyAudience: isOnlyAudience, success: {
+            self.audienceListVM.fetch(roomId: roomId, onlyAudience: isOnlyAudience, success: { [unowned listVC] in
                 listVC.tableView.mj_footer?.endRefreshing()
-            }) { // fail
+            }) { [unowned listVC] in // fail
                 listVC.tableView.mj_footer?.endRefreshing()
             }
         })

@@ -12,25 +12,28 @@ Confirm="Confirm";
 Reject="Reject";
 End="End";
 
-LostConnection="网络异常";
-LostConnectionDescription="当前网络连接错误，请稍后再试";
+Lost_Connection="Network error";
+Lost_Connection_Description="We cannot connect to network now. Please retry later";
+
+Lost_Connection_Retry="Connection lost. Please retry later.";
+Use_Cellular_Data="Use cellular data instead of WIFI. May incur data charges.";
 
 // Main Page
-Multi_Broadcasters="Multi-Hosted Live Streaming";
-Multi_Broadcasters_Description="Live streaming featuring audience participation";
-Single_Broadcaster="Solo-hosted Live Streaming";
+Multi_Broadcasters="Multi Hosts";
+Multi_Broadcasters_Description="Invite others to co-host in broadcasting channel";
+Single_Broadcaster="Solo Host";
 Single_Broadcaster_Description="Live streaming by single host";
-PK_Live="PK Host-in Live Streaming";
-PK_Live_Description="Two hosts from different channels interact in a merged video stream for broadcasting. ";
-Virtual_Live="Virtual-hosted Live Streaming";
-Comming_Soon="Comming Soon";
+PK_Live="PK Host-in";
+PK_Live_Description="Merge streams from 2 channels for broadcasting";
+Virtual_Live="Virtual Host";
+Virtual_Live_Description="Avatar-based simulation for call or broadcasting";
 
 // Create Room Page
 Create_A_Live_Room="Create a room to start";
 Create_Start="Go Live";
 Create_NameLabel="Channel name: ";
 
-Virtual_Appearance_Select="请选择一个形象";
+Virtual_Appearance_Select="Please select an avatar";
 
 // Mine
 Mine_Head="Profile";
@@ -42,21 +45,21 @@ Resolution="Resolution";
 FrameRate="Frame rate";
 BitRate="Bitrate";
 
-Switch_Camera="Switch camera";
+Switch_Camera="Switch";
 Camera="Camera";
 Mic="Mic";
-Audio_Loop="Listen to mic";
+Audio_Loop="Mic loop";
 
 Beauty="Image enhancement";
-BlurLevel="Skin smooth";
-ColorLevel="Whiten";
-CheekThining="Cheek thining";
-EyeEnlarging="Eye enlarging";
+BlurLevel="Smooth";
+ColorLevel="Brighten";
+CheekThining="Thinning";
+EyeEnlarging="Eye";
 
 // Live Room
 Live_Room="Channel";
 Live_Text_Input_Placeholder="Say something...";
-Live_Room_Settings="Channel settings";
+Live_Room_Settings="Settings";
 BGM="Background music";
 Tool="Tools";
 Real_Data="Statistics";
@@ -75,7 +78,7 @@ Please_Input_Headset="Plug in a headphone";
 Super_Resolution_Enabled="Super Resolution enabled";
 
 // Live Seat
-Invite_Broadcasting="Invite a host";
+Invite_Broadcasting="Invite host";
 Seat_Ban="Mute";
 Seat_Unban="Un-mute";
 Owner_Forces_You_End_Broadcasting="Owner forces you end broadcasting";
@@ -85,7 +88,6 @@ End_Broadcasting="End hosting";
 Apply_For_Broadcasting="Become a host";
 Force_To_Audience="End hosting";
 Force_To_Audience_Message="将下麦?";
-Invite_A_Broadcast="Invite a host";
 Became_A_Host="became a host";
 Stopped_Hosting="stopped hosting";
 
@@ -128,5 +130,5 @@ Confirm_Apply_For_Broadcasting="你确定要\“申请上麦\”吗？";
 Broadcasting_Invitation="上麦邀请";
 Confirm_Broadcasting_Invitation="邀请您上麦是否接受？";
 
-Ending_Broadcasting="终止连麦";
-Confirm_Ending_Broadcasting="确定终止连麦？";
+Ending_Broadcasting="End";
+Confirm_Ending_Broadcasting="Are you sure to end this?";

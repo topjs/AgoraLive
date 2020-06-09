@@ -63,6 +63,7 @@ class MultiBroadcastersViewController: MaskViewController, LiveViewController {
     var deviceVM = MediaDeviceVM()
     var playerVM = PlayerVM()
     var enhancementVM = VideoEnhancementVM()
+    var monitor = NetworkMonitor(host: "www.apple.com")
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -405,7 +406,7 @@ private extension MultiBroadcastersViewController {
             let audience = localRole as! LiveAudience
             
             seatVM.receivedOwnerInvitation.subscribe(onNext: {[unowned self] (userSeat) in
-                self.showAlert(NSLocalizedString("Invite_A_Broadcast"),
+                self.showAlert(NSLocalizedString("Invite_Broadcasting"),
                                action1: NSLocalizedString("Reject"),
                                action2: NSLocalizedString("Confirm"),
                                handler1: {[unowned self] (_) in

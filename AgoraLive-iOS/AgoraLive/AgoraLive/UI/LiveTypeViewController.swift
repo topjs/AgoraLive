@@ -52,7 +52,7 @@ class LiveTypeViewController: MaskViewController {
                    description: NSLocalizedString("Multi_Broadcasters_Description")),
             `Type`(background: UIImage(named: "pic-虚拟直播")!,
                    title: NSLocalizedString("Virtual_Live"),
-                   description: NSLocalizedString("Comming_Soon")),
+                   description: NSLocalizedString("Virtual_Live_Description")),
         ])
     }
     

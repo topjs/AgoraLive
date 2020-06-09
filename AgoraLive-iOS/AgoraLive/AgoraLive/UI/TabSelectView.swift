@@ -162,6 +162,8 @@ private extension TabSelectView {
         }
         
         let y = bounds.height - h
+        let offsetX: CGFloat = ((x + w) - bounds.width) >= 0 ? ((x + w) - bounds.width) : 0
+        self.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
         
         UIView.animate(withDuration: 0.3) { [unowned self] in
             self.underline.frame = CGRect(x: x,

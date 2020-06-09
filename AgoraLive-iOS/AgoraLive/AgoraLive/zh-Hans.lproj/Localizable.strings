@@ -13,8 +13,11 @@ Confirm="确定";
 Reject="拒绝";
 End="结束";
 
-LostConnection="网络异常";
-LostConnectionDescription="当前网络连接错误，请稍后再试";
+Lost_Connection="网络异常";
+Lost_Connection_Description="当前网络连接错误，请稍后再试";
+
+Lost_Connection_Retry="网络不给力，请稍后再试";
+Use_Cellular_Data="当前网络无WIFI，继续使用可能产生流量费用";
 
 // Main Page
 Multi_Broadcasters="多人连麦直播";
@@ -24,7 +27,6 @@ Single_Broadcaster_Description="单主播直播";
 PK_Live="PK直播";
 PK_Live_Description="两个不同直播间的主播跨频道连麦PK，引爆直播间";
 Virtual_Live="虚拟主播";
-Comming_Soon="Comming Soon";
 
 // Create Room Page
 Create_A_Live_Room="请创建一个房间";
@@ -86,7 +88,6 @@ End_Broadcasting="下麦";
 Apply_For_Broadcasting="申请上麦";
 Force_To_Audience="下麦";
 Force_To_Audience_Message="将下麦?";
-Invite_A_Broadcast="邀请上麦";
 Became_A_Host="上麦";
 Stopped_Hosting="下麦";
 

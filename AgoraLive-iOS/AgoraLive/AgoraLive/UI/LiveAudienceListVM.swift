@@ -117,11 +117,15 @@ class LiveRoomAudienceList: NSObject {
                                header: ["token": ALKeys.ALUserToken],
                                parameters: parameters)
         
-        let successCallback: DicEXCompletion = { [unowned self] (json: ([String: Any])) in
+        let successCallback: DicEXCompletion = { [weak self] (json: ([String: Any])) in
+            guard let strongSelf = self else {
+                return
+            }
+            
             let data = try json.getDataObject()
             let listJson = try data.getListValue(of: "list")
             let list = try Array(dicList: listJson)
-            self.list.accept(list)
+            strongSelf.list.accept(list)
             
             if let success = success {
                 success()
