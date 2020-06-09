@@ -20,26 +20,15 @@ rm -rf *.xcarchive
 BUILD_DATE=`date +%Y-%m-%d-%H.%M.%S`
 ArchivePath=${APP_TARGET}-${BUILD_DATE}.xcarchive
 
-if [[ $APP_TARGET =~ "Release" ]] 
+if [[ $MODE =~ "Release" ]] 
 then
 Export_Plist_File=exportPlist_release.plist
-elif [[ $APP_TARGET =~ "QA" ]] 
+elif [[ $MODE =~ "QA" ]] 
 then
 Export_Plist_File=exportPlist_qa.plist
 else 
 Export_Plist_File=exportPlist.plist
 fi
-
-if [[ $MODE =~ "Debug" ]] 
-then
-    if [[ $APP_TARGET =~ "Release" ]] 
-    then
-    Export_Plist_File=exportPlist.plist
-    fi    
-MODE=Debug
-else 
-MODE=Release
-fi 
 
 TARGET_FILE=""
 if [ ! -f "Podfile" ];then
