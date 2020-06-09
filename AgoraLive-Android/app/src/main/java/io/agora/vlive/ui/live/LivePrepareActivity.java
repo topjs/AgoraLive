@@ -310,6 +310,15 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
+        boolean fromVirtualImage = getIntent().getBooleanExtra(
+                VirtualImageSelectActivity.
+                KEY_FROM_VIRTUAL_IMAGE, false);
+
+        if (fromVirtualImage) {
+            finish();
+            return;
+        }
+
         mExitDialog = showDialog(R.string.finish_broadcast_title_owner,
                 R.string.finish_broadcast_message_owner, view -> {
                     dismissDialog();

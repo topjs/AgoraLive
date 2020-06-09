@@ -16,6 +16,7 @@ import io.agora.vlive.utils.Global;
 
 public class VirtualImageSelectActivity extends BaseActivity implements View.OnClickListener {
     public static final int PREPARE_REQUEST_CODE = 1;
+    public static final String KEY_FROM_VIRTUAL_IMAGE = "from-virtual-image";
 
     private static final int AUDIENCE_RESULT_CODE = 2;
 
@@ -103,6 +104,7 @@ public class VirtualImageSelectActivity extends BaseActivity implements View.OnC
         intent.putExtra(Global.Constants.KEY_VIRTUAL_IMAGE, mSelected);
         if (intent.getBooleanExtra(Global.Constants.KEY_CREATE_ROOM, false)) {
             intent.setClass(getApplicationContext(), LivePrepareActivity.class);
+            intent.putExtra(KEY_FROM_VIRTUAL_IMAGE, true);
             startActivityForResult(intent, PREPARE_REQUEST_CODE);
         } else if (mFromAudience) {
             setResult(AUDIENCE_RESULT_CODE, intent);
