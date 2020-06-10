@@ -176,7 +176,6 @@ extension MultiBroadcastersViewController {
             guard let session = ALCenter.shared().liveSession,
                 let local = session.role,
                 local.agoraUserId == user.agoraUserId else {
-                    assert(false)
                     return
             }
             

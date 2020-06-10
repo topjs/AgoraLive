@@ -61,13 +61,14 @@ class LiveListTabViewController: MaskViewController {
             listVC = segue.destination as? LiveListViewController
         case "CreateLiveNavigation":
             guard let sender = sender,
-                let type = sender as? LiveType else {
+                let type = sender as? LiveType,
+                let navi = segue.destination as? UINavigationController,
+                let vc = navi.viewControllers.first as? CreateLiveViewController else {
                     assert(false)
                     return
             }
             
-            let vc = segue.destination as? CreateLiveViewController
-            vc?.liveType = type
+            vc.liveType = type
         case "MultiBroadcastersViewController":
             guard let sender = sender,
                 let info = sender as? LiveSession.JoinedInfo,

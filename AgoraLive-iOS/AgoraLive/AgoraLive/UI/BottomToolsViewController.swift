@@ -175,6 +175,8 @@ private extension BottomToolsViewController {
         superRenderButton.isHidden = true
         
         switch (liveType, perspective) {
+        case (.pkBroadcasters, .owner): fallthrough
+        case (.singleBroadcaster, .owner): fallthrough
         case (.multiBroadcasters, .owner):
             beautyButton.isHidden = false
             musicButton.isHidden = false
