@@ -60,7 +60,7 @@
     <!-- Virtual Host -->
     <string name="live_virtual_image_select_title">请选择一个形象</string>
     <string name="live_virtual_image_select_confirm">确定</string>
-    <string name="live_virtual_image_invite">邀请</string>
+    <string name="live_virtual_image_invite">邀请上上麦</string>
     <string name="live_virtual_image_stop_invite">终止连麦</string>
     <string name="live_virtual_image_stop_invite_message">您确定要终止连麦么？</string>
 
