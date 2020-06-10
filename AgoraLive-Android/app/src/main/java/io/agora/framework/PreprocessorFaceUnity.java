@@ -11,6 +11,8 @@ import io.agora.framework.modules.channels.VideoChannel;
 import io.agora.framework.modules.processors.IPreprocessor;
 
 public class PreprocessorFaceUnity implements IPreprocessor {
+    public final static int MSG_EFFECT_BUNDLE_COMPLETE = 1;
+
     private final static String TAG = PreprocessorFaceUnity.class.getSimpleName();
     private final static int ANIMOJI_COUNT = 2;
 
@@ -25,6 +27,12 @@ public class PreprocessorFaceUnity implements IPreprocessor {
     private Effect mEffectNone;
     private Effect mEffectBackground;
     private Effect[] mAnimojiEffects;
+
+    private OnFuEffectBundleLoadedListener mBundleListener;
+
+    public interface OnFuEffectBundleLoadedListener {
+        void onFuEffectBundleLoaded();
+    }
 
     public PreprocessorFaceUnity(Context context) {
         mContext = context;
@@ -56,6 +64,13 @@ public class PreprocessorFaceUnity implements IPreprocessor {
         mFURenderer.onColorLevelSelected(DEFAULT_WHITEN_VALUE);
         mFURenderer.onCheekVSelected(DEFAULT_CHEEK_VALUE);
         mFURenderer.onEyeEnlargeSelected(DEFAULT_EYE_VALUE);
+
+        mFURenderer.setOnBundleLoadCompleteListener(what -> {
+            if (what == MSG_EFFECT_BUNDLE_COMPLETE &&
+                    mBundleListener != null) {
+                mBundleListener.onFuEffectBundleLoaded();
+            }
+        });
         initAnimoji();
     }
 
@@ -72,6 +87,10 @@ public class PreprocessorFaceUnity implements IPreprocessor {
         mEffectBackground = new Effect("white_bg.bundle",
                 -1, "white_bg.bundle", 1,
                 Effect.EFFECT_TYPE_ANIMOJI, 0);
+    }
+
+    public void setOnBundleLoadedListener(OnFuEffectBundleLoadedListener listener) {
+        mBundleListener = listener;
     }
 
     public void onAnimojiSelected(int index) {

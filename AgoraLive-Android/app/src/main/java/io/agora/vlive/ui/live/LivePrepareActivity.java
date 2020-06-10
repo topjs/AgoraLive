@@ -23,10 +23,10 @@ import io.agora.capture.video.camera.VideoModule;
 import io.agora.capture.video.camera.CameraVideoChannel;
 import io.agora.framework.PreprocessorFaceUnity;
 import io.agora.framework.modules.channels.ChannelManager;
-import io.agora.framework.modules.consumers.TextureViewConsumer;
 import io.agora.vlive.Config;
 import io.agora.vlive.ui.actionsheets.BeautySettingActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomSettingActionSheet;
+import io.agora.vlive.ui.components.CameraTextureView;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.R;
 import io.agora.vlive.utils.RandomUtil;
@@ -54,6 +54,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     private int roomType;
     private String mNameTooLongToastMsg;
 
+    private FrameLayout mLocalPreviewLayout;
     private CameraVideoChannel mCameraChannel;
     private PreprocessorFaceUnity mPreprocessor;
 
@@ -115,15 +116,8 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         mPreprocessor = (PreprocessorFaceUnity) VideoModule.instance().
                 getPreprocessor(ChannelManager.ChannelID.CAMERA);
 
+        mLocalPreviewLayout = findViewById(R.id.local_preview_layout);
         changeUIStyles();
-
-        FrameLayout localPreviewLayout = findViewById(R.id.local_preview_layout);
-        TextureView textureView = new TextureView(this);
-        TextureViewConsumer consumer = new TextureViewConsumer();
-        textureView.setSurfaceTextureListener(consumer);
-        localPreviewLayout.addView(textureView);
-
-        startCaptureIfStopped();
     }
 
     private void changeUIStyles() {
@@ -139,8 +133,14 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             layout.setBackgroundColor(Color.WHITE);
             mBeautyBtn.setVisibility(View.GONE);
             mSettingBtn.setVisibility(View.GONE);
-            int virtualImage = getIntent().getIntExtra(Global.Constants.KEY_VIRTUAL_IMAGE, -1);
+            int virtualImage = getIntent().getIntExtra(
+                    Global.Constants.KEY_VIRTUAL_IMAGE, -1);
             mPreprocessor.onAnimojiSelected(virtualImage);
+            mPreprocessor.setOnBundleLoadedListener(() -> {
+                startCaptureIfStopped();
+                runOnUiThread(() -> mLocalPreviewLayout.
+                        addView(new CameraTextureView(this)));
+            });
         } else {
             mCloseBtn.setImageResource(R.drawable.close_button_white);
             mSwitchBtn.setImageResource(R.drawable.switch_camera_white);
@@ -149,6 +149,8 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             mEditText.setTextColor(getResources().getColor(android.R.color.white));
             mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_dark_gray);
             mPreprocessor.onAnimojiSelected(-1);
+            startCaptureIfStopped();
+            mLocalPreviewLayout.addView(new CameraTextureView(this));
         }
     }
 
