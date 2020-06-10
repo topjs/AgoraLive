@@ -325,7 +325,8 @@ extension PKBroadcastersViewController {
                            action2: NSLocalizedString("Confirm"),
                            handler1: { [unowned self] (_) in
                             guard let role = ALCenter.shared().liveSession?.role else {
-                                fatalError()
+                                assert(false)
+                                return
                             }
                             
                             self.pkVM.rejectPK(localRoom: roomId, localUser: role, inviteRoom: room)
@@ -417,7 +418,6 @@ private extension PKBroadcastersViewController {
         case (.otherUser(let user), false):
             playerVM.renderRemoteVideoStream(id: user.agoraUserId,
                                              view: renderView)
-            
             pkButton.isHidden = true
         case (.localUser(let user), true):
             guard let pkView = self.pkView else {

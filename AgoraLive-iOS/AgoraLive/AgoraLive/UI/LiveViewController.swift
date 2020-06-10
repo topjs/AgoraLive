@@ -244,12 +244,10 @@ extension LiveViewController {
                 }
                 self.view.endEditing(true)
                 
-                guard let session = ALCenter.shared().liveSession else {
-                    return
-                }
-                
-                guard let role = session.role else {
-                    fatalError()
+                guard let session = ALCenter.shared().liveSession,
+                    let role = session.role else {
+                        assert(false)
+                        return
                 }
                 
                 if let text = self.chatInputView.textView.text, text.count > 0 {
@@ -312,7 +310,7 @@ extension LiveViewController {
         
         listVC.view.cornerRadius(10)
         
-        let presenetedHeight: CGFloat = UIScreen.main.heightOfSafeAreaTop + 526.0 + 50.0
+        let presenetedHeight: CGFloat = UIScreen.main.heightOfSafeAreaTop + 326.0 + 50.0
         let y = UIScreen.main.bounds.height - presenetedHeight
         let presentedFrame = CGRect(x: 0,
                                     y: y,
@@ -651,6 +649,8 @@ extension LiveViewController {
     
     // MARK: - GIF
     func presentGIF(gift: Gift) {
+        self.hiddenMaskView()
+        
         let gifVC = UIStoryboard.initViewController(of: "GIFViewController",
                                                     class: GIFViewController.self)
         

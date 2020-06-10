@@ -107,6 +107,7 @@ extension PresentChildProtocol {
             dismissChild(child, animated: false)
         }
         
+        self.presentingChild = viewController
         self.view.addSubview(viewController.view)
         
         let originRect = CGRect(x: presentedFrame.origin.x,
@@ -179,6 +180,8 @@ extension ShowAlertProtocol {
         }
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+        self.presentingAlert = alert
+        
         var tActions: [UIAlertAction]
         
         if let actions = actions {
@@ -275,6 +278,8 @@ class MaskViewController: UIViewController, ShowAlertProtocol, PresentChildProto
     @objc private func tapMaskView(_ mask: UIControl) {
         if let maskTapBlock = maskTapBlock {
             maskTapBlock()
+        } else {
+            maskView.isHidden = true
         }
     }
     
