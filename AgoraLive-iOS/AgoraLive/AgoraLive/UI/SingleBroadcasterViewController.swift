@@ -77,6 +77,7 @@ class SingleBroadcasterViewController: MaskViewController, LiveViewController {
         bottomTools(session: session, tintColor: tintColor)
         chatInput()
         musicList()
+        netMonitor()
         superResolution(session: session)
     }
     
@@ -159,9 +160,10 @@ extension SingleBroadcasterViewController {
             vc.superRenderButton.isSelected.toggle()
             
             if vc.superRenderButton.isSelected {
-                let view = SuperResolutionToast(frame: CGRect(x: 0, y: 0, width: 181, height: 44.0), filletRadius: 8)
-                let point = CGPoint(x: UIScreen.main.bounds.width * 0.5, y: 200)
-                self.showToastView(view, position: point, duration: 1.0)
+                let view = TagImageTextToast(frame: CGRect(x: 0, y: 300, width: 181, height: 44.0), filletRadius: 8)
+                view.text = NSLocalizedString("Super_Resolution_Enabled")
+                view.tagImage = UIImage(named: "icon-done")
+                self.showToastView(view, duration: 1.0)
             }
             
             switch session.owner {

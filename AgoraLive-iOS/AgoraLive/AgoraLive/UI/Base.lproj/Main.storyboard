@@ -2419,6 +2419,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cqT-rU-oSU"/>
                     <connections>
+                        <outlet property="chatViewHeight" destination="WyA-B6-ueI" id="tM1-MX-8lT"/>
                         <outlet property="inviteButton" destination="ysV-be-phM" id="GEe-ak-Naw"/>
                         <outlet property="ownerView" destination="Ezh-Cb-hoY" id="Zlw-oI-mgb"/>
                         <outlet property="personCountView" destination="Ws6-gn-DWH" id="nc2-2Y-Vi8"/>

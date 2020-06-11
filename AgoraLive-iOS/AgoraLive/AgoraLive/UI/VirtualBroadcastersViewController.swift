@@ -15,6 +15,7 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
     @IBOutlet weak var ownerView: IconTextView!
     @IBOutlet weak var videoContainer: AGEVideoContainer!
     @IBOutlet weak var inviteButton: UIButton!
+    @IBOutlet weak var chatViewHeight: NSLayoutConstraint!
     
     private var ownerRenderView = UIView()
     private var broadcasterRenderView = UIView()
@@ -83,6 +84,7 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
         musicList()
         broadcastingStatus()
         liveSeat()
+        netMonitor()
         
         updateViews()
     }
@@ -131,6 +133,11 @@ extension VirtualBroadcastersViewController {
         
         personCountView.imageView.image = UIImage(named: "icon-mine-black")
         personCountView.label.textColor = UIColor(hexString: "#333333")
+        
+        let chatViewMaxHeight = UIScreen.main.bounds.height * 0.25
+        if chatViewHeight.constant > chatViewMaxHeight {
+            chatViewHeight.constant = chatViewMaxHeight
+        }
     }
     
     // MARK: - Live Room
@@ -150,7 +157,6 @@ extension VirtualBroadcastersViewController {
         case .otherUser(let remote):
             ownerView.label.text = remote.info.name
             ownerView.imageView.image = images.getHead(index: remote.info.imageIndex)
-           
         }
         
         if role.type != .audience {
@@ -200,7 +206,7 @@ extension VirtualBroadcastersViewController {
             if list.count == 1, let remote = list[0].user {
                 self.virtualVM.broadcasting.accept(.multi([session.owner.user, remote]))
             } else {
-                 self.virtualVM.broadcasting.accept(.single(session.owner.user))
+                self.virtualVM.broadcasting.accept(.single(session.owner.user))
             }
         }).disposed(by: bag)
         
@@ -331,6 +337,12 @@ extension VirtualBroadcastersViewController {
         }
         
         videoContainer.setLayouts([layout], animated: true)
+    }
+    
+    func showToast(_ text: String) {
+        let view = TextToast(frame: CGRect(x: 0, y: 200, width: 0, height: 44), filletRadius: 8)
+        view.text = text
+        self.showToastView(view, duration: 1.0)
     }
 }
 

@@ -47,11 +47,3 @@ class MainTabBarViewController: MaskTabBarController {
         return target
     }
 }
-
-
-//static func initViewController<T: Any>(of id: String, class: T.Type, on stroyName: String = "Main") -> T {
-//    let storyboard = UIStoryboard(name: stroyName, bundle: Bundle.main)
-//    let identifier = id
-//    let vc = storyboard.instantiateViewController(withIdentifier: identifier) as! T
-//    return vc
-//}

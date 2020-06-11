@@ -35,6 +35,8 @@ Create_NameLabel="Channel name: ";
 
 Virtual_Appearance_Select="Please select an avatar";
 
+Limit_Toast="This is a testing product. Please refrain from using it commercially. The max duration per session is 10 minutes, and the max number of participants per channel is 10.";
+
 // Mine
 Mine_Head="Profile";
 Mine_Name="Nickname";
@@ -78,16 +80,19 @@ Please_Input_Headset="Plug in a headphone";
 Super_Resolution_Enabled="Super Resolution enabled";
 
 // Live Seat
-Invite_Broadcasting="Invite host";
 Seat_Ban="Mute";
 Seat_Unban="Un-mute";
+Seat_Close="Block";
+Seat_Release="Unblock";
+End_Broadcasting="End";
+
+Seat_Release_Description="Unblock this seat";
+
+Invite_Broadcasting="Invite host";
 Owner_Forces_You_End_Broadcasting="Owner forces you end broadcasting";
-Seat_Close="Position blocked";
-Seat_Release="Unblock position";
-End_Broadcasting="End hosting";
 Apply_For_Broadcasting="Become a host";
 Force_To_Audience="End hosting";
-Force_To_Audience_Message="将下麦?";
+Force_To_Audience_Message="Force end broadcasting";
 Became_A_Host="became a host";
 Stopped_Hosting="stopped hosting";
 
@@ -96,7 +101,6 @@ Audience_Reject_Broadcasting="Audience reject";
 Invite_Broadcasting_Fail="Invite a host fail";
 Apply_For_Broadcasting_Fail="Apply to be a host fail";
 Seat_Command_Fail="Command fail";
-Seat_Colse="Block position";
 
 // Gift
 Gift="Gift";
@@ -112,7 +116,7 @@ Coin="Coin";
 Present="Give";
 
 // PK
-Invite_PK="PK invitation";
+Invite_PK="Invitation";
 PK_Recieved_Invite="Received PK invitation";
 PK_Invite_Fail="PK hosts failed to connect";
 PK_Invite_Reject="Reject";
@@ -127,7 +131,7 @@ Confirm_Accept_Broadcasting="申请上麦，是否接受？";
 Confirm_Accept_Invitation="";
 Confirm_Apply_For_Broadcasting="你确定要\“申请上麦\”吗？";
 
-Broadcasting_Invitation="上麦邀请";
+Broadcasting_Invitation="Invite host";
 Confirm_Accept_Broadcasting_Invitation="邀请您上麦是否接受？";
 
 Ending_Broadcasting="End";

@@ -204,6 +204,7 @@ class PKBroadcastersViewController: MaskViewController, LiveViewController {
         bottomTools(session: session, tintColor: tintColor)
         chatInput()
         musicList()
+        netMonitor()
         PK(session: session)
     }
     

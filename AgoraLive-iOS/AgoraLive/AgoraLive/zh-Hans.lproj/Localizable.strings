@@ -27,6 +27,7 @@ Single_Broadcaster_Description="单主播直播";
 PK_Live="PK直播";
 PK_Live_Description="两个不同直播间的主播跨频道连麦PK，引爆直播间";
 Virtual_Live="虚拟主播";
+Virtual_Live_Description="用卡通形象模拟真人进行对话或直播";
 
 // Create Room Page
 Create_A_Live_Room="请创建一个房间";
@@ -34,6 +35,8 @@ Create_Start="开始直播";
 Create_NameLabel="直播间的名字: ";
 
 Virtual_Appearance_Select="请选择一个形象";
+
+Limit_Toast="本应用为测试产品，请勿商用。单次直播最长10分钟，每个频道最多10人";
 
 // Mine
 Mine_Head="设置头像";
@@ -78,12 +81,15 @@ Please_Input_Headset="请插上耳机";
 Super_Resolution_Enabled="已切换成超级分辨率！";
 
 // Live Seat
-Invite_Broadcasting="邀请上麦";
 Seat_Ban="禁麦";
 Seat_Unban="解禁";
-Owner_Forces_You_End_Broadcasting="房主强制你下麦";
 Seat_Close="封麦";
 Seat_Release="解封";
+
+Seat_Release_Description="解封此连麦位";
+
+Invite_Broadcasting="邀请上麦";
+Owner_Forces_You_End_Broadcasting="房主强制你下麦";
 End_Broadcasting="下麦";
 Apply_For_Broadcasting="申请上麦";
 Force_To_Audience="下麦";
@@ -96,7 +102,6 @@ Audience_Reject_Broadcasting="观众拒绝连麦";
 Invite_Broadcasting_Fail="邀请上麦失败";
 Apply_For_Broadcasting_Fail="申请上麦失败";
 Seat_Command_Fail="麦位命令失败";
-Seat_Colse="封麦";
 
 // Gift
 Small_Bell="铃铛";

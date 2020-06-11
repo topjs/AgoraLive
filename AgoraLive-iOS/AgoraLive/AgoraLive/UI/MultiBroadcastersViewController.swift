@@ -89,6 +89,7 @@ class MultiBroadcastersViewController: MaskViewController, LiveViewController {
         bottomTools(session: session, tintColor: tintColor)
         chatInput()
         musicList()
+        netMonitor()
         activeSpeaker()
     }
     
@@ -406,6 +407,7 @@ private extension MultiBroadcastersViewController {
             
             seatVM.receivedOwnerInvitation.subscribe(onNext: {[unowned self] (userSeat) in
                 self.showAlert(NSLocalizedString("Invite_Broadcasting"),
+                               message: NSLocalizedString("Confirm_Accept_Broadcasting_Invitation"),
                                action1: NSLocalizedString("Reject"),
                                action2: NSLocalizedString("Confirm"),
                                handler1: {[unowned self] (_) in
@@ -487,9 +489,17 @@ private extension MultiBroadcastersViewController {
     func alertMessageOfSeatCommand(_ command: SeatCommand, with userName: String?) -> String {
         switch command {
         case .ban:
-            return "禁止\"\(userName!)\"发言?"
+            if DeviceAssistant.Language.isChinese {
+                return "禁止\"\(userName!)\"发言?"
+            } else {
+                return "mute \"\(userName!)\"?"
+            }
         case .unban:
-            return "解除\"\(userName!)\"禁言?"
+            if DeviceAssistant.Language.isChinese {
+                return "解除\"\(userName!)\"禁言?"
+            } else {
+                return "unmute \"\(userName!)\"?"
+            }
         case .forceToAudience:
             if DeviceAssistant.Language.isChinese {
                 return "确定\"\(userName!)\"下麦?"
@@ -499,7 +509,7 @@ private extension MultiBroadcastersViewController {
         case .close:
             return "将关闭该麦位，如果该位置上有用户，将下麦该用户"
         case .release:
-            return "解封此连麦位"
+            return NSLocalizedString("Seat_Release_Description")
         default:
             assert(false)
             return ""

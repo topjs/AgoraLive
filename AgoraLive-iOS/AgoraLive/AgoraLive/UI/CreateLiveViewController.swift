@@ -108,6 +108,11 @@ class CreateLiveViewController: MaskViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showLimitToast()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let segueId = segue.identifier else {
             return
@@ -250,6 +255,17 @@ private extension CreateLiveViewController {
             return
         }
         nameTextField.text = name
+    }
+    
+    func showLimitToast() {
+        let view = TagImageTextToast(frame: CGRect(x: 15, y: 300, width: 181, height: 44.0), filletRadius: 8)
+        
+        view.labelSize = CGSize(width: UIScreen.main.bounds.width - 30, height: 0)
+        view.text = NSLocalizedString("Limit_Toast")
+        view.tagImage = UIImage(named: "icon-yellow-caution")
+//        let point = CGPoint(x: UIScreen.main.bounds.width * 0.5, y: 300)
+//        self.view.addSubview(view)
+        self.showToastView(view, duration: 10.0)
     }
     
     func presentMediaSettings() {
