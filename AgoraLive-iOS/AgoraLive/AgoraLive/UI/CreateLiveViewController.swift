@@ -263,9 +263,7 @@ private extension CreateLiveViewController {
         view.labelSize = CGSize(width: UIScreen.main.bounds.width - 30, height: 0)
         view.text = NSLocalizedString("Limit_Toast")
         view.tagImage = UIImage(named: "icon-yellow-caution")
-//        let point = CGPoint(x: UIScreen.main.bounds.width * 0.5, y: 300)
-//        self.view.addSubview(view)
-        self.showToastView(view, duration: 10.0)
+        self.showToastView(view, duration: 5.0)
     }
     
     func presentMediaSettings() {

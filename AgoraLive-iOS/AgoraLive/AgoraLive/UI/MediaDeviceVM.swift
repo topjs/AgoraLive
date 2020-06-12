@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AGECamera
 
 class MediaDeviceVM: NSObject {
     var camera: AGESwitch {
@@ -23,7 +24,7 @@ class MediaDeviceVM: NSObject {
         }
     }
     
-    var cameraPosition: Position {
+    var cameraPosition: AGECamera.Position {
         get {
             let mediaKit = ALCenter.shared().centerProvideMediaHelper()
             return mediaKit.capture.cameraPostion

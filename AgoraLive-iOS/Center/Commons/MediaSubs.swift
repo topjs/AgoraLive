@@ -8,6 +8,7 @@
 
 import AgoraRtcKit
 import Foundation
+import AGECamera
 
 class Capture: NSObject {
     private var agoraKit: AgoraRtcEngineKit {
@@ -61,7 +62,7 @@ class Capture: NSObject {
             #endif
             video = .on
             #if (!arch(i386) && !arch(x86_64))
-            try cameraSession?.start(work: .capture)
+            try cameraSession?.start(work: .capture(isMirror: true))
             #endif
         case .off:
             #if (!arch(i386) && !arch(x86_64))
@@ -75,8 +76,9 @@ class Capture: NSObject {
     }
     
     #if os(iOS)
-    var cameraPostion: Position {
+    var cameraPostion: AGECamera.Position {
         get {
+        
             return cameraSession?.position ?? .front
         }
         

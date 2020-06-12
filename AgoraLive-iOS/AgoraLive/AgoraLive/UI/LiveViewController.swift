@@ -129,14 +129,14 @@ extension LiveViewController {
             case .notReachable, .unknown:
                 let view = TextToast(frame: CGRect(x: 0, y: 200, width: 0, height: 44), filletRadius: 8)
                 view.text = NSLocalizedString("Lost_Connection_Retry")
-                self.showToastView(view, duration: 1.0)
+                self.showToastView(view, duration: 2.0)
             case .reachable(let type):
                 guard type == .wwan else {
                     return
                 }
                 let view = TextToast(frame: CGRect(x: 0, y: 200, width: 0, height: 44), filletRadius: 8)
                 view.text = NSLocalizedString("Use_Cellular_Data")
-                self.showToastView(view, duration: 1.0)
+                self.showToastView(view, duration: 2.0)
             }
         }).disposed(by: bag)
     }

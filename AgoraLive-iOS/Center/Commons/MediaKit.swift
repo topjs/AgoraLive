@@ -8,10 +8,10 @@
 
 import Foundation
 import AgoraRtcKit
+import AGECamera
 
 typealias AudioOutputRouting = AgoraAudioOutputRouting
 typealias ChannelReport = StatisticsInfo
-//typealias SpeakerReport =
 
 class MediaKit: NSObject, AGELogBase {
     enum Speaker {
@@ -175,7 +175,7 @@ extension MediaKit: AgoraVideoSourceProtocol {
 }
 
 extension MediaKit: AGESingleCameraDelegate {
-    func camera(_ camera: AGESingleCamera, position: Position, didOutput sampleBuffer: CMSampleBuffer) {
+    func camera(_ camera: AGESingleCamera, position: AGECamera.Position, didOutput sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }

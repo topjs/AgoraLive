@@ -21,10 +21,6 @@
 		A711AB90244015E000C2A3FD /* SuperCake.gif in Resources */ = {isa = PBXBuildFile; fileRef = A711AB8C244015DF00C2A3FD /* SuperCake.gif */; };
 		A711AB91244015E000C2A3FD /* SuperWine.gif in Resources */ = {isa = PBXBuildFile; fileRef = A711AB8D244015DF00C2A3FD /* SuperWine.gif */; };
 		A711AB94244059F400C2A3FD /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A711AB93244059F400C2A3FD /* LiveViewController.swift */; };
-		A719060824666D2B0031E91C /* AGECameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A719060424666D2B0031E91C /* AGECameraPreview.swift */; };
-		A719060924666D2B0031E91C /* AGESingleCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A719060524666D2B0031E91C /* AGESingleCamera.swift */; };
-		A719060A24666D2B0031E91C /* AGECameraProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A719060624666D2B0031E91C /* AGECameraProtocol.swift */; };
-		A719060B24666D2B0031E91C /* AGECameraSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A719060724666D2B0031E91C /* AGECameraSession.swift */; };
 		A719060D24666D580031E91C /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = A719060C24666D580031E91C /* Popover.swift */; };
 		A719061424667DCE0031E91C /* AgoraLive.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A719060F24667DCE0031E91C /* AgoraLive.xcdatamodeld */; };
 		A719061524667DCE0031E91C /* UserData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A719061124667DCE0031E91C /* UserData+CoreDataClass.swift */; };
@@ -203,10 +199,6 @@
 		A711AB8C244015DF00C2A3FD /* SuperCake.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperCake.gif; sourceTree = "<group>"; };
 		A711AB8D244015DF00C2A3FD /* SuperWine.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperWine.gif; sourceTree = "<group>"; };
 		A711AB93244059F400C2A3FD /* LiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewController.swift; sourceTree = "<group>"; };
-		A719060424666D2B0031E91C /* AGECameraPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGECameraPreview.swift; sourceTree = "<group>"; };
-		A719060524666D2B0031E91C /* AGESingleCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGESingleCamera.swift; sourceTree = "<group>"; };
-		A719060624666D2B0031E91C /* AGECameraProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGECameraProtocol.swift; sourceTree = "<group>"; };
-		A719060724666D2B0031E91C /* AGECameraSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGECameraSession.swift; sourceTree = "<group>"; };
 		A719060C24666D580031E91C /* Popover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
 		A719061024667DCE0031E91C /* AgoraLive.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AgoraLive.xcdatamodel; sourceTree = "<group>"; };
 		A719061124667DCE0031E91C /* UserData+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserData+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -891,20 +883,8 @@
 				A7952A7224162C1000479811 /* MediaModels.swift */,
 				A7952A7624162C1000479811 /* RTCExtension.swift */,
 				A71AAF272435D7A900820096 /* StatisticsInfo.swift */,
-				A7952AD524162CFF00479811 /* Camera */,
 			);
 			name = Media;
-			sourceTree = "<group>";
-		};
-		A7952AD524162CFF00479811 /* Camera */ = {
-			isa = PBXGroup;
-			children = (
-				A719060424666D2B0031E91C /* AGECameraPreview.swift */,
-				A719060624666D2B0031E91C /* AGECameraProtocol.swift */,
-				A719060724666D2B0031E91C /* AGECameraSession.swift */,
-				A719060524666D2B0031E91C /* AGESingleCamera.swift */,
-			);
-			name = Camera;
 			sourceTree = "<group>";
 		};
 		A7952ADE24162E0900479811 /* Log */ = {
@@ -1192,7 +1172,6 @@
 				A754FAEF242B717D0062B2F5 /* FilletView.swift in Sources */,
 				A7952C1624162F4200479811 /* User.swift in Sources */,
 				A7952ACF24162C1000479811 /* AlamoClient.swift in Sources */,
-				A719060A24666D2B0031E91C /* AGECameraProtocol.swift in Sources */,
 				A719061724667DCE0031E91C /* UserDataHelper.swift in Sources */,
 				A77718162456FBDA00BF1F21 /* PlayerVM.swift in Sources */,
 				A7355F88240658F40010CCD1 /* UIView+ExProperty.m in Sources */,
@@ -1216,7 +1195,6 @@
 				A7952AAE24162C1000479811 /* LCLLogFile.m in Sources */,
 				A7847F992458216600469187 /* VideoEnhancementVM.swift in Sources */,
 				A7952A5B24162BF600479811 /* FilesGroup.swift in Sources */,
-				A719060B24666D2B0031E91C /* AGECameraSession.swift in Sources */,
 				A7EA40BC2459825000301AE3 /* ToastView.swift in Sources */,
 				A7615015244AF35B007AAA7F /* MediaDeviceVM.swift in Sources */,
 				A7FDB5A323FFAEE200487FB9 /* IconTextView.swift in Sources */,
@@ -1233,7 +1211,6 @@
 				A7952ABB24162C1000479811 /* AfterWorker.swift in Sources */,
 				A719060D24666D580031E91C /* Popover.swift in Sources */,
 				A7952A5224162BE600479811 /* ALKeys.swift in Sources */,
-				A719060924666D2B0031E91C /* AGESingleCamera.swift in Sources */,
 				A7BD767E247D0CA40062A6B3 /* FUMusicPlayer.m in Sources */,
 				A7952C5C2417636D00479811 /* ALJson.swift in Sources */,
 				A7584B4B2484DB290088FACB /* VirtualVM.swift in Sources */,
@@ -1264,7 +1241,6 @@
 				A791F33C2428A014008D8BC9 /* GiftAudienceViewController.swift in Sources */,
 				A7D2D36F2418D0B600D327B5 /* CenterHelper.swift in Sources */,
 				A791F341242B0ADF008D8BC9 /* ChatViewController.swift in Sources */,
-				A719060824666D2B0031E91C /* AGECameraPreview.swift in Sources */,
 				A711AB83243EF83800C2A3FD /* GIFViewController.swift in Sources */,
 				A7952AC924162C1000479811 /* prng.c in Sources */,
 				A7952AA624162C1000479811 /* MediaSubs.swift in Sources */,
