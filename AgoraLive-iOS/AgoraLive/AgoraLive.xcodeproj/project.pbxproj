@@ -63,8 +63,6 @@
 		A71ED5B4247FBF7F00BA9A32 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */; };
 		A71ED5BA247FBF7F00BA9A32 /* hashiqi_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D6247FBF7F00BA9A32 /* hashiqi_Animoji.png */; };
 		A71ED5BC247FBF7F00BA9A32 /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71ED4D8247FBF7F00BA9A32 /* hashiqi_Animoji.bundle */; };
-		A722F08224769E5900132129 /* model.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A722F07D2476924400132129 /* model.bundle */; };
-		A722F08324769E5F00132129 /* srmetal.metallib in Resources */ = {isa = PBXBuildFile; fileRef = A722F07C2476924400132129 /* srmetal.metallib */; };
 		A72B7BE42444161400E965FB /* SingleBroadcasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B7BE32444161400E965FB /* SingleBroadcasterViewController.swift */; };
 		A72B7BE8244459F000E965FB /* PKBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B7BE7244459F000E965FB /* PKBroadcastersViewController.swift */; };
 		A72B7BEA24445D5B00E965FB /* PKVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B7BE924445D5B00E965FB /* PKVM.swift */; };
@@ -157,10 +155,7 @@
 		A7952C1A2416318300479811 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7952C192416318300479811 /* CoreTelephony.framework */; };
 		A7952C1C2416319400479811 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A7952C1B2416318D00479811 /* libc++.tbd */; };
 		A7952C1E241631B200479811 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A7952C1D241631A900479811 /* libresolv.tbd */; };
-		A7952C23241631C600479811 /* AgoraRtmKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7952C20241631C600479811 /* AgoraRtmKit.framework */; };
 		A7952C522416691600479811 /* URLGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952C512416691600479811 /* URLGroup.swift */; };
-		A7952C582417457A00479811 /* AgoraRtcKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7952C1F241631C600479811 /* AgoraRtcKit.framework */; };
-		A7952C592417457A00479811 /* AgoraRtcKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A7952C1F241631C600479811 /* AgoraRtcKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A7952C5C2417636D00479811 /* ALJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952C5B2417636D00479811 /* ALJson.swift */; };
 		A795CEC22451683700220EF4 /* LabelShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A795CEC12451683700220EF4 /* LabelShadowView.swift */; };
 		A7BD767C247D0CA40062A6B3 /* FUCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BD7676247D0CA40062A6B3 /* FUCamera.m */; };
@@ -182,20 +177,6 @@
 		A7FDB5A723FFB49300487FB9 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FDB5A623FFB49300487FB9 /* UIColor+Hex.m */; };
 		A7FDB5AA23FFBB9400487FB9 /* LiveListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FDB5A923FFBB9300487FB9 /* LiveListVM.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		A7952C5A2417457A00479811 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				A7952C592417457A00479811 /* AgoraRtcKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		082C9E83E5903709E7F89EB6 /* Pods-AgoraLive-Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AgoraLive-Dev.release.xcconfig"; path = "Target Support Files/Pods-AgoraLive-Dev/Pods-AgoraLive-Dev.release.xcconfig"; sourceTree = "<group>"; };
@@ -439,8 +420,6 @@
 				A7952C1C2416319400479811 /* libc++.tbd in Frameworks */,
 				A7952C182416317900479811 /* Accelerate.framework in Frameworks */,
 				A71A96A1247E44F6002749E4 /* libnama.a in Frameworks */,
-				A7952C582417457A00479811 /* AgoraRtcKit.framework in Frameworks */,
-				A7952C23241631C600479811 /* AgoraRtmKit.framework in Frameworks */,
 				A7952C1A2416318300479811 /* CoreTelephony.framework in Frameworks */,
 				A71A96B4247E44F6002749E4 /* libfuai.a in Frameworks */,
 				A7952C1E241631B200479811 /* libresolv.tbd in Frameworks */,
@@ -1047,7 +1026,6 @@
 				A76BD11A23F1035500B2732B /* Frameworks */,
 				A76BD11B23F1035500B2732B /* Resources */,
 				78672562EF6D193B4C6E483B /* [CP] Embed Pods Frameworks */,
-				A7952C5A2417457A00479811 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1101,8 +1079,6 @@
 				A71ED5B2247FBF7F00BA9A32 /* qgirl_Animoji.png in Resources */,
 				A71A96A7247E44F6002749E4 /* ai_facelandmarks209.bundle in Resources */,
 				A71ED5BC247FBF7F00BA9A32 /* hashiqi_Animoji.bundle in Resources */,
-				A722F08324769E5F00132129 /* srmetal.metallib in Resources */,
-				A722F08224769E5900132129 /* model.bundle in Resources */,
 				A7847F9624581A5800469187 /* sound.gif in Resources */,
 				A71A96AA247E44F6002749E4 /* ai_face_processor.bundle in Resources */,
 				A71A96AB247E44F6002749E4 /* ai_bgseg_green.bundle in Resources */,

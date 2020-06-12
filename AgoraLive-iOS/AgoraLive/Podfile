@@ -20,6 +20,8 @@ target 'AgoraLive' do
   pod 'MBProgressHUD'
   pod 'SVProgressHUD'
   pod 'AlamoClient', '~> 1.0.1'
+  pod 'AgoraRtm_iOS', '~> 1.2.2'
+  pod 'AgoraRtcEngine_iOS', '~> 3.0.1'
   
   source 'https://github.com/CocoaPods/Specs.git'
 end
