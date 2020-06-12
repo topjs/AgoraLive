@@ -217,6 +217,7 @@ private extension AGESingleCamera {
             throw AGEError(type: .fail("no connection to the \(position.description) camera video data output"))
         }
         session.noumenon.addConnection(newDataConnection)
+        newDataConnection.isVideoMirrored = true
         newDataConnection.videoOrientation = .portrait
         
         // connect input to layer

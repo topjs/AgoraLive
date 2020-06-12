@@ -142,10 +142,11 @@ class Player: NSObject, AGELogBase {
         return MediaKit.rtcKit
     }
     
-    func renderLocalVideoStream(id: Int, view: UIView) {
+    func renderLocalVideoStream(id: Int, view: UIView, isMirror: Bool = false) {
         log(info: "render local video stream", extra: "id: \(id), view frame: \(view.frame)")
         let canvas = AgoraRtcVideoCanvas(streamId: id, view: view)
         agoraKit.setupLocalVideo(canvas)
+        agoraKit.setLocalVideoMirrorMode(isMirror ? .enabled : .disabled)
     }
     
     func renderRemoteVideoStream(id: Int, view: UIView) {

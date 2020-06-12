@@ -69,10 +69,6 @@ extension LiveViewController {
             self.personCountView.label.text = "\(total)"
         }).disposed(by: bag)
         
-        audienceListVM.list.subscribe(onNext: {[unowned self] (list) in
-            self.personCountView.label.text = "\(list.count)"
-        }).disposed(by: bag)
-        
         audienceListVM.join.subscribe(onNext: { [unowned self] (list) in
             let chats = list.map { (user) -> Chat in
                 let chat = Chat(name: user.info.name,
@@ -312,7 +308,7 @@ extension LiveViewController {
         }
         
         let listVC = UIStoryboard.initViewController(of: "UserListViewController",
-                                                       class: UserListViewController.self)
+                                                     class: UserListViewController.self)
         
         listVC.showType = listType
         self.userListVC = listVC
