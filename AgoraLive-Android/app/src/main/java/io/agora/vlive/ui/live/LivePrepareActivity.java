@@ -374,4 +374,10 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             mCameraChannel.stopCapture();
         }
     }
+
+    public void onPolicyClosed(View view) {
+        if (view.getId() == R.id.live_prepare_policy_close) {
+            findViewById(R.id.live_prepare_policy_caution_layout).setVisibility(View.GONE);
+        }
+    }
 }

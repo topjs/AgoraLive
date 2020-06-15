@@ -54,6 +54,10 @@
     <dimen name="start_broadcast_btn_padding">24dp</dimen>
     <dimen name="bottom_btn_padding">24dp</dimen>
     <dimen name="prepare_edit_corner">10dp</dimen>
+    <dimen name="live_prepare_caution_corner">6dp</dimen>
+    <dimen name="live_prepare_policy_padding">6dp</dimen>
+    <dimen name="live_prepare_policy_sign_size">32dp</dimen>
+    <dimen name="live_prepare_policy_caution_size">16dp</dimen>
 
     <!-- Live -->
     <dimen name="live_component_base_height">40dp</dimen>

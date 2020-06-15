@@ -236,4 +236,7 @@
     <string name="network_unavailable">Network is unavailable, please try later</string>
     <string name="network_switch_to_wifi">You are in WIFI network</string>
     <string name="network_switch_to_mobile">You are in the mobile network, you may pay for the mobile data usage if you continue.</string>
+
+    <!-- Policies -->
+    <string name="live_prepare_room_restriction">This is a testing product. Please refrain from using it commercially. The max duration per session is 10 minutes, and the max number of participants per channel is 10. </string>
 </resources>
