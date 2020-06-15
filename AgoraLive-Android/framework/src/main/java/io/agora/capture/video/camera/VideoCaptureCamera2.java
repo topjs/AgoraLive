@@ -50,6 +50,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
             mCameraDevice = cameraDevice;
             changeCameraStateAndNotify(CameraState.CONFIGURING);
             createPreviewObjectsAndStartPreviewOrFail();
+            firstFrame = true;
         }
 
         @Override

@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.faceunity.FURenderer;
 
+import io.agora.capture.video.camera.CameraManager;
+import io.agora.framework.PreprocessorFaceUnity;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtm.RtmClient;
 import io.agora.vlive.agora.AgoraEngine;
@@ -20,6 +22,7 @@ public class AgoraLiveApplication extends Application {
     private SharedPreferences mPref;
     private Config mConfig;
     private AgoraEngine mAgoraEngine;
+    private CameraManager mCameraVideoManager;
 
     @Override
     public void onCreate() {
@@ -27,7 +30,7 @@ public class AgoraLiveApplication extends Application {
         super.onCreate();
         mPref = getSharedPreferences(Global.Constants.SF_NAME, Context.MODE_PRIVATE);
         mConfig = new Config(this);
-        initFaceUnityGlobally();
+        initVideoGlobally();
     }
 
     public Config config() {
@@ -62,9 +65,19 @@ public class AgoraLiveApplication extends Application {
         mAgoraEngine.removeRtcHandler(handler);
     }
 
-    private void initFaceUnityGlobally() {
+    public CameraManager cameraVideoManager() {
+        return mCameraVideoManager;
+    }
+
+    private void initVideoGlobally() {
         new Thread(() -> {
             FURenderer.initFURenderer(getApplicationContext());
+            PreprocessorFaceUnity preprocessor =
+                    new PreprocessorFaceUnity(this);
+            mCameraVideoManager = new CameraManager(
+                    this, preprocessor);
+            mCameraVideoManager.setCameraStateListener(preprocessor);
+            Log.d(TAG, "CameraVideoManager initialized");
         }).start();
     }
 

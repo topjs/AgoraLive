@@ -217,6 +217,7 @@ public class VideoCaptureCamera
             mCamera.setPreviewCallbackWithBuffer(this);
             mCamera.setPreviewTexture(pPreviewSurfaceTexture);
             mCamera.startPreview();
+            firstFrame = true;
         } catch (IOException | RuntimeException ex) {
             ex.printStackTrace();
         }

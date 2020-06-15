@@ -2,12 +2,14 @@ package io.agora.vlive.ui.live;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -15,7 +17,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import java.util.List;
 
-import io.agora.capture.video.camera.CameraVideoChannel;
 import io.agora.capture.video.camera.VideoModule;
 import io.agora.framework.PreprocessorFaceUnity;
 import io.agora.framework.modules.channels.ChannelManager;
@@ -34,7 +35,7 @@ import io.agora.vlive.proxy.struts.response.EnterRoomResponse;
 import io.agora.vlive.proxy.struts.response.Response;
 import io.agora.vlive.ui.actionsheets.InviteUserActionSheet;
 import io.agora.vlive.ui.actionsheets.LiveRoomToolActionSheet;
-import io.agora.vlive.ui.components.CameraTextureView;
+import io.agora.vlive.ui.components.LinearLayout9to8;
 import io.agora.vlive.ui.components.LiveBottomButtonLayout;
 import io.agora.vlive.ui.components.LiveHostNameLayout;
 import io.agora.vlive.ui.components.LiveMessageEditLayout;
@@ -45,19 +46,88 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
         InviteUserActionSheet.InviteUserActionSheetListener {
     private static final String TAG = VirtualHostLiveActivity.class.getSimpleName();
     private static final int AUDIENCE_SELECT_IMAGE_REQ_CODE = 1;
+    private static final int SURFACE_VIEW_DRAW_LATENCY = 600;
 
     private LiveHostNameLayout mNamePad;
-    private FrameLayout mOwnerVideoLayout;
-    private FrameLayout mHostVideoLayout;
+
+    private RelativeLayout mSingleLayout;
+    private FrameLayout mSingleHostVideoLayout;
+    private View mSingleHostVideoMask;
+
+    private LinearLayout9to8 mChatVideoLayout;
+    private RelativeLayout mOwnerVideoOutLayer;
+    private RelativeLayout mHostVideoOutLayer;
+    private View mOwnerVideoMask;
+    private View mHostVideoMask;
     private AppCompatTextView mFunBtn;
     private boolean mLayoutCalculated;
     private int mVirtualImageSelected;
     private boolean mConnected;
-    private String mHostUid;
+    private String mHostUserId;
+    private int mHostUid = -1; // for rtc
     private PreprocessorFaceUnity mPreprocessor;
     private InviteUserActionSheet mInviteUserListActionSheet;
+    private boolean mInitAsOwner;
+    private boolean mVirtualImageRemoved;
 
-    private CameraVideoChannel mCameraChannel;
+    // To avoid inconsistent video frames, we must
+    // insure that the effect bundle loaded and
+    // camera preview is started and stable.
+    // Thus we wouldn't see a black surface when
+    // the camera starting contribute a short
+    // latency; if the camera preview is started
+    // earlier than the effect bundle is loaded,
+    // we will see the original frames from camera.
+    private int mVideoInitCount;
+
+    private PreprocessorFaceUnity.OnFuEffectBundleLoadedListener
+            mBundleListener = () -> {
+                if (mVirtualImageRemoved) {
+                    mVirtualImageRemoved = false;
+                    return;
+                }
+                startCameraCapture();
+                tryDisplayMyVirtualImage();
+            };
+
+    private PreprocessorFaceUnity.OnFirstFrameListener
+            mOnFirstFrameListener = this::tryDisplayMyVirtualImage;
+
+    private void tryDisplayMyVirtualImage() {
+        if (mVideoInitCount >= 2) {
+            return;
+        }
+
+        mVideoInitCount++;
+        if (mVideoInitCount == 2) {
+            rtcEngine().setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
+            TextureView textureView = new TextureView(this);
+            setLocalPreview(textureView);
+            runOnUiThread(() -> {
+                if (mConnected) {
+                    if (isHost) {
+                        if (mHostVideoOutLayer.getChildCount() > 1) {
+                            mHostVideoOutLayer.removeViewAt(0);
+                        }
+                        mHostVideoOutLayer.addView(textureView, 0);
+                        mHostVideoMask.setVisibility(View.GONE);
+                    } else if (isOwner) {
+                        if (mOwnerVideoOutLayer.getChildCount() > 1) {
+                            mOwnerVideoOutLayer.removeViewAt(0);
+                        }
+                        mOwnerVideoOutLayer.addView(textureView, 0);
+                        mOwnerVideoMask.setVisibility(View.GONE);
+                    }
+                } else if (isOwner) {
+                    if (mSingleHostVideoLayout.getChildCount() > 1) {
+                        mSingleHostVideoLayout.removeViewAt(0);
+                    }
+                    mSingleHostVideoLayout.addView(textureView, 0);
+                    mSingleHostVideoMask.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
 
     // Universal handling of the results of sending rtm messages
     private ResultCallback<Void> mMessageResultCallback = new ResultCallback<Void>() {
@@ -81,21 +151,30 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
     @Override
     protected void onPermissionGranted() {
         initUI();
+        isHost = false;
         super.onPermissionGranted();
     }
 
     private void initUI() {
-        mCameraChannel = (CameraVideoChannel) VideoModule.instance().
-                getVideoChannel(ChannelManager.ChannelID.CAMERA);
         mPreprocessor = (PreprocessorFaceUnity) VideoModule.instance().
             getPreprocessor(ChannelManager.ChannelID.CAMERA);
+        mPreprocessor.setOnBundleLoadedListener(mBundleListener);
+        mPreprocessor.setOnFirstFrameListener(mOnFirstFrameListener);
         mVirtualImageSelected = getIntent().getIntExtra(
                 Global.Constants.KEY_VIRTUAL_IMAGE, -1);
 
         setContentView(R.layout.activity_virtual_host);
-        mOwnerVideoLayout = findViewById(R.id.virtual_live_owner_video_layout);
-        mHostVideoLayout = findViewById(R.id.virtual_live_host_video_layout);
-        mHostVideoLayout.setVisibility(View.GONE);
+
+        mSingleLayout = findViewById(R.id.virtual_image_single_layout);
+        mSingleHostVideoLayout = findViewById(R.id.virtual_image_single_host_video_layout);
+        mSingleHostVideoMask = findViewById(R.id.virtual_image_single_video_mask);
+
+        mChatVideoLayout = findViewById(R.id.virtual_live_video_layout);
+        mOwnerVideoOutLayer = findViewById(R.id.virtual_live_owner_video_outer_layout);
+        mHostVideoOutLayer = findViewById(R.id.virtual_live_host_video_outer_layout);
+
+        mOwnerVideoMask = findViewById(R.id.virtual_live_owner_mask);
+        mHostVideoMask = findViewById(R.id.virtual_live_host_mask);
 
         mFunBtn = findViewById(R.id.virtual_image_function_btn);
 
@@ -126,9 +205,21 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
         rtcStatsView = findViewById(R.id.virtual_host_rtc_stats);
         rtcStatsView.setCloseListener(view -> rtcStatsView.setVisibility(View.GONE));
 
+        mChatVideoLayout.setVisibility(View.GONE);
+
         // In case that the UI is not relocated because
         // the permission request dialog consumes the chance
         onGlobalLayoutCompleted();
+
+        if (isOwner) {
+            // Comes from prepare activity, the video capture has
+            // started and the image bundle has loaded.
+            TextureView textureView = new TextureView(this);
+            setLocalPreview(textureView);
+            mSingleHostVideoLayout.addView(textureView);
+            mSingleHostVideoMask.setVisibility(View.GONE);
+            mInitAsOwner = true;
+        }
     }
 
     @Override
@@ -139,16 +230,6 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
                     (RelativeLayout.LayoutParams) topLayout.getLayoutParams();
             params.topMargin += systemBarHeight;
             topLayout.setLayoutParams(params);
-            mLayoutCalculated = true;
-        }
-
-        LinearLayout videoLayout = findViewById(R.id.virtual_live_video_layout);
-        if (videoLayout != null) {
-            RelativeLayout.LayoutParams params =
-                    (RelativeLayout.LayoutParams) videoLayout.getLayoutParams();
-            params.topMargin += systemBarHeight;
-            params.height = displayWidth * 9 / 8;
-            videoLayout.setLayoutParams(params);
             mLayoutCalculated = true;
         }
     }
@@ -202,74 +283,98 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
             ownerId = response.data.room.owner.userId;
             ownerRtcUid = response.data.room.owner.uid;
 
+            isHost = false;
+
             // Determine if I am the owner of a host here because
             // I may leave the room unexpectedly and come once more.
             String myId = config().getUserProfile().getUserId();
             if (!isOwner && myId.equals(response.data.room.owner.userId)) {
                 isOwner = true;
+
                 myRtcRole = Constants.CLIENT_ROLE_BROADCASTER;
                 rtcEngine().setClientRole(myRtcRole);
+                mVirtualImageSelected = virtualImageNameToId(
+                                response.data.user.virtualAvatar);
             }
 
-            runOnUiThread(() -> {
-                if (isOwner) {
-                    // If I am the owner, the server must tell me
-                    // which image I selected when creating the room
-                    mVirtualImageSelected = virtualImageNameToId(
-                            response.data.user.virtualAvatar);
-
-                    becomeOwner(response.data.room.owner.enableAudio !=
-                                    SeatInfo.User.USER_AUDIO_ENABLE,
-                            response.data.room.owner.enableVideo !=
-                                    SeatInfo.User.USER_VIDEO_ENABLE);
-                } else {
-                    becomeAudience();
+            // Check if someone is the host
+            List<SeatInfo> seatListInfo = response.data.room.coVideoSeats;
+            if (seatListInfo.size() > 0) {
+                SeatInfo info = seatListInfo.get(0);
+                if (info.seat.state == SeatInfo.TAKEN) {
+                    mConnected = true;
+                    mHostUserId = info.user.userId;
+                    mHostUid = info.user.uid;
                 }
+            }
 
+            boolean audioMutedOwner = response.data.room.owner.enableAudio !=
+                    SeatInfo.User.USER_AUDIO_ENABLE;
+            boolean videoMutedOwner = response.data.room.owner.enableVideo !=
+                    SeatInfo.User.USER_VIDEO_ENABLE;
+
+            runOnUiThread(() -> {
                 mNamePad.setName(response.data.room.owner.userName);
                 mNamePad.setIcon(UserUtil.getUserRoundIcon(getResources(),
                         response.data.room.owner.userId));
 
-                // Check if some one has been the host
-                List<SeatInfo> seatListInfo = response.data.room.coVideoSeats;
-                int uid = 0;
-                if (seatListInfo.size() > 0) {
-                    SeatInfo info = seatListInfo.get(0);
-                    if (info.seat.state == SeatInfo.TAKEN) {
-                        mConnected = true;
-                        mHostUid = info.user.userId;
-                        uid = info.user.uid;
-                    }
-                }
-
                 if (mConnected) {
                     toChatDisplay();
-                    isHost = myId.equals(mHostUid);
+                    isHost = myId.equals(mHostUserId);
+                    mVirtualImageSelected = virtualImageNameToId(
+                            response.data.user.virtualAvatar);
+
                     if (isHost) {
-                        mVirtualImageSelected = virtualImageNameToId(
-                                response.data.user.virtualAvatar);
-                        becomesHost();
-                        mFunBtn.setVisibility(View.GONE);
+                        SeatInfo info = response.data.room.coVideoSeats.get(0);
+                        boolean audioMuted = info.user.enableAudio != SeatInfo.User.USER_AUDIO_ENABLE;
+                        boolean videoMuted = info.user.enableVideo != SeatInfo.User.USER_VIDEO_ENABLE;
+                        becomesHost(audioMuted, videoMuted);
+                        setRemoteVideoSurface(mOwnerVideoOutLayer, mOwnerVideoMask, ownerRtcUid, true);
+                    } else if (isOwner) {
+                        becomesOwner(audioMutedOwner, videoMutedOwner, mInitAsOwner, true);
+                        setRemoteVideoSurface(mHostVideoOutLayer, mHostVideoMask, mHostUid, true);
                     } else {
-                        SurfaceView surfaceView = setupRemoteVideo(uid);
-                        mHostVideoLayout.addView(surfaceView);
+                        setRemoteVideoSurface(mOwnerVideoOutLayer, mOwnerVideoMask, ownerRtcUid, true);
+                        setRemoteVideoSurface(mHostVideoOutLayer, mHostVideoMask, mHostUid, true);
+                    }
+                } else {
+                    if (isOwner) {
+                        // If mInitAsOwner is true, that is, the user creates
+                        // this room and then enters. The video has already
+                        // started and the virtual image has been set.
+                        // If the user is identified as the owner according
+                        // to the information returned from server, he needs to
+                        // start video capture here
+                        becomesOwner(audioMutedOwner, videoMutedOwner, mInitAsOwner, false);
+                    } else {
+                        becomeAudience();
                     }
                 }
             });
         }
     }
 
-    private void becomeOwner(boolean audioMuted, boolean videoMuted) {
-        if (!videoMuted) startCameraCapture();
+    private void becomesOwner(boolean audioMuted, boolean videoMuted,
+                              boolean videoInitialized, boolean connected) {
+        config().setAudioMuted(audioMuted);
+        config().setVideoMuted(videoMuted);
+        config().setBeautyEnabled(true);
         mFunBtn.setVisibility(View.VISIBLE);
         mFunBtn.setText(R.string.live_virtual_image_invite);
         bottomButtons.setRole(LiveBottomButtonLayout.ROLE_OWNER);
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
-        config().setAudioMuted(audioMuted);
-        config().setVideoMuted(videoMuted);
-        mPreprocessor.onAnimojiSelected(mVirtualImageSelected);
-        CameraTextureView textureView = new CameraTextureView(this);
-        mOwnerVideoLayout.addView(textureView);
+
+        if (!videoInitialized) {
+            // Wait the bundle and capture callback to
+            // handle the rest work.
+            mPreprocessor.onAnimojiSelected(mVirtualImageSelected);
+        }
+
+        if (connected) {
+            mFunBtn.setText(R.string.live_virtual_image_stop_invite);
+        } else {
+            mFunBtn.setText(R.string.live_virtual_image_invite);
+        }
     }
 
     private void becomeAudience() {
@@ -280,24 +385,24 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
         config().setAudioMuted(true);
         config().setVideoMuted(true);
-        SurfaceView surfaceView = setupRemoteVideo(ownerRtcUid);
-        mOwnerVideoLayout.addView(surfaceView);
+        rtcEngine().muteLocalAudioStream(true);
+        rtcEngine().muteLocalVideoStream(true);
+        mVirtualImageRemoved = true;
         mPreprocessor.onAnimojiSelected(-1);
     }
 
-    private void becomesHost() {
+    private void becomesHost(boolean audioMuted, boolean videoMuted) {
         isHost = true;
-        mFunBtn.setVisibility(View.VISIBLE);
+        config().setAudioMuted(audioMuted);
+        config().setVideoMuted(videoMuted);
+        rtcEngine().muteLocalAudioStream(audioMuted);
+        rtcEngine().muteLocalVideoStream(videoMuted);
+        config().setBeautyEnabled(true);
         mFunBtn.setText(R.string.live_virtual_image_stop_invite);
+        mFunBtn.setVisibility(View.VISIBLE);
         rtcEngine().setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
-        config().setAudioMuted(false);
-        config().setVideoMuted(false);
         bottomButtons.setRole(LiveBottomButtonLayout.ROLE_HOST);
         mPreprocessor.onAnimojiSelected(mVirtualImageSelected);
-        toChatDisplay();
-        CameraTextureView textureView = new CameraTextureView(this);
-        mHostVideoLayout.addView(textureView);
-        mCameraChannel.startCapture();
     }
 
     @Override
@@ -309,7 +414,9 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
     @Override
     public void finish() {
         super.finish();
+        findViewById(R.id.virtual_live_video_layout).setVisibility(View.GONE);
         bottomButtons.clearStates(application());
+        mVirtualImageRemoved = true;
         mPreprocessor.onAnimojiSelected(-1);
     }
 
@@ -381,7 +488,6 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
 
     @Override
     public void onRtmInvitedByOwner(String peerId, String nickname, int index) {
-        Log.i(TAG, "Invited by room owner " + nickname + " for seat " + index);
         if (isOwner) return;
         String title = getResources().getString(R.string.live_room_host_in_invite_user_list_action_sheet_title);
         String message = getResources().getString(R.string.live_room_virtual_image_invited_message);
@@ -449,70 +555,142 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
     public void onRtmSeatStateChanged(List<SeatStateMessage.SeatStateMessageDataItem> list) {
         SeatStateMessage.SeatStateMessageDataItem item = list.get(0);
         boolean taken = item.seat.state == SeatInfo.TAKEN;
-        mHostUid = item.user.userId;
+        mHostUserId = item.user.userId;
         String myUid = config().getUserProfile().getUserId();
 
         runOnUiThread(() -> {
-            if (!mConnected && taken && !TextUtils.isEmpty(mHostUid)) {
+            if (!mConnected && taken && !TextUtils.isEmpty(mHostUserId)) {
+                toChatDisplay();
                 mConnected = true;
-                if (myUid.equals(item.user.userId)) {
-                    becomesHost();
+                mHostUid = item.user.uid;
+
+                if (myUid.equals(mHostUserId)) {
+                    becomesHost(false, false);
+
+                    // I am about to be the host, need to
+                    // switch to another view to display
+                    // the owner's video.
+                    setRemoteVideoSurface(mOwnerVideoOutLayer,
+                            mOwnerVideoMask, ownerRtcUid, false);
                 } else {
                     if (isOwner) {
+                        TextureView textureView = new TextureView(this);
+                        setLocalPreview(textureView);
+                        mOwnerVideoOutLayer.addView(textureView, 0);
+                        mOwnerVideoMask.setVisibility(View.GONE);
                         mFunBtn.setVisibility(View.VISIBLE);
                         mFunBtn.setText(R.string.live_virtual_image_stop_invite);
+                    } else {
+                        // If I am the audience, just move the owner's video
+                        setRemoteVideoSurface(mOwnerVideoOutLayer,
+                                mOwnerVideoMask, ownerRtcUid, false);
                     }
-
-                    toChatDisplay();
-                    mHostVideoLayout.addView(setupRemoteVideo(item.user.uid));
                 }
             } else if (mConnected && !taken) {
                 toSingleHostDisplay();
+                mConnected = false;
+                mHostUserId = null;
+                mHostUid = -1;
 
                 if (isOwner) {
                     mFunBtn.setVisibility(View.VISIBLE);
                     mFunBtn.setText(R.string.live_virtual_image_invite);
+
+                    TextureView textureView = new TextureView(this);
+                    setLocalPreview(textureView);
+                    mSingleHostVideoLayout.addView(textureView);
+                    mSingleHostVideoMask.setVisibility(View.GONE);
                 } else {
-                    isHost = false;
-                    mFunBtn.setVisibility(View.GONE);
-                    bottomButtons.setRole(LiveBottomButtonLayout.ROLE_AUDIENCE);
-                    rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
-                    mPreprocessor.onAnimojiSelected(-1);
-                    mCameraChannel.stopCapture();
+                    if (isHost) {
+                        isHost = false;
+                        mVideoInitCount = 0;
+                        mFunBtn.setVisibility(View.GONE);
+                        bottomButtons.setRole(LiveBottomButtonLayout.ROLE_AUDIENCE);
+                        rtcEngine().setClientRole(Constants.CLIENT_ROLE_AUDIENCE);
+                        mPreprocessor.onAnimojiSelected(-1);
+                        stopCameraCapture();
+                    }
+
+                    setRemoteVideoSurface(mSingleHostVideoLayout,
+                            mSingleHostVideoMask, ownerRtcUid, true);
                 }
-                mConnected = false;
+
             }
         });
     }
 
-    private void toSingleHostDisplay() {
-        mHostVideoLayout.removeAllViews();
-        mHostVideoLayout.setVisibility(View.GONE);
-        LinearLayout.LayoutParams params =
-                (LinearLayout.LayoutParams) mHostVideoLayout.getLayoutParams();
-        params.width = 0;
-        params.weight = 0;
-        mHostVideoLayout.setLayoutParams(params);
+    private void setRemoteVideoSurface(ViewGroup parent, View mask, int uid, boolean delayed) {
+        // delete the video surface which is possibly
+        // left by last video displaying
+        if (parent.getChildCount() > 1) {
+            parent.removeViewAt(0);
+        }
 
-        params = (LinearLayout.LayoutParams)
-                mOwnerVideoLayout.getLayoutParams();
-        params.width = LinearLayout.LayoutParams.MATCH_PARENT;
-        params.weight = 1;
-        mOwnerVideoLayout.setLayoutParams(params);
+        SurfaceView surfaceView = setupRemoteVideo(uid);
+        parent.addView(surfaceView, 0);
+        if (delayed) {
+            // we want to show this view after a short
+            // while, in case that the surface might
+            // not been initialized too soon.
+            new Handler(getMainLooper()).postDelayed(() ->
+                    mask.setVisibility(View.GONE),
+                    SURFACE_VIEW_DRAW_LATENCY);
+        } else {
+            mask.setVisibility(View.GONE);
+        }
+    }
+
+    private void toSingleHostDisplay() {
+        mSingleLayout.setVisibility(View.VISIBLE);
+        mSingleHostVideoLayout.setVisibility(View.VISIBLE);
+        mSingleHostVideoMask.setVisibility(View.VISIBLE);
+        mChatVideoLayout.setVisibility(View.GONE);
+
+        removeFirstElement(mOwnerVideoOutLayer);
+        removeFirstElement(mHostVideoOutLayer);
+    }
+
+    private void removeFirstElement(ViewGroup parent) {
+        if (parent.getChildCount() > 1) {
+            parent.removeViewAt(0);
+        }
     }
 
     private void toChatDisplay() {
-        mHostVideoLayout.setVisibility(View.VISIBLE);
-        LinearLayout.LayoutParams params =
-                (LinearLayout.LayoutParams) mHostVideoLayout.getLayoutParams();
-        params.width = 0;
-        params.weight = 1;
-        mHostVideoLayout.setLayoutParams(params);
-
-        params = (LinearLayout.LayoutParams)
-                mOwnerVideoLayout.getLayoutParams();
-        params.width = 0;
-        params.weight = 1;
-        mOwnerVideoLayout.setLayoutParams(params);
+        mSingleHostVideoLayout.removeAllViews();
+        mSingleLayout.setVisibility(View.GONE);
+        mChatVideoLayout.setVisibility(View.VISIBLE);
+        mOwnerVideoMask.setVisibility(View.VISIBLE);
+        mHostVideoMask.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void onRtcRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
+        super.onRtcRemoteVideoStateChanged(uid, state, reason, elapsed);
+        if (ownerRtcUid == uid) {
+            if (!isOwner && isVideoReceivingState(state)) {
+                runOnUiThread(() -> {
+                    if (mConnected) {
+                        setRemoteVideoSurface(mOwnerVideoOutLayer,
+                                mOwnerVideoMask, ownerRtcUid, true);
+                    } else {
+                        setRemoteVideoSurface(mSingleHostVideoLayout,
+                                mSingleHostVideoMask, ownerRtcUid, true);
+                    }
+                });
+            }
+        } else if (mHostUid == uid) {
+            if (!isHost && isVideoReceivingState(state)) {
+                runOnUiThread(() -> {
+                    setRemoteVideoSurface(mHostVideoOutLayer,
+                            mHostVideoMask, mHostUid, true);
+                });
+            }
+        }
+    }
+
+    private boolean isVideoReceivingState(int state) {
+        return state == Constants.REMOTE_VIDEO_STATE_DECODING;
+    }
+
 }

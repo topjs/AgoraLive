@@ -90,7 +90,15 @@ public class CameraManager {
      * @param textureView
      */
     public void setLocalPreview(TextureView textureView) {
-        textureView.setSurfaceTextureListener(new TextureViewConsumer());
+        TextureViewConsumer consumer = new TextureViewConsumer();
+        textureView.setSurfaceTextureListener(consumer);
+
+        if (textureView.isAttachedToWindow()) {
+            consumer.setDefault(textureView.getSurfaceTexture(),
+                    textureView.getMeasuredWidth(),
+                    textureView.getMeasuredHeight());
+            consumer.connectChannel(CHANNEL_ID);
+        }
     }
 
     /**
@@ -104,8 +112,19 @@ public class CameraManager {
      * @param surfaceView
      */
     public void setLocalPreview(SurfaceView surfaceView) {
-        surfaceView.getHolder().addCallback(
-                new SurfaceViewConsumer(surfaceView));
+        SurfaceViewConsumer consumer = new SurfaceViewConsumer(surfaceView);
+        surfaceView.getHolder().addCallback(consumer);
+
+        if (surfaceView.isAttachedToWindow()) {
+            consumer.setDefault();
+            consumer.connectChannel(CHANNEL_ID);
+        }
+    }
+
+    public void setCameraStateListener(CameraVideoChannel.OnCameraStateListener listener) {
+        if (mCameraChannel != null) {
+            mCameraChannel.setCameraStateListener(listener);
+        }
     }
 
     public void setFacing(int facing) {

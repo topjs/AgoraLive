@@ -23,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Stack;
 
+import io.agora.capture.video.camera.CameraManager;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtm.RtmClient;
 import io.agora.vlive.AgoraLiveApplication;
@@ -364,6 +365,10 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
 
     protected void showLongToast(String message) {
         showToast(message, Toast.LENGTH_LONG);
+    }
+
+    protected CameraManager cameraVideoManager() {
+        return application().cameraVideoManager();
     }
 
     protected void showToast(String message, int length) {

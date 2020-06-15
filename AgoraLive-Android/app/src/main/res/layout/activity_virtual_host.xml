@@ -5,6 +5,21 @@
     android:background="@android:color/white">
 
     <RelativeLayout
+        android:id="@+id/virtual_image_single_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/virtual_image_single_host_video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <View
+            android:id="@+id/virtual_image_single_video_mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/virtual_live_top_participant_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,23 +41,37 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-    <LinearLayout
+    <io.agora.vlive.ui.components.LinearLayout9to8
         android:id="@+id/virtual_live_video_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/virtual_live_top_participant_layout">
-        <FrameLayout
-            android:id="@+id/virtual_live_owner_video_layout"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@id/virtual_live_top_participant_layout"
+        android:visibility="gone">
+        <RelativeLayout
+            android:id="@+id/virtual_live_owner_video_outer_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <FrameLayout
-            android:id="@+id/virtual_live_host_video_layout"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <View
+                android:id="@+id/virtual_live_owner_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/virtual_live_host_video_outer_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <View
+                android:id="@+id/virtual_live_host_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"/>
+        </RelativeLayout>
+    </io.agora.vlive.ui.components.LinearLayout9to8>
 
     <io.agora.vlive.ui.components.LiveBottomButtonLayout
         android:id="@+id/virtual_live_bottom_layout"
@@ -56,7 +85,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/virtual_image_function_btn"
-        android:layout_width="@dimen/virtual_image_invite_btn_width"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height"
         android:layout_alignParentEnd="true"
         android:paddingStart="@dimen/start_broadcast_btn_padding"
@@ -66,7 +95,6 @@
         android:textAlignment="gravity"
         android:gravity="center"
         android:text="@string/live_virtual_image_invite"
-        android:textSize="@dimen/text_size_normal"
         android:lines="1"
         android:textColor="@color/live_action_button_text_color"
         android:background="@drawable/live_action_button_bg"

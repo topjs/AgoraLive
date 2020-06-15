@@ -52,6 +52,10 @@ public class SurfaceViewConsumer extends BaseWindowConsumer implements SurfaceHo
         connectChannel(CHANNEL_ID);
     }
 
+    public void setDefault() {
+        needResetSurface = true;
+    }
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.i(TAG, "surfaceChanged:" + width + "x" + height);

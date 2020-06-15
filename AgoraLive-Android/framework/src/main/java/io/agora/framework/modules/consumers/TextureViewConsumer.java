@@ -47,11 +47,15 @@ public class TextureViewConsumer extends BaseWindowConsumer implements TextureVi
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         Log.i(TAG, "onSurfaceTextureAvailable");
+        setDefault(surface, width, height);
+        connectChannel(CHANNEL_ID);
+    }
+
+    public void setDefault(SurfaceTexture surface, int width, int height) {
         mSurfaceTexture = surface;
         surfaceDestroyed = false;
         needResetSurface = true;
         setSize(width, height);
-        connectChannel(CHANNEL_ID);
     }
 
     @Override

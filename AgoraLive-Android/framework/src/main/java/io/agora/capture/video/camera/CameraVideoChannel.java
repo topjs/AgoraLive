@@ -5,7 +5,11 @@ import android.content.Context;
 import io.agora.framework.modules.channels.ChannelManager;
 import io.agora.framework.modules.channels.VideoChannel;
 
-public class CameraVideoChannel extends VideoChannel {
+public class CameraVideoChannel extends VideoChannel implements VideoCapture.OnVideoCaptureStateListener {
+    public interface OnCameraStateListener {
+        void onFrameFrame();
+    }
+
     private static final String TAG = CameraVideoChannel.class.getSimpleName();
 
     private static final int WIDTH = 1920;
@@ -21,6 +25,8 @@ public class CameraVideoChannel extends VideoChannel {
     private int mFrameRate = FRAME_RATE;
     private int mFacing = FACING;
 
+    private OnCameraStateListener mListener;
+
     public CameraVideoChannel(Context context, int id) {
         super(context, id);
     }
@@ -28,6 +34,11 @@ public class CameraVideoChannel extends VideoChannel {
     @Override
     protected void onChannelContextCreated() {
         mVideoCapture = VideoCaptureFactory.createVideoCapture(getChannelContext().getContext());
+        mVideoCapture.setOnVideoCaptureStateListener(this);
+    }
+
+    public void setCameraStateListener(OnCameraStateListener listener) {
+        mListener = listener;
     }
 
     /**
@@ -62,13 +73,15 @@ public class CameraVideoChannel extends VideoChannel {
     }
 
     public void startCapture() {
-        if (isRunning() && !mCapturedStarted) {
+        if (isRunning()) {
             getHandler().post(() -> {
-                mVideoCapture.connectChannel(ChannelManager.ChannelID.CAMERA);
-                mVideoCapture.setSharedContext(getChannelContext().getEglCore().getEGLContext());
-                mVideoCapture.allocate(mWidth, mHeight, mFrameRate, mFacing);
-                mVideoCapture.startCaptureMaybeAsync(false);
-                mCapturedStarted = true;
+                if (!mCapturedStarted) {
+                    mVideoCapture.connectChannel(ChannelManager.ChannelID.CAMERA);
+                    mVideoCapture.setSharedContext(getChannelContext().getEglCore().getEGLContext());
+                    mVideoCapture.allocate(mWidth, mHeight, mFrameRate, mFacing);
+                    mVideoCapture.startCaptureMaybeAsync(false);
+                    mCapturedStarted = true;
+                }
             });
         }
     }
@@ -93,15 +106,24 @@ public class CameraVideoChannel extends VideoChannel {
     }
 
     public void stopCapture() {
-        if (isRunning() && mCapturedStarted) {
+        if (isRunning()) {
             getHandler().post(() -> {
-                mVideoCapture.deallocate();
-                mCapturedStarted = false;
+                if (mCapturedStarted) {
+                    mCapturedStarted = false;
+                    mVideoCapture.deallocate();
+                }
             });
         }
     }
 
     public boolean hasCaptureStarted() {
         return mCapturedStarted;
+    }
+
+    @Override
+    public void onCameraFirstFrame() {
+        if (mListener != null) {
+            mListener.onFrameFrame();
+        }
     }
 }

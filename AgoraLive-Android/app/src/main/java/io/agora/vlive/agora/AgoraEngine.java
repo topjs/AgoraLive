@@ -26,7 +26,6 @@ public class AgoraEngine {
             mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
             mRtcEngine.enableDualStreamMode(false);
             mRtcEngine.setLogFile(UserUtil.rtcLogFilePath(application));
-            // mRtcEngine.setParameters("{\"rtc.log_filter\":65535}");
 
             mRtmClient = RtmClient.createInstance(application, appId, RtmMessageManager.instance());
             mRtmClient.setLogFile(UserUtil.rtmLogFilePath(application));

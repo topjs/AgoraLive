@@ -6,11 +6,20 @@ import android.opengl.GLES20;
 import com.faceunity.FURenderer;
 import com.faceunity.entity.Effect;
 
+import io.agora.capture.video.camera.CameraVideoChannel;
 import io.agora.capture.video.camera.VideoCaptureFrame;
 import io.agora.framework.modules.channels.VideoChannel;
 import io.agora.framework.modules.processors.IPreprocessor;
 
-public class PreprocessorFaceUnity implements IPreprocessor {
+public class PreprocessorFaceUnity implements IPreprocessor, CameraVideoChannel.OnCameraStateListener {
+    public interface OnFirstFrameListener {
+        void onFirstFrame();
+    }
+
+    public interface OnFuEffectBundleLoadedListener {
+        void onFuEffectBundleLoaded();
+    }
+
     public final static int MSG_EFFECT_BUNDLE_COMPLETE = 1;
 
     private final static String TAG = PreprocessorFaceUnity.class.getSimpleName();
@@ -24,15 +33,17 @@ public class PreprocessorFaceUnity implements IPreprocessor {
     private FURenderer mFURenderer;
     private Context mContext;
     private boolean mEnabled;
-    private Effect mEffectNone;
-    private Effect mEffectBackground;
-    private Effect[] mAnimojiEffects;
+
+    private Effect mHaskiEffect;
+    private Effect mGirlEffect;
+
+    private int mEffectBackgroundHandle;
+    private int mEffectAnimojiHaskiHandle;
+    private int mEffectAnimojiGirlHandle;
+    private int mBeautyHandle;
 
     private OnFuEffectBundleLoadedListener mBundleListener;
-
-    public interface OnFuEffectBundleLoadedListener {
-        void onFuEffectBundleLoaded();
-    }
+    private OnFirstFrameListener mFirstFrameListener;
 
     public PreprocessorFaceUnity(Context context) {
         mContext = context;
@@ -58,7 +69,12 @@ public class PreprocessorFaceUnity implements IPreprocessor {
     public void initPreprocessor() {
         mFURenderer = new FURenderer.Builder(mContext).
                 inputImageFormat(FURenderer.FU_ADM_FLAG_EXTERNAL_OES_TEXTURE)
-                .setNeedAnimoji3D(true).build();
+                .setNeedAnimoji3D(true)
+                // Don't want FURenderer to loads beauty
+                // bundle at the initialization phase
+                // asynchronously
+                .setNeedFaceBeauty(false)
+                .build();
         mFURenderer.onSurfaceCreated();
         mFURenderer.onBlurLevelSelected(DEFAULT_BLUR_VALUE);
         mFURenderer.onColorLevelSelected(DEFAULT_WHITEN_VALUE);
@@ -72,34 +88,50 @@ public class PreprocessorFaceUnity implements IPreprocessor {
             }
         });
         initAnimoji();
+
+        // Enable beautification by default
+        enableBeauty();
     }
 
     private void initAnimoji() {
-        mAnimojiEffects = new Effect[ANIMOJI_COUNT];
-        mAnimojiEffects[0] = new Effect("hashiqi_Animoji",
-                -1, "hashiqi_Animoji.bundle", 4,
-                Effect.EFFECT_TYPE_ANIMOJI, 0);
-        mAnimojiEffects[1] = new Effect("qgirl_Animoji",
-                -1, "qgirl.bundle", 4,
-                Effect.EFFECT_TYPE_ANIMOJI, 0);
-        mEffectNone = new Effect("none", -1,
-                "none", 1, Effect.EFFECT_TYPE_NONE, 0);
-        mEffectBackground = new Effect("white_bg.bundle",
-                -1, "white_bg.bundle", 1,
-                Effect.EFFECT_TYPE_ANIMOJI, 0);
+        mHaskiEffect = new Effect("haski", -1, "hashiqi_Animoji.bundle",
+                1, Effect.EFFECT_TYPE_ANIMOJI, -1);
+        mGirlEffect = new Effect("qgirl", -1, "qgirl.bundle",
+                1, Effect.EFFECT_TYPE_ANIMOJI, -1);
+
+        mEffectAnimojiHaskiHandle = mFURenderer.loadItem("hashiqi_Animoji.bundle");
+        mEffectAnimojiGirlHandle = mFURenderer.loadItem("qgirl.bundle");
+        mEffectBackgroundHandle = mFURenderer.loadItem("white_bg.bundle");
+        mBeautyHandle = mFURenderer.loadItem("face_beautification.bundle");
     }
 
     public void setOnBundleLoadedListener(OnFuEffectBundleLoadedListener listener) {
         mBundleListener = listener;
     }
 
+    public void setOnFirstFrameListener(OnFirstFrameListener listener) {
+        mFirstFrameListener = listener;
+    }
+
+    private void enableBeauty() {
+        mFURenderer.onEffectImageSelected(null,
+                0, mBeautyHandle, true);
+    }
+
     public void onAnimojiSelected(int index) {
         if (mFURenderer != null) {
-            if (0 <= index && index < ANIMOJI_COUNT) {
-                mFURenderer.onVirtualImageSelected(
-                        mAnimojiEffects[index], mEffectBackground);
+            if (0 == index) {
+                enablePreProcess(true);
+                mFURenderer.onEffectImageSelected(mHaskiEffect,
+                        mEffectAnimojiHaskiHandle,
+                        mEffectBackgroundHandle, true);
+            } else if (1 == index) {
+                mFURenderer.onEffectImageSelected(mGirlEffect,
+                        mEffectAnimojiGirlHandle,
+                        mEffectBackgroundHandle, true);
             } else {
-                mFURenderer.onVirtualImageUnselected();
+                enablePreProcess(true);
+                enableBeauty();
             }
         }
     }
@@ -141,6 +173,13 @@ public class PreprocessorFaceUnity implements IPreprocessor {
     public void setEyeValue(float eye) {
         if (mFURenderer != null) {
             mFURenderer.onEyeEnlargeSelected(eye);
+        }
+    }
+
+    @Override
+    public void onFrameFrame() {
+        if (mFirstFrameListener != null) {
+            mFirstFrameListener.onFirstFrame();
         }
     }
 }

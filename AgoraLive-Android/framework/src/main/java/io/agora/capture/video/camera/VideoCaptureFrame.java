@@ -1,7 +1,6 @@
 package io.agora.capture.video.camera;
 
 import android.graphics.SurfaceTexture;
-import android.opengl.Matrix;
 
 import java.util.Arrays;
 
@@ -58,9 +57,15 @@ public class VideoCaptureFrame {
      */
     public boolean mirrored;
 
+    /**
+     * Whether this frame is the first one since the camera
+     * preview starts
+     */
+    public boolean firstFrame;
+
     public VideoCaptureFrame(VideoCaptureFormat format, SurfaceTexture texture,
                              int textureId, byte[] image, float[] textureTransform,
-                             long timestamp, int rotation, boolean mirror) {
+                             long timestamp, int rotation, boolean mirror, boolean firstFrame) {
         this.format = format;
         this.textureId = textureId;
         this.surfaceTexture = texture;
@@ -69,6 +74,7 @@ public class VideoCaptureFrame {
         this.timestamp = timestamp;
         this.rotation = rotation;
         this.mirrored = mirror;
+        this.firstFrame = firstFrame;
     }
 
     public VideoCaptureFrame(VideoCaptureFrame frame) {
@@ -80,16 +86,18 @@ public class VideoCaptureFrame {
         this.timestamp = frame.timestamp;
         this.rotation = frame.rotation;
         this.mirrored = frame.mirrored;
+        this.firstFrame = frame.firstFrame;
     }
 
     public String toString() {
         return "VideoCaptureFrame{" +
-                "mFormat=" + format +
-                ", mRotation=" + rotation +
-                ", mMirror=" + mirrored +
-                ", mTimeStamp=" + timestamp +
-                ", mTextureId=" + textureId +
-                ", mTexMatrix=" + Arrays.toString(textureTransform) +
+                "format=" + format +
+                ", rotation=" + rotation +
+                ", mirror=" + mirrored +
+                ", timeStamp=" + timestamp +
+                ", textureId=" + textureId +
+                ", texMatrix=" + Arrays.toString(textureTransform) +
+                ", first=" + firstFrame +
                 '}';
     }
 }

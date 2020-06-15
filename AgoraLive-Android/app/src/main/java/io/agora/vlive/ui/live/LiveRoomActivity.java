@@ -402,7 +402,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetVideoClicked(boolean muted) {
         Log.i(TAG, "onActionSheetVideoClicked:" + muted);
-        if (isHost) {
+        if (isHost || isOwner) {
             rtcEngine().muteLocalVideoStream(muted);
             config().setVideoMuted(muted);
         }
@@ -411,7 +411,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetSpeakerClicked(boolean muted) {
         Log.i(TAG, "onActionSheetSpeakerClicked:" + muted);
-        if (isHost) {
+        if (isHost || isOwner) {
             rtcEngine().muteLocalAudioStream(muted);
             config().setAudioMuted(muted);
         }
@@ -603,7 +603,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onStop() {
         super.onStop();
-        if ((isHost || isOwner) && !config().isVideoMuted()) {
+        if ((isHost || isOwner) && !config().isVideoMuted()
+                && !mActivityFinished) {
             // If now the app goes to background, stop the camera
             // capture if the host is displaying his video.
             stopCameraCapture();
@@ -644,6 +645,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     public void finish() {
         super.finish();
         mActivityFinished = true;
+        stopCameraCapture();
     }
 
     @Override

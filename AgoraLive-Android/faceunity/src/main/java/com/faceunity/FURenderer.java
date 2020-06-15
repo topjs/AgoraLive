@@ -165,6 +165,7 @@ public class FURenderer implements OnFUControlListener {
         if (isNeedFaceBeauty) {
             mFuItemHandler.sendEmptyMessage(ITEM_ARRAYS_FACE_BEAUTY_INDEX);
         }
+
         if (isNeedAnimoji3D) {
             mFuItemHandler.sendEmptyMessage(ITEM_ARRAYS_EFFECT_ABIMOJI_3D_INDEX);
         }
@@ -737,7 +738,7 @@ public class FURenderer implements OnFUControlListener {
         // 修改美颜参数
         if (mIsNeedUpdateFaceBeauty && mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX] > 0) {
             int itemBeauty = mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX];
-            Log.d(TAG, "beauty drawn");
+            Log.d(TAG, "beauty drawn:" + itemBeauty);
             faceunity.fuItemSetParam(itemBeauty, BeautificationParams.IS_BEAUTY_ON, 1.0);
             // filter_name 滤镜名称
             faceunity.fuItemSetParam(itemBeauty, BeautificationParams.FILTER_NAME, mFilterName);
@@ -884,7 +885,7 @@ public class FURenderer implements OnFUControlListener {
      * @param image virtual image effect
      * @param background effect used to draw background images
      */
-    public void onVirtualImageSelected(Effect image, final Effect background) {
+    public void onEffectImageSelected(Effect image, final Effect background) {
         onEffectSelected(image);
         mFuItemHandler.post(new Runnable() {
             @Override
@@ -905,12 +906,19 @@ public class FURenderer implements OnFUControlListener {
         });
     }
 
-    public void onVirtualImageUnselected() {
-        onEffectSelected(new Effect("none", -1,
-                "none", 1, Effect.EFFECT_TYPE_NONE, 0));
+    public void onEffectImageSelected(Effect imageEffect, int imageHandle, int backgroundHandle, boolean updateBeauty) {
+        mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX] = backgroundHandle;
+        mIsNeedUpdateFaceBeauty = updateBeauty;
 
-        if (isNeedFaceBeauty) {
-            mFuItemHandler.sendEmptyMessage(ITEM_ARRAYS_FACE_BEAUTY_INDEX);
+        if (imageHandle > 0) {
+            updateEffectItemParams(imageEffect, imageHandle);
+            // Private parameter to set the virtual image in the middle
+            fuItemSetParam(imageHandle, "{\"thing\":\"<global>\",\"param\":\"follow\"}", 0);
+        }
+
+        mItemsArray[ITEM_ARRAYS_EFFECT_INDEX] = imageHandle;
+        if (mOnBundleLoadCompleteListener != null) {
+            mOnBundleLoadCompleteListener.onBundleLoadComplete(ITEM_ARRAYS_EFFECT_INDEX);
         }
     }
 
@@ -1074,7 +1082,7 @@ public class FURenderer implements OnFUControlListener {
      * @param bundlePath 道具 bundle 的路径
      * @return 大于 0 时加载成功
      */
-    private int loadItem(String bundlePath) {
+    public int loadItem(String bundlePath) {
         int item = 0;
         try {
             if (!TextUtils.isEmpty(bundlePath)) {
@@ -1512,6 +1520,7 @@ public class FURenderer implements OnFUControlListener {
                         @Override
                         public void run() {
                             mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX] = itemBeauty;
+                            Log.i(TAG, "beauty set from FUHandler:" + mItemsArray[ITEM_ARRAYS_FACE_BEAUTY_INDEX]);
                             mIsNeedUpdateFaceBeauty = true;
                         }
                     });

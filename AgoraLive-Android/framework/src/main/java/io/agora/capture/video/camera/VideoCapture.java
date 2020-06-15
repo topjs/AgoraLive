@@ -7,8 +7,6 @@ package io.agora.capture.video.camera;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.opengl.EGLContext;
-import android.view.Surface;
-import android.view.WindowManager;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,6 +20,10 @@ import io.agora.framework.modules.producers.VideoProducer;
  * provides some necessary data type(s) with accessors.
  **/
 public abstract class VideoCapture extends VideoProducer {
+    public interface OnVideoCaptureStateListener {
+        void onCameraFirstFrame();
+    }
+
     /**
      * Common class for storing a frameRate range. Values should be multiplied by 1000.
      */
@@ -81,6 +83,10 @@ public abstract class VideoCapture extends VideoProducer {
     String mCamera2Id;
     int mFacing;
 
+    boolean firstFrame;
+
+    OnVideoCaptureStateListener stateListener;
+
     VideoCapture(Context context) {
         pContext = context;
     }
@@ -97,6 +103,10 @@ public abstract class VideoCapture extends VideoProducer {
 
     void deallocate() {
         deallocate(true);
+    }
+
+    public void setOnVideoCaptureStateListener(OnVideoCaptureStateListener listener) {
+        stateListener = listener;
     }
 
     /**
@@ -170,8 +180,14 @@ public abstract class VideoCapture extends VideoProducer {
                 null,
                 System.currentTimeMillis(),
                 pCameraNativeOrientation,
-                mirrored);
+                mirrored,
+                firstFrame);
 
         pushVideoFrame(frame);
+
+        if (firstFrame && stateListener != null) {
+            stateListener.onCameraFirstFrame();
+        }
+        firstFrame = false;
     }
 }

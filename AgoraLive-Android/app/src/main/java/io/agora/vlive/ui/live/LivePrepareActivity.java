@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -64,8 +63,9 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     private boolean mCameraPersist;
 
     private boolean mActivityFinished;
-
     private boolean mPermissionGranted;
+
+    private int mVideoInitCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,12 +135,15 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             mSettingBtn.setVisibility(View.GONE);
             int virtualImage = getIntent().getIntExtra(
                     Global.Constants.KEY_VIRTUAL_IMAGE, -1);
+
+            // The listener needs to be reset before the
+            // virtual image is selected
+            mPreprocessor.setOnBundleLoadedListener(this::tryInitializeVideo);
+
+            mPreprocessor.setOnFirstFrameListener(this::tryInitializeVideo);
+            config().setBeautyEnabled(true);
+            startCameraCapture();
             mPreprocessor.onAnimojiSelected(virtualImage);
-            mPreprocessor.setOnBundleLoadedListener(() -> {
-                startCaptureIfStopped();
-                runOnUiThread(() -> mLocalPreviewLayout.
-                        addView(new CameraTextureView(this)));
-            });
         } else {
             mCloseBtn.setImageResource(R.drawable.close_button_white);
             mSwitchBtn.setImageResource(R.drawable.switch_camera_white);
@@ -148,9 +151,21 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             mEditHint.setTextColor(getResources().getColor(R.color.gray_lightest));
             mEditText.setTextColor(getResources().getColor(android.R.color.white));
             mEditLayout.setBackgroundResource(R.drawable.room_edit_layout_bg_dark_gray);
+            startCameraCapture();
             mPreprocessor.onAnimojiSelected(-1);
-            startCaptureIfStopped();
             mLocalPreviewLayout.addView(new CameraTextureView(this));
+        }
+    }
+
+    private void tryInitializeVideo() {
+        if (mVideoInitCount >= 2) {
+            return;
+        }
+
+        mVideoInitCount++;
+        if (mVideoInitCount == 2) {
+            runOnUiThread(() -> mLocalPreviewLayout.
+                    addView(new CameraTextureView(this)));
         }
     }
 
@@ -159,12 +174,6 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
         roomType = getIntent().getIntExtra(Global.Constants.TAB_KEY, Global.Constants.TAB_ID_MULTI);
         mPermissionGranted = true;
         initUI();
-    }
-
-    private void startCaptureIfStopped() {
-        if (mCameraChannel != null && !mCameraChannel.hasCaptureStarted()) {
-            mCameraChannel.startCapture();
-        }
     }
 
     @Override
@@ -338,7 +347,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     public void onStart() {
         super.onStart();
         if (mPermissionGranted) {
-            startCaptureIfStopped();
+            startCameraCapture();
         }
     }
 
