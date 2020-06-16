@@ -19,6 +19,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import io.agora.vlive.Config;
 import io.agora.vlive.R;
+import io.agora.vlive.ui.profile.AboutActivity;
 import io.agora.vlive.ui.profile.ModifyUserNameActivity;
 import io.agora.vlive.utils.Global;
 import io.agora.vlive.utils.UserUtil;
@@ -46,6 +47,7 @@ public class MeFragment extends AbstractFragment implements View.OnClickListener
 
         mLayout.findViewById(R.id.user_profile_nickname_setting_layout).setOnClickListener(this);
         mLayout.findViewById(R.id.user_profile_icon_setting_layout).setOnClickListener(this);
+        mLayout.findViewById(R.id.user_profile_about_layout).setOnClickListener(this);
         return mLayout;
     }
 
@@ -87,6 +89,9 @@ public class MeFragment extends AbstractFragment implements View.OnClickListener
                 break;
             case R.id.user_profile_icon_setting_layout:
                 break;
+            case R.id.user_profile_about_layout:
+                gotoAboutActivity();
+                break;
         }
     }
 
@@ -96,7 +101,10 @@ public class MeFragment extends AbstractFragment implements View.OnClickListener
         startActivityForResult(intent, USER_NAME_REQUEST);
     }
 
-
+    private void gotoAboutActivity() {
+        Intent intent = new Intent(getContext(), AboutActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
