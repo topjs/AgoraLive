@@ -968,8 +968,8 @@
 		A7D89D4A247E78B20048B7EC /* VirtualBroadcasting */ = {
 			isa = PBXGroup;
 			children = (
-				A7D89D4B247E79060048B7EC /* VirtualAppearanceViewController.swift */,
 				A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */,
+				A7D89D4B247E79060048B7EC /* VirtualAppearanceViewController.swift */,
 			);
 			name = VirtualBroadcasting;
 			sourceTree = "<group>";

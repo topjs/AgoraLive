@@ -140,6 +140,16 @@ extension LiveViewController {
             }
         }).disposed(by: bag)
     }
+    
+    // MARK: - Live Session
+    func liveSession(_ session: LiveSession) {
+        session.end.subscribe(onNext: { [unowned self] (_) in
+            self.leave()
+            self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
+                self.dimissSelf()
+            }
+        }).disposed(by: bag)
+    }
 }
 
 // MARK: - View
@@ -234,6 +244,7 @@ extension LiveViewController {
                            action1: NSLocalizedString("Cancel"),
                            action2: NSLocalizedString("Confirm")) { [unowned self] (_) in
                             self.leave()
+                            self.dimissSelf()
             }
         }).disposed(by: bag)
     }
@@ -337,19 +348,19 @@ extension LiveViewController {
         let roomId = session.roomId
         
         // Invite VC
-        listVC.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [unowned self, unowned listVC] in
-            self.audienceListVM.refetch(roomId: roomId, onlyAudience: isOnlyAudience, success: { [unowned listVC] in
-                listVC.tableView.mj_header?.endRefreshing()
-            }) { [unowned listVC] in // fail
-                listVC.tableView.mj_header?.endRefreshing()
+        listVC.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [unowned self] in
+            self.audienceListVM.refetch(roomId: roomId, onlyAudience: isOnlyAudience, success: { [unowned self] in
+                self.userListVC?.tableView.mj_header?.endRefreshing()
+            }) { [unowned self] in // fail
+                self.userListVC?.tableView.mj_header?.endRefreshing()
             }
         })
         
-        listVC.tableView.mj_footer = MJRefreshBackFooter(refreshingBlock: { [unowned self, unowned listVC] in
-            self.audienceListVM.fetch(roomId: roomId, onlyAudience: isOnlyAudience, success: { [unowned listVC] in
-                listVC.tableView.mj_footer?.endRefreshing()
-            }) { [unowned listVC] in // fail
-                listVC.tableView.mj_footer?.endRefreshing()
+        listVC.tableView.mj_footer = MJRefreshBackFooter(refreshingBlock: { [unowned self] in
+            self.audienceListVM.fetch(roomId: roomId, onlyAudience: isOnlyAudience, success: { [unowned self] in
+                self.userListVC?.tableView.mj_footer?.endRefreshing()
+            }) { [unowned self] in // fail
+                self.userListVC?.tableView.mj_footer?.endRefreshing()
             }
         })
     }
@@ -698,6 +709,9 @@ extension LiveViewController {
         ALCenter.shared().liveSession?.leave()
         ALCenter.shared().liveSession = nil
         enhancementVM.reset()
+    }
+    
+    func dimissSelf() {
         if let _ = self.navigationController?.viewControllers.first as? LiveListTabViewController {
             self.navigationController?.popViewController(animated: true)
         } else {

@@ -79,6 +79,7 @@ class MultiBroadcastersViewController: MaskViewController, LiveViewController {
             return
         }
         
+        liveSession(session)
         liveRoom(session: session)
         liveRole(session: session)
         audience()
@@ -365,12 +366,6 @@ private extension MultiBroadcastersViewController {
         
         self.roomLabel.text = NSLocalizedString("Live_Room") + ": "
         self.roomNameLabel.text = session.settings.title
-        
-        session.end.subscribe(onNext: { [unowned self] (_) in
-            self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
-                self.leave()
-            }
-        }).disposed(by: bag)
     }
     
     func liveRole(session: LiveSession) {

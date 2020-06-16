@@ -332,7 +332,11 @@ private extension LiveSession {
                 let data = try json.getDataObject()
                 let owner = try RemoteOwner(dic: data)
                 
-                if !strongSelf.owner.isLocal {
+                guard let tOwner = strongSelf.owner else {
+                    return
+                }
+                
+                if !tOwner.isLocal {
                     strongSelf.owner = .otherUser(owner)
                 }
                 

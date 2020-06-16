@@ -69,6 +69,7 @@ class SingleBroadcasterViewController: MaskViewController, LiveViewController {
             return
         }
         
+        liveSession(session)
         liveRoom(session: session)
         audience()
         chatList()
@@ -142,12 +143,6 @@ extension SingleBroadcasterViewController {
             deviceVM.camera = .off
             deviceVM.mic = .off
         }
-        
-        session.end.subscribe(onNext: { [unowned self] (_) in
-            self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
-                self.leave()
-            }
-        }).disposed(by: bag)
     }
     
     func superResolution(session: LiveSession) {

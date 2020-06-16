@@ -74,6 +74,7 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
             return
         }
         
+        liveSession(session)
         liveRoom(session: session)
         audience()
         chatList()
@@ -166,12 +167,6 @@ extension VirtualBroadcastersViewController {
             deviceVM.camera = .off
             deviceVM.mic = .off
         }
-        
-        session.end.subscribe(onNext: { [unowned self] (_) in
-            self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
-                self.leave()
-            }
-        }).disposed(by: bag)
         
         inviteButton.rx.tap.subscribe(onNext: { [unowned self] in
             guard let session = ALCenter.shared().liveSession,

@@ -196,6 +196,7 @@ class PKBroadcastersViewController: MaskViewController, LiveViewController {
             return
         }
         
+        liveSession(session)
         liveRoom(session: session)
         audience()
         chatList()
@@ -273,12 +274,6 @@ extension PKBroadcastersViewController {
             pkView?.intoOtherButton.isHidden = false
             pkButton.isHidden = true
         }
-        
-        session.end.subscribe(onNext: { [unowned self] (_) in
-            self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
-                self.leave()
-            }
-        }).disposed(by: bag)
         
         bottomToolsVC?.closeButton.rx.tap.subscribe(onNext: { [unowned self] () in
             if self.pkVM.statistics.value.state.isDuring {
