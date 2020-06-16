@@ -44,7 +44,7 @@
     <string name="agoralive_release_time_title">Release:&#160;&#160;</string>
     <string name="agoralive_release_time"></string>
     <string name="agoralive_media_sdk_version_title">Media SDK Version:&#160;&#160;</string>
-    <string name="agoralive_media_sdk_version">3.0.1</string>
+    <string name="agoralive_media_sdk_version">3.0.0</string>
 
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">Room Name:</string>
