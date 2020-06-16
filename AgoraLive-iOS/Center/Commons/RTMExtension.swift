@@ -31,6 +31,7 @@ extension AgoraRtmKit: AGELogBase {
         setParameters("{\"rtm.msg.report_enabled\": \(true)}")
         setParameters("{\"rtm.msg.payload_report_enabled\": \(true)}")
         #endif
+        log(info: "rtm sdk version: \(AgoraRtmKit.getSDKVersion())")
     }
     
     func login(rtmId: String, token: String?, success: Completion, fail: ErrorCompletion) {
