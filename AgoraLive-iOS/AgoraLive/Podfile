@@ -21,7 +21,7 @@ target 'AgoraLive' do
   pod 'SVProgressHUD'
   pod 'AlamoClient', '~> 1.0.1'
   pod 'AgoraRtm_iOS', '~> 1.2.2'
-  pod 'AgoraRtcEngine_iOS', '~> 3.0.1'
+  pod 'AgoraRtcEngine_iOS', '~> 3.0.0'
   pod 'AGECamera', :path => '/Users/cavansu/Documents/Github/AGECamera/' 
 
   source 'https://github.com/CocoaPods/Specs.git'

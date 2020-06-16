@@ -17,7 +17,7 @@ class NetworkMonitor: NSObject {
     private lazy var netListener = NetworkReachabilityManager(host: self.host)
     private let host: String
     
-    var connect = BehaviorRelay(value: ReachabilityStatus.unknown)
+    var connect = PublishRelay<ReachabilityStatus>()
     
     init(host: String) {
         self.host = host

@@ -1426,7 +1426,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yuhua Gong (YBKA3W5TF4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 305;
+				CURRENT_PROJECT_VERSION = 306;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SW3CA7M752;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1445,7 +1445,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraAppsDevProfile;
@@ -1464,7 +1464,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yuhua Gong (YBKA3W5TF4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 305;
+				CURRENT_PROJECT_VERSION = 306;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SW3CA7M752;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1483,7 +1483,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraAppsDevProfile;
@@ -1556,7 +1556,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Haifeng Hong (MJP2F92AG6)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 305;
+				CURRENT_PROJECT_VERSION = 306;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JDPG69R49Z;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1575,7 +1575,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraLab2020;
@@ -1649,7 +1649,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Haifeng Hong (MJP2F92AG6)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 305;
+				CURRENT_PROJECT_VERSION = 306;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JDPG69R49Z;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1673,7 +1673,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../SDK/Faceunity/FaceUnity-SDK-iOS";
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DPREPRODUCT";
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
