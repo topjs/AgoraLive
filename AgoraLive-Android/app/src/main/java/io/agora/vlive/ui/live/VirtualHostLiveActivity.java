@@ -489,6 +489,8 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
     @Override
     public void onRtmInvitedByOwner(String peerId, String nickname, int index) {
         if (isOwner) return;
+        closeDialog();
+
         String title = getResources().getString(R.string.live_room_host_in_invite_user_list_action_sheet_title);
         String message = getResources().getString(R.string.live_room_virtual_image_invited_message);
         message = String.format(message, nickname);
@@ -545,6 +547,7 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
     @Override
     public void onRtmInvitationRejected(String peerId, String nickname) {
         Log.i(TAG, "The audience has rejected your invitation");
+        closeDialog();
         String title = getResources().getString(R.string.live_room_host_in_invite_rejected);
         String message = getResources().getString(R.string.live_room_host_in_invite_rejected_message);
         message = String.format(message, nickname);
