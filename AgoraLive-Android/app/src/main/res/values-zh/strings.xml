@@ -18,7 +18,7 @@
     <string name="home_category_desp_multi">观众与主播连麦互动</string>
     <string name="home_category_desp_single">标准单主播直播</string>
     <string name="home_category_desp_pk">跨直播间主播连\n麦PK互动</string>
-    <string name="home_category_desp_virtual_host"></string>
+    <string name="home_category_desp_virtual_host">用卡通形象模拟真人进行对话或直播</string>
 
     <string name="room_list_no_data_hint">请创建一个房间</string>
     <string name="room_list_fail_to_obtain_data_hint">暂无数据，请稍候再试</string>
