@@ -2,7 +2,7 @@ package io.agora.vlive.ui.profile;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import io.agora.vlive.R;
 import io.agora.vlive.ui.BaseActivity;
@@ -19,8 +19,8 @@ public class DisclaimerActivity extends BaseActivity {
     protected void onGlobalLayoutCompleted() {
         View topLayout = findViewById(R.id.activity_disclaimer_title_layout);
         if (topLayout != null) {
-            LinearLayout.LayoutParams params =
-                    (LinearLayout.LayoutParams)
+            RelativeLayout.LayoutParams params =
+                    (RelativeLayout.LayoutParams)
                             topLayout.getLayoutParams();
             params.topMargin += systemBarHeight;
             topLayout.setLayoutParams(params);
