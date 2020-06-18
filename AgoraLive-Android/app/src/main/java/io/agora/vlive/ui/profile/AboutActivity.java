@@ -40,7 +40,8 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
     private void setVersionText() {
         AppCompatTextView agoraLiveVersionText = findViewById(R.id.agoralive_version_text);
-        agoraLiveVersionText.setText(getAppVersion());
+        String versionText = "Ver " + getAppVersion();
+        agoraLiveVersionText.setText(versionText);
     }
 
     @Override
