@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 import io.agora.vlive.R;
 import io.agora.vlive.ui.BaseActivity;
 
@@ -19,7 +21,9 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         findViewById(R.id.about_privacy_layout).setOnClickListener(this);
         findViewById(R.id.about_disclaimer_layout).setOnClickListener(this);
         findViewById(R.id.about_sign_up_layout).setOnClickListener(this);
-        findViewById(R.id.about_version_layout).setOnClickListener(this);
+        findViewById(R.id.about_activity_close).setOnClickListener(this);
+
+        setVersionText();
     }
 
     @Override
@@ -32,6 +36,11 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
             params.topMargin += systemBarHeight;
             topLayout.setLayoutParams(params);
         }
+    }
+
+    private void setVersionText() {
+        AppCompatTextView agoraLiveVersionText = findViewById(R.id.agoralive_version_text);
+        agoraLiveVersionText.setText(getAppVersion());
     }
 
     @Override
@@ -51,9 +60,9 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 uri = Uri.parse(link);
                 intent = new Intent(Intent.ACTION_VIEW, uri);
                 break;
-            case R.id.about_version_layout:
-                intent = new Intent(this, VersionActivity.class);
-                break;
+            case R.id.about_activity_close:
+                finish();
+                return;
         }
 
         startActivity(intent);

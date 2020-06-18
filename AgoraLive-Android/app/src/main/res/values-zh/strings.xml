@@ -44,10 +44,9 @@
     <string name="sign_up_website_link">https://sso.agora.io/cn/signup</string>
 
     <string name="version_title">版本说明</string>
-    <string name="agoralive_version_title">AgoraLive 版本:&#160;&#160;</string>
-    <string name="agoralive_release_time_title">发布时间:&#160;&#160;</string>
-    <string name="agoralive_media_sdk_version_title">媒体SDK版本:&#160;&#160;</string>
-    <string name="agoralive_release_time"></string>
+    <string name="agoralive_version_title">AgoraLive 版本</string>
+    <string name="agoralive_release_time_title">发布时间</string>
+    <string name="agoralive_media_sdk_version_title">媒体SDK版本</string>
 
     <string name="modify_user_title">输入名字</string>
 
