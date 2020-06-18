@@ -113,6 +113,7 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
         case "ChatViewController":
             let vc = segue.destination as! ChatViewController
             vc.cellColor = tintColor
+            vc.contentColor = UIColor(hexString: "#333333")
             self.chatVC = vc
         default:
             break
@@ -207,7 +208,14 @@ extension VirtualBroadcastersViewController {
         
         // Owner
         seatVM.receivedAudienceRejectInvitation.subscribe(onNext: { [unowned self] (user) in
-            self.showAlert(message: user.info.name + NSLocalizedString("Reject"))
+            var message: String
+            if DeviceAssistant.Language.isChinese {
+                message = user.info.name + NSLocalizedString("Invitation_Rejected_Description")
+            } else {
+                message = NSLocalizedString("Invitation_Rejected_Description") + " " + user.info.name
+            }
+            
+            self.showAlert(NSLocalizedString("Invitation_Rejected"), message: message, handler: nil)
         }).disposed(by: bag)
         
         // Audience
@@ -455,7 +463,7 @@ extension VirtualBroadcastersViewController {
         self.showAlert(NSLocalizedString("Broadcasting_Invitation"),
                        message: NSLocalizedString("Confirm_Accept_Broadcasting_Invitation"),
                        action1: NSLocalizedString("Reject"),
-                       action2: NSLocalizedString("Confirm"),
+                       action2: NSLocalizedString("Accept"),
                        handler1: { [unowned self] (_) in
                         self.hiddenMaskView()
                         

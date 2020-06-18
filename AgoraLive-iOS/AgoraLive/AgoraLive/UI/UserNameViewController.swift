@@ -15,6 +15,22 @@ class UserNameViewController: UIViewController {
     
     var newName: BehaviorRelay<String>!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let navigation = self.navigationController as? CSNavigationController else {
+            fatalError()
+        }
+        navigation.navigationBar.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard let navigation = self.navigationController as? CSNavigationController else {
+            fatalError()
+        }
+        navigation.rightButton = nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.text = newName.value

@@ -95,6 +95,7 @@ class ChatViewController: UITableViewController {
     }
     
     var cellColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+    var contentColor: UIColor? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,6 +119,10 @@ class ChatViewController: UITableViewController {
         cell.fillet.insideBackgroundColor = cellColor
         cell.contentWidth = chat.textSize.width
         cell.contentImage = chat.image
+        
+        if let contentColor = contentColor {
+            cell.contentLabel.textColor = contentColor
+        }
         return cell
     }
 }

@@ -45,6 +45,7 @@ class CreateLiveViewController: MaskViewController {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cameraPreview: UIView!
+    @IBOutlet weak var randomButton: UIButton!
     
     private let bag = DisposeBag()
     
@@ -105,6 +106,11 @@ class CreateLiveViewController: MaskViewController {
             switchCameraButton.isHidden = true
             backButton.setImage(UIImage(named: "icon-back-black"),
                                 for: .normal)
+            
+//            nameTextField.textColor = UIColor(hexString: "#333333")
+//            nameLabel.textColor = UIColor(hexString: "#080808")
+//            randomButton.setImage(UIImage(named: "icon-random-black"), for: .normal)
+//            nameBgView.backgroundColor = .white
         }
     }
     
@@ -258,7 +264,9 @@ private extension CreateLiveViewController {
     }
     
     func showLimitToast() {
-        let view = TagImageTextToast(frame: CGRect(x: 15, y: 300, width: 181, height: 44.0), filletRadius: 8)
+        let mainScreen = UIScreen.main
+        let y = mainScreen.bounds.height - mainScreen.heightOfSafeAreaBottom - 38 - 15 - 150
+        let view = TagImageTextToast(frame: CGRect(x: 15, y: y, width: 181, height: 44.0), filletRadius: 8)
         
         view.labelSize = CGSize(width: UIScreen.main.bounds.width - 30, height: 0)
         view.text = NSLocalizedString("Limit_Toast")

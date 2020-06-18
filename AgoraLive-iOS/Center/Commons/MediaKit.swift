@@ -68,6 +68,10 @@ class MediaKit: NSObject, AGELogBase {
         self.reinitRTC()
     }
     
+    func getSDKVersion() -> String {
+        return AgoraRtcEngineKit.getSdkVersion()
+    }
+    
     func reinitRTC() {
         MediaKit.rtcKit = AgoraRtcEngineKit.sharedEngine(withAppId: ALKeys.AgoraAppId,
                                                          delegate: self)

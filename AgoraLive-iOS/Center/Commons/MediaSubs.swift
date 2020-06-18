@@ -62,7 +62,8 @@ class Capture: NSObject {
             #endif
             video = .on
             #if (!arch(i386) && !arch(x86_64))
-            try cameraSession?.start(work: .capture(isMirror: true))
+            let configuration = AGESingleCamera.CaptureConfiguration()
+            try cameraSession?.start(work: .capture(configuration: configuration))
             #endif
         case .off:
             #if (!arch(i386) && !arch(x86_64))

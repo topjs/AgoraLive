@@ -70,7 +70,11 @@ class VirtualAppearanceViewController: UIViewController, RxViewController {
         
         closeButton.rx.tap.subscribe(onNext: { [unowned self] in
             self.enhancementVM.reset()
-            self.navigationController?.dismiss(animated: true, completion: nil)
+            if let navigation = self.navigationController {
+                navigation.dismiss(animated: true, completion: nil)
+            } else {
+                self.dismiss(animated: true, completion: nil)
+            }
         }).disposed(by: bag)
     }
 }

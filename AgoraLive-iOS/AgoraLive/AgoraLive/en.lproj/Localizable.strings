@@ -41,6 +41,21 @@ Limit_Toast="This is a testing product. Please refrain from using it commerciall
 Mine_Head="Profile";
 Mine_Name="Nickname";
 Input_Name="Input";
+About="About";
+Privacy_Item="Privacy";
+Disclaimer="Disclaimer";
+Register_Agora_Account="Agora Account";
+Version_Release_Date="Release Date";
+RTC_SDK_Version="SDK Version";
+AL_Version="Agora Live Version";
+
+Test_Product_Disclaimer="Test product disclaimer ";
+
+Disclaimer_Detail="  Agora Live (\"this product\") is a test product provided by Agora . Agora enjoys the copyright and ownership of this product. It is hereby granted free of charge to anyone who obtains a copy of this product and related documentation (hereinafter referred to as \"software\") to try the software without limitation, including but not limited to trial, copy, modify, merge, publish, distribute, but this product shall not be used For any commercial use, you may not sublicense and / or sell copies of the software.
+
+  This product is provided \"as is\" without any express warranty, including but not limited to guarantees of suitability, suitability for specific purposes, and non-infringement. Whether it is due to any contract, infringement or other forms of conduct related to this product or the trial of this product or other methods, Agora will not be responsible for any claims, damages or other liabilities.
+
+  You are free to choose whether to try the services provided by this product. If you download, install, or try the services provided in this product, it means that you trust the owner of the product, and Agora shall not be responsible for any form of loss or injury caused by yourself or others when you try the services provided in this product for any reason.";
 
 // Media
 Resolution="Resolution";
@@ -88,6 +103,9 @@ End_Broadcasting="End";
 
 Seat_Release_Description="Unblock this seat";
 
+Invitation_Rejected="Invitation Rejected";
+Invitation_Rejected_Description="Your Invitation has been rejected by";
+
 Invite_Broadcasting="Invite host";
 Owner_Forces_You_End_Broadcasting="Owner forces you end broadcasting";
 Apply_For_Broadcasting="Become a host";
@@ -132,7 +150,7 @@ Confirm_Accept_Invitation="";
 Confirm_Apply_For_Broadcasting="你确定要\“申请上麦\”吗？";
 
 Broadcasting_Invitation="Invite host";
-Confirm_Accept_Broadcasting_Invitation="邀请您上麦是否接受？";
+Confirm_Accept_Broadcasting_Invitation="Do you agree to become a host？";
 
 Ending_Broadcasting="End";
 Confirm_Ending_Broadcasting="Are you sure to end this?";

@@ -77,6 +77,7 @@
 		A7588528242E01C10011FCCF /* BottomToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7588527242E01C10011FCCF /* BottomToolsViewController.swift */; };
 		A75D5B2A244FE77D00CE7528 /* CSNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */; };
 		A7615015244AF35B007AAA7F /* MediaDeviceVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7615014244AF35B007AAA7F /* MediaDeviceVM.swift */; };
+		A76767EB249B0E45002C4FBD /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76767EA249B0E45002C4FBD /* AboutViewController.swift */; };
 		A768B6142452F3980073510D /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A768B6132452F3980073510D /* GIFView.swift */; };
 		A76BD12123F1035500B2732B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BD12023F1035500B2732B /* AppDelegate.swift */; };
 		A76BD12823F1035500B2732B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BD12623F1035500B2732B /* Main.storyboard */; };
@@ -266,6 +267,7 @@
 		A7588527242E01C10011FCCF /* BottomToolsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolsViewController.swift; sourceTree = "<group>"; };
 		A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNavigationController.swift; sourceTree = "<group>"; };
 		A7615014244AF35B007AAA7F /* MediaDeviceVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDeviceVM.swift; sourceTree = "<group>"; };
+		A76767EA249B0E45002C4FBD /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		A768B6132452F3980073510D /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFView.swift; sourceTree = "<group>"; };
 		A76BD11D23F1035500B2732B /* AgoraLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgoraLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76BD12023F1035500B2732B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -794,8 +796,8 @@
 		A7952A7824162C1000479811 /* SSZipArchive */ = {
 			isa = PBXGroup;
 			children = (
-				A7952A7924162C1000479811 /* ZipArchive.h */,
 				A7952A7A24162C1000479811 /* minizip */,
+				A7952A7924162C1000479811 /* ZipArchive.h */,
 				A7952A9E24162C1000479811 /* SSZipArchive.h */,
 				A7952A9F24162C1000479811 /* SSZipCommon.h */,
 				A7952AA024162C1000479811 /* SSZipArchive.m */,
@@ -961,6 +963,7 @@
 			children = (
 				A773BD4D24090426003ECBFD /* MineViewController.swift */,
 				A773BD512410A001003ECBFD /* UserNameViewController.swift */,
+				A76767EA249B0E45002C4FBD /* AboutViewController.swift */,
 			);
 			name = Mine;
 			sourceTree = "<group>";
@@ -1219,6 +1222,7 @@
 				A71A9482247E40B2002749E4 /* FUImageHelper.m in Sources */,
 				A7952AB824162C1000479811 /* AGELock.swift in Sources */,
 				A7952A5424162BE600479811 /* ALCenter.swift in Sources */,
+				A76767EB249B0E45002C4FBD /* AboutViewController.swift in Sources */,
 				A7FDB59F23FD2B0C00487FB9 /* LiveListTabViewController.swift in Sources */,
 				A71AAF88243D740F00820096 /* UIImage+CSClipToCycle.m in Sources */,
 				A71AAF18243354C500820096 /* MusicViewController.swift in Sources */,
@@ -1426,7 +1430,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yuhua Gong (YBKA3W5TF4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 306;
+				CURRENT_PROJECT_VERSION = 307;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SW3CA7M752;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1464,7 +1468,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yuhua Gong (YBKA3W5TF4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 306;
+				CURRENT_PROJECT_VERSION = 307;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SW3CA7M752;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1556,7 +1560,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Haifeng Hong (MJP2F92AG6)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 306;
+				CURRENT_PROJECT_VERSION = 307;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JDPG69R49Z;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1649,7 +1653,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Haifeng Hong (MJP2F92AG6)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 306;
+				CURRENT_PROJECT_VERSION = 307;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JDPG69R49Z;
 				FRAMEWORK_SEARCH_PATHS = (
