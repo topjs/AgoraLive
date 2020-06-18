@@ -13,9 +13,19 @@ class DisclaimerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = NSLocalizedString("Test_Product_Disclaimer")
-        self.textView.text = NSLocalizedString("Disclaimer_Detail")
+        
+        let para = NSMutableParagraphStyle()
+        para.alignment = .natural
+        para.firstLineHeadIndent = 20
+        para.lineSpacing = 5
+        para.lineBreakMode = .byCharWrapping
+        para.paragraphSpacingBefore = 0
+        
+        let string = NSAttributedString(string: NSLocalizedString("Disclaimer_Detail"),
+                                        attributes: [NSAttributedString.Key.paragraphStyle : para,
+                                                     NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17)])
+        self.textView.attributedText = string
     }
 }
 
