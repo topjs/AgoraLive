@@ -289,8 +289,9 @@ private extension LiveListTabViewController {
         monitor.action(.on)
         monitor.connect.subscribe(onNext: { [unowned self] (status) in
             switch status {
-            case .notReachable, .unknown: self.listVC?.placeHolderView.viewType = .lostConnection
-            case .reachable:              self.listVC?.placeHolderView.viewType = .noRoom
+            case .notReachable: self.listVC?.placeHolderView.viewType = .lostConnection
+            case .reachable:    self.listVC?.placeHolderView.viewType = .noRoom
+            default: break
             }
         }).disposed(by: bag)
     }

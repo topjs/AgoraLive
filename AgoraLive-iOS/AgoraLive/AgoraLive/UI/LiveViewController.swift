@@ -126,7 +126,7 @@ extension LiveViewController {
         monitor.action(.on)
         monitor.connect.subscribe(onNext: { [unowned self] (status) in
             switch status {
-            case .notReachable, .unknown:
+            case .notReachable:
                 let view = TextToast(frame: CGRect(x: 0, y: 200, width: 0, height: 44), filletRadius: 8)
                 view.text = NSLocalizedString("Lost_Connection_Retry")
                 self.showToastView(view, duration: 2.0)
@@ -137,6 +137,8 @@ extension LiveViewController {
                 let view = TextToast(frame: CGRect(x: 0, y: 200, width: 0, height: 44), filletRadius: 8)
                 view.text = NSLocalizedString("Use_Cellular_Data")
                 self.showToastView(view, duration: 2.0)
+            default:
+                break
             }
         }).disposed(by: bag)
     }
