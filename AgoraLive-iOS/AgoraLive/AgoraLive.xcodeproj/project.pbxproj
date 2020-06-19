@@ -72,7 +72,6 @@
 		A754FAF6242C9B700062B2F5 /* LiveSeatVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A754FAF5242C9B700062B2F5 /* LiveSeatVM.swift */; };
 		A7584B09248114EA0088FACB /* VirtualBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */; };
 		A7584B4B2484DB290088FACB /* VirtualVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B4A2484DB290088FACB /* VirtualVM.swift */; };
-		A7584B4F2484F3B80088FACB /* bj_lan.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7584B4E2484F3B80088FACB /* bj_lan.bundle */; };
 		A758851E242DF20E0011FCCF /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758851D242DF20E0011FCCF /* UserListViewController.swift */; };
 		A7588528242E01C10011FCCF /* BottomToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7588527242E01C10011FCCF /* BottomToolsViewController.swift */; };
 		A75D5B2A244FE77D00CE7528 /* CSNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */; };
@@ -262,7 +261,6 @@
 		A754FAF5242C9B700062B2F5 /* LiveSeatVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSeatVM.swift; sourceTree = "<group>"; };
 		A7584B08248114EA0088FACB /* VirtualBroadcastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualBroadcastersViewController.swift; sourceTree = "<group>"; };
 		A7584B4A2484DB290088FACB /* VirtualVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualVM.swift; sourceTree = "<group>"; };
-		A7584B4E2484F3B80088FACB /* bj_lan.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bj_lan.bundle; sourceTree = "<group>"; };
 		A758851D242DF20E0011FCCF /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		A7588527242E01C10011FCCF /* BottomToolsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolsViewController.swift; sourceTree = "<group>"; };
 		A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNavigationController.swift; sourceTree = "<group>"; };
@@ -560,7 +558,6 @@
 			isa = PBXGroup;
 			children = (
 				A73F27C82489FE60000C85E0 /* bai_bj.bundle */,
-				A7584B4E2484F3B80088FACB /* bj_lan.bundle */,
 				A71ED4CE247FBF7F00BA9A32 /* qgirl_Animoji.png */,
 				A71ED4D0247FBF7F00BA9A32 /* qgirl_Animoji.bundle */,
 				A71ED4D6247FBF7F00BA9A32 /* hashiqi_Animoji.png */,
@@ -1090,7 +1087,6 @@
 				A71A96AD247E44F6002749E4 /* ai_humanpose.bundle in Resources */,
 				A711AB7C243EF78A00C2A3FD /* SuperWatch.gif in Resources */,
 				A73F27C92489FE60000C85E0 /* bai_bj.bundle in Resources */,
-				A7584B4F2484F3B80088FACB /* bj_lan.bundle in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
 				A711AB8E244015E000C2A3FD /* SuperIcecream.gif in Resources */,
 				A76BD12823F1035500B2732B /* Main.storyboard in Resources */,
