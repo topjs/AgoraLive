@@ -41,10 +41,13 @@ class AboutViewController: UITableViewController {
     @IBOutlet weak var sdkValueLabel: UILabel!
     @IBOutlet weak var alValueLabel: UILabel!
     
+    private let agoraLabel = UILabel(frame: CGRect.zero)
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let navigation = self.navigationController as? CSNavigationController else {
-            fatalError()
+            assert(false)
+            return
         }
         
         navigation.navigationBar.isHidden = false
@@ -65,6 +68,28 @@ class AboutViewController: UITableViewController {
         sdkValueLabel.text = "Ver \(ALCenter.shared().centerProvideMediaHelper().rtcVersion)"
         
         releaseDateValueLabel.text = "2020.6.18"
+        
+        agoraLabel.text = "www.agora.io"
+        agoraLabel.font = UIFont.systemFont(ofSize: 10)
+        agoraLabel.textColor = UIColor(hexString: "#999999")
+        agoraLabel.textAlignment = .center
+        
+        guard let navigation = self.navigationController as? CSNavigationController else {
+            assert(false)
+            return
+        }
+        
+        let w: CGFloat = 100
+        let h: CGFloat = 15
+        let x: CGFloat = (UIScreen.main.bounds.width - w) * 0.5
+        let y: CGFloat = UIScreen.main.bounds.height -
+            UIScreen.main.heightOfSafeAreaBottom -
+            UIScreen.main.heightOfSafeAreaTop -
+            navigation.navigationBar.bounds.height -
+            15 - h
+        
+        agoraLabel.frame = CGRect(x: x, y: y, width: w, height: h)
+        view.addSubview(agoraLabel)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

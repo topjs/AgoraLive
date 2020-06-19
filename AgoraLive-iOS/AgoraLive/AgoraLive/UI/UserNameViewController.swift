@@ -18,7 +18,8 @@ class UserNameViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let navigation = self.navigationController as? CSNavigationController else {
-            fatalError()
+            assert(false)
+            return
         }
         navigation.navigationBar.isHidden = false
     }
@@ -26,7 +27,8 @@ class UserNameViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         guard let navigation = self.navigationController as? CSNavigationController else {
-            fatalError()
+            assert(false)
+            return
         }
         navigation.rightButton = nil
     }
@@ -49,7 +51,8 @@ class UserNameViewController: UIViewController {
 private extension UserNameViewController {
     func setupRightButton() {
         guard let navigation = self.navigationController as? CSNavigationController else {
-            fatalError()
+            assert(false)
+            return
         }
         
         navigation.navigationBar.isHidden = false
