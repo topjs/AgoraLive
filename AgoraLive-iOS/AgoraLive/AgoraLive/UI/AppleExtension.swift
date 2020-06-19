@@ -229,12 +229,20 @@ extension ShowAlertProtocol {
 
 protocol ShowHudProtocol where Self: UIViewController {
     var hud: MBProgressHUD? {get set}
-    
+    func isShowingHUD() -> Bool
     func showHUD()
     func hiddenHUD()
 }
 
 extension ShowHudProtocol {
+    func isShowingHUD() -> Bool {
+        if let _ = self.hud {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func showHUD() {
         guard self.hud == nil else {
             return

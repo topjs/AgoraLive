@@ -1826,7 +1826,7 @@
         <!--Navigation Controller-->
         <scene sceneID="i0w-We-qVY">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="2g6-aF-l79" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="2g6-aF-l79" customClass="CSNavigationController" customModule="AgoraLive" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-types" selectedImage="icon-types-selected" id="sd0-Ba-5u8"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ron-N0-B6f">

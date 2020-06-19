@@ -131,14 +131,14 @@ extension SingleBroadcasterViewController {
         case .localUser(let user):
             ownerView.label.text = user.info.name
             ownerView.imageView.image = images.getHead(index: user.info.imageIndex)
-            playerVM.renderLocalVideoStream(id: user.agoraUserId,
-                                            view: self.renderView)
+            playerVM.startRenderLocalVideoStream(id: user.agoraUserId,
+                                                 view: self.renderView)
             deviceVM.camera = .on
             deviceVM.mic = .on
         case .otherUser(let remote):
             ownerView.label.text = remote.info.name
             ownerView.imageView.image = images.getHead(index: remote.info.imageIndex)
-            playerVM.renderRemoteVideoStream(id: remote.agoraUserId,
+            playerVM.startRenderRemoteVideoStream(id: remote.agoraUserId,
                                              view: self.renderView)
             deviceVM.camera = .off
             deviceVM.mic = .off

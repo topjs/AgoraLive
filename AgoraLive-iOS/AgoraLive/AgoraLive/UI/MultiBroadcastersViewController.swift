@@ -166,11 +166,11 @@ extension MultiBroadcastersViewController {
             }
             
             if local.agoraUserId == viewUser.1.agoraUserId {
-                self.playerVM.renderLocalVideoStream(id: viewUser.1.agoraUserId,
-                                                     view: viewUser.0)
+                self.playerVM.startRenderLocalVideoStream(id: viewUser.1.agoraUserId,
+                                                          view: viewUser.0)
             } else {
-                self.playerVM.renderRemoteVideoStream(id: viewUser.1.agoraUserId,
-                                                      view: viewUser.0)
+                self.playerVM.startRenderRemoteVideoStream(id: viewUser.1.agoraUserId,
+                                                           view: viewUser.0)
             }
         }).disposed(by: bag)
         
@@ -350,15 +350,15 @@ private extension MultiBroadcastersViewController {
             
             ownerRenderView.imageView.image = images.getOrigin(index: user.info.imageIndex)
             ownerRenderView.label.text = user.info.name
-            playerVM.renderLocalVideoStream(id: user.agoraUserId,
-                                            view: self.ownerRenderView.renderView)
+            playerVM.startRenderLocalVideoStream(id: user.agoraUserId,
+                                                 view: self.ownerRenderView.renderView)
             deviceVM.camera = .on
             deviceVM.mic = .on
         case .otherUser(let remote):
             let images = ALCenter.shared().centerProvideImagesHelper()
             ownerRenderView.imageView.image = images.getOrigin(index: remote.info.imageIndex)
             ownerRenderView.label.text  = remote.info.name
-            playerVM.renderRemoteVideoStream(id: remote.agoraUserId,
+            playerVM.startRenderRemoteVideoStream(id: remote.agoraUserId,
                                              view: self.ownerRenderView.renderView)
             deviceVM.camera = .off
             deviceVM.mic = .off

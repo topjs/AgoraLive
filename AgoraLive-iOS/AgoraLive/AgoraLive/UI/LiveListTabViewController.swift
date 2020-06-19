@@ -22,14 +22,10 @@ class LiveListTabViewController: MaskViewController {
     private let monitor = NetworkMonitor(host: "www.apple.com")
     private var listVC: LiveListViewController?
     private var timer: Timer?
-    private var firstAppear = true
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if firstAppear {
-            firstAppear = false
-            updateViewsWithListVM()
-        }
+        updateViewsWithListVM()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -272,7 +268,21 @@ private extension LiveListTabViewController {
     }
     
     func updateViewsWithListVM() {
-        listVM.refetch()
+        guard !self.isShowingHUD() else {
+            return
+        }
+        
+        if let isRefreshing = self.listVC?.collectionView.mj_header?.isRefreshing,
+            isRefreshing {
+            return
+        }
+        
+        self.showHUD()
+        listVM.refetch(success: { [unowned self] in
+            self.hiddenHUD()
+        }) { [unowned self] in // fail
+            self.hiddenHUD()
+        }
     }
     
     func netMonitor() {

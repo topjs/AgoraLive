@@ -71,8 +71,8 @@ class CreateLiveViewController: MaskViewController {
         deviceVM.camera = .on
         deviceVM.cameraPosition = .front
         
-        playerVM.renderLocalVideoStream(id: 0,
-                                        view: self.cameraPreview)
+        playerVM.startRenderLocalVideoStream(id: 0,
+                                             view: self.cameraPreview)
         
         switch liveType {
         case .multiBroadcasters:
