@@ -262,30 +262,33 @@ protocol ShowToastProtocol where Self: UIViewController {
     var toastView: ToastView? {get set}
     var toastWork: AfterWorker? {get set}
     
-    func showToastView(_ view: ToastView, duration: TimeInterval)
+    func showToastView(_ view: ToastView, duration: TimeInterval, completion: Completion )
 }
 
 extension ShowToastProtocol {
-    func showToastView(_ view: ToastView, duration: TimeInterval = TimeInterval.animation) {
-           guard let window = UIApplication.shared.keyWindow else {
-               return
-           }
-           
-           if let worker = toastWork {
-               self.toastView?.removeFromSuperview()
-               worker.cancel()
-           }
-           
-           toastWork = AfterWorker()
-           
-           self.toastView = view
-           
-           window.addSubview(view)
-           
-           toastWork?.perform(after: duration, on: DispatchQueue.main, { [weak self] in
-               self?.toastView?.removeFromSuperview()
-           })
-       }
+    func showToastView(_ view: ToastView, duration: TimeInterval = TimeInterval.animation, completion: Completion = nil) {
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+        
+        if let worker = toastWork {
+            self.toastView?.removeFromSuperview()
+            worker.cancel()
+        }
+        
+        toastWork = AfterWorker()
+        
+        self.toastView = view
+        
+        window.addSubview(view)
+        
+        toastWork?.perform(after: duration, on: DispatchQueue.main, { [weak self] in
+            self?.toastView?.removeFromSuperview()
+            if let completion = completion {
+                completion()
+            }
+        })
+    }
 }
 
 class MaskViewController: UIViewController, ShowAlertProtocol, PresentChildProtocol, ShowHudProtocol, ShowToastProtocol {

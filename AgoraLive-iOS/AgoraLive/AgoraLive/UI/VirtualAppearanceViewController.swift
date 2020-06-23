@@ -23,7 +23,7 @@ class VirtualAppearanceViewController: UIViewController, RxViewController {
     var appearance: VirtualAppearance = .girl {
         didSet {
             guard appearance != .none else {
-                enhancementVM.virtualAppearance = appearance
+//                enhancementVM.virtualAppearance = appearance
                 return
             }
             
@@ -31,7 +31,7 @@ class VirtualAppearanceViewController: UIViewController, RxViewController {
             self.leftButton.isDeselected = (appearance == .dog ? false : true)
             self.bigImageView.image = appearance.image
             
-            enhancementVM.virtualAppearance = appearance
+//            enhancementVM.virtualAppearance = appearance
         }
     }
     

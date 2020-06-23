@@ -35,7 +35,6 @@
 		A71A96A4247E44F6002749E4 /* ai_facelandmarks239.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95B6247E44F5002749E4 /* ai_facelandmarks239.bundle */; };
 		A71A96A5247E44F6002749E4 /* tongue.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95B7247E44F5002749E4 /* tongue.bundle */; };
 		A71A96A6247E44F6002749E4 /* ai_bgseg.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95B8247E44F5002749E4 /* ai_bgseg.bundle */; };
-		A71A96A7247E44F6002749E4 /* ai_facelandmarks209.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95B9247E44F5002749E4 /* ai_facelandmarks209.bundle */; };
 		A71A96A8247E44F6002749E4 /* ai_gesture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95BA247E44F5002749E4 /* ai_gesture.bundle */; };
 		A71A96A9247E44F6002749E4 /* ai_facelandmarks75.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95BB247E44F5002749E4 /* ai_facelandmarks75.bundle */; };
 		A71A96AA247E44F6002749E4 /* ai_face_processor.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A71A95BC247E44F5002749E4 /* ai_face_processor.bundle */; };
@@ -74,6 +73,7 @@
 		A7584B4B2484DB290088FACB /* VirtualVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7584B4A2484DB290088FACB /* VirtualVM.swift */; };
 		A758851E242DF20E0011FCCF /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758851D242DF20E0011FCCF /* UserListViewController.swift */; };
 		A7588528242E01C10011FCCF /* BottomToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7588527242E01C10011FCCF /* BottomToolsViewController.swift */; };
+		A75A56D124A054C100D0089E /* FUClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A56D024A054C100D0089E /* FUClient.m */; };
 		A75D5B2A244FE77D00CE7528 /* CSNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */; };
 		A7615015244AF35B007AAA7F /* MediaDeviceVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7615014244AF35B007AAA7F /* MediaDeviceVM.swift */; };
 		A76767EB249B0E45002C4FBD /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76767EA249B0E45002C4FBD /* AboutViewController.swift */; };
@@ -218,7 +218,6 @@
 		A71A95B6247E44F5002749E4 /* ai_facelandmarks239.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ai_facelandmarks239.bundle; sourceTree = "<group>"; };
 		A71A95B7247E44F5002749E4 /* tongue.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = tongue.bundle; sourceTree = "<group>"; };
 		A71A95B8247E44F5002749E4 /* ai_bgseg.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ai_bgseg.bundle; sourceTree = "<group>"; };
-		A71A95B9247E44F5002749E4 /* ai_facelandmarks209.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ai_facelandmarks209.bundle; sourceTree = "<group>"; };
 		A71A95BA247E44F5002749E4 /* ai_gesture.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ai_gesture.bundle; sourceTree = "<group>"; };
 		A71A95BB247E44F5002749E4 /* ai_facelandmarks75.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ai_facelandmarks75.bundle; sourceTree = "<group>"; };
 		A71A95BC247E44F5002749E4 /* ai_face_processor.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ai_face_processor.bundle; sourceTree = "<group>"; };
@@ -263,6 +262,8 @@
 		A7584B4A2484DB290088FACB /* VirtualVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualVM.swift; sourceTree = "<group>"; };
 		A758851D242DF20E0011FCCF /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		A7588527242E01C10011FCCF /* BottomToolsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolsViewController.swift; sourceTree = "<group>"; };
+		A75A56CF24A054C100D0089E /* FUClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FUClient.h; sourceTree = "<group>"; };
+		A75A56D024A054C100D0089E /* FUClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FUClient.m; sourceTree = "<group>"; };
 		A75D5B29244FE77D00CE7528 /* CSNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNavigationController.swift; sourceTree = "<group>"; };
 		A7615014244AF35B007AAA7F /* MediaDeviceVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDeviceVM.swift; sourceTree = "<group>"; };
 		A76767EA249B0E45002C4FBD /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -526,7 +527,6 @@
 				A71A95B6247E44F5002749E4 /* ai_facelandmarks239.bundle */,
 				A71A95B7247E44F5002749E4 /* tongue.bundle */,
 				A71A95B8247E44F5002749E4 /* ai_bgseg.bundle */,
-				A71A95B9247E44F5002749E4 /* ai_facelandmarks209.bundle */,
 				A71A95BA247E44F5002749E4 /* ai_gesture.bundle */,
 				A71A95BB247E44F5002749E4 /* ai_facelandmarks75.bundle */,
 				A71A95BC247E44F5002749E4 /* ai_face_processor.bundle */,
@@ -882,6 +882,8 @@
 				A7952A7224162C1000479811 /* MediaModels.swift */,
 				A7952A7624162C1000479811 /* RTCExtension.swift */,
 				A71AAF272435D7A900820096 /* StatisticsInfo.swift */,
+				A75A56CF24A054C100D0089E /* FUClient.h */,
+				A75A56D024A054C100D0089E /* FUClient.m */,
 			);
 			name = Media;
 			sourceTree = "<group>";
@@ -1057,7 +1059,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A71ED5B2247FBF7F00BA9A32 /* qgirl_Animoji.png in Resources */,
-				A71A96A7247E44F6002749E4 /* ai_facelandmarks209.bundle in Resources */,
 				A71ED5BC247FBF7F00BA9A32 /* hashiqi_Animoji.bundle in Resources */,
 				A7847F9624581A5800469187 /* sound.gif in Resources */,
 				A71A96AA247E44F6002749E4 /* ai_face_processor.bundle in Resources */,
@@ -1178,6 +1179,7 @@
 				A7952AB124162C1000479811 /* RTMHelper.swift in Sources */,
 				A7952AA924162C1000479811 /* RequestProtocols.swift in Sources */,
 				A7D2D36C2417AA6100D327B5 /* MineVM.swift in Sources */,
+				A75A56D124A054C100D0089E /* FUClient.m in Sources */,
 				A7952ABF24162C1000479811 /* ioapi.c in Sources */,
 				A773BD522410A001003ECBFD /* UserNameViewController.swift in Sources */,
 				A71A948E247E4269002749E4 /* FURecordEncoder.m in Sources */,

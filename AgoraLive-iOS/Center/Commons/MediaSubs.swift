@@ -263,170 +263,60 @@ enum VirtualAppearance {
     }
 }
 
-class VideoEnhancement: NSObject {
-    var beauty: AGESwitch = .off {
-        didSet {
-            switch beauty {
-            case .off: FUManager.share()?.destoryItems()
-            case .on:  FUManager.share()?.loadItems()
-            }
-        }
-    }
+class VideoEnhancement: FUClient {
+    private(set) var beauty: AGESwitch = .off
     
-    static func getFUSkinParam(with tag: String) -> FUBeautyParam? {
-        var param: FUBeautyParam?
-        guard let array = FUManager.share()?.skinParams else {
-            return nil
+    func beauty(_ action: AGESwitch, success: Completion = nil, fail: Completion = nil) {
+        if beauty == action {
+            if let success = success {
+                success()
+            }
+            return
         }
         
-        for item in array {
-            let i = item as! FUBeautyParam
-            if i.mParam == tag {
-                param = i
-                break
-            }
-        }
-        
-        return param
-    }
-    
-    static func getFUShapeParam(with tag: String) -> FUBeautyParam? {
-        var param: FUBeautyParam?
-        guard let array = FUManager.share()?.shapeParams else {
-            return nil
-        }
-        
-        for item in array {
-            let i = item as! FUBeautyParam
-            if i.mParam == tag {
-                param = i
-                break
-            }
-        }
-        
-        return param
-    }
-    
-    var blurLevel: Double {
-        set {
-            guard let param = VideoEnhancement.getFUSkinParam(with: "blur_level") else {
-                return
-            }
-            
-            param.mValue = Float(newValue)
-            
-            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue * 6)
-        }
-        
-        get {
-            guard let param = VideoEnhancement.getFUSkinParam(with: "blur_level") else {
-                return 0
-            }
-            return Double(param.mValue)
-        }
-    }
-    
-    var colorLevel: Double {
-        set {
-            guard let param = VideoEnhancement.getFUSkinParam(with: "color_level") else {
-                return
-            }
-            
-            param.mValue = Float(newValue)
-            
-            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
-        }
-        
-        get {
-            guard let param = VideoEnhancement.getFUSkinParam(with: "color_level") else {
-                return 0
-            }
-            return Double(param.mValue)
-        }
-    }
-    
-    var cheekThining: Double {
-        set {
-            guard let param = VideoEnhancement.getFUShapeParam(with: "cheek_thinning") else {
-                return
-            }
-            
-            param.mValue = Float(newValue)
-            
-            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
-        }
-        
-        get {
-            guard let param = VideoEnhancement.getFUShapeParam(with: "cheek_thinning") else {
-                return 0
+        switch action {
+        case .on:
+            loadFilter(success: { [unowned self] in
+                self.beauty = .on
+                if let success = success {
+                    success()
+                }
                 
-            }
-            return Double(param.mValue)
-        }
-    }
-    
-    var eyeEnlarging: Double {
-        set {
-            guard let param = VideoEnhancement.getFUShapeParam(with: "eye_enlarging") else {
-                return
-            }
-            
-            param.mValue = Float(newValue)
-            
-            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
-        }
-        
-        get {
-            guard let param = VideoEnhancement.getFUShapeParam(with: "eye_enlarging") else {
-                return 0
+                print("loadFilter success")
+            }) { [unowned self] (error) in
+                self.beauty = .off
+                if let fail = fail {
+                    fail()
+                }
                 
+                print("loadFilter error: \(error)")
             }
-            return Double(param.mValue)
+        case .off:
+            self.beauty = .off
+            destoryAllItems()
         }
     }
     
-    var virtualAppearance: VirtualAppearance = .none {
-        didSet {
-            switch virtualAppearance {
-            case .none:
-                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-                FUManager.share()?.destoryItems()
-            case .dog:
-                FUManager.share()?.loadBackground()
-                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-            case .girl:
-                FUManager.share()?.loadBackground()
-                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-            }
-        }
-    }
+//
+//    var virtualAppearance: VirtualAppearance = .none {
+//        didSet {
+//            switch virtualAppearance {
+//            case .none:
+//                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
+//                FUManager.share()?.destoryItems()
+//            case .dog:
+//                FUManager.share()?.loadBackground()
+//                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
+//            case .girl:
+//                FUManager.share()?.loadBackground()
+//                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
+//            }
+//        }
+//    }
+    
     
     func reset() {
-        func perSkinReset(tag: String) {
-            guard let param = VideoEnhancement.getFUSkinParam(with: tag) else {
-                return
-            }
-            
-            param.mValue = param.defaultValue
-            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
-        }
-        
-        func perShapReset(tag: String) {
-            guard let param = VideoEnhancement.getFUShapeParam(with: tag) else {
-                return
-            }
-            
-            param.mValue = param.defaultValue
-            FUManager.share()?.setParamItemAboutType(.typeBeauty, name: param.mParam, value: param.mValue)
-        }
-        
-        perSkinReset(tag: "blur_level")
-        perSkinReset(tag: "color_level")
-        
-        perShapReset(tag: "cheek_thinning")
-        perShapReset(tag: "eye_enlarging")
-        
         beauty = .off
-        virtualAppearance = .none
+        destoryAllItems()
     }
 }

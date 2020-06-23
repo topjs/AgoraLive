@@ -53,7 +53,14 @@ class BeautySettingsViewController: UITableViewController {
         self.nameLabel3.adjustsFontSizeToFitWidth = true
         self.nameLabel4.adjustsFontSizeToFitWidth = true
         
-        enhanceVM.publishWork.subscribe(onNext: { [unowned self] (work) in
+        self.slider1.minimumValue = enhanceVM.minSmooth
+        self.slider1.maximumValue = enhanceVM.maxSmooth
+        
+        self.slider2.minimumValue = enhanceVM.minBrighten
+        self.slider2.maximumValue = enhanceVM.maxBrighten
+        
+        // Beauty Switch
+        enhanceVM.beauty.subscribe(onNext: { [unowned self] (work) in
             self.workSwitch.isOn = work.boolValue
             self.slider1.isEnabled = work.boolValue
             self.slider2.isEnabled = work.boolValue
@@ -61,45 +68,55 @@ class BeautySettingsViewController: UITableViewController {
             self.slider4.isEnabled = work.boolValue
         }).disposed(by: bag)
         
-        enhanceVM.publishBlur.subscribe(onNext: { [unowned self] (value) in
-            self.slider1.value = Float(value)
+        self.workSwitch.rx.value.subscribe(onNext: { [unowned self] (value) in
+            self.enhanceVM.beauty(value ? .on : .off)
+        }).disposed(by: bag)
+        
+        // Smooth
+        enhanceVM.smooth.subscribe(onNext: { (value) in
+            self.slider1.value = value
             self.valueLabel1.text = String(format: "%0.1f", value)
         }).disposed(by: bag)
         
-        
-        enhanceVM.publishColor.subscribe(onNext: { [unowned self] (value) in
-            self.slider2.value = Float(value)
-            self.valueLabel2.text = String(format: "%0.1f", value)
-        }).disposed(by: bag)
-      
-        enhanceVM.publishCheekThing.subscribe(onNext: { [unowned self] (value) in
-            self.slider3.value = Float(value)
-            self.valueLabel3.text = String(format: "%0.1f", value)
-        }).disposed(by: bag)
-        
-        enhanceVM.publishEyeEnlarging.subscribe(onNext: { [unowned self] (value) in
-            self.slider4.value = Float(value)
-            self.valueLabel4.text = String(format: "%0.1f", value)
-        }).disposed(by: bag)
-        
-        self.workSwitch.rx.value.subscribe(onNext: { [unowned self] (value) in
-            self.enhanceVM.beauty = value ? .on : .off
-        }).disposed(by: bag)
-        
         self.slider1.rx.value.subscribe(onNext: { [unowned self] (value) in
-            self.enhanceVM.blurLevel = Double(value)
+            self.enhanceVM.smooth.accept(value)
+        }).disposed(by: bag)
+        
+        // Brighten
+        enhanceVM.brighten.subscribe(onNext: { [unowned self] (value) in
+            self.slider2.value = value
+            self.valueLabel2.text = String(format: "%0.1f", value)
         }).disposed(by: bag)
         
         self.slider2.rx.value.subscribe(onNext: { [unowned self] (value) in
-            self.enhanceVM.colorLevel = Double(value)
+            self.enhanceVM.brighten.accept(value)
         }).disposed(by: bag)
         
-        self.slider3.rx.value.subscribe(onNext: { [unowned self] (value) in
-            self.enhanceVM.cheekThining = Double(value)
-        }).disposed(by: bag)
+
+//
+//        enhanceVM.publishCheekThing.subscribe(onNext: { [unowned self] (value) in
+//            self.slider3.value = Float(value)
+//            self.valueLabel3.text = String(format: "%0.1f", value)
+//        }).disposed(by: bag)
+//
+//        enhanceVM.publishEyeEnlarging.subscribe(onNext: { [unowned self] (value) in
+//            self.slider4.value = Float(value)
+//            self.valueLabel4.text = String(format: "%0.1f", value)
+//        }).disposed(by: bag)
+//
         
-        self.slider4.rx.value.subscribe(onNext: { [unowned self] (value) in
-            self.enhanceVM.eyeEnlarging = Double(value)
-        }).disposed(by: bag)
+
+       
+        
+//
+
+//
+//        self.slider3.rx.value.subscribe(onNext: { [unowned self] (value) in
+//            self.enhanceVM.cheekThining = Double(value)
+//        }).disposed(by: bag)
+//
+//        self.slider4.rx.value.subscribe(onNext: { [unowned self] (value) in
+//            self.enhanceVM.eyeEnlarging = Double(value)
+//        }).disposed(by: bag)
     }
 }

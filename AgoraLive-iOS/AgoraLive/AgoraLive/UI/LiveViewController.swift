@@ -385,9 +385,9 @@ extension LiveViewController {
                           animated: true,
                           presentedFrame: presentedFrame)
         
-        beautyVC.enhanceVM.publishWork.subscribe(onNext: { [unowned self] (work) in
-            self.bottomToolsVC?.beautyButton.isSelected = work.boolValue
-        }).disposed(by: bag)
+//        beautyVC.enhanceVM.publishWork.subscribe(onNext: { [unowned self] (work) in
+//            self.bottomToolsVC?.beautyButton.isSelected = work.boolValue
+//        }).disposed(by: bag)
     }
     
     // MARK: - Music List
