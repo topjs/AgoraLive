@@ -17,6 +17,8 @@ class VideoEnhancementVM: NSObject {
     lazy var beauty = BehaviorRelay(value: enhancement.beauty)
     lazy var smooth = BehaviorRelay(value: enhancement.getFilterItem(with: .smooth).value)
     lazy var brighten = BehaviorRelay(value: enhancement.getFilterItem(with: .brighten).value)
+    lazy var thinning = BehaviorRelay(value: enhancement.getFilterItem(with: .thinning).value)
+    lazy var eyeEnlarge = BehaviorRelay(value: enhancement.getFilterItem(with: .eye).value)
     
     var minSmooth: Float {
         return enhancement.getFilterItem(with: .smooth).minValue
@@ -32,6 +34,22 @@ class VideoEnhancementVM: NSObject {
     
     var maxBrighten: Float {
         return enhancement.getFilterItem(with: .brighten).maxValue
+    }
+    
+    var minThinning: Float {
+        return enhancement.getFilterItem(with: .thinning).minValue
+    }
+    
+    var maxThinning: Float {
+        return enhancement.getFilterItem(with: .thinning).maxValue
+    }
+    
+    var minEyeEnlarge: Float {
+        return enhancement.getFilterItem(with: .eye).minValue
+    }
+    
+    var maxEyeEnlarge: Float {
+        return enhancement.getFilterItem(with: .eye).maxValue
     }
     
     var virtualAppearance: VirtualAppearance = .dog
@@ -62,47 +80,34 @@ extension VideoEnhancementVM {
         case .off:
             self.enhancement.beauty(.off)
             self.beauty.accept(.off)
+            smooth.accept(enhancement.getFilterItem(with: .smooth).value)
+            brighten.accept(enhancement.getFilterItem(with: .brighten).value)
+            thinning.accept(enhancement.getFilterItem(with: .thinning).value)
+            eyeEnlarge.accept(enhancement.getFilterItem(with: .eye).value)
         }
     }
-
-//
-//    var cheekThining: Double {
-//        set {
-//            enhancement.cheekThining = newValue
-//            publishCheekThing.accept(newValue)
-//        }
-//
-//        get {
-//            return enhancement.cheekThining
-//        }
-//    }
-//
-//    var eyeEnlarging: Double {
-//        set {
-//            enhancement.eyeEnlarging = newValue
-//            publishEyeEnlarging.accept(newValue)
-//        }
-//
-//        get {
-//            return enhancement.eyeEnlarging
-//        }
-//    }
-//
-    
     
     func reset() {
-        enhancement.reset()
+        beauty(.off)
     }
 }
 
 extension VideoEnhancementVM {
     func observerPropertys() {
         smooth.subscribe(onNext: { [unowned self] (value) in
-            self.enhancement.setFilterValue(Float(value), with: .smooth)
+            self.enhancement.setFilterValue(value, with: .smooth)
         }).disposed(by: bag)
         
         brighten.subscribe(onNext: { [unowned self] (value) in
-            self.enhancement.setFilterValue(Float(value), with: .brighten)
+            self.enhancement.setFilterValue(value, with: .brighten)
+        }).disposed(by: bag)
+        
+        thinning.subscribe(onNext: { [unowned self] (value) in
+            self.enhancement.setFilterValue(value, with: .thinning)
+        }).disposed(by: bag)
+        
+        eyeEnlarge.subscribe(onNext: { [unowned self] (value) in
+            self.enhancement.setFilterValue(value, with: .eye)
         }).disposed(by: bag)
     }
 }

@@ -37,27 +37,21 @@ class BeautySettingsViewController: UITableViewController {
         let color = UIColor(hexString: "#D8D8D8")
         let x: CGFloat = 15.0
         let width = UIScreen.main.bounds.width - (x * 2)
-        self.titleLabel.containUnderline(color,
+        titleLabel.containUnderline(color,
                                          x: x,
                                          width: width)
         
-        self.titleLabel.text = NSLocalizedString("Beauty")
+        titleLabel.text = NSLocalizedString("Beauty")
         
-        self.nameLabel1.text = NSLocalizedString("BlurLevel")
-        self.nameLabel2.text = NSLocalizedString("ColorLevel")
-        self.nameLabel3.text = NSLocalizedString("CheekThining")
-        self.nameLabel4.text = NSLocalizedString("EyeEnlarging")
+        nameLabel1.text = NSLocalizedString("BlurLevel")
+        nameLabel2.text = NSLocalizedString("ColorLevel")
+        nameLabel3.text = NSLocalizedString("CheekThining")
+        nameLabel4.text = NSLocalizedString("EyeEnlarging")
         
-        self.nameLabel1.adjustsFontSizeToFitWidth = true
-        self.nameLabel2.adjustsFontSizeToFitWidth = true
-        self.nameLabel3.adjustsFontSizeToFitWidth = true
-        self.nameLabel4.adjustsFontSizeToFitWidth = true
-        
-        self.slider1.minimumValue = enhanceVM.minSmooth
-        self.slider1.maximumValue = enhanceVM.maxSmooth
-        
-        self.slider2.minimumValue = enhanceVM.minBrighten
-        self.slider2.maximumValue = enhanceVM.maxBrighten
+        nameLabel1.adjustsFontSizeToFitWidth = true
+        nameLabel2.adjustsFontSizeToFitWidth = true
+        nameLabel3.adjustsFontSizeToFitWidth = true
+        nameLabel4.adjustsFontSizeToFitWidth = true
         
         // Beauty Switch
         enhanceVM.beauty.subscribe(onNext: { [unowned self] (work) in
@@ -68,11 +62,14 @@ class BeautySettingsViewController: UITableViewController {
             self.slider4.isEnabled = work.boolValue
         }).disposed(by: bag)
         
-        self.workSwitch.rx.value.subscribe(onNext: { [unowned self] (value) in
+        workSwitch.rx.value.subscribe(onNext: { [unowned self] (value) in
             self.enhanceVM.beauty(value ? .on : .off)
         }).disposed(by: bag)
         
         // Smooth
+        slider1.minimumValue = enhanceVM.minSmooth
+        slider1.maximumValue = enhanceVM.maxSmooth
+        
         enhanceVM.smooth.subscribe(onNext: { (value) in
             self.slider1.value = value
             self.valueLabel1.text = String(format: "%0.1f", value)
@@ -83,40 +80,42 @@ class BeautySettingsViewController: UITableViewController {
         }).disposed(by: bag)
         
         // Brighten
+        slider2.minimumValue = enhanceVM.minBrighten
+        slider2.maximumValue = enhanceVM.maxBrighten
+        
         enhanceVM.brighten.subscribe(onNext: { [unowned self] (value) in
             self.slider2.value = value
             self.valueLabel2.text = String(format: "%0.1f", value)
         }).disposed(by: bag)
         
-        self.slider2.rx.value.subscribe(onNext: { [unowned self] (value) in
+        slider2.rx.value.subscribe(onNext: { [unowned self] (value) in
             self.enhanceVM.brighten.accept(value)
         }).disposed(by: bag)
         
-
-//
-//        enhanceVM.publishCheekThing.subscribe(onNext: { [unowned self] (value) in
-//            self.slider3.value = Float(value)
-//            self.valueLabel3.text = String(format: "%0.1f", value)
-//        }).disposed(by: bag)
-//
-//        enhanceVM.publishEyeEnlarging.subscribe(onNext: { [unowned self] (value) in
-//            self.slider4.value = Float(value)
-//            self.valueLabel4.text = String(format: "%0.1f", value)
-//        }).disposed(by: bag)
-//
+        // Face Thinning
+        slider3.minimumValue = enhanceVM.minThinning
+        slider3.maximumValue = enhanceVM.maxThinning
         
+        enhanceVM.thinning.subscribe(onNext: { [unowned self] (value) in
+            self.slider3.value = value
+            self.valueLabel3.text = String(format: "%0.1f", value)
+        }).disposed(by: bag)
 
-       
+        slider3.rx.value.subscribe(onNext: { [unowned self] (value) in
+            self.enhanceVM.thinning.accept(value)
+        }).disposed(by: bag)
         
-//
+        // Eye enlarge
+        slider4.minimumValue = enhanceVM.minEyeEnlarge
+        slider4.maximumValue = enhanceVM.maxEyeEnlarge
+        
+        enhanceVM.eyeEnlarge.subscribe(onNext: { [unowned self] (value) in
+            self.slider4.value = value
+            self.valueLabel4.text = String(format: "%0.1f", value)
+        }).disposed(by: bag)
 
-//
-//        self.slider3.rx.value.subscribe(onNext: { [unowned self] (value) in
-//            self.enhanceVM.cheekThining = Double(value)
-//        }).disposed(by: bag)
-//
-//        self.slider4.rx.value.subscribe(onNext: { [unowned self] (value) in
-//            self.enhanceVM.eyeEnlarging = Double(value)
-//        }).disposed(by: bag)
+        self.slider4.rx.value.subscribe(onNext: { [unowned self] (value) in
+            self.enhanceVM.eyeEnlarge.accept(value)
+        }).disposed(by: bag)
     }
 }
