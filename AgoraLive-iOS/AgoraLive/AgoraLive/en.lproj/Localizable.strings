@@ -11,7 +11,7 @@ Done="Done";
 Confirm="Confirm";
 Reject="Reject";
 End="End";
-Accept="接受";
+Accept="Accept";
 
 Lost_Connection="Network error";
 Lost_Connection_Description="We cannot connect to network now. Please retry later";
