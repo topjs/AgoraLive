@@ -202,14 +202,10 @@ class CreateLiveViewController: MaskViewController {
     
     @IBAction func doClosePressed(_ sender: UIButton) {
         if liveType != .virtualBroadcasters {
-            self.showAlert("是否取消直播间创建",
-                           action1: NSLocalizedString("Cancel"),
-                           action2: NSLocalizedString("Confirm")) { [unowned self] (_) in
-                            self.enhancementVM.reset()
-                            self.deviceVM.camera = .off
-                            self.navigationController?.dismiss(animated: true,
-                                                               completion: nil)
-            }
+            self.enhancementVM.reset()
+            self.deviceVM.camera = .off
+            self.navigationController?.dismiss(animated: true,
+                                               completion: nil)
         } else {
             self.navigationController?.popViewController(animated: true)
         }

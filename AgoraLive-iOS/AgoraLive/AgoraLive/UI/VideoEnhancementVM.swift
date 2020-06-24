@@ -98,7 +98,7 @@ extension VideoEnhancementVM {
     func reset() {
         beauty.accept(.off)
         virtualAppearance.accept(.none)
-        enhancement.destoryAllItems()
+        enhancement.reset()
     }
 }
 
