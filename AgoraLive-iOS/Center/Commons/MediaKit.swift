@@ -183,10 +183,9 @@ extension MediaKit: AGESingleCameraDelegate {
         CVPixelBufferLockBaseAddress(pixelBuffer, .init(rawValue: 0))
         
         let timeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-        // || enhancement.virtualAppearance != .none
-        if enhancement.beauty == .on {
+        
+        if enhancement.beauty == .on || enhancement.appearance != .none {
             enhancement.renderItems(to: pixelBuffer)
-//            FUManager.share()?.renderItems(to: pixelBuffer)
         }
         
         self.consumer?.consumePixelBuffer(pixelBuffer,

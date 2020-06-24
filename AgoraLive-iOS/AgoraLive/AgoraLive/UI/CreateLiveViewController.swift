@@ -330,7 +330,7 @@ private extension CreateLiveViewController {
         
         var extra: [String: Any]? = nil
         if liveType == .virtualBroadcasters {
-            extra = ["virtualAvatar": enhancementVM.virtualAppearance.item]
+            extra = ["virtualAvatar": enhancementVM.virtualAppearance.value.item]
         }
         
         LiveSession.create(roomSettings: settings,

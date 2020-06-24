@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
 typedef void (^FUCompletion)(void);
 typedef void (^FUErrorCompletion)(NSError *error);
 
@@ -34,6 +35,8 @@ typedef NS_ENUM(NSUInteger, FUFilterItemType) {
 - (void)setFilterValue:(float)value withType:(FUFilterItemType)type;
 - (FUFilterItem *)getFilterItemWithType:(FUFilterItemType)type;
 
+- (void)loadBackgroudWithSuccess:(FUCompletion)success fail:(FUErrorCompletion)fail;
+- (void)loadAnimoji:(NSString *)name success:(FUCompletion)success fail:(FUErrorCompletion)fail;
 - (void)renderItemsToPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 - (void)destoryAllItems;
 @end

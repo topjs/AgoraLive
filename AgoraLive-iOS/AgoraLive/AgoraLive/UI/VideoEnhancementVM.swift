@@ -14,11 +14,13 @@ class VideoEnhancementVM: NSObject {
     private let bag = DisposeBag()
     
     // Rx
-    lazy var beauty = BehaviorRelay(value: enhancement.beauty)
-    lazy var smooth = BehaviorRelay(value: enhancement.getFilterItem(with: .smooth).value)
-    lazy var brighten = BehaviorRelay(value: enhancement.getFilterItem(with: .brighten).value)
-    lazy var thinning = BehaviorRelay(value: enhancement.getFilterItem(with: .thinning).value)
-    lazy var eyeEnlarge = BehaviorRelay(value: enhancement.getFilterItem(with: .eye).value)
+    private(set) lazy var beauty = BehaviorRelay(value: enhancement.beauty)
+    private(set) lazy var smooth = BehaviorRelay(value: enhancement.getFilterItem(with: .smooth).value)
+    private(set) lazy var brighten = BehaviorRelay(value: enhancement.getFilterItem(with: .brighten).value)
+    private(set) lazy var thinning = BehaviorRelay(value: enhancement.getFilterItem(with: .thinning).value)
+    private(set) lazy var eyeEnlarge = BehaviorRelay(value: enhancement.getFilterItem(with: .eye).value)
+    
+    private(set) lazy var virtualAppearance = BehaviorRelay(value: enhancement.appearance)
     
     var minSmooth: Float {
         return enhancement.getFilterItem(with: .smooth).minValue
@@ -51,8 +53,6 @@ class VideoEnhancementVM: NSObject {
     var maxEyeEnlarge: Float {
         return enhancement.getFilterItem(with: .eye).maxValue
     }
-    
-    var virtualAppearance: VirtualAppearance = .dog
     
     override init() {
         super.init()
@@ -87,8 +87,18 @@ extension VideoEnhancementVM {
         }
     }
     
+    func virtualAppearance(_ appearance: VirtualAppearance) {
+        enhancement.virtualAppearance(appearance, success: { [unowned self] in
+            self.virtualAppearance.accept(appearance)
+        }) { [unowned self] in
+            self.virtualAppearance.accept(appearance)
+        }
+    }
+    
     func reset() {
-        beauty(.off)
+        beauty.accept(.off)
+        virtualAppearance.accept(.none)
+        enhancement.destoryAllItems()
     }
 }
 

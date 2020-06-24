@@ -265,6 +265,7 @@ enum VirtualAppearance {
 
 class VideoEnhancement: FUClient {
     private(set) var beauty: AGESwitch = .off
+    private(set) var appearance: VirtualAppearance = .none
     
     func beauty(_ action: AGESwitch, success: Completion = nil, fail: Completion = nil) {
         if beauty == action {
@@ -293,30 +294,44 @@ class VideoEnhancement: FUClient {
             }
         case .off:
             self.beauty = .off
-            destoryAllItems()
         }
     }
     
-//
-//    var virtualAppearance: VirtualAppearance = .none {
-//        didSet {
-//            switch virtualAppearance {
-//            case .none:
-//                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-//                FUManager.share()?.destoryItems()
-//            case .dog:
-//                FUManager.share()?.loadBackground()
-//                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-//            case .girl:
-//                FUManager.share()?.loadBackground()
-//                FUManager.share()?.loadItem(virtualAppearance.item, completion: nil);
-//            }
-//        }
-//    }
-    
+    func virtualAppearance(_ appearance: VirtualAppearance, success: Completion = nil, fail: Completion = nil) {
+        switch appearance {
+        case .girl, .dog:
+            loadBackgroud(success: { [unowned self] in
+                print("loadBackgroud success")
+                
+                self.loadAnimoji(appearance.item, success: { [unowned self] in
+                    self.appearance = appearance
+                    if let success = success {
+                        success()
+                    }
+                    
+                    print("loadAnimoji success")
+                }) { (error) in
+                    if let fail = fail {
+                        fail()
+                    }
+                    
+                    print("loadBackgroud error: \(error)")
+                }
+            }) { (error) in
+                if let fail = fail {
+                    fail()
+                }
+                
+                print("loadBackgroud error: \(error)")
+            }
+        case .none:
+            self.appearance = .none
+        }
+    }
     
     func reset() {
         beauty = .off
+        appearance = .none
         destoryAllItems()
     }
 }
