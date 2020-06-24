@@ -23,6 +23,7 @@ target 'AgoraLive' do
   pod 'AgoraRtm_iOS', '~> 1.2.2'
   pod 'AgoraRtcEngine_iOS', '~> 3.0.0'
   pod 'AGECamera', :path => '/Users/cavansu/Documents/Github/AGECamera/' 
+  pod 'Nama-lite', '~> 6.7.0' 
 
   source 'https://github.com/CocoaPods/Specs.git'
 end

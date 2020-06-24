@@ -491,7 +491,7 @@ extension VirtualBroadcastersViewController {
                 self.seatVM.localAudience(role,
                                           acceptInvitingOn: 1,
                                           roomId: roomId,
-                                          extra: ["virtualAvatar": self.enhancementVM.virtualAppearance.item])
+                                          extra: ["virtualAvatar": self.enhancementVM.virtualAppearance.value.item])
             }
         }
     }

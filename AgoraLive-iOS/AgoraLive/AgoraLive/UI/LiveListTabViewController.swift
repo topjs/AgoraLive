@@ -128,7 +128,7 @@ class LiveListTabViewController: MaskViewController {
             }
             
             if let virtualAppearance = info.virtualAppearance {
-                vc?.enhancementVM.virtualAppearance = VirtualAppearance.item(virtualAppearance)
+                vc?.enhancementVM.virtualAppearance.accept(VirtualAppearance.item(virtualAppearance))
             }
             
             vc?.virtualVM = VirtualVM(broadcasting: BehaviorRelay(value: broadcasting))
