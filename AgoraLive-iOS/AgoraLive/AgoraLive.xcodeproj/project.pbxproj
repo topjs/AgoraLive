@@ -1291,6 +1291,11 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxRelay\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxSwift\"",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"FU_67=0",
+				);
 				INFOPLIST_FILE = AgoraLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1336,8 +1341,6 @@
 					"-framework",
 					"\"FLAnimatedImage\"",
 					"-framework",
-					"\"HandyJSON\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"MBProgressHUD\"",
@@ -1358,16 +1361,15 @@
 					"-framework",
 					"\"RxSwift\"",
 					"-framework",
-					"\"SVProgressHUD\"",
-					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
-					"-l\"fuai\"",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D FU_67";
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraAppsDevProfile;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG FU_67=0";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgoraLive/AgoraLive-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1394,6 +1396,11 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxRelay\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxSwift\"",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					FU_67,
+				);
 				INFOPLIST_FILE = AgoraLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1439,8 +1446,6 @@
 					"-framework",
 					"\"FLAnimatedImage\"",
 					"-framework",
-					"\"HandyJSON\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"MBProgressHUD\"",
@@ -1461,16 +1466,14 @@
 					"-framework",
 					"\"RxSwift\"",
 					"-framework",
-					"\"SVProgressHUD\"",
-					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
-					"-l\"fuai\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraAppsDevProfile;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "FU_67=0";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgoraLive/AgoraLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1551,6 +1554,11 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxRelay\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxSwift\"",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					FU_67,
+				);
 				INFOPLIST_FILE = AgoraLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1596,8 +1604,6 @@
 					"-framework",
 					"\"FLAnimatedImage\"",
 					"-framework",
-					"\"HandyJSON\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"MBProgressHUD\"",
@@ -1618,16 +1624,14 @@
 					"-framework",
 					"\"RxSwift\"",
 					"-framework",
-					"\"SVProgressHUD\"",
-					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
-					"-l\"fuai\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraLab2020;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "FU_67=0";
 				SWIFT_OBJC_BRIDGING_HEADER = "AgoraLive/AgoraLive-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1713,6 +1717,7 @@
 					"$(inherited)",
 					"COCOAPODS=1",
 					"PREPRODUCT=1",
+					FU_67,
 				);
 				INFOPLIST_FILE = AgoraLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1759,8 +1764,6 @@
 					"-framework",
 					"\"FLAnimatedImage\"",
 					"-framework",
-					"\"HandyJSON\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"MBProgressHUD\"",
@@ -1781,14 +1784,11 @@
 					"-framework",
 					"\"RxSwift\"",
 					"-framework",
-					"\"SVProgressHUD\"",
-					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
-					"-l\"fuai\"",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DPREPRODUCT";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DPREPRODUCT -DFU_67";
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraLab2020;

@@ -10,6 +10,12 @@
 #import "FURenderer.h"
 #import "authpack.h"
 
+typedef NS_ENUM(NSUInteger, FUItemLevel) {
+    FUItemLevelBackground      = 0,
+    FUItemLevelFace            = 1,
+    FUItemLevelAntiAliasing    = 2,
+};
+
 @implementation FUFilterItem
 @end
 
@@ -21,13 +27,16 @@
 
 @property (nonatomic, strong) NSArray *filterItems;
 @property (nonatomic, strong) dispatch_queue_t asyncLoadQueue;
+
 @property (nonatomic, assign) BOOL loadAISuccess;
 @property (nonatomic, assign) BOOL loadFilterSuccess;
 @property (nonatomic, assign) BOOL loadBackgroundSuccess;
+@property (nonatomic, assign) BOOL loadAntiAliasingSuccess;
 
-@property (nonatomic, assign) int filterIndexOfItems;
-@property (nonatomic, assign) int backgroundIndexOfItems;
-@property (nonatomic, assign) int animojiIndexOfItems;
+@property (nonatomic, assign) FUItemLevel filterIndexOfItems;
+@property (nonatomic, assign) FUItemLevel backgroundIndexOfItems;
+@property (nonatomic, assign) FUItemLevel animojiIndexOfItems;
+@property (nonatomic, assign) FUItemLevel aliasingIndexOfItems;
 @end
 
 @implementation FUClient
@@ -46,12 +55,15 @@
     
     dispatch_async(_asyncLoadQueue, ^{
         NSError *error = nil;
+        
+        #if FU_67
         if (![weakSelf checkLoadAIModel:&error]) {
             if (fail) {
                 fail(error);
                 return;
             }
         }
+        #endif
         
         if (![weakSelf loadFilterWithError:&error]) {
             if (fail) {
@@ -108,6 +120,7 @@
     
     dispatch_async(_asyncLoadQueue, ^{
         NSError *error = nil;
+        #if FU_67
         if (![weakSelf checkLoadAIModel:&error]) {
             if (fail) {
                 weakSelf.loadBackgroundSuccess = false;
@@ -115,6 +128,7 @@
                 return;
             }
         }
+        #endif
         
         if (![self checkLoadBackgroundWithError:&error]) {
             if (fail) {
@@ -135,14 +149,23 @@
     
     dispatch_async(_asyncLoadQueue, ^{
         NSError *error = nil;
+        #if FU_67
         if (![weakSelf checkLoadAIModel:&error]) {
             if (fail) {
                 fail(error);
                 return;
             }
         }
+        #endif
         
         if (![weakSelf checkLoadBackgroundWithError:&error]) {
+            if (fail) {
+                fail(error);
+                return;
+            }
+        }
+        
+        if (![weakSelf checkLoadAntiAliasingWithError:&error]) {
             if (fail) {
                 fail(error);
                 return;
@@ -181,6 +204,8 @@
 - (void)initAll {
     self.asyncLoadQueue = dispatch_queue_create("com.faceLoadItem", DISPATCH_QUEUE_SERIAL);
     
+    
+    #if FU_67
     [[FURenderer shareRenderer] setupWithData:nil
                                      dataSize:0
                                        ardata:nil
@@ -188,22 +213,34 @@
                                      authSize:sizeof(g_auth_package)
                           shouldCreateContext:YES];
     
+    #else
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"v3.bundle" ofType:nil];
+
+    [[FURenderer shareRenderer] setupWithDataPath:path
+                                      authPackage:&g_auth_package
+                                         authSize:sizeof(g_auth_package)
+                              shouldCreateContext:YES];
+    #endif
+    
     [self initPropertys];
     [self initFilterItems];
     
+    #if FU_67
     __weak typeof(self) weakSelf = self;
     
     dispatch_async(_asyncLoadQueue, ^{
         [weakSelf loadAllAIModel:nil];
     });
+    #endif
 }
 
 - (void)initPropertys {
     itemsCount = 3;
     
-    self.filterIndexOfItems = 1;
-    self.backgroundIndexOfItems = 0;
-    self.animojiIndexOfItems = 1;
+    self.backgroundIndexOfItems = FUItemLevelBackground;
+    self.filterIndexOfItems = FUItemLevelFace;
+    self.animojiIndexOfItems = FUItemLevelFace;
+    self.aliasingIndexOfItems = FUItemLevelAntiAliasing;
     
     self.loadAISuccess = false;
     self.loadBackgroundSuccess = false;
@@ -215,6 +252,7 @@
 }
 
 #pragma mark - Private AI Model
+#if FU_67
 - (BOOL)checkLoadAIModel:(NSError **)error {
     if (!self.loadAISuccess) {
         [FURenderer releaseAIModel:FUAITYPE_FACEPROCESSOR
@@ -296,6 +334,7 @@
     
     return true;
 }
+#endif
 
 #pragma mark - Private Filter
 - (BOOL)checkFilterWithError:(NSError **)error {
@@ -394,9 +433,35 @@
     }
     
     self.loadBackgroundSuccess = true;
-    self.backgroundIndexOfItems = 0;
     items[self.backgroundIndexOfItems] = result;
     return self.loadBackgroundSuccess;
+}
+
+- (BOOL)checkLoadAntiAliasingWithError:(NSError **)error {
+    if (!self.loadAntiAliasingSuccess) {
+        [self loadAntiAliasingWithError:error];
+        if (*error) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+- (BOOL)loadAntiAliasingWithError:(NSError **)error {
+    int result = [self loadModel:@"fxaa.bundle"];
+    
+    if (result <= 0) {
+        *error = [NSError errorWithDomain:@"FU-load-AntiAliasingj"
+                                     code:result
+                                 userInfo:nil];
+        self.loadAntiAliasingSuccess = false;
+        return self.loadAntiAliasingSuccess;
+    }
+    
+    self.loadAntiAliasingSuccess = true;
+    items[self.loadAntiAliasingSuccess] = result;
+    return self.loadAntiAliasingSuccess;
 }
 
 - (BOOL)loadAnimoji:(NSString *)name withError:(NSError **)error {
@@ -411,7 +476,6 @@
     }
     
     int itemHandle = result;
-    self.animojiIndexOfItems = 1;
     items[self.animojiIndexOfItems] = itemHandle;
     
     [FURenderer itemSetParam:itemHandle withName:@"{\"thing\":\"<global>\",\"param\":\"follow\"}" value:@(0)];

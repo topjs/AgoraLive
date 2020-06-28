@@ -8,22 +8,19 @@ target 'AgoraLive' do
   # Pods for AgoraLive
   platform :ios, '9.0'
   
-  pod 'RxSwift'
+  pod 'RxSwift', '~> 5.0.1'
   pod 'RxCocoa'
   pod 'RxDataSources'
-  pod 'HandyJSON'
   pod 'Alamofire', '~> 4.7.3'
-  pod 'MJRefresh'
-  #pod 'AliyunOSSiOS'
+  pod 'MJRefresh', '~> 3.3.1'
   pod 'AGEVideoLayout'
   pod 'FLAnimatedImage'
-  pod 'MBProgressHUD'
-  pod 'SVProgressHUD'
+  pod 'MBProgressHUD', '~> 1.1.0'
   pod 'AlamoClient', '~> 1.0.1'
   pod 'AgoraRtm_iOS', '~> 1.2.2'
   pod 'AgoraRtcEngine_iOS', '~> 3.0.0'
   pod 'AGECamera', :path => '/Users/cavansu/Documents/Github/AGECamera/' 
-  pod 'Nama-lite', '~> 6.7.0' 
+  pod 'Nama-lite', '~> 6.4.0' 
 
   source 'https://github.com/CocoaPods/Specs.git'
 end

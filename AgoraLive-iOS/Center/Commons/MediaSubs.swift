@@ -263,9 +263,17 @@ enum VirtualAppearance {
     }
 }
 
-class VideoEnhancement: FUClient {
+class VideoEnhancement: FUClient , AGELogBase {
     private(set) var beauty: AGESwitch = .off
     private(set) var appearance: VirtualAppearance = .none
+    
+    var logTube: LogTube {
+        get {
+            return ALCenter.shared().centerProvideLogTubeHelper()
+        }
+        set {
+        }
+    }
     
     func beauty(_ action: AGESwitch, success: Completion = nil, fail: Completion = nil) {
         if beauty == action {
@@ -283,14 +291,14 @@ class VideoEnhancement: FUClient {
                     success()
                 }
                 
-                print("loadFilter success")
+                self.log(info: "loadFilter success")
             }) { [unowned self] (error) in
                 self.beauty = .off
                 if let fail = fail {
                     fail()
                 }
                 
-                print("loadFilter error: \(error)")
+                self.log(error: error, extra: "load filter")
             }
         case .off:
             self.beauty = .off
@@ -301,28 +309,26 @@ class VideoEnhancement: FUClient {
         switch appearance {
         case .girl, .dog:
             loadBackgroud(success: { [unowned self] in
-                print("loadBackgroud success")
-                
                 self.loadAnimoji(appearance.item, success: { [unowned self] in
                     self.appearance = appearance
                     if let success = success {
                         success()
                     }
                     
-                    print("loadAnimoji success")
+                    self.log(info: "loadAnimoji success", extra: "appearance: \(appearance.item)")
                 }) { (error) in
                     if let fail = fail {
                         fail()
                     }
                     
-                    print("loadBackgroud error: \(error)")
+                    self.log(error: error, extra: "load background")
                 }
             }) { (error) in
                 if let fail = fail {
                     fail()
                 }
                 
-                print("loadBackgroud error: \(error)")
+                self.log(error: error, extra: "load virtual appearance")
             }
         case .none:
             self.appearance = .none
@@ -333,5 +339,23 @@ class VideoEnhancement: FUClient {
         beauty = .off
         appearance = .none
         destoryAllItems()
+    }
+}
+
+// MARK: Log
+private extension VideoEnhancement {
+    func log(info: String, extra: String? = nil, funcName: String = #function) {
+        let className = VideoEnhancement.self
+        logOutputInfo(info, extra: extra, className: className, funcName: funcName)
+    }
+    
+    func log(warning: String, extra: String? = nil, funcName: String = #function) {
+        let className = VideoEnhancement.self
+        logOutputWarning(warning, extra: extra, className: className, funcName: funcName)
+    }
+    
+    func log(error: Error, extra: String? = nil, funcName: String = #function) {
+        let className = VideoEnhancement.self
+        logOutputError(error, extra: extra, className: className, funcName: funcName)
     }
 }
