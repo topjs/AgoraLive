@@ -147,6 +147,11 @@ extension LiveViewController {
     func liveSession(_ session: LiveSession) {
         session.end.subscribe(onNext: { [unowned self] (_) in
             self.leave()
+            
+            if let vc = self.presentingViewController {
+                vc.dismiss(animated: false, completion: nil)
+            }
+            
             self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
                 self.dimissSelf()
             }

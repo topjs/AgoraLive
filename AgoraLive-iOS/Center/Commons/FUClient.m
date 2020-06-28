@@ -203,35 +203,39 @@ typedef NS_ENUM(NSUInteger, FUItemLevel) {
 #pragma mark - Private
 - (void)initAll {
     self.asyncLoadQueue = dispatch_queue_create("com.faceLoadItem", DISPATCH_QUEUE_SERIAL);
-    
-    
-    #if FU_67
-    [[FURenderer shareRenderer] setupWithData:nil
-                                     dataSize:0
-                                       ardata:nil
-                                  authPackage:&g_auth_package
-                                     authSize:sizeof(g_auth_package)
-                          shouldCreateContext:YES];
-    
-    #else
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"v3.bundle" ofType:nil];
-
-    [[FURenderer shareRenderer] setupWithDataPath:path
-                                      authPackage:&g_auth_package
-                                         authSize:sizeof(g_auth_package)
-                              shouldCreateContext:YES];
-    #endif
-    
-    [self initPropertys];
-    [self initFilterItems];
-    
-    #if FU_67
     __weak typeof(self) weakSelf = self;
     
     dispatch_async(_asyncLoadQueue, ^{
+        #if FU_67
+        [[FURenderer shareRenderer] setupWithData:nil
+                                         dataSize:0
+                                           ardata:nil
+                                      authPackage:&g_auth_package
+                                         authSize:sizeof(g_auth_package)
+                              shouldCreateContext:YES];
+        
+        #else
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"v3.bundle" ofType:nil];
+        
+        [[FURenderer shareRenderer] setupWithDataPath:path
+                                          authPackage:&g_auth_package
+                                             authSize:sizeof(g_auth_package)
+                                  shouldCreateContext:YES];
+        #endif
+        
+        NSData *tongueData = [weakSelf getModelDataWithResourceName:@"tongue.bundle"];
+        fuLoadTongueModel((void *)tongueData.bytes, (int)tongueData.length);
+        float flexible = 0.5;
+        fuSetFaceTrackParam((char *)[@"mouth_expression_more_flexible" UTF8String], &flexible);
+        
+        [weakSelf initPropertys];
+        [weakSelf initFilterItems];
+        
+        #if FU_67
         [weakSelf loadAllAIModel:nil];
+        #endif
     });
-    #endif
 }
 
 - (void)initPropertys {

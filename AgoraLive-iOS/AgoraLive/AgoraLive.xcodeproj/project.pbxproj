@@ -55,6 +55,21 @@
 		A773BD522410A001003ECBFD /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A773BD512410A001003ECBFD /* UserNameViewController.swift */; };
 		A77718162456FBDA00BF1F21 /* PlayerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77718152456FBDA00BF1F21 /* PlayerVM.swift */; };
 		A7779C2B244DC7DC002A285A /* LocalLiveSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */; };
+		A77E574124A8955700DD7670 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = A77E572D24A8955600DD7670 /* .gitkeep */; };
+		A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573224A8955600DD7670 /* bai_bj.bundle */; };
+		A77E574324A8955700DD7670 /* qgirl_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A77E573324A8955600DD7670 /* qgirl_Animoji.png */; };
+		A77E574424A8955700DD7670 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */; };
+		A77E574524A8955700DD7670 /* hashiqi_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A77E573524A8955600DD7670 /* hashiqi_Animoji.png */; };
+		A77E574624A8955700DD7670 /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */; };
+		A77E574724A8955700DD7670 /* SuperBell.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573824A8955600DD7670 /* SuperBell.gif */; };
+		A77E574824A8955700DD7670 /* SuperCake.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573924A8955600DD7670 /* SuperCake.gif */; };
+		A77E574924A8955700DD7670 /* SuperWatch.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573A24A8955600DD7670 /* SuperWatch.gif */; };
+		A77E574A24A8955700DD7670 /* SuperWine.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573B24A8955600DD7670 /* SuperWine.gif */; };
+		A77E574B24A8955700DD7670 /* SuperRocket.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573C24A8955600DD7670 /* SuperRocket.gif */; };
+		A77E574C24A8955700DD7670 /* SuperRing.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573D24A8955600DD7670 /* SuperRing.gif */; };
+		A77E574D24A8955700DD7670 /* SuperIcecream.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573E24A8955600DD7670 /* SuperIcecream.gif */; };
+		A77E574E24A8955700DD7670 /* SuperDiamond.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573F24A8955600DD7670 /* SuperDiamond.gif */; };
+		A77E574F24A8955700DD7670 /* sound.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E574024A8955600DD7670 /* sound.gif */; };
 		A7847F992458216600469187 /* VideoEnhancementVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7847F982458216600469187 /* VideoEnhancementVM.swift */; };
 		A791F33A242898DC008D8BC9 /* MultiBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A791F339242898DC008D8BC9 /* MultiBroadcastersViewController.swift */; };
 		A791F33C2428A014008D8BC9 /* GiftAudienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A791F33B2428A014008D8BC9 /* GiftAudienceViewController.swift */; };
@@ -117,20 +132,6 @@
 		A7952C522416691600479811 /* URLGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952C512416691600479811 /* URLGroup.swift */; };
 		A7952C5C2417636D00479811 /* ALJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952C5B2417636D00479811 /* ALJson.swift */; };
 		A795CEC22451683700220EF4 /* LabelShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A795CEC12451683700220EF4 /* LabelShadowView.swift */; };
-		A79DE35124A3054B00F1A234 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A79DE34B24A3054B00F1A234 /* bai_bj.bundle */; };
-		A79DE35224A3054B00F1A234 /* qgirl_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A79DE34C24A3054B00F1A234 /* qgirl_Animoji.png */; };
-		A79DE35324A3054B00F1A234 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A79DE34D24A3054B00F1A234 /* qgirl_Animoji.bundle */; };
-		A79DE35424A3054B00F1A234 /* hashiqi_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A79DE34E24A3054B00F1A234 /* hashiqi_Animoji.png */; };
-		A79DE35524A3054B00F1A234 /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A79DE34F24A3054B00F1A234 /* hashiqi_Animoji.bundle */; };
-		A79DE38524A30B6400F1A234 /* SuperBell.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE37C24A30B6400F1A234 /* SuperBell.gif */; };
-		A79DE38624A30B6400F1A234 /* SuperCake.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE37D24A30B6400F1A234 /* SuperCake.gif */; };
-		A79DE38724A30B6400F1A234 /* SuperWatch.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE37E24A30B6400F1A234 /* SuperWatch.gif */; };
-		A79DE38824A30B6400F1A234 /* SuperWine.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE37F24A30B6400F1A234 /* SuperWine.gif */; };
-		A79DE38924A30B6400F1A234 /* SuperRocket.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE38024A30B6400F1A234 /* SuperRocket.gif */; };
-		A79DE38A24A30B6400F1A234 /* SuperRing.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE38124A30B6400F1A234 /* SuperRing.gif */; };
-		A79DE38B24A30B6400F1A234 /* SuperIcecream.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE38224A30B6400F1A234 /* SuperIcecream.gif */; };
-		A79DE38C24A30B6400F1A234 /* SuperDiamond.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE38324A30B6400F1A234 /* SuperDiamond.gif */; };
-		A79DE38D24A30B6400F1A234 /* sound.gif in Resources */ = {isa = PBXBuildFile; fileRef = A79DE38424A30B6400F1A234 /* sound.gif */; };
 		A7CEF1EB2423495E004FB752 /* LiveSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CEF1EA2423495E004FB752 /* LiveSession.swift */; };
 		A7CEF1ED24238389004FB752 /* LiveRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CEF1EC24238389004FB752 /* LiveRole.swift */; };
 		A7CEF1EF24249BC0004FB752 /* LiveAudienceListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CEF1EE24249BC0004FB752 /* LiveAudienceListVM.swift */; };
@@ -216,6 +217,22 @@
 		A773BD512410A001003ECBFD /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
 		A77718152456FBDA00BF1F21 /* PlayerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVM.swift; sourceTree = "<group>"; };
 		A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalLiveSettings.swift; sourceTree = "<group>"; };
+		A77E572D24A8955600DD7670 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		A77E572F24A8955600DD7670 /* authpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
+		A77E573224A8955600DD7670 /* bai_bj.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bai_bj.bundle; sourceTree = "<group>"; };
+		A77E573324A8955600DD7670 /* qgirl_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qgirl_Animoji.png; sourceTree = "<group>"; };
+		A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = qgirl_Animoji.bundle; sourceTree = "<group>"; };
+		A77E573524A8955600DD7670 /* hashiqi_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hashiqi_Animoji.png; sourceTree = "<group>"; };
+		A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hashiqi_Animoji.bundle; sourceTree = "<group>"; };
+		A77E573824A8955600DD7670 /* SuperBell.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperBell.gif; sourceTree = "<group>"; };
+		A77E573924A8955600DD7670 /* SuperCake.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperCake.gif; sourceTree = "<group>"; };
+		A77E573A24A8955600DD7670 /* SuperWatch.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperWatch.gif; sourceTree = "<group>"; };
+		A77E573B24A8955600DD7670 /* SuperWine.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperWine.gif; sourceTree = "<group>"; };
+		A77E573C24A8955600DD7670 /* SuperRocket.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperRocket.gif; sourceTree = "<group>"; };
+		A77E573D24A8955600DD7670 /* SuperRing.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperRing.gif; sourceTree = "<group>"; };
+		A77E573E24A8955600DD7670 /* SuperIcecream.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperIcecream.gif; sourceTree = "<group>"; };
+		A77E573F24A8955600DD7670 /* SuperDiamond.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperDiamond.gif; sourceTree = "<group>"; };
+		A77E574024A8955600DD7670 /* sound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sound.gif; sourceTree = "<group>"; };
 		A7847F982458216600469187 /* VideoEnhancementVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEnhancementVM.swift; sourceTree = "<group>"; };
 		A791F339242898DC008D8BC9 /* MultiBroadcastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiBroadcastersViewController.swift; sourceTree = "<group>"; };
 		A791F33B2428A014008D8BC9 /* GiftAudienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftAudienceViewController.swift; sourceTree = "<group>"; };
@@ -305,21 +322,6 @@
 		A7952C512416691600479811 /* URLGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLGroup.swift; sourceTree = "<group>"; };
 		A7952C5B2417636D00479811 /* ALJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALJson.swift; sourceTree = "<group>"; };
 		A795CEC12451683700220EF4 /* LabelShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelShadowView.swift; sourceTree = "<group>"; };
-		A79DE34824A3054B00F1A234 /* authpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
-		A79DE34B24A3054B00F1A234 /* bai_bj.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bai_bj.bundle; sourceTree = "<group>"; };
-		A79DE34C24A3054B00F1A234 /* qgirl_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qgirl_Animoji.png; sourceTree = "<group>"; };
-		A79DE34D24A3054B00F1A234 /* qgirl_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = qgirl_Animoji.bundle; sourceTree = "<group>"; };
-		A79DE34E24A3054B00F1A234 /* hashiqi_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hashiqi_Animoji.png; sourceTree = "<group>"; };
-		A79DE34F24A3054B00F1A234 /* hashiqi_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hashiqi_Animoji.bundle; sourceTree = "<group>"; };
-		A79DE37C24A30B6400F1A234 /* SuperBell.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperBell.gif; sourceTree = "<group>"; };
-		A79DE37D24A30B6400F1A234 /* SuperCake.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperCake.gif; sourceTree = "<group>"; };
-		A79DE37E24A30B6400F1A234 /* SuperWatch.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperWatch.gif; sourceTree = "<group>"; };
-		A79DE37F24A30B6400F1A234 /* SuperWine.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperWine.gif; sourceTree = "<group>"; };
-		A79DE38024A30B6400F1A234 /* SuperRocket.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperRocket.gif; sourceTree = "<group>"; };
-		A79DE38124A30B6400F1A234 /* SuperRing.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperRing.gif; sourceTree = "<group>"; };
-		A79DE38224A30B6400F1A234 /* SuperIcecream.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperIcecream.gif; sourceTree = "<group>"; };
-		A79DE38324A30B6400F1A234 /* SuperDiamond.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperDiamond.gif; sourceTree = "<group>"; };
-		A79DE38424A30B6400F1A234 /* sound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sound.gif; sourceTree = "<group>"; };
 		A7CEF1EA2423495E004FB752 /* LiveSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSession.swift; sourceTree = "<group>"; };
 		A7CEF1EC24238389004FB752 /* LiveRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRole.swift; sourceTree = "<group>"; };
 		A7CEF1EE24249BC0004FB752 /* LiveAudienceListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveAudienceListVM.swift; sourceTree = "<group>"; };
@@ -454,7 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				A76BD11F23F1035500B2732B /* AgoraLive */,
-				A79DE34524A3054B00F1A234 /* Resource */,
+				A77E572C24A8955600DD7670 /* Resource */,
 				A7952A4E24162BC600479811 /* Center */,
 				A76BD11E23F1035500B2732B /* Products */,
 				33F5DFEBF7B1A17E6486CE1B /* Pods */,
@@ -566,6 +568,62 @@
 				A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A77E572C24A8955600DD7670 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A77E572D24A8955600DD7670 /* .gitkeep */,
+				A77E572E24A8955600DD7670 /* Faceunity */,
+				A77E573724A8955600DD7670 /* Gif */,
+			);
+			name = Resource;
+			path = ../Resource;
+			sourceTree = "<group>";
+		};
+		A77E572E24A8955600DD7670 /* Faceunity */ = {
+			isa = PBXGroup;
+			children = (
+				A77E572F24A8955600DD7670 /* authpack.h */,
+				A77E573024A8955600DD7670 /* items */,
+			);
+			path = Faceunity;
+			sourceTree = "<group>";
+		};
+		A77E573024A8955600DD7670 /* items */ = {
+			isa = PBXGroup;
+			children = (
+				A77E573124A8955600DD7670 /* Animoji */,
+			);
+			path = items;
+			sourceTree = "<group>";
+		};
+		A77E573124A8955600DD7670 /* Animoji */ = {
+			isa = PBXGroup;
+			children = (
+				A77E573224A8955600DD7670 /* bai_bj.bundle */,
+				A77E573324A8955600DD7670 /* qgirl_Animoji.png */,
+				A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */,
+				A77E573524A8955600DD7670 /* hashiqi_Animoji.png */,
+				A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */,
+			);
+			path = Animoji;
+			sourceTree = "<group>";
+		};
+		A77E573724A8955600DD7670 /* Gif */ = {
+			isa = PBXGroup;
+			children = (
+				A77E573824A8955600DD7670 /* SuperBell.gif */,
+				A77E573924A8955600DD7670 /* SuperCake.gif */,
+				A77E573A24A8955600DD7670 /* SuperWatch.gif */,
+				A77E573B24A8955600DD7670 /* SuperWine.gif */,
+				A77E573C24A8955600DD7670 /* SuperRocket.gif */,
+				A77E573D24A8955600DD7670 /* SuperRing.gif */,
+				A77E573E24A8955600DD7670 /* SuperIcecream.gif */,
+				A77E573F24A8955600DD7670 /* SuperDiamond.gif */,
+				A77E574024A8955600DD7670 /* sound.gif */,
+			);
+			path = Gif;
 			sourceTree = "<group>";
 		};
 		A7952A4E24162BC600479811 /* Center */ = {
@@ -762,60 +820,6 @@
 			name = libs;
 			sourceTree = "<group>";
 		};
-		A79DE34524A3054B00F1A234 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				A79DE37B24A30B6400F1A234 /* Gif */,
-				A79DE34724A3054B00F1A234 /* Faceunity */,
-			);
-			path = Resource;
-			sourceTree = "<group>";
-		};
-		A79DE34724A3054B00F1A234 /* Faceunity */ = {
-			isa = PBXGroup;
-			children = (
-				A79DE34824A3054B00F1A234 /* authpack.h */,
-				A79DE34924A3054B00F1A234 /* items */,
-			);
-			path = Faceunity;
-			sourceTree = "<group>";
-		};
-		A79DE34924A3054B00F1A234 /* items */ = {
-			isa = PBXGroup;
-			children = (
-				A79DE34A24A3054B00F1A234 /* Animoji */,
-			);
-			path = items;
-			sourceTree = "<group>";
-		};
-		A79DE34A24A3054B00F1A234 /* Animoji */ = {
-			isa = PBXGroup;
-			children = (
-				A79DE34B24A3054B00F1A234 /* bai_bj.bundle */,
-				A79DE34C24A3054B00F1A234 /* qgirl_Animoji.png */,
-				A79DE34D24A3054B00F1A234 /* qgirl_Animoji.bundle */,
-				A79DE34E24A3054B00F1A234 /* hashiqi_Animoji.png */,
-				A79DE34F24A3054B00F1A234 /* hashiqi_Animoji.bundle */,
-			);
-			path = Animoji;
-			sourceTree = "<group>";
-		};
-		A79DE37B24A30B6400F1A234 /* Gif */ = {
-			isa = PBXGroup;
-			children = (
-				A79DE37C24A30B6400F1A234 /* SuperBell.gif */,
-				A79DE37D24A30B6400F1A234 /* SuperCake.gif */,
-				A79DE37E24A30B6400F1A234 /* SuperWatch.gif */,
-				A79DE37F24A30B6400F1A234 /* SuperWine.gif */,
-				A79DE38024A30B6400F1A234 /* SuperRocket.gif */,
-				A79DE38124A30B6400F1A234 /* SuperRing.gif */,
-				A79DE38224A30B6400F1A234 /* SuperIcecream.gif */,
-				A79DE38324A30B6400F1A234 /* SuperDiamond.gif */,
-				A79DE38424A30B6400F1A234 /* sound.gif */,
-			);
-			path = Gif;
-			sourceTree = "<group>";
-		};
 		A7CA48C724559B7E00507435 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
@@ -918,24 +922,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A79DE35224A3054B00F1A234 /* qgirl_Animoji.png in Resources */,
+				A77E574C24A8955700DD7670 /* SuperRing.gif in Resources */,
+				A77E574824A8955700DD7670 /* SuperCake.gif in Resources */,
 				A72B7BEC24445DEF00E965FB /* Assets.xcassets in Resources */,
-				A79DE35424A3054B00F1A234 /* hashiqi_Animoji.png in Resources */,
-				A79DE38624A30B6400F1A234 /* SuperCake.gif in Resources */,
+				A77E574424A8955700DD7670 /* qgirl_Animoji.bundle in Resources */,
+				A77E574D24A8955700DD7670 /* SuperIcecream.gif in Resources */,
+				A77E574E24A8955700DD7670 /* SuperDiamond.gif in Resources */,
+				A77E574F24A8955700DD7670 /* sound.gif in Resources */,
+				A77E574B24A8955700DD7670 /* SuperRocket.gif in Resources */,
 				A76BD12D23F1035600B2732B /* LaunchScreen.storyboard in Resources */,
-				A79DE35124A3054B00F1A234 /* bai_bj.bundle in Resources */,
-				A79DE38924A30B6400F1A234 /* SuperRocket.gif in Resources */,
+				A77E574524A8955700DD7670 /* hashiqi_Animoji.png in Resources */,
+				A77E574A24A8955700DD7670 /* SuperWine.gif in Resources */,
+				A77E574324A8955700DD7670 /* qgirl_Animoji.png in Resources */,
+				A77E574124A8955700DD7670 /* .gitkeep in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
-				A79DE35524A3054B00F1A234 /* hashiqi_Animoji.bundle in Resources */,
-				A79DE38824A30B6400F1A234 /* SuperWine.gif in Resources */,
-				A79DE38D24A30B6400F1A234 /* sound.gif in Resources */,
-				A79DE38724A30B6400F1A234 /* SuperWatch.gif in Resources */,
-				A79DE38A24A30B6400F1A234 /* SuperRing.gif in Resources */,
+				A77E574724A8955700DD7670 /* SuperBell.gif in Resources */,
+				A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */,
+				A77E574924A8955700DD7670 /* SuperWatch.gif in Resources */,
 				A76BD12823F1035500B2732B /* Main.storyboard in Resources */,
-				A79DE38B24A30B6400F1A234 /* SuperIcecream.gif in Resources */,
-				A79DE35324A3054B00F1A234 /* qgirl_Animoji.bundle in Resources */,
-				A79DE38C24A30B6400F1A234 /* SuperDiamond.gif in Resources */,
-				A79DE38524A30B6400F1A234 /* SuperBell.gif in Resources */,
+				A77E574624A8955700DD7670 /* hashiqi_Animoji.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1399,7 +1404,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					FU_67,
+					"FU_67=0",
 				);
 				INFOPLIST_FILE = AgoraLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1557,7 +1562,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					FU_67,
+					"FU_67=0",
 				);
 				INFOPLIST_FILE = AgoraLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1628,6 +1633,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D FU_67";
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraLab2020;
@@ -1717,7 +1723,7 @@
 					"$(inherited)",
 					"COCOAPODS=1",
 					"PREPRODUCT=1",
-					FU_67,
+					"FU_67=0",
 				);
 				INFOPLIST_FILE = AgoraLive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1788,7 +1794,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DPREPRODUCT -DFU_67";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DPREPRODUCT -D FU_67";
 				PRODUCT_BUNDLE_IDENTIFIER = io.agora.AgoraLiveBroadcast;
 				PRODUCT_NAME = AgoraLive;
 				PROVISIONING_PROFILE_SPECIFIER = AgoraLab2020;
