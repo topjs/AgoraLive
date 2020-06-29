@@ -279,7 +279,7 @@ extension VirtualBroadcastersViewController {
                                                           view: self.ownerRenderView)
             case .otherUser(let user):
                 self.playerVM.startRenderRemoteVideoStream(id: user.agoraUserId,
-                                                      view: self.ownerRenderView)
+                                                           view: self.ownerRenderView)
             }
             
             // Broadcaster RenderView
@@ -291,7 +291,7 @@ extension VirtualBroadcastersViewController {
                                                                   view: self.broadcasterRenderView)
                     } else {
                         self.playerVM.startRenderRemoteVideoStream(id: item.agoraUserId,
-                                                              view: self.broadcasterRenderView)
+                                                                   view: self.broadcasterRenderView)
                     }
                 }
             default:
