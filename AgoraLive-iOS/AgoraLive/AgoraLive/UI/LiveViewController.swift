@@ -148,7 +148,7 @@ extension LiveViewController {
         session.end.subscribe(onNext: { [unowned self] (_) in
             self.leave()
             
-            if let vc = self.presentingViewController {
+            if let vc = self.presentedViewController {
                 vc.dismiss(animated: false, completion: nil)
             }
             
