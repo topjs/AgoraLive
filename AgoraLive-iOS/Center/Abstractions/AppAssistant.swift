@@ -20,7 +20,11 @@ class AppAssistant: NSObject {
                                         "terminalType": 1,
                                         "version": AppAssistant.version]
         
-        let task = RequestTask(event: event, type: .http(.get, url: url), timeout: .low, parameters: parameters)
+        let task = RequestTask(event: event,
+                               type: .http(.get, url: url),
+                               timeout: .low,
+                               parameters: parameters)
+        
         let successCallback: DicEXCompletion = { (json: ([String: Any])) throws in
             let data = try json.getDataObject()
             let config = try data.getDictionaryValue(of: "config")
@@ -34,7 +38,7 @@ class AppAssistant: NSObject {
         let response = AGEResponse.json(successCallback)
         
         let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
-            return .retry(after: 0.5, newTask: nil)
+            return .retry(after: 0.5)
         }
         
         client.request(task: task, success: response, failRetry: retry)
