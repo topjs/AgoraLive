@@ -123,6 +123,11 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
 
 extension VirtualBroadcastersViewController {
     func updateViews() {
+        ownerView.frame = CGRect(x: 0,
+                                 y: 0,
+                                 width: UIScreen.main.bounds.width,
+                                 height: UIScreen.main.bounds.height)
+        
         videoContainer.backgroundColor = .white
         ownerRenderView.backgroundColor = .white
         broadcasterRenderView.backgroundColor = .white

@@ -91,7 +91,7 @@ extension VideoEnhancementVM {
         enhancement.virtualAppearance(appearance, success: { [unowned self] in
             self.virtualAppearance.accept(appearance)
         }) { [unowned self] in
-            self.virtualAppearance.accept(appearance)
+            self.virtualAppearance.accept(.none)
         }
     }
     

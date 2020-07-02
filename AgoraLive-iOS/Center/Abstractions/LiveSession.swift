@@ -165,6 +165,8 @@ class LiveSession: NSObject {
             }
             
             var virtualAppearance: String?
+            print("self.type: \(self.type.description)")
+            print("self.role: \(self.role!.type)")
             if self.type == .virtualBroadcasters, self.role!.type != .audience {
                 virtualAppearance = try localUserJson.getStringValue(of: "virtualAvatar")
             }
@@ -249,9 +251,9 @@ class LiveSession: NSObject {
         let client = ALCenter.shared().centerProvideRequestHelper()
         role = nil
         mediaKit.removeObserver(self)
+        mediaKit.leaveChannel()
         try! mediaKit.capture.video(.off)
         mediaKit.capture.audio = .off
-        mediaKit.leaveChannel()
         
         rtm.leaveChannel()
         

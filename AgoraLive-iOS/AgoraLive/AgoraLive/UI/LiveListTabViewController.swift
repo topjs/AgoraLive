@@ -25,7 +25,7 @@ class LiveListTabViewController: MaskViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateViewsWithListVM()
+        updateViewsWithListVM(false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -41,8 +41,6 @@ class LiveListTabViewController: MaskViewController {
         updateTabSelectView()
         // LiveListViewController
         updateLiveListVC()
-
-        updateViewsWithListVM()
         
         netMonitor()
     }
@@ -128,7 +126,7 @@ class LiveListTabViewController: MaskViewController {
             }
             
             if let virtualAppearance = info.virtualAppearance {
-                vc?.enhancementVM.virtualAppearance.accept(VirtualAppearance.item(virtualAppearance))
+                vc?.enhancementVM.virtualAppearance(VirtualAppearance.item(virtualAppearance))
             }
             
             vc?.virtualVM = VirtualVM(broadcasting: BehaviorRelay(value: broadcasting))
@@ -267,7 +265,7 @@ private extension LiveListTabViewController {
         }).disposed(by: bag)
     }
     
-    func updateViewsWithListVM() {
+    func updateViewsWithListVM(_ hasHUD: Bool = true) {
         guard !self.isShowingHUD() else {
             return
         }
@@ -277,7 +275,10 @@ private extension LiveListTabViewController {
             return
         }
         
-        self.showHUD()
+        if hasHUD {
+            self.showHUD()
+        }
+        
         listVM.refetch(success: { [unowned self] in
             self.hiddenHUD()
         }) { [unowned self] in // fail

@@ -65,11 +65,11 @@ class ExtensionViewController: UIViewController {
         
         switch perspective {
         case .owner, .broadcaster:
-            settingsButton.setImage(UIImage(named: "icon-setting"), for: .normal)
-            settingsButton.setTitle(NSLocalizedString("Live_Room_Settings"), for: .normal)
-            view.addSubview(settingsButton)
-            
             if liveType != .virtualBroadcasters {
+                settingsButton.setImage(UIImage(named: "icon-setting"), for: .normal)
+                settingsButton.setTitle(NSLocalizedString("Live_Room_Settings"), for: .normal)
+                view.addSubview(settingsButton)
+                
                 switchCameraButton.setImage(UIImage(named: "icon-rotate"), for: .normal)
                 switchCameraButton.setTitle(NSLocalizedString("Switch_Camera"), for: .normal)
                 view.addSubview(switchCameraButton)
@@ -127,7 +127,14 @@ class ExtensionViewController: UIViewController {
             }
             
             var y: CGFloat = self.titleLabel.frame.maxY + 20.0
-            var buttons = [dataButton, settingsButton]
+            var buttons: [UIButton]
+            
+            if liveType != .virtualBroadcasters {
+                buttons = [dataButton, settingsButton]
+            } else {
+                buttons = [dataButton]
+            }
+            
             buttonsLayout(buttons, y: y)
             
             y = dataButton.frame.maxY + 22.0

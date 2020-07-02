@@ -50,6 +50,7 @@ class MediaKit: NSObject, AGELogBase {
     }
     
     private(set) var channelStatus: AGEChannelStatus = .out
+    private var cameraStreamQueue = DispatchQueue(label: "CameraStreamQueue")
     
     lazy var capture = Capture(parent: self)
     lazy var player = Player()
@@ -176,23 +177,25 @@ extension MediaKit: AgoraVideoSourceProtocol {
 
 extension MediaKit: AGESingleCameraDelegate {
     func camera(_ camera: AGESingleCamera, position: AGECamera.Position, didOutput sampleBuffer: CMSampleBuffer) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            return
+        cameraStreamQueue.async { [unowned self] in
+            guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+                return
+            }
+            
+            CVPixelBufferLockBaseAddress(pixelBuffer, .init(rawValue: 0))
+            
+            let timeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+            
+            if self.enhancement.beauty == .on || self.enhancement.appearance != .none {
+                self.enhancement.renderItems(to: pixelBuffer)
+            }
+            
+            self.consumer?.consumePixelBuffer(pixelBuffer,
+                                              withTimestamp: timeStamp,
+                                              rotation: .rotationNone)
+            
+            CVPixelBufferUnlockBaseAddress(pixelBuffer, .init(rawValue: 0))
         }
-        
-        CVPixelBufferLockBaseAddress(pixelBuffer, .init(rawValue: 0))
-        
-        let timeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-        
-        if enhancement.beauty == .on || enhancement.appearance != .none {
-            enhancement.renderItems(to: pixelBuffer)
-        }
-        
-        self.consumer?.consumePixelBuffer(pixelBuffer,
-                                          withTimestamp: timeStamp,
-                                          rotation: .rotationNone)
-        
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, .init(rawValue: 0))
     }
 }
 
