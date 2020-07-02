@@ -25,7 +25,7 @@ class LiveListTabViewController: MaskViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateViewsWithListVM(false)
+        roomListRefresh(false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -188,7 +188,7 @@ private extension LiveListTabViewController {
         
         // placeHolderView tap
         vc.placeHolderView.tap.subscribe(onNext: { [unowned self] (_) in
-            self.scheduelRefresh()
+            self.roomListRefresh(true)
         }).disposed(by: bag)
         
         // placeHolderView if need hidden
@@ -265,26 +265,29 @@ private extension LiveListTabViewController {
         }).disposed(by: bag)
     }
     
-    func updateViewsWithListVM(_ hasHUD: Bool = true) {
-        guard !self.isShowingHUD() else {
-            return
-        }
-        
-        if let isRefreshing = self.listVC?.collectionView.mj_header?.isRefreshing,
-            isRefreshing {
-            return
-        }
-        
-        if hasHUD {
-            self.showHUD()
-        }
-        
-        listVM.refetch(success: { [unowned self] in
-            self.hiddenHUD()
-        }) { [unowned self] in // fail
-            self.hiddenHUD()
-        }
-    }
+//    func updateViewsWithListVM(_ hasHUD: Bool = true) {
+//
+//
+//        if hasHUD {
+//            self.showHUD()
+//        }
+//
+//        let end: Completion = { [unowned self] in
+//            if animate {
+//                self.hiddenHUD()
+//            }
+//        }
+//
+//        listVM.refetch(success: { [unowned self] in
+//            if hasHUD {
+//                self.hiddenHUD()
+//            }
+//        }) { [unowned self] in // fail
+//            if hasHUD {
+//                self.hiddenHUD()
+//            }
+//        }
+//    }
     
     func netMonitor() {
         monitor.action(.on)
@@ -301,19 +304,33 @@ private extension LiveListTabViewController {
         timer = Timer(fireAt: Date(timeIntervalSinceNow: 60.0),
                       interval: 60.0,
                       target: self,
-                      selector: #selector(scheduelRefresh),
+                      selector: #selector(roomListRefresh),
                       userInfo: nil,
                       repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
         timer?.fire()
     }
     
-    @objc func scheduelRefresh() {
+    @objc func roomListRefresh(_ hasHUD: Bool = false) {
+        guard !self.isShowingHUD() else {
+            return
+        }
+        
+        if let isRefreshing = self.listVC?.collectionView.mj_header?.isRefreshing,
+            isRefreshing {
+            return
+        }
+        
         let end: Completion = { [unowned self] in
-            self.hiddenHUD()
+            if hasHUD {
+                self.hiddenHUD()
+            }
         }
 
-        self.showHUD()
+        if hasHUD {
+            self.showHUD()
+        }
+        
         listVM.refetch(success: end, fail: end)
     }
     

@@ -20,7 +20,7 @@ class PlaceHolderView: UIView {
     @IBOutlet weak var lostConnectionLabel: UILabel!
     @IBOutlet weak var lostConnectionDescLabel: UILabel!
     
-    var tap = PublishSubject<Bool>()
+    var tap = PublishSubject<()>()
     
     var viewType: ViewType = .noRoom {
         didSet {
@@ -43,7 +43,7 @@ class PlaceHolderView: UIView {
     }
     
     @IBAction func doTapPressed(_ sender: UITapGestureRecognizer) {
-        tap.onNext(true)
+        tap.onNext(())
     }
 }
 

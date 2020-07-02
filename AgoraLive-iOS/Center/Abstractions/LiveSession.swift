@@ -165,8 +165,7 @@ class LiveSession: NSObject {
             }
             
             var virtualAppearance: String?
-            print("self.type: \(self.type.description)")
-            print("self.role: \(self.role!.type)")
+            
             if self.type == .virtualBroadcasters, self.role!.type != .audience {
                 virtualAppearance = try localUserJson.getStringValue(of: "virtualAvatar")
             }

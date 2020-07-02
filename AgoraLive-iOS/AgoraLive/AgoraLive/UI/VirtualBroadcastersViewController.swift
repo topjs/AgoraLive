@@ -74,6 +74,8 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
             return
         }
         
+        updateViews()
+        
         liveSession(session)
         liveRoom(session: session)
         audience()
@@ -86,8 +88,6 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
         broadcastingStatus()
         liveSeat()
         netMonitor()
-        
-        updateViews()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
