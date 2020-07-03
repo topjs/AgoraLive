@@ -264,31 +264,7 @@ private extension LiveListTabViewController {
             }
         }).disposed(by: bag)
     }
-    
-//    func updateViewsWithListVM(_ hasHUD: Bool = true) {
-//
-//
-//        if hasHUD {
-//            self.showHUD()
-//        }
-//
-//        let end: Completion = { [unowned self] in
-//            if animate {
-//                self.hiddenHUD()
-//            }
-//        }
-//
-//        listVM.refetch(success: { [unowned self] in
-//            if hasHUD {
-//                self.hiddenHUD()
-//            }
-//        }) { [unowned self] in // fail
-//            if hasHUD {
-//                self.hiddenHUD()
-//            }
-//        }
-//    }
-    
+        
     func netMonitor() {
         monitor.action(.on)
         monitor.connect.subscribe(onNext: { [unowned self] (status) in
