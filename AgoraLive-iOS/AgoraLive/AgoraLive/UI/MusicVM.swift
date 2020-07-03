@@ -66,10 +66,14 @@ class MusicVM: NSObject {
                                type: .http(.get, url: url),
                                timeout: .medium)
         
-        let success: DicEXCompletion = { [unowned self] (json) in
+        let success: DicEXCompletion = { [weak self] (json) in
+            guard let strongSelf = self else {
+                return
+            }
+            
             let data = try json.getListValue(of: "data")
             let list = try Array(list: data)
-            self.list = BehaviorRelay(value: list)
+            strongSelf.list = BehaviorRelay(value: list)
         }
         
         let fail: ErrorRetryCompletion = { (error) in

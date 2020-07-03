@@ -69,12 +69,12 @@ extension VideoEnhancementVM {
         switch action {
         case .on:
             self.enhancement.beauty(.on, success: { [unowned self] in
-                DispatchQueue.main.async { [unowned self] in
-                    self.beauty.accept(.on)
+                DispatchQueue.main.async { [weak self] in
+                    self?.beauty.accept(.on)
                 }
             }) { [unowned self] in
-                DispatchQueue.main.async { [unowned self] in
-                    self.beauty.accept(.off)
+                DispatchQueue.main.async { [weak self] in
+                    self?.beauty.accept(.off)
                 }
             }
         case .off:
@@ -88,10 +88,10 @@ extension VideoEnhancementVM {
     }
     
     func virtualAppearance(_ appearance: VirtualAppearance) {
-        enhancement.virtualAppearance(appearance, success: { [unowned self] in
-            self.virtualAppearance.accept(appearance)
-        }) { [unowned self] in
-            self.virtualAppearance.accept(.none)
+        enhancement.virtualAppearance(appearance, success: { [weak self] in
+            self?.virtualAppearance.accept(appearance)
+        }) { [weak self] in
+            self?.virtualAppearance.accept(.none)
         }
     }
     

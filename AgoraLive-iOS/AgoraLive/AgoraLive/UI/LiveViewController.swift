@@ -145,15 +145,22 @@ extension LiveViewController {
     
     // MARK: - Live Session
     func liveSession(_ session: LiveSession) {
-        session.end.subscribe(onNext: { [unowned self] (_) in
-            self.leave()
+        session.end.subscribe(onNext: { [weak self] (_) in
+            guard let strongSelf = self else {
+                return
+            }
             
-            if let vc = self.presentedViewController {
+            strongSelf.leave()
+            
+            if let vc = strongSelf.presentedViewController {
                 vc.dismiss(animated: false, completion: nil)
             }
             
-            self.showAlert(NSLocalizedString("Live_End")) { [unowned self] (_) in
-                self.dimissSelf()
+            strongSelf.showAlert(NSLocalizedString("Live_End")) { [weak self] (_) in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.dimissSelf()
             }
         }).disposed(by: bag)
     }
@@ -172,6 +179,8 @@ extension LiveViewController {
         
         switch perspective {
         case .owner, .broadcaster:
+            bottomToolsVC?.beautyButton.isSelected = enhancementVM.beauty.value.boolValue
+            
             bottomToolsVC?.beautyButton.rx.tap.subscribe(onNext: { [unowned self] () in
                 self.showMaskView(color: UIColor.clear) { [unowned self] in
                     self.hiddenMaskView()

@@ -282,6 +282,7 @@ extension PKBroadcastersViewController {
                                action1: NSLocalizedString("Cancel"),
                                action2: NSLocalizedString("End")) { [unowned self] (_) in
                                 self.leave()
+                                self.dimissSelf()
                 }
             } else {
                 self.showAlert(NSLocalizedString("Live_End"),
@@ -289,6 +290,7 @@ extension PKBroadcastersViewController {
                                action1: NSLocalizedString("Cancel"),
                                action2: NSLocalizedString("Confirm")) { [unowned self] (_) in
                                 self.leave()
+                                self.dimissSelf()
                 }
             }
         }).disposed(by: bag)

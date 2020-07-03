@@ -143,7 +143,7 @@ PK_Remaining="PK remaining";
 Join_Other_Live_Room_Fail="Join the other channel fail";
 PK_End="PK End";
 End_PK="End PK";
-End_PK_Message="（倒计时还未结束退出pk）";
+End_PK_Message="（The countdown is not over yet）";
 
 // Virtual
 Confirm_Accept_Broadcasting="申请上麦，是否接受？";

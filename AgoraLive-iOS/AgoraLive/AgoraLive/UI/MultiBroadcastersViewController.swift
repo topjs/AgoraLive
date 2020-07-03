@@ -502,7 +502,11 @@ private extension MultiBroadcastersViewController {
                 return "Stop \"\(userName!)\" hosting"
             }
         case .close:
-            return "将关闭该麦位，如果该位置上有用户，将下麦该用户"
+            if DeviceAssistant.Language.isChinese {
+                return "将关闭该麦位，如果该位置上有用户，将下麦该用户"
+            } else {
+                return "block this position"
+            }
         case .release:
             return NSLocalizedString("Seat_Release_Description")
         default:

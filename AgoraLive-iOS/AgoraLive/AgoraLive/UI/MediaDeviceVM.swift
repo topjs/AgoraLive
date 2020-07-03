@@ -72,12 +72,20 @@ class MediaDeviceVM: NSObject {
         try? mediaKit.capture.switchCamera()
     }
     
+    func cameraResolution(_ resolution: AVCaptureSession.Preset) {
+        let mediaKit = ALCenter.shared().centerProvideMediaHelper()
+        mediaKit.capture.videoResolution(.high)
+    }
+    
     override init() {
         super.init()
         
         let mediaKit = ALCenter.shared().centerProvideMediaHelper()
-        mediaKit.player.addEvent(.audioOutputRouting({ [unowned self] (route) in
-            self.audioOutput.accept(route)
+        mediaKit.player.addEvent(.audioOutputRouting({ [weak self] (route) in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.audioOutput.accept(route)
         }), observer: self)
     }
 }

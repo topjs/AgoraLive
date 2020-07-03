@@ -251,7 +251,7 @@ class LiveSession: NSObject {
         role = nil
         mediaKit.removeObserver(self)
         mediaKit.leaveChannel()
-        try! mediaKit.capture.video(.off)
+        try? mediaKit.capture.video(.off)
         mediaKit.capture.audio = .off
         
         rtm.leaveChannel()

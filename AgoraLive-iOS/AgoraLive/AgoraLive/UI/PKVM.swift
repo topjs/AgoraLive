@@ -189,6 +189,10 @@ private extension PKVM {
     func observe() {
         let rtm = ALCenter.shared().centerProvideRTMHelper()
         rtm.addReceivedChannelMessage(observer: self) { [weak self] (json) in
+            guard let strongSelf = self else {
+                return
+            }
+            
             guard let cmd = try? json.getEnum(of: "cmd", type: ALChannelMessage.AType.self) else {
                 return
             }
@@ -205,7 +209,7 @@ private extension PKVM {
             let statistics = try PKStatistics(dic: data)
             
             guard statistics.state.isDuring else {
-                self?.statistics.accept(statistics)
+                strongSelf.statistics.accept(statistics)
                 return
             }
             
@@ -220,17 +224,21 @@ private extension PKVM {
                 }
             }
             
-            self?.statistics.accept(statistics)
+            strongSelf.statistics.accept(statistics)
             
             if let config = try? data.getDictionaryValue(of: "relayConfig") {
                 let relayInfo = try MediaRelayInfo(dic: config)
-                self?.startRelayingMediaStream(relayInfo)
+                strongSelf.startRelayingMediaStream(relayInfo)
             } else {
-                self?.stopRelayingMediaStream()
+                strongSelf.stopRelayingMediaStream()
             }
         }
         
         rtm.addReceivedPeerMessage(observer: self) { [weak self] (json) in
+            guard let strongSelf = self else {
+                return
+            }
+            
             guard let type = try? json.getEnum(of: "cmd", type: ALPeerMessage.AType.self) else {
                 return
             }
@@ -247,11 +255,11 @@ private extension PKVM {
             case ALPeerMessage.Command.invitePK(fromRoom: "").rawValue:
                 let fromRoom = try data.getStringValue(of: "pkRoomId")
                 let room = RoomBrief(roomId: fromRoom, ownerAgoraUid: agoraUid)
-                self?.receivedPKInvite.accept(room)
+                strongSelf.receivedPKInvite.accept(room)
             case ALPeerMessage.Command.rejectPK(fromRoom: "").rawValue:
                 let fromRoom = try data.getStringValue(of: "pkRoomId")
                 let room = RoomBrief(roomId: fromRoom, ownerAgoraUid: agoraUid)
-                self?.receivedPKReject.accept(room)
+                strongSelf.receivedPKReject.accept(room)
             default:
                 break
             }

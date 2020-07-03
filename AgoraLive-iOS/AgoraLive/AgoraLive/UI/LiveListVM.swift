@@ -132,20 +132,24 @@ extension LiveListVM {
                                header: ["token": ALKeys.ALUserToken],
                                parameters: parameters)
         
-        let successCallback: DicEXCompletion = { [unowned self] (json: ([String: Any])) in
+        let successCallback: DicEXCompletion = { [weak self] (json: ([String: Any])) in
+            guard let strongSelf = self else {
+                return
+            }
+            
             let object = try json.getDataObject()
             let jsonList = try object.getValue(of: "list", type: [StringAnyDic].self)
             let list = try [RoomBrief](dicList: jsonList)
             
             switch requestListType {
             case .multiBroadcasters:
-                self.multiBroadcastersList.append(contentsOf: list)
+                strongSelf.multiBroadcastersList.append(contentsOf: list)
             case .singleBroadcaster:
-                self.singleBroadcasterList.append(contentsOf: list)
+                strongSelf.singleBroadcasterList.append(contentsOf: list)
             case .pkBroadcasters:
-                self.pkBroadcastersList.append(contentsOf: list)
+                strongSelf.pkBroadcastersList.append(contentsOf: list)
             case .virtualBroadcasters:
-                self.virtualBroadcastersList.append(contentsOf: list)
+                strongSelf.virtualBroadcastersList.append(contentsOf: list)
             }
             
             if let success = success {
@@ -179,7 +183,11 @@ extension LiveListVM {
                                header: ["token": ALKeys.ALUserToken],
                                parameters: parameters)
         
-        let successCallback: DicEXCompletion = { [unowned self] (json: ([String: Any])) in
+        let successCallback: DicEXCompletion = { [weak self] (json: ([String: Any])) in
+            guard let strongSelf = self else {
+                return
+            }
+            
             try json.getCodeCheck()
             let object = try json.getDataObject()
             let jsonList = try object.getValue(of: "list", type: [StringAnyDic].self)
@@ -187,13 +195,13 @@ extension LiveListVM {
             
             switch requestListType {
             case .multiBroadcasters:
-                self.multiBroadcastersList = list
+                strongSelf.multiBroadcastersList = list
             case .singleBroadcaster:
-                self.singleBroadcasterList = list
+                strongSelf.singleBroadcasterList = list
             case .pkBroadcasters:
-                self.pkBroadcastersList = list
+                strongSelf.pkBroadcastersList = list
             case .virtualBroadcasters:
-                self.virtualBroadcastersList = list
+                strongSelf.virtualBroadcastersList = list
             }
             
             if let success = success {

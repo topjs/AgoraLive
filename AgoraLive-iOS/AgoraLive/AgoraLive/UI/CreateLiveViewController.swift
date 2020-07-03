@@ -70,6 +70,7 @@ class CreateLiveViewController: MaskViewController {
         
         deviceVM.camera = .on
         deviceVM.cameraPosition = .front
+        deviceVM.cameraResolution(.high)
         
         playerVM.startRenderLocalVideoStream(id: 0,
                                              view: self.cameraPreview)
@@ -106,11 +107,6 @@ class CreateLiveViewController: MaskViewController {
             switchCameraButton.isHidden = true
             backButton.setImage(UIImage(named: "icon-back-black"),
                                 for: .normal)
-            
-//            nameTextField.textColor = UIColor(hexString: "#333333")
-//            nameLabel.textColor = UIColor(hexString: "#080808")
-//            randomButton.setImage(UIImage(named: "icon-random-black"), for: .normal)
-//            nameBgView.backgroundColor = .white
         }
     }
     

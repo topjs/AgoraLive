@@ -76,6 +76,10 @@ class Capture: NSObject {
         }
     }
     
+    func videoResolution(_ resolution: AVCaptureSession.Preset) {
+        cameraSession?.set(resolution: resolution)
+    }
+    
     #if os(iOS)
     var cameraPostion: AGECamera.Position {
         get {
