@@ -70,6 +70,7 @@
 		A77E574D24A8955700DD7670 /* SuperIcecream.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573E24A8955600DD7670 /* SuperIcecream.gif */; };
 		A77E574E24A8955700DD7670 /* SuperDiamond.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573F24A8955600DD7670 /* SuperDiamond.gif */; };
 		A77E574F24A8955700DD7670 /* sound.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E574024A8955600DD7670 /* sound.gif */; };
+		A77E579224AE10FE00DD7670 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E579124AE10FE00DD7670 /* NetworkMonitor.swift */; };
 		A7847F992458216600469187 /* VideoEnhancementVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7847F982458216600469187 /* VideoEnhancementVM.swift */; };
 		A791F33A242898DC008D8BC9 /* MultiBroadcastersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A791F339242898DC008D8BC9 /* MultiBroadcastersViewController.swift */; };
 		A791F33C2428A014008D8BC9 /* GiftAudienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A791F33B2428A014008D8BC9 /* GiftAudienceViewController.swift */; };
@@ -86,7 +87,6 @@
 		A7952AA624162C1000479811 /* MediaSubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A5F24162C1000479811 /* MediaSubs.swift */; };
 		A7952AA724162C1000479811 /* RTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6024162C1000479811 /* RTMClient.swift */; };
 		A7952AA824162C1000479811 /* AGEError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6124162C1000479811 /* AGEError.swift */; };
-		A7952AA924162C1000479811 /* RequestProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6224162C1000479811 /* RequestProtocols.swift */; };
 		A7952AAA24162C1000479811 /* LogTube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6324162C1000479811 /* LogTube.swift */; };
 		A7952AAB24162C1000479811 /* RTMProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6424162C1000479811 /* RTMProtocols.swift */; };
 		A7952AAC24162C1000479811 /* Convert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6524162C1000479811 /* Convert.swift */; };
@@ -95,7 +95,6 @@
 		A7952AAF24162C1000479811 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6B24162C1000479811 /* TypeAlias.swift */; };
 		A7952AB024162C1000479811 /* MediaKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6C24162C1000479811 /* MediaKit.swift */; };
 		A7952AB124162C1000479811 /* RTMHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6D24162C1000479811 /* RTMHelper.swift */; };
-		A7952AB224162C1000479811 /* RequestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6E24162C1000479811 /* RequestModels.swift */; };
 		A7952AB324162C1000479811 /* ZipTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A6F24162C1000479811 /* ZipTool.swift */; };
 		A7952AB524162C1000479811 /* DictionaryGetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A7124162C1000479811 /* DictionaryGetable.swift */; };
 		A7952AB624162C1000479811 /* MediaModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952A7224162C1000479811 /* MediaModels.swift */; };
@@ -121,8 +120,6 @@
 		A7952ACA24162C1000479811 /* pwd2key.c in Sources */ = {isa = PBXBuildFile; fileRef = A7952A9A24162C1000479811 /* pwd2key.c */; };
 		A7952ACB24162C1000479811 /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = A7952A9B24162C1000479811 /* aestab.c */; };
 		A7952ACC24162C1000479811 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = A7952AA024162C1000479811 /* SSZipArchive.m */; };
-		A7952ACE24162C1000479811 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952AA224162C1000479811 /* NetworkMonitor.swift */; };
-		A7952ACF24162C1000479811 /* AlamoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952AA324162C1000479811 /* AlamoClient.swift */; };
 		A7952AD124162C1000479811 /* RTMExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952AA524162C1000479811 /* RTMExtension.swift */; };
 		A7952C1624162F4200479811 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7952C1524162F4200479811 /* User.swift */; };
 		A7952C182416317900479811 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7952C172416317900479811 /* Accelerate.framework */; };
@@ -233,6 +230,7 @@
 		A77E573E24A8955600DD7670 /* SuperIcecream.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperIcecream.gif; sourceTree = "<group>"; };
 		A77E573F24A8955600DD7670 /* SuperDiamond.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperDiamond.gif; sourceTree = "<group>"; };
 		A77E574024A8955600DD7670 /* sound.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sound.gif; sourceTree = "<group>"; };
+		A77E579124AE10FE00DD7670 /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		A7847F982458216600469187 /* VideoEnhancementVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEnhancementVM.swift; sourceTree = "<group>"; };
 		A791F339242898DC008D8BC9 /* MultiBroadcastersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiBroadcastersViewController.swift; sourceTree = "<group>"; };
 		A791F33B2428A014008D8BC9 /* GiftAudienceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftAudienceViewController.swift; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 		A7952A5F24162C1000479811 /* MediaSubs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaSubs.swift; sourceTree = "<group>"; };
 		A7952A6024162C1000479811 /* RTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTMClient.swift; sourceTree = "<group>"; };
 		A7952A6124162C1000479811 /* AGEError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AGEError.swift; sourceTree = "<group>"; };
-		A7952A6224162C1000479811 /* RequestProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProtocols.swift; sourceTree = "<group>"; };
 		A7952A6324162C1000479811 /* LogTube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogTube.swift; sourceTree = "<group>"; };
 		A7952A6424162C1000479811 /* RTMProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTMProtocols.swift; sourceTree = "<group>"; };
 		A7952A6524162C1000479811 /* Convert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convert.swift; sourceTree = "<group>"; };
@@ -260,7 +257,6 @@
 		A7952A6B24162C1000479811 /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
 		A7952A6C24162C1000479811 /* MediaKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaKit.swift; sourceTree = "<group>"; };
 		A7952A6D24162C1000479811 /* RTMHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTMHelper.swift; sourceTree = "<group>"; };
-		A7952A6E24162C1000479811 /* RequestModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestModels.swift; sourceTree = "<group>"; };
 		A7952A6F24162C1000479811 /* ZipTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipTool.swift; sourceTree = "<group>"; };
 		A7952A7124162C1000479811 /* DictionaryGetable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryGetable.swift; sourceTree = "<group>"; };
 		A7952A7224162C1000479811 /* MediaModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaModels.swift; sourceTree = "<group>"; };
@@ -308,8 +304,6 @@
 		A7952A9F24162C1000479811 /* SSZipCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipCommon.h; sourceTree = "<group>"; };
 		A7952AA024162C1000479811 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		A7952AA124162C1000479811 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A7952AA224162C1000479811 /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
-		A7952AA324162C1000479811 /* AlamoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamoClient.swift; sourceTree = "<group>"; };
 		A7952AA524162C1000479811 /* RTMExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTMExtension.swift; sourceTree = "<group>"; };
 		A7952C1524162F4200479811 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A7952C172416317900479811 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -746,10 +740,6 @@
 		A7952AD224162C7300479811 /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				A7952AA324162C1000479811 /* AlamoClient.swift */,
-				A7952AA224162C1000479811 /* NetworkMonitor.swift */,
-				A7952A6E24162C1000479811 /* RequestModels.swift */,
-				A7952A6224162C1000479811 /* RequestProtocols.swift */,
 			);
 			name = Request;
 			sourceTree = "<group>";
@@ -792,6 +782,7 @@
 		A7952ADF24162E2800479811 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				A77E579124AE10FE00DD7670 /* NetworkMonitor.swift */,
 				A7952A6624162C1000479811 /* DeviceAssistant.swift */,
 				A7952A7724162C1000479811 /* AfterWorker.swift */,
 				A7952A6524162C1000479811 /* Convert.swift */,
@@ -1035,13 +1026,11 @@
 				A7952A5D24162BF600479811 /* LogFiles.swift in Sources */,
 				A754FAEF242B717D0062B2F5 /* FilletView.swift in Sources */,
 				A7952C1624162F4200479811 /* User.swift in Sources */,
-				A7952ACF24162C1000479811 /* AlamoClient.swift in Sources */,
 				A719061724667DCE0031E91C /* UserDataHelper.swift in Sources */,
 				A77718162456FBDA00BF1F21 /* PlayerVM.swift in Sources */,
 				A7355F88240658F40010CCD1 /* UIView+ExProperty.m in Sources */,
 				A7952AC424162C1000479811 /* hmac.c in Sources */,
 				A7952AB124162C1000479811 /* RTMHelper.swift in Sources */,
-				A7952AA924162C1000479811 /* RequestProtocols.swift in Sources */,
 				A7D2D36C2417AA6100D327B5 /* MineVM.swift in Sources */,
 				A75A56D124A054C100D0089E /* FUClient.m in Sources */,
 				A7952ABF24162C1000479811 /* ioapi.c in Sources */,
@@ -1105,13 +1094,12 @@
 				A711AB83243EF83800C2A3FD /* GIFViewController.swift in Sources */,
 				A7952AC924162C1000479811 /* prng.c in Sources */,
 				A7952AA624162C1000479811 /* MediaSubs.swift in Sources */,
-				A7952AB224162C1000479811 /* RequestModels.swift in Sources */,
 				A7952AB924162C1000479811 /* AGELog.swift in Sources */,
 				A7952A5324162BE600479811 /* Utils.swift in Sources */,
 				A7952ABC24162C1000479811 /* crypt.c in Sources */,
 				A7952AB524162C1000479811 /* DictionaryGetable.swift in Sources */,
+				A77E579224AE10FE00DD7670 /* NetworkMonitor.swift in Sources */,
 				A791F33E2428B121008D8BC9 /* LiveSeatViewController.swift in Sources */,
-				A7952ACE24162C1000479811 /* NetworkMonitor.swift in Sources */,
 				A71AAF282435D7A900820096 /* StatisticsInfo.swift in Sources */,
 				A72B7BEA24445D5B00E965FB /* PKVM.swift in Sources */,
 				A7952AB324162C1000479811 /* ZipTool.swift in Sources */,

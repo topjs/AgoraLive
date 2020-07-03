@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 struct MediaRelayInfo {
     var currentChannelName: String
@@ -162,13 +163,13 @@ class PKVM: NSObject {
             if let success = success, isSuccess {
                 success()
             } else if let fail = fail, !isSuccess {
-                let error = AGEError.fail("pk live invite fail")
+                let error = ACError.fail("pk live invite fail")
                 fail(error)
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail(error)
             }
@@ -272,13 +273,13 @@ private extension PKVM {
                           of: RequestEvent(name: isInvite ? "invite-pk" : "reject-pk"),
                           to: "\(inviteRoom.ownerAgoraUid)",
                           fail: fail)
-        } catch let error as AGEError {
+        } catch let error as ACError {
             if let fail = fail {
                 fail(error)
             }
         } catch {
             if let fail = fail {
-                fail(AGEError.unknown())
+                fail(ACError.unknown())
             }
         }
     }

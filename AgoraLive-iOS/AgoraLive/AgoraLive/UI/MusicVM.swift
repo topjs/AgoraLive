@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 fileprivate extension Array where Element == Music {
     init(list: [StringAnyDic]) throws {
@@ -72,11 +73,11 @@ class MusicVM: NSObject {
             self.list = BehaviorRelay(value: list)
         }
         
-        let fail: ErrorRetryCompletion = { (error) in
+        let fail: ACErrorRetryCompletion = { (error) in
             return .resign
         }
         
-        let response = AGEResponse.json(success)
+        let response = ACResponse.json(success)
         client.request(task: task, success: response, failRetry: fail)
     }
 }
