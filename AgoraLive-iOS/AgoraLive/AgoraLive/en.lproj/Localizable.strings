@@ -107,7 +107,7 @@ Seat_Release_Description="Unblock this seat";
 Invitation_Rejected="Invitation Rejected";
 Invitation_Rejected_Description="Your Invitation has been rejected by";
 
-Invite_Broadcasting="Invite host";
+Invite_Broadcasting="Invite";
 Owner_Forces_You_End_Broadcasting="Owner forces you end broadcasting";
 Apply_For_Broadcasting="Become a host";
 Force_To_Audience="End hosting";

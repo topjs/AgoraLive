@@ -24,7 +24,7 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
     var tintColor = UIColor(red: 0,
                             green: 0,
                             blue: 0,
-                            alpha: 0.2)
+                            alpha: 0.08)
     
     var bag: DisposeBag = DisposeBag()
     
@@ -74,8 +74,6 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
             return
         }
         
-        updateViews()
-        
         liveSession(session)
         liveRoom(session: session)
         audience()
@@ -88,6 +86,8 @@ class VirtualBroadcastersViewController: MaskViewController, LiveViewController 
         broadcastingStatus()
         liveSeat()
         netMonitor()
+        
+        updateViews()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -138,6 +138,7 @@ extension VirtualBroadcastersViewController {
         ownerView.label.textColor = UIColor(hexString: "#333333")
         ownerView.label.font = UIFont.systemFont(ofSize: 11)
         
+        personCountView.backgroundColor = tintColor
         personCountView.imageView.image = UIImage(named: "icon-mine-black")
         personCountView.label.textColor = UIColor(hexString: "#333333")
         

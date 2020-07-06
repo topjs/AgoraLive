@@ -380,9 +380,9 @@ extension PKBroadcastersViewController {
 private extension PKBroadcastersViewController {
     func showResult(statistics: PKStatistics) {
         if let result = statistics.state.hasResult {
-            let completion = { [unowned self] in
-                self.showAlert(NSLocalizedString("PK_End"))
-                self.updateViewsWith(statistics: statistics)
+            let completion = { [weak self] in
+                self?.showAlert(NSLocalizedString("PK_End"))
+                self?.updateViewsWith(statistics: statistics)
             }
             
             switch result {

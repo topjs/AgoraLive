@@ -399,6 +399,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="22"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="hexBackgroundColor" value="#0088EB"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="doStartPressed:" destination="myS-lR-c6P" eventType="touchUpInside" id="OXs-2A-P5m"/>
@@ -417,6 +418,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="19"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="hexBackgroundColor" value="#000000-0.6"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="doBeautyPressed:" destination="myS-lR-c6P" eventType="touchUpInside" id="M54-V8-Eqs"/>
@@ -434,6 +436,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="19"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="hexBackgroundColor" value="#000000-0.6"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="doRoomSettingsPressed:" destination="myS-lR-c6P" eventType="touchUpInside" id="49o-Ol-eWT"/>
@@ -2379,7 +2382,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VzC-8o-YmL" customClass="IconTextView" customModule="AgoraLive" customModuleProvider="target">
-                                <rect key="frame" x="32" y="57" width="88" height="32"/>
+                                <rect key="frame" x="15" y="57" width="88" height="32"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="7eU-WD-W4V"/>
@@ -2402,7 +2405,7 @@
                             <constraint firstItem="dwo-YI-A5f" firstAttribute="trailing" secondItem="DzH-bp-RaY" secondAttribute="trailing" id="gNo-mV-FCa"/>
                             <constraint firstItem="dwo-YI-A5f" firstAttribute="bottom" secondItem="OEf-5h-eeW" secondAttribute="bottom" constant="15" id="gXz-HJ-FN1"/>
                             <constraint firstItem="kyr-23-p8V" firstAttribute="top" secondItem="dwo-YI-A5f" secondAttribute="top" constant="15" id="rBE-uZ-MqX"/>
-                            <constraint firstItem="VzC-8o-YmL" firstAttribute="leading" secondItem="dwo-YI-A5f" secondAttribute="leading" constant="32" id="sYG-Vg-aNq"/>
+                            <constraint firstItem="VzC-8o-YmL" firstAttribute="leading" secondItem="dwo-YI-A5f" secondAttribute="leading" constant="15" id="sYG-Vg-aNq"/>
                             <constraint firstItem="dwo-YI-A5f" firstAttribute="trailing" secondItem="OEf-5h-eeW" secondAttribute="trailing" id="xhH-Yf-ZA4"/>
                             <constraint firstItem="DzH-bp-RaY" firstAttribute="top" secondItem="kis-Mi-6v1" secondAttribute="top" id="ziS-Vz-dp0"/>
                         </constraints>
@@ -2492,7 +2495,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ovb-zh-IXy" customClass="IconTextView" customModule="AgoraLive" customModuleProvider="target">
-                                <rect key="frame" x="32" y="57" width="88" height="32"/>
+                                <rect key="frame" x="15" y="57" width="88" height="32"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="fzD-HK-vGx"/>
@@ -2512,7 +2515,7 @@
                         <constraints>
                             <constraint firstItem="kfa-9A-RvW" firstAttribute="trailing" secondItem="hAs-lR-dmv" secondAttribute="trailing" id="1g5-PL-Nn8"/>
                             <constraint firstItem="Upf-Qj-pVi" firstAttribute="centerY" secondItem="i86-uz-AxX" secondAttribute="centerY" id="2nU-Zl-mjE"/>
-                            <constraint firstItem="ovb-zh-IXy" firstAttribute="leading" secondItem="kfa-9A-RvW" secondAttribute="leading" constant="32" id="5SD-fZ-aAA"/>
+                            <constraint firstItem="ovb-zh-IXy" firstAttribute="leading" secondItem="kfa-9A-RvW" secondAttribute="leading" constant="15" id="5SD-fZ-aAA"/>
                             <constraint firstItem="i86-uz-AxX" firstAttribute="top" secondItem="kfa-9A-RvW" secondAttribute="top" constant="15" id="5Sl-v8-Vcf"/>
                             <constraint firstItem="TEq-Le-S7E" firstAttribute="leading" secondItem="kfa-9A-RvW" secondAttribute="leading" id="838-Zt-gro"/>
                             <constraint firstItem="48K-xA-P7C" firstAttribute="top" secondItem="PRA-UQ-V5J" secondAttribute="bottom" constant="11" id="BZC-dL-wXa"/>
@@ -2796,7 +2799,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ezh-Cb-hoY" customClass="IconTextView" customModule="AgoraLive" customModuleProvider="target">
-                                <rect key="frame" x="32" y="57" width="88" height="32"/>
+                                <rect key="frame" x="15" y="57" width="88" height="32"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="XQy-R3-szC"/>
@@ -2824,7 +2827,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ezh-Cb-hoY" firstAttribute="centerY" secondItem="31f-co-y3o" secondAttribute="centerY" id="0Ht-YQ-NPy"/>
-                            <constraint firstItem="Ezh-Cb-hoY" firstAttribute="leading" secondItem="eJM-ob-F9S" secondAttribute="leading" constant="32" id="0tr-DV-6Q1"/>
+                            <constraint firstItem="Ezh-Cb-hoY" firstAttribute="leading" secondItem="eJM-ob-F9S" secondAttribute="leading" constant="15" id="0tr-DV-6Q1"/>
                             <constraint firstItem="eJM-ob-F9S" firstAttribute="trailing" secondItem="sM7-72-QCL" secondAttribute="trailing" id="5t4-QB-2MM"/>
                             <constraint firstItem="31f-co-y3o" firstAttribute="centerY" secondItem="Ws6-gn-DWH" secondAttribute="centerY" id="6f9-NK-tXZ"/>
                             <constraint firstItem="sM7-72-QCL" firstAttribute="top" secondItem="IQo-cC-gSZ" secondAttribute="top" id="8Py-1W-8eE"/>

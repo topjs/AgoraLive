@@ -138,9 +138,9 @@ class LiveListTabViewController: MaskViewController {
 
 private extension LiveListTabViewController {
     func updateViews() {
-        createButton.layer.shadowOpacity = 1
+        createButton.layer.shadowOpacity = 0.3
         createButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-        createButton.layer.shadowColor = UIColor.black.cgColor
+        createButton.layer.shadowColor = UIColor(hexString: "#BD3070").cgColor
         
         createButton.rx.tap.subscribe(onNext: { [unowned self] in
             if self.listVM.presentingType != .virtualBroadcasters {
