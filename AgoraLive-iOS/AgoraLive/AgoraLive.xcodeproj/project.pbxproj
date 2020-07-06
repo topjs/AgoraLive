@@ -55,7 +55,6 @@
 		A773BD522410A001003ECBFD /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A773BD512410A001003ECBFD /* UserNameViewController.swift */; };
 		A77718162456FBDA00BF1F21 /* PlayerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77718152456FBDA00BF1F21 /* PlayerVM.swift */; };
 		A7779C2B244DC7DC002A285A /* LocalLiveSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */; };
-		A77E574124A8955700DD7670 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = A77E572D24A8955600DD7670 /* .gitkeep */; };
 		A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573224A8955600DD7670 /* bai_bj.bundle */; };
 		A77E574324A8955700DD7670 /* qgirl_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A77E573324A8955600DD7670 /* qgirl_Animoji.png */; };
 		A77E574424A8955700DD7670 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */; };
@@ -217,7 +216,6 @@
 		A773BD512410A001003ECBFD /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
 		A77718152456FBDA00BF1F21 /* PlayerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVM.swift; sourceTree = "<group>"; };
 		A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalLiveSettings.swift; sourceTree = "<group>"; };
-		A77E572D24A8955600DD7670 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		A77E572F24A8955600DD7670 /* authpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
 		A77E573224A8955600DD7670 /* bai_bj.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bai_bj.bundle; sourceTree = "<group>"; };
 		A77E573324A8955600DD7670 /* qgirl_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qgirl_Animoji.png; sourceTree = "<group>"; };
@@ -575,7 +573,6 @@
 		A77E572C24A8955600DD7670 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				A77E572D24A8955600DD7670 /* .gitkeep */,
 				A77E572E24A8955600DD7670 /* Faceunity */,
 				A77E573724A8955600DD7670 /* Gif */,
 			);
@@ -936,7 +933,6 @@
 				A77E574524A8955700DD7670 /* hashiqi_Animoji.png in Resources */,
 				A77E574A24A8955700DD7670 /* SuperWine.gif in Resources */,
 				A77E574324A8955700DD7670 /* qgirl_Animoji.png in Resources */,
-				A77E574124A8955700DD7670 /* .gitkeep in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
 				A77E574724A8955700DD7670 /* SuperBell.gif in Resources */,
 				A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */,
