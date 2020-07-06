@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('azure_keystore_file')
+            storePassword 'azureKeystorePassword'
+            keyAlias = 'azure_keystore_alias'
+            keyPassword 'azureKeystorePassword'
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -14,6 +23,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,7 +39,7 @@ configurations {
 }
 
 dependencies {
-    def agora_rtc_version = "3.0.0"
+    def agora_rtc_version = "3.0.1.1"
     def agora_rtm_version = "1.2.2"
     def lifecycle_version = "2.2.0"
     def navigation_version = "2.2.1"

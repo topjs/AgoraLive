@@ -41,9 +41,9 @@
     <string name="version_title">Versions</string>
     <string name="agoralive_version_title">AgoraLive Version</string>
     <string name="agoralive_release_time_title">Release</string>
-    <string name="agoralive_release_time">2020.05.20</string>
+    <string name="agoralive_release_time">2020.07.06</string>
     <string name="agoralive_media_sdk_version_title">Media SDK Version</string>
-    <string name="agoralive_media_sdk_version">Ver 3.0.0</string>
+    <string name="agoralive_media_sdk_version">Ver 3.0.1.1</string>
 
     <!-- Live Prepare Activity -->
     <string name="live_prepare_hint">Room Name:</string>
@@ -127,9 +127,9 @@
     <string name="live_room_tool_action_sheet_title">Tool</string>
     <string-array name="live_room_action_sheet_tool_names">
         <item>Data</item>
-        <item>Setting</item>
         <item>Speaker</item>
         <item>EarMonitor</item>
+        <item>Setting</item>
         <item>Rotate</item>
         <item>Camera</item>
     </string-array>
