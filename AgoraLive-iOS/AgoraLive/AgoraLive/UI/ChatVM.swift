@@ -52,7 +52,7 @@ class ChatVM: NSObject {
     
     func newMessages(_ chats: [Chat]) {
         var new = self.list.value
-        new.append(contentsOf: chats)
+        new.insert(contentsOf: chats, at: 0)
         self.list.accept(new)
     }
     
@@ -69,9 +69,7 @@ class ChatVM: NSObject {
                 return
             }
             let new = Chat(name: local.name + ": ", text: text)
-            var list = strongSelf.list.value
-            list.append(new)
-            strongSelf.list.accept(list)
+            strongSelf.newMessages([new])
         }, fail: fail)
     }
         
@@ -97,10 +95,7 @@ private extension ChatVM {
             let name = try data.getStringValue(of: "fromUserName")
             let text = try data.getStringValue(of: "message")
             let chat = Chat(name: name + ": ", text: text)
-            
-            var list = strongSelf.list.value
-            list.append(chat)
-            strongSelf.list.accept(list)
+            strongSelf.newMessages([chat])
         }
     }
     
