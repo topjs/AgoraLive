@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Agora Live" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfT-0z-rjm">
-                                <rect key="frame" x="165.66666666666666" y="78" width="83" height="21"/>
+                                <rect key="frame" x="165.66666666666666" y="58" width="83" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -27,7 +27,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xdQ-Uj-9lG">
-                                <rect key="frame" x="15" y="114" width="384" height="699"/>
+                                <rect key="frame" x="15" y="94" width="384" height="719"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LiveTypeCell" rowHeight="151" id="ptR-9N-KQ5" customClass="LiveTypeCell" customModule="AgoraLive" customModuleProvider="target">
@@ -96,7 +96,7 @@
                             <constraint firstItem="xdQ-Uj-9lG" firstAttribute="top" secondItem="hfT-0z-rjm" secondAttribute="bottom" constant="15" id="0LR-i7-Xrs"/>
                             <constraint firstItem="hfT-0z-rjm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="35Z-My-5hh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xdQ-Uj-9lG" secondAttribute="bottom" id="6pW-uK-ssd"/>
-                            <constraint firstItem="hfT-0z-rjm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="34" id="OVj-1b-jVd"/>
+                            <constraint firstItem="hfT-0z-rjm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="14" id="OVj-1b-jVd"/>
                             <constraint firstItem="xdQ-Uj-9lG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vA2-hg-KDq"/>
                             <constraint firstItem="xdQ-Uj-9lG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="z0Y-v0-vrA"/>
                         </constraints>
