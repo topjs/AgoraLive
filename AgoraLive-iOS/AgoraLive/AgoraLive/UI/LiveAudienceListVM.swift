@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 fileprivate enum UserJoinOrLeft: Int {
     case left, join
@@ -93,9 +94,9 @@ class LiveRoomAudienceList: NSObject {
                 success()
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail()
             }
@@ -135,9 +136,9 @@ class LiveRoomAudienceList: NSObject {
                 success()
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail()
             }

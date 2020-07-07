@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 protocol UserInfoProtocol {
     var info: BasicUserInfo {get set}
@@ -111,9 +112,9 @@ class CurrentUser: NSObject, UserInfoProtocol {
                 success()
             }
         }
-        let response = AGEResponse.blank(successCallback)
+        let response = ACResponse.blank(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail()
             }

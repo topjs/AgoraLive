@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 struct RoomBrief {
     var name: String
@@ -156,9 +157,9 @@ extension LiveListVM {
                 success()
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail()
             }
@@ -208,9 +209,9 @@ extension LiveListVM {
                 success()
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail()
             }
