@@ -47,5 +47,3 @@ xcodebuild -exportArchive -exportOptionsPlist ${Export_Plist_File} -archivePath 
 mkdir app
 mv *.ipa app && mv *.xcarchive app
 zip -q -r app.zip app
-
-cp pugongying.sh app
