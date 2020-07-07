@@ -56,9 +56,7 @@
 		A77718162456FBDA00BF1F21 /* PlayerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77718152456FBDA00BF1F21 /* PlayerVM.swift */; };
 		A7779C2B244DC7DC002A285A /* LocalLiveSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */; };
 		A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573224A8955600DD7670 /* bai_bj.bundle */; };
-		A77E574324A8955700DD7670 /* qgirl_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A77E573324A8955600DD7670 /* qgirl_Animoji.png */; };
 		A77E574424A8955700DD7670 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */; };
-		A77E574524A8955700DD7670 /* hashiqi_Animoji.png in Resources */ = {isa = PBXBuildFile; fileRef = A77E573524A8955600DD7670 /* hashiqi_Animoji.png */; };
 		A77E574624A8955700DD7670 /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */; };
 		A77E574724A8955700DD7670 /* SuperBell.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573824A8955600DD7670 /* SuperBell.gif */; };
 		A77E574824A8955700DD7670 /* SuperCake.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573924A8955600DD7670 /* SuperCake.gif */; };
@@ -217,11 +215,9 @@
 		A77718152456FBDA00BF1F21 /* PlayerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVM.swift; sourceTree = "<group>"; };
 		A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalLiveSettings.swift; sourceTree = "<group>"; };
 		A77E572F24A8955600DD7670 /* authpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
-		A77E573224A8955600DD7670 /* bai_bj.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bai_bj.bundle; sourceTree = "<group>"; };
-		A77E573324A8955600DD7670 /* qgirl_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qgirl_Animoji.png; sourceTree = "<group>"; };
-		A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = qgirl_Animoji.bundle; sourceTree = "<group>"; };
-		A77E573524A8955600DD7670 /* hashiqi_Animoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hashiqi_Animoji.png; sourceTree = "<group>"; };
-		A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hashiqi_Animoji.bundle; sourceTree = "<group>"; };
+		A77E573224A8955600DD7670 /* bai_bj.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = bai_bj.bundle; sourceTree = "<group>"; };
+		A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = qgirl_Animoji.bundle; sourceTree = "<group>"; };
+		A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = hashiqi_Animoji.bundle; sourceTree = "<group>"; };
 		A77E573824A8955600DD7670 /* SuperBell.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperBell.gif; sourceTree = "<group>"; };
 		A77E573924A8955600DD7670 /* SuperCake.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperCake.gif; sourceTree = "<group>"; };
 		A77E573A24A8955600DD7670 /* SuperWatch.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperWatch.gif; sourceTree = "<group>"; };
@@ -601,9 +597,7 @@
 			isa = PBXGroup;
 			children = (
 				A77E573224A8955600DD7670 /* bai_bj.bundle */,
-				A77E573324A8955600DD7670 /* qgirl_Animoji.png */,
 				A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */,
-				A77E573524A8955600DD7670 /* hashiqi_Animoji.png */,
 				A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */,
 			);
 			path = Animoji;
@@ -930,9 +924,7 @@
 				A77E574F24A8955700DD7670 /* sound.gif in Resources */,
 				A77E574B24A8955700DD7670 /* SuperRocket.gif in Resources */,
 				A76BD12D23F1035600B2732B /* LaunchScreen.storyboard in Resources */,
-				A77E574524A8955700DD7670 /* hashiqi_Animoji.png in Resources */,
 				A77E574A24A8955700DD7670 /* SuperWine.gif in Resources */,
-				A77E574324A8955700DD7670 /* qgirl_Animoji.png in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
 				A77E574724A8955700DD7670 /* SuperBell.gif in Resources */,
 				A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */,
