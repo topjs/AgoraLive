@@ -207,13 +207,15 @@ public abstract class AbsPageFragment extends AbstractFragment implements SwipeR
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+            if (mRoomList.size() <= position) return;
+
             RoomInfo info = mRoomList.get(position);
             RoomListItemViewHolder itemHolder = (RoomListItemViewHolder) holder;
             itemHolder.name.setText(info.roomName);
             itemHolder.count.setText(String.valueOf(info.currentUsers));
             itemHolder.layout.setBackgroundResource(UserUtil.getUserProfileIcon(info.roomId));
             itemHolder.itemView.setOnClickListener((view) -> {
-                if (config().appIdObtained()) {
+                if (config().appIdObtained() && position < mRoomList.size()) {
                     goLiveRoom(mRoomList.get(position),
                             serverTypeToTabType(onGetRoomListType()));
                 } else {
