@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.elvishew.xlog.XLog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -223,8 +224,7 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
     @Override
     public void onMessageReceived(RtmMessage rtmMessage, final String peerId) {
         // Where peer to peer messages are received.
-
-        Log.d(TAG, "peer " + peerId + " message received:" + rtmMessage.getText());
+        XLog.d("Peer message from " + peerId + " msg:" + rtmMessage.getText());
 
         PeerMessageData message = new GsonBuilder().create().
                 fromJson(rtmMessage.getText(), PeerMessageData.class);
@@ -302,7 +302,9 @@ public class RtmMessageManager implements RtmClientListener, RtmChannelListener 
         // Where channel messages are received
         boolean error = false;
         String json = rtmMessage.getText();
-        Log.d(TAG, "on channel message received: " + json);
+
+        XLog.d("Channel message: " + rtmMessage.getText());
+
         Gson gson = new Gson();
         int cmd = -1;
         try {

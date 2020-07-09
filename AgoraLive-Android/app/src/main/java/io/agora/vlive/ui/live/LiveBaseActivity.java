@@ -10,7 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.widget.Toast;
@@ -18,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.elvishew.xlog.XLog;
 
 import java.util.List;
 import java.util.Map;
@@ -295,13 +296,12 @@ public abstract class LiveBaseActivity extends BaseActivity
         mMessageManager.joinChannel(rtcChannelName, new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.i(LiveBaseActivity.class.getSimpleName(), "on rtm join channel success");
+                XLog.d("on rtm join channel success " + rtcChannelName);
             }
 
             @Override
             public void onFailure(ErrorInfo errorInfo) {
-                Log.e(LiveBaseActivity.class.getSimpleName(),
-                        "rtm join channel failed:" + errorInfo.toString());
+                XLog.e("rtm join channel failed " + rtcChannelName + " msg:" + errorInfo.toString());
             }
         });
     }
@@ -497,12 +497,12 @@ public abstract class LiveBaseActivity extends BaseActivity
             mMessageManager.leaveChannel(new ResultCallback<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Log.e(LiveBaseActivity.class.getSimpleName(), "rtm leave success");
+
                 }
 
                 @Override
                 public void onFailure(ErrorInfo errorInfo) {
-                    Log.e(LiveBaseActivity.class.getSimpleName(), errorInfo.toString());
+
                 }
             });
         }

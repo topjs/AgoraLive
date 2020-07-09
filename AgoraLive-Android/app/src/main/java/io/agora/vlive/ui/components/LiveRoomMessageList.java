@@ -157,7 +157,7 @@ public class LiveRoomMessageList extends RecyclerView {
 
         void setMessage(String user, String message) {
             int background = mLightMode
-                    ? R.drawable.round_scalable_light_gray_bg
+                    ? R.drawable.round_scalable_gray_transparent_bg
                     : R.drawable.round_scalable_gray_bg;
             int nameColor = mLightMode
                     ? Color.BLACK

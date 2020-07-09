@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -70,7 +69,6 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideStatusBar(false);
     }
 
     @Override
@@ -122,6 +120,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
     private void changeUIStyles() {
         if (tabId == Config.LIVE_TYPE_VIRTUAL_HOST) {
+            hideStatusBar(true);
             // It only accepts front camera frames for virtual images.
             mSwitchBtn.setVisibility(View.GONE);
             mCloseBtn.setImageResource(R.drawable.icon_back_black);
@@ -145,6 +144,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             startCameraCapture();
             mPreprocessor.onAnimojiSelected(virtualImage);
         } else {
+            hideStatusBar(false);
             mCloseBtn.setImageResource(R.drawable.close_button_white);
             mSwitchBtn.setImageResource(R.drawable.switch_camera_white);
             mRandomBtn.setImageResource(R.drawable.random_button_white);
@@ -267,56 +267,48 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
     @Override
     public void onActionSheetBeautyEnabled(boolean enabled) {
-        Log.i(TAG, "onActionSheetBeautyEnabled:" + enabled);
         findViewById(R.id.live_prepare_beauty_btn).setActivated(enabled);
         enablePreProcess(enabled);
     }
 
     @Override
     public void onActionSheetBlurSelected(float blur) {
-        Log.d(TAG, "onActionSheetBlurSelected:" + blur);
         setBlurValue(blur);
     }
 
     @Override
     public void onActionSheetWhitenSelected(float whiten) {
-        Log.d(TAG, "onActionSheetWhitenSelected:" + whiten);
         setWhitenValue(whiten);
     }
 
     @Override
     public void onActionSheetCheekSelected(float cheek) {
-        Log.d(TAG, "onActionSheetCheekSelected:" + cheek);
         setCheekValue(cheek);
     }
 
     @Override
     public void onActionSheetEyeEnlargeSelected(float eye) {
-        Log.d(TAG, "onActionSheetEyeEnlargeSelected:" + eye);
         setEyeValue(eye);
     }
 
     @Override
     public void onActionSheetResolutionSelected(int index) {
-        Log.d(TAG, "onActionSheetResolutionSelected:" + index);
         config().setResolutionIndex(index);
     }
 
     @Override
     public void onActionSheetFrameRateSelected(int index) {
-        Log.d(TAG, "onActionSheetFrameRateSelected:" + index);
         config().setFrameRateIndex(index);
     }
 
     @Override
     public void onActionSheetBitrateSelected(int bitrate) {
-        Log.d(TAG, "onActionSheetBitrateSelected:" + bitrate);
         config().setVideoBitrate(bitrate);
     }
 
     @Override
     public void onActionSheetSettingBackPressed() {
-        Log.d(TAG, "onActionSheetSettingBackPressed:");
+
     }
 
     @Override

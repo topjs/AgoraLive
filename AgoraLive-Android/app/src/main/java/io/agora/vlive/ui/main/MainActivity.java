@@ -2,14 +2,13 @@ package io.agora.vlive.ui.main;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.elvishew.xlog.XLog;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -180,7 +179,7 @@ public class MainActivity extends BaseActivity {
         rtmClient().login(profile.getRtmToken(), String.valueOf(profile.getAgoraUid()), new ResultCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d(TAG, "rtm client login success:" + config().getUserProfile().getRtmToken());
+                XLog.d("rtm client login success:" + config().getUserProfile().getRtmToken());
             }
 
             @Override
@@ -196,7 +195,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onGiftListResponse(GiftListResponse response) {
-        Log.i(TAG, "onGiftListFinished");
         config().initGiftList(this);
     }
 
@@ -207,12 +205,12 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onMusicLisResponse(MusicListResponse response) {
         config().setMusicList(response.data);
-        Log.i(TAG, "onMusicListFinished");
     }
 
     @Override
     public void onResponseError(int requestType, int error, String message) {
-        Log.e(TAG, "request:" + requestType + " error:" + error + " msg:" + message);
+        XLog.e("request:" + requestType + " error:" + error + " msg:" + message);
+
         switch (requestType) {
             case Request.APP_VERSION:
                 if (mAppIdTryCount <= MAX_PERIODIC_APP_ID_TRY_COUNT) {

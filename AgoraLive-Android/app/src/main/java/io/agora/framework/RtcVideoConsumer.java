@@ -1,8 +1,8 @@
 package io.agora.framework;
 
 import android.opengl.GLES20;
-import android.opengl.Matrix;
-import android.util.Log;
+
+import com.elvishew.xlog.XLog;
 
 import io.agora.capture.video.camera.VideoCaptureFrame;
 import io.agora.capture.video.camera.VideoModule;
@@ -82,14 +82,14 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
 
     @Override
     public boolean onInitialize(IVideoFrameConsumer consumer) {
-        Log.i(TAG, "onInitialize");
+        XLog.i("onInitialize");
         mRtcConsumer = consumer;
         return true;
     }
 
     @Override
     public boolean onStart() {
-        Log.i(TAG, "onStart");
+        XLog.i("onStart");
         connectChannel(mChannelId);
         mValidInRtc = true;
         return true;
@@ -97,13 +97,14 @@ public class RtcVideoConsumer implements IVideoConsumer, IVideoSource {
 
     @Override
     public void onStop() {
+        XLog.i("onStop");
         mValidInRtc = false;
         mRtcConsumer = null;
     }
 
     @Override
     public void onDispose() {
-        Log.i(TAG , "onDispose");
+        XLog.i("onDispose");
         mValidInRtc = false;
         mRtcConsumer = null;
         disconnectChannel(mChannelId);

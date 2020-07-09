@@ -2,13 +2,14 @@ package io.agora.vlive.ui.live;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
+
+import com.elvishew.xlog.XLog;
 
 import io.agora.rtc.Constants;
 import io.agora.rtc.video.ChannelMediaInfo;
@@ -385,11 +386,11 @@ public class HostPKLiveActivity extends LiveRoomActivity
     @Override
     public void onRtcChannelMediaRelayStateChanged(int state, int code) {
         if (state == Constants.RELAY_STATE_CONNECTING) {
-            Log.d(TAG, "channel media relay is connecting");
+            XLog.d("channel media relay is connecting");
         } else if (state == Constants.RELAY_STATE_RUNNING) {
-            Log.d(TAG, "channel media relay is running");
+            XLog.d("channel media relay is running");
         } else if (state == Constants.RELAY_STATE_FAILURE) {
-            Log.e(TAG, "channel media relay fails");
+            XLog.e("channel media relay fails");
         }
     }
 
@@ -502,7 +503,7 @@ public class HostPKLiveActivity extends LiveRoomActivity
 
     @Override
     public void onStartStopPkResponse(StartStopPkResponse response) {
-        Log.i(TAG, "onStartStopPkResponse:" + response.data);
+
     }
 
     @Override
