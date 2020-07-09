@@ -19,6 +19,7 @@ public class UserUtil {
     private static final String LOG_FOLDER_NAME = "logs";
     private static final String LOG_FILE_NAME_RTC = "agora-rtc.log";
     private static final String LOG_FILE_NAME_RTM = "agora-rtm.log";
+    private static final String LOG_APP_NAME = "agoralive-app.log";
 
     public static int getUserProfileIcon(String userId) {
         try {
@@ -51,7 +52,7 @@ public class UserUtil {
         return logFilePath(context, LOG_FILE_NAME_RTM);
     }
 
-    private static String logFilePath(Context context, String name) {
+    public static File appLogFolder(Context context) {
         File folder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), LOG_FOLDER_NAME);
@@ -61,10 +62,15 @@ public class UserUtil {
                     context.getPackageName() + File.separator +
                     LOG_FOLDER_NAME;
             folder = new File(path);
-            if (!folder.exists() && !folder.mkdir()) folder = null;
         }
 
+        if (!folder.exists() && !folder.mkdir()) folder = null;
+        return folder;
+    }
+
+    private static String logFilePath(Context context, String name) {
+        File folder = appLogFolder(context);
         if (folder != null && !folder.exists() && !folder.mkdir()) return "";
-        else return new File(folder, LOG_FILE_NAME_RTC).getAbsolutePath();
+        else return new File(folder, name).getAbsolutePath();
     }
 }

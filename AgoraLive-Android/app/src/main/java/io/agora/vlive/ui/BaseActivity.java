@@ -235,7 +235,6 @@ public abstract class BaseActivity extends AppCompatActivity implements ClientPr
         actionSheet.setActionSheetListener(listener);
         if (newStack) mActionSheetStack.clear();
         mActionSheetStack.push(actionSheet);
-        Log.i(TAG, "action sheet stack size:" + mActionSheetStack.size());
         showActionSheetDialog(actionSheet);
         return actionSheet;
     }

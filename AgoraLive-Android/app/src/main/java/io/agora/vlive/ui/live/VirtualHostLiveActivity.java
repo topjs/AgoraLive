@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
@@ -540,13 +539,11 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
 
     @Override
     public void onRtmInvitationAccepted(String peerId, String nickname, int index) {
-        Log.i(TAG, "The audience has accepted your invitation");
         showShortToast(getResources().getString(R.string.invite_success));
     }
 
     @Override
     public void onRtmInvitationRejected(String peerId, String nickname) {
-        Log.i(TAG, "The audience has rejected your invitation");
         closeDialog();
         String title = getResources().getString(R.string.live_room_host_in_invite_rejected);
         String message = getResources().getString(R.string.live_room_host_in_invite_rejected_message);
@@ -684,10 +681,8 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
             }
         } else if (mHostUid == uid) {
             if (!isHost && isVideoReceivingState(state)) {
-                runOnUiThread(() -> {
-                    setRemoteVideoSurface(mHostVideoOutLayer,
-                            mHostVideoMask, mHostUid, true);
-                });
+                runOnUiThread(() -> setRemoteVideoSurface(
+                        mHostVideoOutLayer, mHostVideoMask, mHostUid, true));
             }
         }
     }
@@ -695,5 +690,4 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
     private boolean isVideoReceivingState(int state) {
         return state == Constants.REMOTE_VIDEO_STATE_DECODING;
     }
-
 }

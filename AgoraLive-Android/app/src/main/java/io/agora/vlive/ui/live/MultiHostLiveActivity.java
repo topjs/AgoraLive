@@ -8,7 +8,6 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewOutlineProvider;
@@ -19,6 +18,8 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import com.elvishew.xlog.XLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -373,7 +374,7 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onRtcJoinChannelSuccess(String channel, int uid, int elapsed) {
-        Log.i(TAG, "onRtcJoinChannelSuccess:" + channel + " uid:" + (uid & 0xFFFFFFFFL));
+        XLog.i("onRtcJoinChannelSuccess:" + channel + " uid:" + (uid & 0xFFFFFFFFL));
     }
 
     @Override
@@ -508,7 +509,6 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onSeatAdapterHostInviteClicked(int position, View view) {
-        Log.i(TAG, "onSeatAdapterHostInviteClicked:" + position);
         mInviteUserListActionSheet = (InviteUserActionSheet) showActionSheetDialog(
                 ACTION_SHEET_INVITE_AUDIENCE, tabIdToLiveType(tabId), isHost, true, this);
         // Seat no starts from 1
@@ -534,7 +534,6 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onSeatAdapterAudienceApplyClicked(int position, View view) {
-        Log.i(TAG, "onSeatAdapterAudienceApplyClicked:" + position);
         curDialog = showDialog(R.string.live_room_host_in_audience_apply_title,
                 R.string.live_room_host_in_audience_apply_message,
                 v -> {
@@ -544,7 +543,6 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
     }
 
     private void audienceApplyForSeat(int position) {
-        Log.i(TAG, "audience apply for a seat:");
         Config.UserProfile profile = config().getUserProfile();
         getMessageManager().apply(String.valueOf(ownerRtcUid), profile.getUserName(),
                 config().getUserProfile().getUserId(), position + 1, mMessageResultCallback);
@@ -578,19 +576,16 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onRtmApplicationAccepted(String peerId, String nickname, int index) {
-        Log.i(TAG, "Seat application is accepted by the room owner");
         showShortToast(getResources().getString(R.string.apply_seat_success));
     }
 
     @Override
     public void onRtmInvitationAccepted(String peerId, String nickname, int index) {
-        Log.i(TAG, "The audience has accepted your invitation");
         showShortToast(getResources().getString(R.string.invite_success));
     }
 
     @Override
     public void onRtmApplicationRejected(String peerId, String nickname) {
-        Log.i(TAG, "Seat application is rejected by the room owner");
         String title = getResources().getString(R.string.live_room_host_in_apply_rejected);
         String message = getResources().getString(R.string.live_room_host_in_apply_rejected_message);
         message = String.format(message, nickname);
@@ -599,7 +594,6 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onRtmInvitationRejected(String peerId, String nickname) {
-        Log.i(TAG, "The audience has rejected your invitation");
         String title = getResources().getString(R.string.live_room_host_in_invite_rejected);
         String message = getResources().getString(R.string.live_room_host_in_invite_rejected_message);
         message = String.format(message, nickname);
@@ -643,10 +637,8 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onSeatAdapterMoreClicked(int position, View view, int seatState, int audioMuteState) {
-        Log.i(TAG, "onSeatAdapterMoreClicked");
         if (isOwner || isHost) {
             int mode = isOwner ? SeatItemDialog.MODE_OWNER : SeatItemDialog.MODE_HOST;
-            Log.i(TAG, "more pop up dialog mode:" + mode);
             SeatItemDialog dialog = new SeatItemDialog(this, seatState,
                     audioMuteState, mode, view, position, this);
             dialog.show();
@@ -715,7 +707,6 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onSeatDialogItemClicked(int position, SeatItemDialog.Operation operation) {
-        Log.i(TAG, "onSeatDialogItemClicked: position=" + position + " operation:" + operation.toString());
         final LiveMultiHostSeatLayout.SeatItem item = mSeatLayout.getSeatItem(position);
 
         String title = null;
@@ -795,12 +786,11 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onSeatAdapterPositionClosed(int position, View view) {
-        Log.i(TAG, "onSeatAdapterAudienceApplyClicked:" + position);
+
     }
 
     @Override
     public void onActionSheetAudienceInvited(int seatId, String peerId, String userName) {
-        Log.i(TAG, "onActionSheetAudienceInvited");
         // Called when the owner click the audience list and
         // want to "invite" this audience to be a host
         // At this moment, it should show a dialog to ask
@@ -825,7 +815,6 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
 
     @Override
     public void onRtmInvitedByOwner(String peerId, String nickname, int index) {
-        Log.i(TAG, "Invited by room owner " + nickname + " for seat " + index);
         if (isOwner) return;
         String title = getResources().getString(R.string.live_room_host_in_invite_user_list_action_sheet_title);
         String message = getResources().getString(R.string.live_room_host_in_invited_by_owner);

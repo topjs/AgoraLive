@@ -1,6 +1,6 @@
 package io.agora.vlive.proxy;
 
-import android.util.Log;
+import com.elvishew.xlog.XLog;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import io.agora.vlive.BuildConfig;
 import io.agora.vlive.proxy.interfaces.GeneralService;
 import io.agora.vlive.proxy.interfaces.LiveRoomService;
 import io.agora.vlive.proxy.interfaces.RoomListService;
@@ -50,7 +51,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.internal.EverythingIsNonNull;
 
 class Client {
-    private static final boolean DEBUG = false;
     private static final String PRODUCT_URL = "https://api-solutions.sh.agoralab.co";
     private static final String MSG_NULL_RESPONSE = "Response content is null";
     private static final int MAX_RESPONSE_THREAD = 10;
@@ -80,8 +80,8 @@ class Client {
                 .callbackExecutor(Executors.newFixedThreadPool(MAX_RESPONSE_THREAD))
                 .addConverterFactory(GsonConverterFactory.create());
 
-        if (DEBUG) {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(s -> Log.d("client", s));
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(XLog::d);
             interceptor.level(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
             builder.client(client);

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -268,56 +267,48 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
     @Override
     public void onActionSheetBeautyEnabled(boolean enabled) {
-        Log.i(TAG, "onActionSheetBeautyEnabled:" + enabled);
         findViewById(R.id.live_prepare_beauty_btn).setActivated(enabled);
         enablePreProcess(enabled);
     }
 
     @Override
     public void onActionSheetBlurSelected(float blur) {
-        Log.d(TAG, "onActionSheetBlurSelected:" + blur);
         setBlurValue(blur);
     }
 
     @Override
     public void onActionSheetWhitenSelected(float whiten) {
-        Log.d(TAG, "onActionSheetWhitenSelected:" + whiten);
         setWhitenValue(whiten);
     }
 
     @Override
     public void onActionSheetCheekSelected(float cheek) {
-        Log.d(TAG, "onActionSheetCheekSelected:" + cheek);
         setCheekValue(cheek);
     }
 
     @Override
     public void onActionSheetEyeEnlargeSelected(float eye) {
-        Log.d(TAG, "onActionSheetEyeEnlargeSelected:" + eye);
         setEyeValue(eye);
     }
 
     @Override
     public void onActionSheetResolutionSelected(int index) {
-        Log.d(TAG, "onActionSheetResolutionSelected:" + index);
         config().setResolutionIndex(index);
     }
 
     @Override
     public void onActionSheetFrameRateSelected(int index) {
-        Log.d(TAG, "onActionSheetFrameRateSelected:" + index);
         config().setFrameRateIndex(index);
     }
 
     @Override
     public void onActionSheetBitrateSelected(int bitrate) {
-        Log.d(TAG, "onActionSheetBitrateSelected:" + bitrate);
         config().setVideoBitrate(bitrate);
     }
 
     @Override
     public void onActionSheetSettingBackPressed() {
-        Log.d(TAG, "onActionSheetSettingBackPressed:");
+
     }
 
     @Override

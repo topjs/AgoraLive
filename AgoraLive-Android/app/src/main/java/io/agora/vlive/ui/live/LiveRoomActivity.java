@@ -10,16 +10,16 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
+
+import com.elvishew.xlog.XLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +106,7 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
                 boolean plugged = intent.getIntExtra("state", -1) == 1;
                 boolean hasMic = intent.getIntExtra("microphone", -1) == 1;
                 mHeadsetWithMicrophonePlugged = plugged && hasMic;
-                Log.d(TAG, "Wired headset is plugged：" + mHeadsetWithMicrophonePlugged);
+                XLog.d("Wired headset is plugged：" + mHeadsetWithMicrophonePlugged);
             }
         }
     };
@@ -257,65 +257,55 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onActionSheetBeautyEnabled(boolean enabled) {
-        Log.i(TAG, "onActionSheetBeautyEnabled:" + enabled);
         bottomButtons.setBeautyEnabled(enabled);
         enablePreProcess(enabled);
     }
 
     @Override
     public void onActionSheetBlurSelected(float blur) {
-        Log.i(TAG, "onActionSheetBrightnessSelected:" + blur);
         setBlurValue(blur);
     }
 
     @Override
     public void onActionSheetWhitenSelected(float whiten) {
-        Log.i(TAG, "onActionSheetWhitenSelected:" + whiten);
         setWhitenValue(whiten);
     }
 
     @Override
     public void onActionSheetCheekSelected(float cheek) {
-        Log.i(TAG, "onActionSheetCheekSelected:" + cheek);
         setCheekValue(cheek);
     }
 
     @Override
     public void onActionSheetEyeEnlargeSelected(float eye) {
-        Log.i(TAG, "onActionSheetEyeEnlargeSelected:" + eye);
         setEyeValue(eye);
     }
 
     @Override
     public void onActionSheetResolutionSelected(int index) {
-        Log.i(TAG, "onActionSheetResolutionSelected:" + index);
         config().setResolutionIndex(index);
         setVideoConfiguration();
     }
 
     @Override
     public void onActionSheetFrameRateSelected(int index) {
-        Log.i(TAG, "onActionSheetFrameRateSelected:" + index);
         config().setFrameRateIndex(index);
         setVideoConfiguration();
     }
 
     @Override
     public void onActionSheetBitrateSelected(int bitrate) {
-        Log.i(TAG, "onActionSheetBitrateSelected:" + bitrate);
         config().setVideoBitrate(bitrate);
         setVideoConfiguration();
     }
 
     @Override
     public void onActionSheetSettingBackPressed() {
-        Log.i(TAG, "onActionSheetSettingBackPressed:");
         dismissActionSheetDialog();
     }
 
     @Override
     public void onActionSheetMusicSelected(int index, String name, String url) {
-        Log.i(TAG, "onActionSheetMusicSelected:" + name);
         long now = System.currentTimeMillis();
         if (now - mLastMusicPlayedTimeStamp > MIN_ONLINE_MUSIC_INTERVAL) {
             rtcEngine().startAudioMixing(url, false, false, -1);
@@ -326,7 +316,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onActionSheetMusicStopped() {
-        Log.i(TAG, "onActionSheetMusicStopped");
         rtcEngine().stopAudioMixing();
         bottomButtons.setMusicPlaying(false);
     }
@@ -348,7 +337,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
      */
     @Override
     public boolean onActionSheetEarMonitoringClicked(boolean monitor) {
-        Log.i(TAG, "onActionSheetEarMonitoringClicked:" + monitor);
         if (monitor) {
             if (mHeadsetWithMicrophonePlugged) {
                 rtcEngine().enableInEarMonitoring(true);
@@ -369,7 +357,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onActionSheetRealDataClicked() {
-        Log.i(TAG, "onActionSheetRealDataClicked");
         if (rtcStatsView != null) {
             runOnUiThread(() -> {
                 int visibility = rtcStatsView.getVisibility();
@@ -389,19 +376,16 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onActionSheetSettingClicked() {
-        Log.i(TAG, "onActionSheetSettingClicked");
         showActionSheetDialog(ACTION_SHEET_VIDEO, tabIdToLiveType(tabId), isHost, false, this);
     }
 
     @Override
     public void onActionSheetRotateClicked() {
-        Log.i(TAG, "onActionSheetRotateClicked");
         switchCamera();
     }
 
     @Override
     public void onActionSheetVideoClicked(boolean muted) {
-        Log.i(TAG, "onActionSheetVideoClicked:" + muted);
         if (isHost || isOwner) {
             rtcEngine().muteLocalVideoStream(muted);
             config().setVideoMuted(muted);
@@ -410,7 +394,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onActionSheetSpeakerClicked(boolean muted) {
-        Log.i(TAG, "onActionSheetSpeakerClicked:" + muted);
         if (isHost || isOwner) {
             rtcEngine().muteLocalAudioStream(muted);
             config().setAudioMuted(muted);
@@ -419,17 +402,17 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onActionSheetAudioRouteSelected(int type) {
-        Log.i(TAG, "onActionSheetAudioRouteSelected:" + type);
+
     }
 
     @Override
     public void onActionSheetAudioRouteEnabled(boolean enabled) {
-        Log.i(TAG, "onActionSheetAudioRouteEnabled:" + enabled);
+
     }
 
     @Override
     public void onActionSheetAudioBackPressed() {
-        Log.i(TAG, "onActionSheetAudioBackPressed");
+
         dismissActionSheetDialog();
     }
 
@@ -514,7 +497,6 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
     @Override
     public void onActionSheetUserListItemSelected(String userId, String userName) {
         // Called when clicking an online user's name, and want to see the detail
-        Log.d(TAG, "onActionSheetUserListItemSelected:" + userId);
     }
 
     @Override
@@ -580,12 +562,12 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onRtcJoinChannelSuccess(String channel, int uid, int elapsed) {
-        Log.d(TAG, "onRtcJoinChannelSuccess:" + channel + " uid:" + (uid & 0xFFFFFFFFL));
+        XLog.d("onRtcJoinChannelSuccess:" + channel + " uid:" + (uid & 0xFFFFFFFFL));
     }
 
     @Override
     public void onRtcRemoteVideoStateChanged(int uid, int state, int reason, int elapsed) {
-        Log.d(TAG, "onRtcRemoteVideoStateChanged: " + (uid & 0xFFFFFFFFL) +
+        XLog.d("onRtcRemoteVideoStateChanged: " + (uid & 0xFFFFFFFFL) +
                 " state:" + state + " reason:" + reason);
     }
 
@@ -656,10 +638,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
 
     @Override
     public void onResponseError(int requestType, int error, String message) {
-        Log.e(TAG, "request:" + requestType + " error:" + error + " msg:" + message);
+        XLog.e("request:" + requestType + " error:" + error + " msg:" + message);
         runOnUiThread(() -> showLongToast("request type: "+
                 Request.getRequestString(requestType) + " " + message));
-
-
     }
 }

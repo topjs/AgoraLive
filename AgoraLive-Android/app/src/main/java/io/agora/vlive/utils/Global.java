@@ -55,6 +55,14 @@ public class Global {
         public static final int CAMERA_CAPTURE_HEIGHT = 1080;
         public static final int CAMERA_FRAME_RATE = 30;
 
+        // By default the app log keeps for 5 days before being destroyed
+        public static final long LOG_DURATION = 1000 * 60 * 24 * 5;
+
+        // Enable stack trace info with depth
+        public static final int LOG_CLASS_DEPTH = 1;
+
+        public static final long APP_LOG_SIZE = 1 << 30;
+
         public static final int[] TAB_IDS_RES = {
                 R.string.home_category_title_multi,
                 R.string.home_category_title_single,
