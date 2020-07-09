@@ -44,7 +44,7 @@ faceunity
 
 ### Virtual Host Image Resource
 
-The virtual host image resources are not part of FaceUnity SDK, please contact us for these files. Unzip and copy the following files to `app/src/main/assets` like:
+The virtual host image resources are not part of FaceUnity SDK, you can download [here](https://download.agora.io/demo/release/AgoraLiveVirtualImage.zip). Unzip and copy the following files to `app/src/main/assets` like:
 
 ```
 app
