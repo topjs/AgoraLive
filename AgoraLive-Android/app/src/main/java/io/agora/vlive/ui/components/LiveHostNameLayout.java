@@ -44,7 +44,7 @@ public class LiveHostNameLayout extends RelativeLayout {
         mHeight = getResources().getDimensionPixelSize(R.dimen.live_name_pad_height);
 
         if (lightMode) {
-            setBackgroundResource(R.drawable.round_scalable_light_gray_bg);
+            setBackgroundResource(R.drawable.round_scalable_gray_transparent_bg);
         } else {
             setBackgroundResource(R.drawable.round_scalable_gray_bg);
         }

@@ -10,6 +10,7 @@
     <color name="gray_light">#a3a3a3</color>
     <color name="gray_lighter">#cccccc</color>
     <color name="gray_lightest">#efefef</color>
+    <color name="gray_transparent">#14000000</color>
 
     <color name="default_text_color_light">#c4c4c4</color>
 

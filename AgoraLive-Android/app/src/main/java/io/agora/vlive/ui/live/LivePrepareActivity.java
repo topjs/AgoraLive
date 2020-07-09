@@ -70,7 +70,6 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideStatusBar(false);
     }
 
     @Override
@@ -122,6 +121,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
 
     private void changeUIStyles() {
         if (tabId == Config.LIVE_TYPE_VIRTUAL_HOST) {
+            hideStatusBar(true);
             // It only accepts front camera frames for virtual images.
             mSwitchBtn.setVisibility(View.GONE);
             mCloseBtn.setImageResource(R.drawable.icon_back_black);
@@ -145,6 +145,7 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             startCameraCapture();
             mPreprocessor.onAnimojiSelected(virtualImage);
         } else {
+            hideStatusBar(false);
             mCloseBtn.setImageResource(R.drawable.close_button_white);
             mSwitchBtn.setImageResource(R.drawable.switch_camera_white);
             mRandomBtn.setImageResource(R.drawable.random_button_white);
