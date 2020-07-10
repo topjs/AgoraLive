@@ -50,7 +50,7 @@
     <string name="modify_user_title">输入名字</string>
 
     <!-- Live Prepare Activity -->
-    <string name="live_prepare_hint">直播间名字:</string>
+    <string name="live_prepare_hint">直播间名字</string>
     <string name="go_live_text">开始直播</string>
     <string name="live_prepare_name_too_long_toast_format">房间名称不能超过%d个字符</string>
     <string name="live_prepare_no_room_name">请输入您的房间名称</string>
@@ -59,10 +59,10 @@
     <string name="live_bottom_edit_hint">说点什么 &#8230;</string>
     <string name="live_send_empty_message">您不能发空的消息</string>
 
-    <string name="live_host_in_room_name_hint">房间:&#160;</string>
-    <string name="live_host_in_seat_state_open_audience">申请连线</string>
-    <string name="live_host_in_seat_state_open_host">邀请连麦</string>
-    <string name="live_host_in_seat_state_closed">封麦</string>
+    <string name="live_host_in_room_name_hint">房间&#160;&#160;</string>
+    <string name="live_host_in_seat_state_open_audience">申请上麦</string>
+    <string name="live_host_in_seat_state_open_host">邀请上麦</string>
+    <string name="live_host_in_seat_state_blocked">封麦</string>
 
     <string name="live_system_notification_member_joined">进入房间</string>
     <string name="live_system_notification_member_left">离开房间</string>
@@ -88,17 +88,13 @@
     <string name="live_message_gift_send">向主播赠送了一个</string>
 
     !-- Action Sheet -->
-    <string name="live_room_setting_action_sheet_title">直播间设置</string>
+    <string name="live_room_setting_action_sheet_title">设置</string>
     <string name="live_room_setting_title_resolution">分辨率</string>
     <string name="live_room_setting_title_framerate">帧率</string>
     <string name="live_room_setting_title_bitrate">码率</string>
     <string name="live_room_setting_bitrate_value_default">默认</string>
 
     <string name="live_room_beauty_action_sheet_title">美颜</string>
-    <string name="live_room_beauty_action_sheet_brightness">亮度</string>
-    <string name="live_room_beauty_action_sheet_smooth">光滑</string>
-    <string name="live_room_beauty_action_sheet_temperature">色温</string>
-
     <string name="live_room_beauty_action_sheet_blur">磨皮</string>
     <string name="live_room_beauty_action_sheet_color">美白</string>
     <string name="live_room_beauty_action_sheet_cheek_thinning">瘦脸</string>
@@ -161,8 +157,8 @@
     <string name="dialog_positive_button_accept">接受</string>
     <string name="dialog_negative_button_refuse">拒绝</string>
     
-    <string name="finish_broadcast_title_owner">结束直播</string>
-    <string name="finish_broadcast_message_owner">是否结束直播?</string>
+    <string name="end_live_streaming_title_owner">结束直播</string>
+    <string name="end_live_streaming_message_owner">是否结束直播?</string>
 
     <string name="finish_broadcast_title_audience">离开房间</string>
     <string name="finish_broadcast_message_audience">是否想要离开房间?</string>
@@ -170,8 +166,8 @@
     <string name="dialog_multi_host_open_seat_title">解封</string>
     <string name="dialog_multi_host_open_seat_message">解封此麦位?</string>
 
-    <string name="dialog_multi_host_close_seat_title">封麦</string>
-    <string name="dialog_multi_host_close_seat_message">将关闭该麦位，如果该位置上有用户, 将下麦该用户</string>
+    <string name="dialog_multi_host_block_seat_title">封麦</string>
+    <string name="dialog_multi_host_block_seat_message">将关闭该麦位，如果该位置上有用户, 将下麦该用户</string>
 
     <string name="dialog_multi_host_mute_title">禁麦</string>
     <string name="dialog_multi_host_mute_message">禁止"%s"发言？</string>

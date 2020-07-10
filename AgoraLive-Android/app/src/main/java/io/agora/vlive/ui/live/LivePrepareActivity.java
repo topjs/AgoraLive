@@ -322,8 +322,8 @@ public class LivePrepareActivity extends LiveBaseActivity implements View.OnClic
             return;
         }
 
-        mExitDialog = showDialog(R.string.finish_broadcast_title_owner,
-                R.string.finish_broadcast_message_owner, view -> {
+        mExitDialog = showDialog(R.string.end_live_streaming_title_owner,
+                R.string.end_live_streaming_message_owner, view -> {
                     dismissDialog();
                     finish();
                 });

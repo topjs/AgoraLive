@@ -330,8 +330,8 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_bottom_btn_close:
-                curDialog = showDialog(R.string.finish_broadcast_title_owner,
-                        R.string.finish_broadcast_message_owner, this);
+                curDialog = showDialog(R.string.end_live_streaming_title_owner,
+                        R.string.end_live_streaming_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
                 LiveRoomToolActionSheet toolSheet = (LiveRoomToolActionSheet)
@@ -764,8 +764,8 @@ public class MultiHostLiveActivity extends LiveRoomActivity implements View.OnCl
                         item.userId, position + 1, SeatInfo.OPEN);
                 break;
             case close:
-                title = getResources().getString(R.string.dialog_multi_host_close_seat_title);
-                message = getResources().getString(R.string.dialog_multi_host_close_seat_message);
+                title = getResources().getString(R.string.dialog_multi_host_block_seat_title);
+                message = getResources().getString(R.string.dialog_multi_host_block_seat_message);
                 type = Request.MODIFY_SEAT_STATE;
                 request = new ModifySeatStateRequest(
                         config().getUserProfile().getToken(), roomId,

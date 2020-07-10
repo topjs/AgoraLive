@@ -602,8 +602,8 @@ public abstract class LiveRoomActivity extends LiveBaseActivity implements
         int titleRes;
         int messageRes;
         if (isHost || isOwner) {
-            titleRes = R.string.finish_broadcast_title_owner;
-            messageRes = R.string.finish_broadcast_message_owner;
+            titleRes = R.string.end_live_streaming_title_owner;
+            messageRes = R.string.end_live_streaming_message_owner;
         } else {
             titleRes = R.string.finish_broadcast_title_audience;
             messageRes = R.string.finish_broadcast_message_audience;

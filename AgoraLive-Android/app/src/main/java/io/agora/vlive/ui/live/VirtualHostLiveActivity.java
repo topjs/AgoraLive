@@ -237,8 +237,8 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_bottom_btn_close:
-                curDialog = showDialog(R.string.finish_broadcast_title_owner,
-                        R.string.finish_broadcast_message_owner, this);
+                curDialog = showDialog(R.string.end_live_streaming_title_owner,
+                        R.string.end_live_streaming_message_owner, this);
                 break;
             case R.id.live_bottom_btn_more:
                 LiveRoomToolActionSheet toolSheet =
@@ -406,8 +406,8 @@ public class VirtualHostLiveActivity extends LiveRoomActivity implements View.On
 
     @Override
     public void onBackPressed() {
-        curDialog = showDialog(R.string.finish_broadcast_title_owner,
-                R.string.finish_broadcast_message_owner, this);
+        curDialog = showDialog(R.string.end_live_streaming_title_owner,
+                R.string.end_live_streaming_message_owner, this);
     }
 
     @Override
