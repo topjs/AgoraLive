@@ -174,9 +174,7 @@ private extension LiveListTabViewController {
             
             self.listVM.presentingType = type
             
-            if self.listVM.presentingList.value.count == 0 {
-                self.listVM.refetch()
-            }
+            self.roomListRefresh(false)
         }).disposed(by: bag)
     }
     

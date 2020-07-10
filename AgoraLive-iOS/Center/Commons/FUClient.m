@@ -370,7 +370,6 @@ typedef NS_ENUM(NSUInteger, FUItemLevel) {
     /* 默认自定义脸型 */
     [FURenderer itemSetParam:bundleHandle withName:@"face_shape" value:@(4)];
     
-    
     self.loadFilterSuccess = true;
     self.filterIndexOfItems = 1;
     items[self.filterIndexOfItems] = bundleHandle;
