@@ -42,6 +42,12 @@ faceunity
                     |_ libnama.so
 ``` 
 
+### Face Unity Licence
+
+You need to contact FaceUnity for a licence file named `authpack.java`. Please replace `faceunity/src/main/java/com/faceunity/authpack.java` with your `authpack.java`.
+
+The licence should at least contain beautification and animoji permissions.
+
 ### Virtual Host Image Resource
 
 The virtual host image resources are not part of FaceUnity SDK, you can download [here](https://download.agora.io/demo/release/AgoraLiveVirtualImage.zip). Unzip and copy the following files to `app/src/main/assets` like:
