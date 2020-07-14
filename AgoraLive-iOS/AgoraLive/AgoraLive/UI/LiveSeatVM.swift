@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 enum SeatState: Int {
     case empty = 0, normal, close
@@ -189,13 +190,13 @@ extension LiveSeatVM {
                               of: RequestEvent(name: "apply_for_broadcasting"),
                               to: "\(user.agoraUserId)",
                               fail: fail)
-            } catch let error as AGEError {
+            } catch let error as ACError {
                 if let fail = fail {
                     fail(error)
                 }
             } catch {
                 if let fail = fail {
-                    fail(AGEError.unknown())
+                    fail(ACError.unknown())
                 }
             }
             return
@@ -242,12 +243,12 @@ extension LiveSeatVM {
             if isSuccess, let callback = success {
                 callback()
             } else if !isSuccess, let callback = fail {
-                callback(AGEError.fail("live-seat-command fail") )
+                callback(ACError.fail("live-seat-command fail") )
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let fail: ErrorRetryCompletion = { (error) in
+        let fail: ACErrorRetryCompletion = { (error) in
             if let callback = fail {
                 callback(error)
             }
@@ -280,9 +281,9 @@ extension LiveSeatVM {
                 callback(AGEError.fail("live-seat-command fail") )
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let fail: ErrorRetryCompletion = { (error) in
+        let fail: ACErrorRetryCompletion = { (error) in
             if let callback = fail {
                 callback(error)
             }
@@ -306,13 +307,9 @@ extension LiveSeatVM {
                           of: RequestEvent(name: "apply_for_broadcasting"),
                           to: "\(agoraUid)",
                           fail: fail)
-        } catch let error as AGEError {
-            if let fail = fail {
-                fail(error)
-            }
         } catch {
             if let fail = fail {
-                fail(AGEError.unknown())
+                fail(error)
             }
         }
     }
@@ -342,9 +339,9 @@ extension LiveSeatVM {
                 callback()
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let fail: ErrorRetryCompletion = { (error) in
+        let fail: ACErrorRetryCompletion = { (error) in
             if let callback = fail {
                 callback()
             }
@@ -371,13 +368,9 @@ extension LiveSeatVM {
                           of: RequestEvent(name: "apply_for_broadcasting"),
                           to: "\(owner.agoraUserId)",
                           fail: fail)
-        } catch let error as AGEError {
-            if let fail = fail {
-                fail(error)
-            }
         } catch {
             if let fail = fail {
-                fail(AGEError.unknown())
+                fail(error)
             }
         }
     }
@@ -408,12 +401,12 @@ extension LiveSeatVM {
             if isSuccess, let callback = success {
                 callback()
             } else if !isSuccess, let callback = fail {
-                callback(AGEError.fail("live-seat-command fail") )
+                callback(ACError.fail("live-seat-command fail") )
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let fail: ErrorRetryCompletion = { (error) in
+        let fail: ACErrorRetryCompletion = { (error) in
             if let callback = fail {
                 callback(error)
             }
@@ -437,13 +430,9 @@ extension LiveSeatVM {
                           of: RequestEvent(name: "apply_for_broadcasting"),
                           to: "\(owner.agoraUserId)",
                           fail: fail)
-        } catch let error as AGEError {
-            if let fail = fail {
-                fail(error)
-            }
         } catch {
             if let fail = fail {
-                fail(AGEError.unknown())
+                fail(error)
             }
         }
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 import AgoraRtmKit
+import AlamoClient
 
 typealias AGESocketState = AgoraRtmConnectionState
 
@@ -54,7 +55,7 @@ extension AgoraRtmKit: AGELogBase {
         }
     }
     
-    func send(message: String, of event: AGERequestEvent, to peer: String, success: Completion, fail: ErrorCompletion) {
+    func send(message: String, of event: ACRequestEvent, to peer: String, success: Completion, fail: ErrorCompletion) {
         let messageObj = AgoraRtmMessage(text: message)
         
         send(messageObj, toPeer: peer) { [unowned self] (errorCode) in
@@ -106,7 +107,7 @@ extension AgoraRtmKit: AGELogBase {
                 fail(error)
             }
         } catch {
-            let error = AGEError.unknown()
+            let error = ACError.unknown()
             log(error: error, extra: "create channel fail")
             if let fail = fail {
                 fail(error)
@@ -168,7 +169,7 @@ extension AgoraRtmChannel: AGELogBase {
         }
     }
     
-    func send(message: String, of event: AGERequestEvent, success: Completion, fail: ErrorCompletion) {
+    func send(message: String, of event: ACRequestEvent, success: Completion, fail: ErrorCompletion) {
         let messageObj = AgoraRtmMessage(text: message)
         
         send(messageObj) { [unowned self] (errorCode) in

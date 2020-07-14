@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 struct Chat {
     var textSize: CGSize

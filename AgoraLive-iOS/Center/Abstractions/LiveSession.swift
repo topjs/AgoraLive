@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import AlamoClient
 
 enum LiveType: Int {
     case singleBroadcaster = 1, multiBroadcasters, pkBroadcasters, virtualBroadcasters
@@ -98,9 +99,9 @@ class LiveSession: NSObject {
                 success(session)
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail()
             }
@@ -188,9 +189,9 @@ class LiveSession: NSObject {
                 return .resign
             }
         }
-        let response = AGEResponse.json(successCallback)
+        let response = ACResponse.json(successCallback)
         
-        let retry: ErrorRetryCompletion = { (error: AGEError) -> RetryOptions in
+        let retry: ACErrorRetryCompletion = { (error: Error) -> RetryOptions in
             if let fail = fail {
                 fail()
             }
