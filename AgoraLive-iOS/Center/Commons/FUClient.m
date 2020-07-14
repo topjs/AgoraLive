@@ -364,9 +364,6 @@ typedef NS_ENUM(NSUInteger, FUItemLevel) {
     }
     int bundleHandle = result;
     
-    /* 默认精细磨皮 */
-//    [FURenderer itemSetParam:bundleHandle withName:@"heavy_blur" value:@(0)];
-//    [FURenderer itemSetParam:bundleHandle withName:@"blur_type" value:@(2)];
     /* 默认自定义脸型 */
     [FURenderer itemSetParam:bundleHandle withName:@"face_shape" value:@(4)];
     
