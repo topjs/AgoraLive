@@ -251,8 +251,8 @@ enum VirtualAppearance {
     var item: String {
         get {
             switch self {
-            case .girl: return "qgirl_Animoji"
-            case .dog:  return "hashiqi_Animoji"
+            case .girl: return "girl"
+            case .dog:  return "hashiqi"
             case .none: return "noitem"
             }
         }
@@ -260,9 +260,9 @@ enum VirtualAppearance {
     
     static func item(_ item: String) -> VirtualAppearance {
         switch item {
-        case "qgirl_Animoji":   return VirtualAppearance.girl
-        case "hashiqi_Animoji": return VirtualAppearance.dog
-        default:                return VirtualAppearance.none
+        case "girl":    return VirtualAppearance.girl
+        case "hashiqi": return VirtualAppearance.dog
+        default:        return VirtualAppearance.none
         }
     }
 }

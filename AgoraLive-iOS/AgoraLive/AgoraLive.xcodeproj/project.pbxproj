@@ -53,11 +53,11 @@
 		A773BD4E24090426003ECBFD /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A773BD4D24090426003ECBFD /* MineViewController.swift */; };
 		A773BD50240E4CC1003ECBFD /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A773BD4F240E4CC1003ECBFD /* MainTabBarViewController.swift */; };
 		A773BD522410A001003ECBFD /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A773BD512410A001003ECBFD /* UserNameViewController.swift */; };
+		A776F71F24BEA711001B16B1 /* hashiqi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A776F71B24BEA711001B16B1 /* hashiqi.bundle */; };
+		A776F72024BEA711001B16B1 /* bg.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A776F71C24BEA711001B16B1 /* bg.bundle */; };
+		A776F72124BEA711001B16B1 /* girl.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A776F71D24BEA711001B16B1 /* girl.bundle */; };
 		A77718162456FBDA00BF1F21 /* PlayerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77718152456FBDA00BF1F21 /* PlayerVM.swift */; };
 		A7779C2B244DC7DC002A285A /* LocalLiveSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */; };
-		A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573224A8955600DD7670 /* bai_bj.bundle */; };
-		A77E574424A8955700DD7670 /* qgirl_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */; };
-		A77E574624A8955700DD7670 /* hashiqi_Animoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */; };
 		A77E574724A8955700DD7670 /* SuperBell.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573824A8955600DD7670 /* SuperBell.gif */; };
 		A77E574824A8955700DD7670 /* SuperCake.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573924A8955600DD7670 /* SuperCake.gif */; };
 		A77E574924A8955700DD7670 /* SuperWatch.gif in Resources */ = {isa = PBXBuildFile; fileRef = A77E573A24A8955600DD7670 /* SuperWatch.gif */; };
@@ -209,12 +209,12 @@
 		A773BD4D24090426003ECBFD /* MineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		A773BD4F240E4CC1003ECBFD /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		A773BD512410A001003ECBFD /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
+		A776F71B24BEA711001B16B1 /* hashiqi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = hashiqi.bundle; sourceTree = "<group>"; };
+		A776F71C24BEA711001B16B1 /* bg.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = bg.bundle; sourceTree = "<group>"; };
+		A776F71D24BEA711001B16B1 /* girl.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = girl.bundle; sourceTree = "<group>"; };
+		A776F71E24BEA711001B16B1 /* authpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
 		A77718152456FBDA00BF1F21 /* PlayerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerVM.swift; sourceTree = "<group>"; };
 		A7779C2A244DC7DC002A285A /* LocalLiveSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalLiveSettings.swift; sourceTree = "<group>"; };
-		A77E572F24A8955600DD7670 /* authpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
-		A77E573224A8955600DD7670 /* bai_bj.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = bai_bj.bundle; sourceTree = "<group>"; };
-		A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = qgirl_Animoji.bundle; sourceTree = "<group>"; };
-		A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = hashiqi_Animoji.bundle; sourceTree = "<group>"; };
 		A77E573824A8955600DD7670 /* SuperBell.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperBell.gif; sourceTree = "<group>"; };
 		A77E573924A8955600DD7670 /* SuperCake.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperCake.gif; sourceTree = "<group>"; };
 		A77E573A24A8955600DD7670 /* SuperWatch.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SuperWatch.gif; sourceTree = "<group>"; };
@@ -552,6 +552,25 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		A776F71924BEA711001B16B1 /* Faceunity */ = {
+			isa = PBXGroup;
+			children = (
+				A776F71E24BEA711001B16B1 /* authpack.h */,
+				A776F71A24BEA711001B16B1 /* Animoji */,
+			);
+			path = Faceunity;
+			sourceTree = "<group>";
+		};
+		A776F71A24BEA711001B16B1 /* Animoji */ = {
+			isa = PBXGroup;
+			children = (
+				A776F71B24BEA711001B16B1 /* hashiqi.bundle */,
+				A776F71C24BEA711001B16B1 /* bg.bundle */,
+				A776F71D24BEA711001B16B1 /* girl.bundle */,
+			);
+			path = Animoji;
+			sourceTree = "<group>";
+		};
 		A7779C28244DC56E002A285A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -563,38 +582,11 @@
 		A77E572C24A8955600DD7670 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				A77E572E24A8955600DD7670 /* Faceunity */,
+				A776F71924BEA711001B16B1 /* Faceunity */,
 				A77E573724A8955600DD7670 /* Gif */,
 			);
 			name = Resource;
 			path = ../Resource;
-			sourceTree = "<group>";
-		};
-		A77E572E24A8955600DD7670 /* Faceunity */ = {
-			isa = PBXGroup;
-			children = (
-				A77E572F24A8955600DD7670 /* authpack.h */,
-				A77E573024A8955600DD7670 /* items */,
-			);
-			path = Faceunity;
-			sourceTree = "<group>";
-		};
-		A77E573024A8955600DD7670 /* items */ = {
-			isa = PBXGroup;
-			children = (
-				A77E573124A8955600DD7670 /* Animoji */,
-			);
-			path = items;
-			sourceTree = "<group>";
-		};
-		A77E573124A8955600DD7670 /* Animoji */ = {
-			isa = PBXGroup;
-			children = (
-				A77E573224A8955600DD7670 /* bai_bj.bundle */,
-				A77E573424A8955600DD7670 /* qgirl_Animoji.bundle */,
-				A77E573624A8955600DD7670 /* hashiqi_Animoji.bundle */,
-			);
-			path = Animoji;
 			sourceTree = "<group>";
 		};
 		A77E573724A8955600DD7670 /* Gif */ = {
@@ -907,21 +899,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				A77E574C24A8955700DD7670 /* SuperRing.gif in Resources */,
+				A776F72124BEA711001B16B1 /* girl.bundle in Resources */,
 				A77E574824A8955700DD7670 /* SuperCake.gif in Resources */,
 				A72B7BEC24445DEF00E965FB /* Assets.xcassets in Resources */,
-				A77E574424A8955700DD7670 /* qgirl_Animoji.bundle in Resources */,
 				A77E574D24A8955700DD7670 /* SuperIcecream.gif in Resources */,
 				A77E574E24A8955700DD7670 /* SuperDiamond.gif in Resources */,
 				A77E574F24A8955700DD7670 /* sound.gif in Resources */,
 				A77E574B24A8955700DD7670 /* SuperRocket.gif in Resources */,
 				A76BD12D23F1035600B2732B /* LaunchScreen.storyboard in Resources */,
 				A77E574A24A8955700DD7670 /* SuperWine.gif in Resources */,
+				A776F72024BEA711001B16B1 /* bg.bundle in Resources */,
 				A76BD13A23F25F6500B2732B /* Localizable.strings in Resources */,
 				A77E574724A8955700DD7670 /* SuperBell.gif in Resources */,
-				A77E574224A8955700DD7670 /* bai_bj.bundle in Resources */,
+				A776F71F24BEA711001B16B1 /* hashiqi.bundle in Resources */,
 				A77E574924A8955700DD7670 /* SuperWatch.gif in Resources */,
 				A76BD12823F1035500B2732B /* Main.storyboard in Resources */,
-				A77E574624A8955700DD7670 /* hashiqi_Animoji.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

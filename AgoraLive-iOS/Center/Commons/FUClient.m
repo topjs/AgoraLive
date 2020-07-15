@@ -422,10 +422,10 @@ typedef NS_ENUM(NSUInteger, FUItemLevel) {
 }
 
 - (BOOL)loadBackgroundWithError:(NSError **)error {
-    int result = [self loadModel:@"bai_bj.bundle"];
+    int result = [self loadModel:@"bg.bundle"];
     
     if (result <= 0) {
-        *error = [NSError errorWithDomain:@"FU-load-bai_bj"
+        *error = [NSError errorWithDomain:@"FU-load-background"
                                      code:result
                                  userInfo:nil];
         self.loadBackgroundSuccess = false;
