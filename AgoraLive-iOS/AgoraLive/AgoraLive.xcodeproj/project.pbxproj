@@ -1255,7 +1255,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yuhua Gong (YBKA3W5TF4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 321;
+				CURRENT_PROJECT_VERSION = 322;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SW3CA7M752;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1281,7 +1281,7 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-v6.7.0-lite\"",
 				);
-				MARKETING_VERSION = 3.1.1;
+				MARKETING_VERSION = 3.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1360,7 +1360,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Agora Lab, Inc. (48TB6ZZL5S)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 321;
+				CURRENT_PROJECT_VERSION = 322;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 48TB6ZZL5S;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1387,7 +1387,7 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-v6.7.0-lite\"",
 				);
-				MARKETING_VERSION = 3.1.1;
+				MARKETING_VERSION = 3.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1520,7 +1520,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Haifeng Hong (MJP2F92AG6)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 321;
+				CURRENT_PROJECT_VERSION = 322;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JDPG69R49Z;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1546,7 +1546,7 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-v6.7.0-lite\"",
 				);
-				MARKETING_VERSION = 3.1.1;
+				MARKETING_VERSION = 3.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1680,7 +1680,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Haifeng Hong (MJP2F92AG6)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 321;
+				CURRENT_PROJECT_VERSION = 322;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JDPG69R49Z;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1707,7 +1707,7 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-v6.7.0-lite\"",
 				);
-				MARKETING_VERSION = 3.1.1;
+				MARKETING_VERSION = 3.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1840,7 +1840,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yuhua Gong (YBKA3W5TF4)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 321;
+				CURRENT_PROJECT_VERSION = 322;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = SW3CA7M752;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1867,7 +1867,7 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Nama-lite/FaceUnity-SDK-iOS-v6.7.0-lite\"",
 				);
-				MARKETING_VERSION = 3.1.1;
+				MARKETING_VERSION = 3.1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
