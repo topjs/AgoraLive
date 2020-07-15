@@ -101,13 +101,7 @@ extension AgoraRtmKit: AGELogBase {
                     }
                 }
             }
-        } catch let error as AGEError {
-            log(error: error, extra: "create channel fail")
-            if let fail = fail {
-                fail(error)
-            }
         } catch {
-            let error = ACError.unknown()
             log(error: error, extra: "create channel fail")
             if let fail = fail {
                 fail(error)

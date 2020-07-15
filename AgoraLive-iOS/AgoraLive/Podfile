@@ -11,7 +11,6 @@ target 'AgoraLive' do
   pod 'RxSwift', '~> 5.0.1'
   pod 'RxCocoa'
   pod 'RxDataSources'
-  #pod 'Alamofire', '~> 4.7.3'
   pod 'MJRefresh', '~> 3.3.1'
   pod 'AGEVideoLayout'
   pod 'FLAnimatedImage'
@@ -20,7 +19,7 @@ target 'AgoraLive' do
   pod 'AgoraRtcEngine_iOS', '~> 3.0.1'
   pod 'AGECamera', '~> 1.0.1'
   pod 'Nama-lite', '~> 6.4.0'
-  pod 'AlamoClient', :path => '/Users/cavansu/Documents/Github/AlamoClient/'  
+  pod 'AlamoClient', '~> 1.0.2' 
 
   source 'https://github.com/CocoaPods/Specs.git'
 end
