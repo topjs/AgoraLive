@@ -4,7 +4,7 @@ parameters:
 
 jobs:
   - job: ${{ parameters.displayName }}Build
-    displayName: ${{ parameters.displayName }}
+    displayName: ${{ parameters.displayName }} + ${{ parameters.mode }}
 
     pool:
       vmImage: 'macOS-10.14'
