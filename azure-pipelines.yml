@@ -7,8 +7,8 @@ trigger:
 - master
 - dev/*
 
-pool:
-  vmImage: 'macos-latest'
+variables:
+  AgoraiOSMode: 'Debug'
 
 jobs:
 
@@ -19,5 +19,6 @@ jobs:
     
 - template: AgoraLive-iOS/Build/azure/build.yml
   parameters:
-    displayName: 'AgoraLive'
+    displayName: 'AgoraLive_iOS_$(AgoraiOSMode)'
+    mode: @(AgoraiOSMode)
   
