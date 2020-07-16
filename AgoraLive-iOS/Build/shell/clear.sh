@@ -5,4 +5,4 @@ rm -f ../product/DistributionSummary.plist
 rm -f ../product/ExportOptions.plist
 rm -f ../product/Packaging.log
 rm -rf ../product/app
-rm -f ../productapp.zip
+rm -f ../product/app.zip
