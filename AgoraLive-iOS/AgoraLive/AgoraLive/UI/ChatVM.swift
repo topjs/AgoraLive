@@ -22,7 +22,7 @@ struct Chat {
         let width = UIScreen.main.bounds.width - 60
         let textRect = content.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)),
                                             options: .usesLineFragmentOrigin,
-                                            attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)],
+                                            attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium)],
                                             context: nil)
         
         let attrContent = NSMutableAttributedString(string: (content as String))

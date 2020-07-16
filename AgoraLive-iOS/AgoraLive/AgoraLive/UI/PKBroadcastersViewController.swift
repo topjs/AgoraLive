@@ -370,9 +370,11 @@ extension PKBroadcastersViewController {
             }
             
             newPk.pkVM = PKVM(statistics: statistics)
-            let navigation = self.navigationController
-            navigation?.popViewController(animated: false)
-            navigation?.pushViewController(newPk, animated: true)
+            guard let navigation = self.navigationController else {
+                return
+            }
+            navigation.popViewController(animated: false)
+            navigation.pushViewController(newPk, animated: false)
         }, fail: fail)
     }
 }
@@ -381,7 +383,9 @@ private extension PKBroadcastersViewController {
     func showResult(statistics: PKStatistics) {
         if let result = statistics.state.hasResult {
             let completion = { [weak self] in
-                self?.showAlert(NSLocalizedString("PK_End"))
+                let view = TextToast(frame: CGRect(x: 0, y: 200, width: 0, height: 44), filletRadius: 8)
+                view.text = NSLocalizedString("PK_End")
+                self?.showToastView(view, duration: 0.2)
                 self?.updateViewsWith(statistics: statistics)
             }
             
@@ -401,7 +405,6 @@ private extension PKBroadcastersViewController {
     func updateViewsWith(statistics: PKStatistics) {
         guard let session = ALCenter.shared().liveSession,
             let owner = session.owner else {
-                assert(false)
                 return
         }
         

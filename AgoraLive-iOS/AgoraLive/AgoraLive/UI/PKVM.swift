@@ -209,28 +209,38 @@ private extension PKVM {
             let data = try json.getDataObject()
             let statistics = try PKStatistics(dic: data)
             
-            guard statistics.state.isDuring else {
-                strongSelf.statistics.accept(statistics)
-                return
-            }
-            
-            switch owner {
-            case .localUser(let user):
-                guard user.info.userId != statistics.opponentOwner!.info.userId else {
-                    return
-                }
-            case .otherUser(let user):
-                guard user.info.userId != statistics.opponentOwner!.info.userId else {
-                    return
-                }
-            }
-            
             strongSelf.statistics.accept(statistics)
             
-            if let config = try? data.getDictionaryValue(of: "relayConfig") {
-                let relayInfo = try MediaRelayInfo(dic: config)
-                strongSelf.startRelayingMediaStream(relayInfo)
-            } else {
+            switch statistics.state {
+            case .none:
+                guard owner.isLocal else {
+                    return
+                }
+                
+                strongSelf.stopRelayingMediaStream()
+            case .during:
+                guard owner.isLocal else {
+                    return
+                }
+                
+                if let config = try? data.getDictionaryValue(of: "relayConfig") {
+                    let relayInfo = try MediaRelayInfo(dic: config)
+                    strongSelf.startRelayingMediaStream(relayInfo)
+                }
+            case .start:
+                guard owner.isLocal else {
+                    return
+                }
+                
+                if let config = try? data.getDictionaryValue(of: "relayConfig") {
+                    let relayInfo = try MediaRelayInfo(dic: config)
+                    strongSelf.startRelayingMediaStream(relayInfo)
+                }
+            case .end:
+                guard owner.isLocal else {
+                    return
+                }
+                
                 strongSelf.stopRelayingMediaStream()
             }
         }

@@ -1887,15 +1887,15 @@
             <objects>
                 <tableViewController id="Qus-to-FXv" customClass="ChatViewController" customModule="AgoraLive" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lj9-IB-nJK">
-                        <rect key="frame" x="0.0" y="0.0" width="302" height="219"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="219"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChatCell" id="ok8-ug-tiy" customClass="ChatCell" customModule="AgoraLive" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="302" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ok8-ug-tiy" id="6am-7o-csy">
-                                    <rect key="frame" x="0.0" y="0.0" width="302" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -2899,11 +2899,11 @@
     <inferredMetricsTieBreakers>
         <segue reference="VtV-Zm-jwg"/>
         <segue reference="fh7-g9-fFy"/>
-        <segue reference="Rzl-6U-2pE"/>
+        <segue reference="Olq-Ar-mcc"/>
         <segue reference="Q62-nz-nPv"/>
-        <segue reference="zjX-Y6-wKj"/>
+        <segue reference="R3w-x9-Vme"/>
         <segue reference="q3I-2V-0Kx"/>
-        <segue reference="reS-Gs-QCe"/>
+        <segue reference="rmU-bn-dDI"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icon-back" width="29" height="29"/>
