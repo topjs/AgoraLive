@@ -10,8 +10,6 @@ jobs:
 
     variables:
       - group: AgoraLive
-      
-    variables:
       - group: AgoraKeys
 
     steps:
