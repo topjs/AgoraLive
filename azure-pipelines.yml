@@ -12,10 +12,10 @@ pool:
 
 jobs:
 
-- template: AgoraLive-Android/build-templates/build-release.yml
-  parameters:
-    project: 'AgoraLive-Android'
-    name: 'AgoraLive_Android'
+#- template: AgoraLive-Android/build-templates/build-release.yml
+#  parameters:
+#    project: 'AgoraLive-Android'
+#    name: 'AgoraLive_Android'
     
 - template: AgoraLive-iOS/Build/azure/build.yml
   parameters:
