@@ -30,7 +30,7 @@ jobs:
    
       - script: cd 'AgoraLive-iOS/Build/shell' && chmod +x download_zip.sh && ./download_zip.sh $(fubundle) ../../Resource
       
-      - script: cp $(downloadAuthpack.secureFilePath) ../../Resource/Faceunity/
+      - script: cp $(downloadAuthpack.secureFilePath) Resource/Faceunity/
 
       - script: cd 'AgoraLive-iOS/Build/shell' && chmod +x build.sh && ./build.sh AgoraLive Debug
       
