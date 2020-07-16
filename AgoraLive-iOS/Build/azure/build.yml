@@ -1,0 +1,39 @@
+parameters:
+  displayName: ''
+
+jobs:
+  - job: ${{ parameters.displayName }}Build
+    displayName: ${{ parameters.displayName }}
+
+    pool:
+      vmImage: 'macOS-10.14'
+
+    variables:
+      - group: AgoraLive
+
+    steps:
+      - task: InstallAppleCertificate@2
+        inputs:
+          certSecureFile: 'certificate.p12'
+          certPwd: $(agora.password)
+
+      - task: InstallAppleProvisioningProfile@1
+        inputs:
+          provProfileSecureFile: 'AgoraAppsDevProfile.mobileprovision'
+          
+      - task: DownloadSecureFile@1
+        name: downloadAuthpack
+        displayName: 'Download face unity authpack'
+        inputs:
+            secureFile: 'authpack.h'
+   
+      - script: cd 'AgoraLive-iOS/Build/shell' && chmod +x download_zip.sh && ./download_zip.sh $(fubundle) ../../Resource
+      
+      - script: cp $(downloadAuthpack.secureFilePath) ../../Resource/Faceunity
+
+      - script: cd 'AgoraLive-iOS/Build/shell' && chmod +x build.sh && ./build.sh AgoraLive Debug
+      
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: AgoraLive-iOS/Build/product/app
+          ArtifactName: AgoraLiveiOSDebug

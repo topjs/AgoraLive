@@ -16,3 +16,8 @@ jobs:
   parameters:
     project: 'AgoraLive-Android'
     name: 'AgoraLive_Android'
+    
+- template: AgoraLive-iOS/Build/azure/build.yml
+  parameters:
+    displayName: 'AgoraLive'
+  
