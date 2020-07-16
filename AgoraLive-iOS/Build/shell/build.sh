@@ -18,7 +18,7 @@ rm -f *dSYMs.zip
 rm -rf *.xcarchive
 
 BUILD_DATE=`date +%Y-%m-%d-%H.%M.%S`
-ArchivePath=../Build/product/${APP_TARGET}-${BUILD_DATE}.xcarchive
+ArchivePath=../Build/product/${APP_TARGET}-${BUILD_DATE}_${MODE}.xcarchive
 
 if [[ $MODE =~ "Release" ]] 
 then
